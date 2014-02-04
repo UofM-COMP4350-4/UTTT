@@ -1,0 +1,5 @@
+class GameInterface
+{
+public:
+	virtual ~Game() = 0;
+};

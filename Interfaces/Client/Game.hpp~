@@ -1,0 +1,14 @@
+namespace client
+{
+	namespace game
+	{
+		class Game
+		{
+		public:
+			//TODO: Define Generic methods here.
+			//make sure to follow the description of what the interface is supposed to do
+			Game() {}
+			virtual ~Game() = 0;
+		};
+	}
+}

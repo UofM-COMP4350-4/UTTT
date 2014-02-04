@@ -1,0 +1,15 @@
+namespace client
+{
+	namespace game
+	{
+		
+		class Comm
+		{
+		public:
+			//TODO: Define Generic methods here.
+			//make sure to follow the description of what the interface is supposed to do
+			Comm() {}
+			virtual ~Comm() = 0;
+		};
+	}
+}
