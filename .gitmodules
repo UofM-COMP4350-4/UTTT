@@ -1,9 +1,9 @@
 [submodule "client-web/enyo"]
 	path = client-web/enyo
-	url = git@github.com:enyojs/enyo.git
+	url = https://github.com/enyojs/enyo.git
 [submodule "client-web/lib/onyx"]
 	path = client-web/lib/onyx
-	url = git@github.com:enyojs/onyx.git
+	url = https://github.com/enyojs/onyx.git
 [submodule "client-web/lib/layout"]
 	path = client-web/lib/layout
-	url = git@github.com:enyojs/layout.git
+	url = https://github.com/enyojs/layout.git
