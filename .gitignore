@@ -4,6 +4,22 @@
 /client-web/deploy
 /server/node_modules
 
+# Submodule unnecessary files #
+###############################
+/client-web/enyo/samples
+/client-web/lib/layout/contextual/samples
+/client-web/lib/layout/contextual/samples
+/client-web/lib/layout/fittable/samples
+/client-web/lib/layout/flex/docs
+/client-web/lib/layout/flex/samples
+/client-web/lib/layout/imageview/samples
+/client-web/lib/layout/list/samples
+/client-web/lib/layout/panels/samples
+/client-web/lib/layout/slideable/samples
+/client-web/lib/layout/tree/samples
+/client-web/lib/onyx/design
+/client-web/lib/onyx/samples
+
 # OS generated files #
 ######################
 */.DS_Store
