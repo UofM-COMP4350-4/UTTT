@@ -1,0 +1,20 @@
+{
+	"name": "nbgi-server",
+	"version": "1.0.0",
+	"dependencies": {
+		"restify": "",
+		"passport": "",
+		"passport-facebook": "",
+		"passport-twitter": "",
+		"passport-google": "",
+		"socket.io": ""
+	},
+	"devDependencies": {
+		"jshint": "",
+		"mocha-phantomjs": "",
+		"mocha": "",
+		"expect.js": "",
+		"json2htmlcov": ""
+	}
+}
+
