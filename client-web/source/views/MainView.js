@@ -5,19 +5,18 @@
 */
 
 enyo.kind({
-	name: "nbgi.MainView",
-	kind: "FittableRows",
+	name: "MainView",
+	kind: "View",
+	controllerKind: "MainController",
+	layoutKind:"FittableRowsLayout",
 	fit: true,
 	components:[
 		{kind: "onyx.Toolbar", content: "Hello World"},
 		{kind: "enyo.Scroller", fit: true, components: [
-			{name: "main", classes: "nice-padding", allowHtml: true}
+			{name: "results", classes: "nice-padding", allowHtml: true}
 		]},
 		{kind: "onyx.Toolbar", components: [
-			{kind: "onyx.Button", content: "Tap me", ontap: "helloWorldTap"}
+			{kind: "onyx.Button", content: "Tap me", ontap: "controller.helloWorldTap"}
 		]}
-	],
-	helloWorldTap: function(inSender, inEvent) {
-		this.$.main.addContent("The button was tapped.<br/>");
-	}
+	]
 });

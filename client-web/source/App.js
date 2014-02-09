@@ -1,15 +1,15 @@
 /**
-	Define and instantiate your enyo.Application kind in this file.  Note,
+	Define and instantiate your application kind in this file. Note,
 	application rendering should be deferred until DOM is ready by wrapping
 	it in a call to enyo.ready().
 */
 
 enyo.kind({
-	name: "nbgi.Application",
-	kind: "enyo.Application",
-	view: "nbgi.MainView"
+	name: "Application",
+	kind: "MainView",
+	classes:"enyo-fit enyo-unselectable"
 });
 
 enyo.ready(function () {
-	new nbgi.Application({name: "app"});
+	new Application().renderInto(document.body);
 });

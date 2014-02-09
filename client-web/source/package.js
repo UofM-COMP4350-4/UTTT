@@ -3,6 +3,8 @@ enyo.depends(
 	"$lib/layout",
 	// Onyx UI library
 	"$lib/onyx",
+	// Extended Library
+	"$lib/ext",
 	// Stylesheets
 	"../stylesheets",
 	// Controller and data definitions

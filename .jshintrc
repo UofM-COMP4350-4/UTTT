@@ -3,7 +3,13 @@
         "enyo": false,
         "$L": false,
         "onyx": false,
-        "nbgi": false
+        "Application": false,
+        "require":false,
+        "module": false,
+        "exports": false,
+        "process": false,
+        "__filename": false,
+        "__dirname": false
     },
     "es3": true,
     "evil": false,
