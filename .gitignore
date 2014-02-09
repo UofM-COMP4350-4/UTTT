@@ -1,8 +1,8 @@
 # Project generated files #
 ###########################
-/server/node_modules
 /client-web/build
 /client-web/deploy
+/server/node_modules
 
 # OS generated files #
 ######################
