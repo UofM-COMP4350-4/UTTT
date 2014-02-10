@@ -1,8 +1,8 @@
 client-ios
-client-web/deploy
-client-web/build
 client-web/assets
+client-web/build
+client-web/deploy
 client-web/enyo
 client-web/lib
-client-web/deploy
-server
+client-web/stylesheets
+server/node_modules
