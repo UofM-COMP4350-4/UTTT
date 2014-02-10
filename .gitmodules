@@ -1,12 +1,9 @@
 [submodule "client-web/enyo"]
 	path = client-web/enyo
 	url = https://github.com/enyojs/enyo.git
-	ignore = untracked
 [submodule "client-web/lib/onyx"]
 	path = client-web/lib/onyx
 	url = https://github.com/enyojs/onyx.git
-	ignore = untracked
 [submodule "client-web/lib/layout"]
 	path = client-web/lib/layout
 	url = https://github.com/enyojs/layout.git
-	ignore = untracked
