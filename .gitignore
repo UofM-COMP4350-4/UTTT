@@ -3,6 +3,7 @@
 /client-web/build
 /client-web/deploy
 /server/node_modules
+/server/public
 
 # OS generated files #
 ######################
