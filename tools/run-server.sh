@@ -14,16 +14,18 @@ TOOLS="$(cd `dirname "$0"`; pwd)"
 # git repository root
 ROOT="`dirname "$TOOLS"`"
 
+cd "$ROOT"
 echo " "
 
-"$ROOT/client-web/tools/deploy.sh"
-
-if [ -e "$ROOT/server" ] ; then
-	rm -fr "$ROOT/server/public"
-	mkdir -p "$ROOT/server/public"
-	echo "Copying deployable application to server public directory"
-	cp -fr "$ROOT/client-web/deploy/"* "$ROOT/server/public/"
+if [ "$1" != "" ] ; then
+	PORT = $1
 fi
+
+if [ "$2" != "" ] ; then
+	IP = $2
+fi
+
+node "$ROOT/server/server.js"
 
 echo " "
 echo "Complete!"
