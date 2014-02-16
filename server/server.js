@@ -1,6 +1,6 @@
-var http = require('http');
-var server = http.createServer(function (request, response) {
-	response.writeHead(200, {"Content-Type": "text/plain"});
-	response.end("Hello World\n");
-});
-server.listen(80);
+var restify = require('restify');
+var ecstatic = require('ecstatic');
+
+var server = restify.createServer();
+server.pre(ecstatic({ root: __dirname + '/public'}));
+server.listen(process.env.PORT || 80, process.env.IP);
