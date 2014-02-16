@@ -21,8 +21,8 @@ echo " "
 if [ -e "$ROOT/server" ] ; then
 	rm -fr "$ROOT/server/public"
 	mkdir -p "$ROOT/server/public"
-	cp -fr "$ROOT/client-web/deploy/"* "$ROOT/server/public/"
 	echo "Copying deployable application to server public directory"
+	cp -fr "$ROOT/client-web/deploy/"* "$ROOT/server/public/"
 fi
 
 echo " "
