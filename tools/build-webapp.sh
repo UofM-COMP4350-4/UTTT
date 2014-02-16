@@ -18,7 +18,15 @@ echo " "
 
 "$ROOT/client-web/tools/deploy.sh"
 
+if [ -e "$ROOT/server" ] ; then
+	rm -fr "$ROOT/server/public"
+	mkdir -p "$ROOT/server/public"
+	cp -fr "$ROOT/client-web/deploy/"* "$ROOT/server/public/"
+	echo "Copying deployable application to server public directory"
+fi
+
 echo " "
 echo "Complete!"
 echo " "
 pause
+echo " "
