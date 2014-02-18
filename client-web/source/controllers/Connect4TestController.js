@@ -5,12 +5,9 @@
 */
 
 enyo.kind({
-	name: "MainController",
+	name: "Connect4TestController",
 	kind: "Component",
-		testConnect4Tap: function(inSender, inEvent) {
-		this.view.$.results.addContent("Testing Connect 4...<br/>");
-	},
-	helloWorldTap: function(inSender, inEvent) {
+	TestConnect4Tap: function(inSender, inEvent) {
 		this.view.$.results.addContent("The button was tapped.<br/>");
 	}
 });
