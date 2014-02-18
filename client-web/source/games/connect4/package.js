@@ -1,1 +1,1 @@
-enyo.depends();
+enyo.depends("GameBoard.js");

@@ -11,6 +11,10 @@ enyo.kind({
 		this.view.$.results.addContent("Testing Connect 4...<br/>");
 	},
 	helloWorldTap: function(inSender, inEvent) {
-		this.view.$.results.addContent("The button was tapped.<br/>");
+		var player1 = new Player(1,"Player1");
+		var player2 = new Player(2,"Player2");
+		var GameBoard = new Connect4();
+		
+		//this.view.$.results.addContent("The button was tapped.<br/>");
 	}
 });
