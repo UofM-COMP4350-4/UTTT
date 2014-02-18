@@ -2,5 +2,7 @@ enyo.depends(
 	"ultimate-tictactoe",
 	"connect4",
 	"chess",
-	"scrabble"
+	"scrabble",
+	"Player.js",
+	"UserException.js"
 );
