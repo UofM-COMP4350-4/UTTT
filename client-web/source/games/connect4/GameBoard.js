@@ -12,7 +12,7 @@ Connect4.prototype.addPlayer = function(Player)
 	}
 	else
 	{
-		throw new UserException.UserException("Cannot exceed maximum players");
+		throw new UserException("Attempted to add more players than maximum allowed");
 	}
 }
 Connect4.prototype.requestMove = function(Move)

@@ -16,6 +16,7 @@ enyo.kind({
 			{name: "results", classes: "nice-padding", allowHtml: true}
 		]},
 		{kind: "onyx.Toolbar", components: [
+			{kind: "onyx.Button", content: "Test Connect4"},
 			{kind: "onyx.Button", content: "Tap me", ontap: "controller.helloWorldTap"}
 		]}
 	]
