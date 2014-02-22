@@ -1,12 +1,31 @@
-exports.Iterator = function(grid, row_size, col_size, column, row)
+var ValidateObjectController = require("../../controllers/ValidateObjectController.js")
+
+exports.Iterator = function(grid, column, row)
 {
+	ValidateObjectController.ValidateObject(grid);
+	ValidateObjectController.ValidateObject(column);
+	ValidateObjectController.ValidateObject(row);
+	//ValidateColumnRowLocations(column, row);
+	//ValidateGridSize(grid)
+	
 	this.grid = grid;
 	this.column = column;
 	this.row = row;
-	this.row_size = row_size;
-	this.col_size = col_size;
-	this.index = row*row_size+column;
+	this.row_size = 6;
+	this.col_size = 7;
+	this.index = row * this.row_size + column;
 }
+
+function ValidateColumnRowLocations(column, row) {
+	if (column > this.col_size) {
+		// error
+	}
+	
+	if (row > this.row_size) {
+		// error
+	}
+}
+
 exports.Iterator.prototype.Move = function(rowDiff, colDiff)
 {
 	return rowDiff*this.row_size + colDiff;
@@ -14,7 +33,7 @@ exports.Iterator.prototype.Move = function(rowDiff, colDiff)
 exports.Iterator.prototype.StepRowBack = function ()
 {
 	if (this.row >= 0)
-		this.index = this.index-this.move(0, 1);//(index - column) / row_size;
+		this.index = this.index-this.move(0, 1);
 }
 
 exports.Iterator.prototype.StepColumnBack = function ()
