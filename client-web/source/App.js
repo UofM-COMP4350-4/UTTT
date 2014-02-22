@@ -6,7 +6,7 @@
 
 enyo.kind({
 	name: "Application",
-	kind: "MainView",
+	kind: "SamMainView",
 	classes:"enyo-fit enyo-unselectable"
 });
 

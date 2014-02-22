@@ -1,3 +1,4 @@
 enyo.depends(
-	"MainController.js"
+	"MainController.js",
+	"GameCommController.js"
 );
