@@ -4,7 +4,7 @@ var Connect4GamePiece = require("./Connect4GamePiece.js")
 
 exports.Connect4.PIECES_TO_WIN = 4;
 
-exports.Connect4 = function Connect4()
+exports.Connect4GameBoard = function Connect4GameBoard()
 {
 	this.ROW_SIZE = 6;
 	this.COL_SIZE = 7;
@@ -14,7 +14,31 @@ exports.Connect4 = function Connect4()
 	this.IsWinner = false;
 }
 
-exports.Connect4.prototype.IsWinner = function(row, col) {
+exports.Connect4GameBoard.prototype.GetLocationIfDropGamePieceAtCol(col) {
+	ValidateObjectController.ValidateNumber(col);
+	var move = null;
+
+	var iterator = new GridIteratorJS.GridIterator(this.grid, col, 0, this.ROW_SIZE, this.COL_SIZE);
+	var currentGamePiece = this.grid[iterator.GetIndex()];
+	
+	if (currentGamePiece == undefined) {
+		while (currentGamePiece != null && currentGamePiece == undefined) {
+			iterator.StepRowForward();
+			currentGamePiece = this.grid[iterator.GetIndex()];
+		}
+		
+		iterator.StepRowBackward();
+		move = new Connect4Move(iterator.row,iterator.col);
+	}
+	// else {
+		// throw new Error('You cannot play here.  This column is already full');
+		// // send message to player saying that this is an invalid move
+	// }
+	
+	return move;
+}
+
+exports.Connect4GameBoard.prototype.IsWinner = function(row, col) {
 	ValidateObjectController.ValidateNumber(row);
 	ValidateObjectController.ValidateNumber(col);
 	var isWinner = IsWinnerSouthWestToNorthEast(this.grid, row, col);
@@ -30,6 +54,8 @@ exports.Connect4.prototype.IsWinner = function(row, col) {
 	if (!isWinner) {
 		isWinner = IsWinnerVertically(col);
 	}
+	
+	return isWinner;
 }
 
 function IsWinnerSouthWestToNorthEast(grid, row, col) {
@@ -144,7 +170,7 @@ function IsWinnerVertically(col) {
 	return isWinner;
 }
 
-exports.Connect4.prototype.AddPlayer = function(player)
+exports.Connect4GameBoard.prototype.AddPlayer = function(player)
 {
 	ValidateObjectController.ValidateObject(player);
 	if (this.players.length < 2)
@@ -157,38 +183,16 @@ exports.Connect4.prototype.AddPlayer = function(player)
 	}
 }
 
-exports.Connect4.prototype.RequestMove = function(Move)
+exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(Move)
 {
 	ValidateObjectController.ValidateObject(Move);
+	var iterator = new GridIteratorJS.GridIterator(grid, move.x, move.y, ROW_SIZE, COL_SIZE);
+	var connect4GamePiece = this.grid[iterator.GetIndex()];
 	
-	if (this.IsValidMove(Move.row, Move.col)) {
+	if (connect4GamePiece == undefined) {
 		this.grid[iterator.GetIndex()] = new Connect4GamePiece.Connect4GamePiece(Move.GetPlayer());
-		
-		if (this.IsWinner(Move.row, Move.col)) {
-			// send message to both players saying that x has won
-		}
-		else {
-			// send message to opponent with new move
-		}
-	}
-}
-
-exports.Connect4.prototype.IsValidMove(row, col) {
-	ValidateObjectController.ValidateNumber(row);
-	ValidateObjectController.ValidateNumber(col);
-	var IsValidMove = true;
-	var iterator = new GridIteratorJS.GridIterator(grid, col, row, ROW_SIZE, COL_SIZE);
-	var currentGamePiece = this.grid[iterator.GetIndex()];
-	
-	if (currentGamePiece == undefined || currentGamePiece == null) {
-		return true;
 	}
 	else {
-		return false;
+		throw new Error('A game piece already exists at this location.');
 	}
-}
-
-exports.Connect4.prototype.getResult = function()
-{
-	
 }
