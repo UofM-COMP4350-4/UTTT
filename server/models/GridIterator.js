@@ -1,5 +1,5 @@
-var ValidateObjectController = require("../../controllers/ValidateObjectController.js")
-var GridValidationController = require("./GridValidationController.js")
+var ValidateObjectController = require("../controllers/ValidateObjectController.js")
+var GridValidationController = require("../controllers/GridValidationController.js")
 
 /*	Grid Iterator
  *  Use: To be used to iterate and step through the elements in a grid of any size.

@@ -1,6 +1,6 @@
-var GridIteratorJS = require("./GridIterator.js");
-var ValidateObjectController = require("../../controllers/ValidateObjectController.js")
-var Connect4GamePiece = require("Connect4GamePiece.js")
+var GridIteratorJS = require(".././GridIterator.js");
+var ValidateObjectController = require("../.././controllers/ValidateObjectController.js")
+var Connect4GamePiece = require("./Connect4GamePiece.js")
 
 exports.Connect4.PIECES_TO_WIN = 4;
 
@@ -14,7 +14,7 @@ exports.Connect4 = function Connect4()
 	this.IsWinner = false;
 }
 
-exports.Connect4.prototype.IsWinner(row, col) {
+exports.Connect4.prototype.IsWinner = function(row, col) {
 	ValidateObjectController.ValidateObject(row);
 	ValidateObjectController.ValidateObject(col);
 	var isWinner = IsWinnerSouthWestToNorthEast(this.grid, row, col);
