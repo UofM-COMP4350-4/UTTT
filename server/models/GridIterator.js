@@ -9,10 +9,10 @@ var GridValidationController = require("../controllers/GridValidationController.
 exports.GridIterator = function(grid, column, row, row_size, col_size)
 {
 	ValidateObjectController.ValidateObject(grid);
-	ValidateObjectController.ValidateObject(column);
-	ValidateObjectController.ValidateObject(row);
-	ValidateObjectController.ValidateObject(row_size);
-	ValidateObjectController.ValidateObject(col_size);
+	ValidateObjectController.ValidateNumber(column);
+	ValidateObjectController.ValidateNumber(row);
+	ValidateObjectController.ValidateNumber(row_size);
+	ValidateObjectController.ValidateNumber(col_size);
 	ValidateObjectController.ValidateObjectIsOneDimensionalArray(grid);
 	GridValidationController.ValidateColumnRowLocations(column, row, row_size, col_size);
 	GridValidationController.ValidateGridSize(grid, row_size, col_size);
@@ -27,8 +27,8 @@ exports.GridIterator = function(grid, column, row, row_size, col_size)
 
 exports.GridIterator.prototype.Move = function(rowDiff, colDiff)
 {
-	ValidateObjectController.ValidateObject(rowDiff);
-	ValidateObjectController.ValidateObject(colDiff);
+	ValidateObjectController.ValidateNumber(rowDiff);
+	ValidateObjectController.ValidateNumber(colDiff);
 	
 	return rowDiff * this.col_size + colDiff;
 }
@@ -103,8 +103,8 @@ exports.GridIterator.prototype.StepDiagonalBackward = function ()
 
 exports.GridIterator.prototype.StepToLocation = function(row, column)
 {
-	ValidateObjectController.ValidateObject(row);
-	ValidateObjectController.ValidateObject(column);
+	ValidateObjectController.ValidateNumber(row);
+	ValidateObjectController.ValidateNumber(column);
 	GridValidationController.ValidateColumnRowLocations(column, row, this.row_size, this.col_size);
 	
 	if (row >= 0 && column >= 0 && row < this.row_size && column <= this.col_size)

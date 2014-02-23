@@ -16,10 +16,10 @@ exports.ValidateGridSize = function(grid, row_size, col_size) {
 }
 
 exports.ValidateColumnRowLocations = function(column, row, row_size, col_size) {
-	ValidateObjectController.ValidateObject(column);
-	ValidateObjectController.ValidateObject(row);
-	ValidateObjectController.ValidateObject(row_size);
-	ValidateObjectController.ValidateObject(col_size);
+	ValidateObjectController.ValidateNumber(column);
+	ValidateObjectController.ValidateNumber(row);
+	ValidateObjectController.ValidateNumber(row_size);
+	ValidateObjectController.ValidateNumber(col_size);
 	
 	if (column >= col_size) {
 		throw new Error('Column must be less than ' + col_size + '.');

@@ -2,8 +2,8 @@ var ValidateObjectController = require("../controllers/ValidateObjectController.
 
 exports.Player = function Player(id, name)
 {
-	ValidateObjectController.ValidateObject(id);
-	ValidateObjectController.ValidateObject(name);
+	ValidateObjectController.ValidateNumber(id);
+	ValidateObjectController.ValidateString(name);
 	this.id = id;
 	this.name = name;
 }

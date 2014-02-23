@@ -15,8 +15,8 @@ exports.Connect4 = function Connect4()
 }
 
 exports.Connect4.prototype.IsWinner = function(row, col) {
-	ValidateObjectController.ValidateObject(row);
-	ValidateObjectController.ValidateObject(col);
+	ValidateObjectController.ValidateNumber(row);
+	ValidateObjectController.ValidateNumber(col);
 	var isWinner = IsWinnerSouthWestToNorthEast(this.grid, row, col);
 	
 	if (!isWinner) {
@@ -34,8 +34,8 @@ exports.Connect4.prototype.IsWinner = function(row, col) {
 
 function IsWinnerSouthWestToNorthEast(grid, row, col) {
 	ValidateObjectController.ValidateObject(grid);
-	ValidateObjectController.ValidateObject(row);
-	ValidateObjectController.ValidateObject(col);
+	ValidateObjectController.ValidateNumber(row);
+	ValidateObjectController.ValidateNumber(col);
 	var iterator = new GridIteratorJS.GridIterator(grid, col-Math.min(col,row), row-Math.min(col,row), ROW_SIZE, COL_SIZE);
 	var currentGamePiece = this.grid[iterator.GetIndex()];	
 	var countSameOwner = 0;
@@ -62,8 +62,8 @@ function IsWinnerSouthWestToNorthEast(grid, row, col) {
 
 function IsWinnerSouthEastToNorthWest(grid, row, col) {
 	ValidateObjectController.ValidateObject(grid);
-	ValidateObjectController.ValidateObject(row);
-	ValidateObjectController.ValidateObject(col);
+	ValidateObjectController.ValidateNumber(row);
+	ValidateObjectController.ValidateNumber(col);
 	var iterator = new GridIteratorJS.GridIterator(grid, col+Math.min(col,row), row-Math.min(col,row), ROW_SIZE, COL_SIZE);
 	var currentGamePiece = this.grid[iterator.GetIndex()];	
 	var countSameOwner = 0;
@@ -89,7 +89,7 @@ function IsWinnerSouthEastToNorthWest(grid, row, col) {
 }
 
 function IsWinnerHorizontally(row) {
-	ValidateObjectController.ValidateObject(row);
+	ValidateObjectController.ValidateNumber(row);
 	var iterator = new GridIteratorJS.GridIterator(grid, 0, row, ROW_SIZE, COL_SIZE);
 	var currentGamePiece = this.grid[iterator.GetIndex()];	
 	var countSameOwner = 0;
@@ -117,7 +117,7 @@ function IsWinnerHorizontally(row) {
 }
 
 function IsWinnerVertically(col) {
-	ValidateObjectController.ValidateObject(col);
+	ValidateObjectController.ValidateNumber(col);
 	var iterator = new GridIteratorJS.GridIterator(grid, 0, row, ROW_SIZE, COL_SIZE);
 	var currentGamePiece = this.grid[iterator.GetIndex()];	
 	var countSameOwner = 0;
@@ -159,6 +159,8 @@ exports.Connect4.prototype.AddPlayer = function(player)
 
 exports.Connect4.prototype.RequestMove = function(Move)
 {
+	ValidateObjectController.ValidateObject(Move);
+	
 	if (this.IsValidMove(Move.row, Move.col)) {
 		this.grid[iterator.GetIndex()] = new Connect4GamePiece.Connect4GamePiece(Move.GetPlayer());
 		
@@ -172,6 +174,8 @@ exports.Connect4.prototype.RequestMove = function(Move)
 }
 
 exports.Connect4.prototype.IsValidMove(row, col) {
+	ValidateObjectController.ValidateNumber(row);
+	ValidateObjectController.ValidateNumber(col);
 	var IsValidMove = true;
 	var iterator = new GridIteratorJS.GridIterator(grid, col, row, ROW_SIZE, COL_SIZE);
 	var currentGamePiece = this.grid[iterator.GetIndex()];
