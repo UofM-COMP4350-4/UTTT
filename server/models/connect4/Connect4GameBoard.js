@@ -2,15 +2,18 @@ var GridIteratorJS = require(".././GridIterator.js");
 var ValidateObjectController = require("../.././controllers/ValidateObjectController.js")
 var Connect4GamePiece = require("./Connect4GamePiece.js")
 
-exports.Connect4.PIECES_TO_WIN = 4;
+exports.Connect4.prototype.PIECES_TO_WIN = 4;
 
-exports.Connect4GameBoard = function Connect4GameBoard()
+exports.Connect4GameBoard = function Connect4GameBoard(gameInfo)
 {
+	this.gameID = gameInfo.gameID;
+	this.instance_id = gameInfo.instanceID;
+	this.userToPlay = gameInfo.userToPlay;
 	this.ROW_SIZE = 6;
 	this.COL_SIZE = 7;
-	this.max_players = 2;
-	this.players = new Array();
-	this.grid = new Array[ROW_SIZE * COL_SIZE];
+	this.maxPlayers = 2;
+	this.players = [gameInfo.player1, gameInfo.player2];
+	this.grid = new Array[this.ROW_SIZE * this.COL_SIZE];
 	this.IsWinner = false;
 }
 
@@ -30,10 +33,6 @@ exports.Connect4GameBoard.prototype.GetLocationIfDropGamePieceAtCol(col) {
 		iterator.StepRowBackward();
 		move = new Connect4Move(iterator.row,iterator.col);
 	}
-	// else {
-		// throw new Error('You cannot play here.  This column is already full');
-		// // send message to player saying that this is an invalid move
-	// }
 	
 	return move;
 }
@@ -54,6 +53,8 @@ exports.Connect4GameBoard.prototype.IsWinner = function(row, col) {
 	if (!isWinner) {
 		isWinner = IsWinnerVertically(col);
 	}
+	
+	this.IsWinner = isWinner;
 	
 	return isWinner;
 }
@@ -183,14 +184,41 @@ exports.Connect4GameBoard.prototype.AddPlayer = function(player)
 	}
 }
 
-exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(Move)
+exports.Connect4GameBoard.prototype.IsPlayersTurn(Move) {
+	ValidateObjectController.ValidateObject(move);
+	var playerID = move.player.id;
+	
+	if (userToPlay.id == playerID) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+exports.Connect4GameBoard.prototype.GetNextTurnsPlayerID() {
+	ValidateObjectController.ValidateNumber(currentID);
+	var nextPlayersID = null;
+	var turnPlayersID = userToPlay.id;
+	
+	for (var index = 0; index < players.length; index++) {
+		if (turnPlayersID != players[index].id) {
+			nextPlayersID = players[index].id;
+		}
+	}
+	
+	return nextPlayersID
+}
+
+exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(move)
 {
-	ValidateObjectController.ValidateObject(Move);
+	ValidateObjectController.ValidateObject(move);
 	var iterator = new GridIteratorJS.GridIterator(grid, move.x, move.y, ROW_SIZE, COL_SIZE);
 	var connect4GamePiece = this.grid[iterator.GetIndex()];
 	
 	if (connect4GamePiece == undefined) {
 		this.grid[iterator.GetIndex()] = new Connect4GamePiece.Connect4GamePiece(Move.GetPlayer());
+		userToPlay = this.GetNextTurnsPlayerID();
 	}
 	else {
 		throw new Error('A game piece already exists at this location.');
