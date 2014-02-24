@@ -3,15 +3,15 @@ enyo.kind({
 	kind: "Component",
 	published: {
 		menuShowing: true,
-		socialShowing: true,
+		socialShowing: true
 	},
 	create:function() {
-	    this.inherited(arguments);
-	    this.narrowFit = enyo.Panels.isScreenNarrow();
-	    if(this.narrowFit) {
-	    	this.socialShowing = false;
-	    	this.view.$.lowerPanels.setIndexDirect(0);
-	    }
+		this.inherited(arguments);
+		this.narrowFit = enyo.Panels.isScreenNarrow();
+		if(this.narrowFit) {
+			this.socialShowing = false;
+			this.view.$.lowerPanels.setIndexDirect(0);
+		}
 	},
 	menuShowingChanged: function() {
 		if(this.menuShowing) {
@@ -34,10 +34,10 @@ enyo.kind({
 		}
 	},
 	upperTransition: function(inSender, inEvent) {
-		this.menuShowing = (inEvent.toIndex==0);
+		this.menuShowing = (inEvent.toIndex===0);
 	},
 	lowerTransition: function(inSender, inEvent) {
-		this.socialShowing = (inEvent.toIndex==1);
+		this.socialShowing = (inEvent.toIndex===1);
 		if(this.narrowFit && !this.menuShowing) {
 			this.view.$.upperPanels.setIndexDirect(1);
 		}
