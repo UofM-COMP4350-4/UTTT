@@ -5,46 +5,24 @@ var FlatFileAccessJS = require("../../models/FlatFileAccess.js");
  *  Use: Test class to be used with Mocha.  Tests the GridValidationController.js functions.
  */
 
+var flatFileAccess = new FlatFileAccessJS.FlatFileAccess();
+var jsonObj = {a: 1, b: 'test', c: 3};
+var path = './../../../server/games/test.txt';
+
 describe('Controller Test Suite', function(){
 	describe('FlatFileAccess Test Class', function() {
 		it('Test: Save JSON Object with Existing Path', function() {
-			var flatFileAccess = new FlatFileAccessJS.FlatFileAccess();
-			var jsonObj = {1,2,3};
-			var path = './games/test.txt';
-		
 			assert.equal(flatFileAccess.SaveJSONObject(jsonObj, path), true);
-			assert.equal(flatFileAccess.IsPathCreated(path), true);
-			assert.equal(flatFileAccess.IsPathCreated('./games/blah.txt'), false);
-			assert.equal(flatFileAccess.LoadJSONObject(path), true);
+			assert.equal(flatFileAccess.IsPathCreated('./games/doesntexist.txt'), false);
+			assert.deepEqual(flatFileAccess.LoadJSONObject(path), jsonObj);
 			assert.equal(flatFileAccess.DeleteFile(path), true);
 			assert.equal(flatFileAccess.IsPathCreated(path), false);
 		});
 		
-		it('Test: Save JSON Object a path that doesnt exist', function() {
-			var flatFileAccess = new FlatFileAccessJS.FlatFileAccess();
-			var jsonObj = {1,2,3};
-			var path = './games/test.txt';
-		
-			assert.equal(flatFileAccess.SaveJSONObject(jsonObj, path), true);
-			assert.equal(flatFileAccess.IsPathCreated(path), true);
-			assert.equal(flatFileAccess.LoadJSONObject(path), true);
-			assert.equal(flatFileAccess.DeleteFile(path), true);
-			assert.equal(flatFileAccess.IsPathCreated(path), false);
-		});
-		
-		it('Test: Load JSON Object that doesnt exist', function() {
-			var flatFileAccess = new FlatFileAccessJS.FlatFileAccess();
-			assert.equal(flatFileAccess.LoadJSONObject('./games/blah.txt'), true);
-		});
-		
-		it('Test: Delete file that doesnt exist', function() {
-			var flatFileAccess = new FlatFileAccessJS.FlatFileAccess();
-			assert.equal(flatFileAccess.DeleteFile('./games/blah.txt'), true);
-		});
-		
-		it('Test: Load a JSON Object that doesnt exist', function() {
-			var flatFileAccess = new FlatFileAccessJS.FlatFileAccess();
-			assert.throws(function() { flatFileAccess.DeleteFile('./games/blah.txt') }, Error);
+		it('Test: Save/Delete/Load with Path that doesnt exist', function() {		
+			assert.throws(function() { flatFileAccess.SaveJSONObject(jsonObj, './games/doesntexist.txt') }, Error);
+			assert.throws(function() { flatFileAccess.DeleteFile('./games/doesntexist.txt') }, Error);
+			assert.throws(function() { flatFileAccess.LoadJSONObject('./games/doesntexist.txt') }, Error);
 		});
 		
 		it('Test: Arguments Null/NaN/Undefined Data', function() {
@@ -65,7 +43,8 @@ describe('Controller Test Suite', function(){
 		
 		it('Test: Inivialize Invalid Data', function() {
 			assert.throws(function() { flatFileAccess.SaveJSONObject(1, 1) }, Error);
-			assert.throws(function() { flatFileAccess.SaveJSONObject(4, {a:1}) }, Error);
+			assert.throws(function() { flatFileAccess.SaveJSONObject(1, {a:1}) }, Error);
+			assert.throws(function() { flatFileAccess.SaveJSONObject('./', '{a:1}') }, Error);
 			
 			assert.throws(function() { flatFileAccess.IsPathCreated(1) }, Error);
 			assert.throws(function() { flatFileAccess.IsPathCreated(false) }, Error);	

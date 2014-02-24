@@ -1,6 +1,6 @@
 var ValidateObjectController = require("../controllers/ValidateObjectController.js")
 var FileSystem = require('fs');
-var MkDirP = require('mkdirp');
+
 /*	Flat File Access
  *  Use: Reads, Saves and Updates JSON objects saved in flat files.
  */
@@ -12,75 +12,41 @@ exports.FlatFileAccess = function()
 	
 }
 
-exports.FlatFileAccess.SaveJSONObject(JSONObject, pathToSave) {
+exports.FlatFileAccess.prototype.SaveJSONObject = function(JSONObject, pathToSave) {
 	ValidateObjectController.ValidateString(pathToSave);
 	ValidateObjectController.ValidateObject(JSONObject);
 	
-	if(!this.IsPathCreated(pathToSave)) {
-		this.CreateDirectory(pathToSave);
+	if (typeof JSONObject == 'object') {
+		FileSystem.writeFileSync(pathToSave, JSON.stringify(JSONObject, null));
 	}
-	
-	FileSystem.writeFile(pathToSave, JSON.stringify(myData, null), function(err) {
-	    if(err) {
-	        throw err;
-	    } 
-	    else {
-	        console.log("The file was saved!");
-	    }
-	});
+	else {
+		throw new Error('Argument is not an object.');
+	}
 	
 	return true;
 }
 
-exports.FlatFileAccess.IsPathCreated(path) {
+exports.FlatFileAccess.prototype.IsPathCreated = function(path) {
+	var isPathCreated = false;
+	
 	ValidateObjectController.ValidateString(path);
-	fs.exists(path, function (exists) {
-  		if (exist) {
-  			return true;
-  		}
-  		else {
-  			return false;
+	FileSystem.exists(path, function (exists) {
+  		if (exists) {
+  			isPathCreated = true;
   		}
 	});
+	
+	return isPathCreated;
 }
 
-exports.FlatFileAccess.CreateDirectory(path) {
-	ValidateObjectController.ValidateString(path);
-	MkDirP(path, function (err) {
-    	if (err) {
-    		throw err;
-    	} 
-    	else {
-    		console.log('The directory was created!');
-    	} 
-});
-}
-
-exports.FlatFileAccess.LoadJSONObject(pathToFile) {
+exports.FlatFileAccess.prototype.LoadJSONObject = function(pathToFile) {
 	ValidateObjectController.ValidateString(pathToFile);
-	var gameJSONObj = null;
-	
-	FileSystem.readFile(pathToFile, function(err, data) {
-	    if(err) {
-	        throw err;
-	    } 
-	    else {
-	        console.log("The file was loaded!");
-	    	gameJSONObj = JSON.parse(data);
-	    }
-	});
-	
-	return gameJSONObj;	
+	var readData = FileSystem.readFileSync(pathToFile);
+	return JSON.parse(readData);
 }
 
-exports.FlatFileAccess.DeleteFile(pathToFile) {
+exports.FlatFileAccess.prototype.DeleteFile = function(pathToFile) {
 	ValidateObjectController.ValidateString(pathToFile);
-	fs.unlink('/tmp/hello', function (err) {
-		if (err) {
-			throw err; 
-		}
-		console.log('The file was deleted!');
-	});
-	
+	FileSystem.unlinkSync(pathToFile);
 	return true;
 }
