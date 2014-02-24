@@ -1,3 +1,3 @@
 enyo.depends(
-	"MainView.js"
+	"AppView.js"
 );
