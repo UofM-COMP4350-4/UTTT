@@ -1,5 +1,5 @@
 var assert = require("assert");
-var GridIteratorJS = require("../../.././models/GridIterator.js");
+var GridIteratorJS = require("../.././models/GridIterator.js");
 
 /*  Grid Iterator Tests
  *  Use: Test class to be used with Mocha.  Tests the GridIterator.js data structure.

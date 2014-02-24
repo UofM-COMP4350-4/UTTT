@@ -15,23 +15,21 @@ exports.GameFactory = function()
 exports.GameFactory.prototype.GameTypeConstructor = Connect4GameBoard.Connect4GameBoard;  // default is Connect4
 exports.GameFactory.prototype.GamePieceConstructor = Connect4GamePiece.Connect4GamePiece; // default is Connect4
 
-exports.GameFactory.prototype.CreateGameBoard(gameInfo) {
-	switch(gameInfo.gameTypeID) {
+exports.GameFactory.prototype.CreateGameBoard = function(gameInfo) {
+	switch(gameInfo.gameID) {
 		case 1: // create Connect4 GameBoard
-			console.log('Created Connect4 GameBoard ID-' + gameTypeID + '.');
+			console.log('Created Connect4 GameBoard ID-' + gameInfo.gameID + '.');
 			this.GameTypeConstructor = Connect4GameBoard.Connect4GameBoard;
 			break;
 	}
-	
+
 	return new this.GameTypeConstructor(gameInfo);
 }
 
 exports.GameFactory.prototype.CreateGamePiece = function(pieceInfo) {
-	var gamePiece = null;
-	
-	switch(pieceInfo.gameTypeID) {
+	switch(pieceInfo.gameID) {
 		case 1: // create Connect4 GamePiece
-			console.log('Created Connect4 GamePiece ID-' + pieceID + '.');
+			console.log('Created Connect4 GamePiece ID-' + pieceInfo.pieceID + '.');
 			this.GamePieceConstructor = Connect4GamePiece.Connect4GamePiece;
 			break;
 	}

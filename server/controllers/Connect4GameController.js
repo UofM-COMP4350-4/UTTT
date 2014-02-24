@@ -32,6 +32,9 @@ exports.Connect4GameController.RequestMove(move) {
 			if (isGameWon) {
 				// send message to winner and opponent saying the game has been won
 			}
+			else if (gameBoard.IsDraw()) {
+				// send message to both players saying the game is a draw
+			}
 			else {
 				// send message to opponent with updated game board state
 			}

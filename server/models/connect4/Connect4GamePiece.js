@@ -2,7 +2,9 @@ var ValidateObjectController = require("../.././controllers/ValidateObjectContro
 
 exports.Connect4GamePiece = function Connect4GamePiece(pieceInfo)
 {
-	ValidateObjectController.ValidateObject(player);
+	ValidateObjectController.ValidateObject(pieceInfo);
+	ValidateObjectController.ValidateObject(pieceInfo.player);
+	ValidateObjectController.ValidateNumber(pieceInfo.pieceID);
 	this.player = pieceInfo.player;
 	this.pieceID = pieceInfo.pieceID;
 }

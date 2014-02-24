@@ -5,9 +5,15 @@ exports.ValidateObject = function(object) {
 	else if (typeof object == 'number' && isNaN(object)) {
 		throw new Error('Argument cannot be null or undefined.');
 	}
-	else {
-		return true;
+	else if (typeof object == 'object') {
+		var keys = Object.keys(object);
+
+		for (var index = 0; index < keys.length; index++) {
+			exports.ValidateObject(object[keys[index]]);	
+		}
 	}
+	
+	return true;
 }
 
 exports.ValidateBoolean = function(boolean) {

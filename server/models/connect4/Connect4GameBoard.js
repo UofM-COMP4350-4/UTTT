@@ -2,22 +2,33 @@ var GridIteratorJS = require(".././GridIterator.js");
 var ValidateObjectController = require("../.././controllers/ValidateObjectController.js")
 var Connect4GamePiece = require("./Connect4GamePiece.js")
 
-exports.Connect4.prototype.PIECES_TO_WIN = 4;
+var PIECES_TO_WIN = 4;
 
 exports.Connect4GameBoard = function Connect4GameBoard(gameInfo)
 {
+	ValidateObjectController.ValidateObject(gameInfo);
+	ValidateObjectController.ValidateNumber(gameInfo.gameID);
+	ValidateObjectController.ValidateNumber(gameInfo.instanceID);
+	ValidateObjectController.ValidateObject(gameInfo.userToPlay);
+	ValidateObjectController.ValidateObject(gameInfo.player1);
+	ValidateObjectController.ValidateObject(gameInfo.player2);
 	this.gameID = gameInfo.gameID;
-	this.instance_id = gameInfo.instanceID;
-	this.userToPlay = gameInfo.userToPlay;
+	this.instanceID = gameInfo.instanceID;
+	this.userToPlay = gameInfo.player1;
 	this.ROW_SIZE = 6;
 	this.COL_SIZE = 7;
 	this.maxPlayers = 2;
 	this.players = [gameInfo.player1, gameInfo.player2];
-	this.grid = new Array[this.ROW_SIZE * this.COL_SIZE];
+	this.grid = [this.ROW_SIZE * this.COL_SIZE];
 	this.IsWinner = false;
+	this.moves = [];
 }
 
-exports.Connect4GameBoard.prototype.GetLocationIfDropGamePieceAtCol(col) {
+exports.Connect4GameBoard.prototype.IsDraw = function() {
+	return moves.length == grid.length;
+}
+
+exports.Connect4GameBoard.prototype.GetLocationIfDropGamePieceAtCol = function(col) {
 	ValidateObjectController.ValidateNumber(col);
 	var move = null;
 
@@ -184,7 +195,7 @@ exports.Connect4GameBoard.prototype.AddPlayer = function(player)
 	}
 }
 
-exports.Connect4GameBoard.prototype.IsPlayersTurn(Move) {
+exports.Connect4GameBoard.prototype.IsPlayersTurn = function(Move) {
 	ValidateObjectController.ValidateObject(move);
 	var playerID = move.player.id;
 	
@@ -196,7 +207,7 @@ exports.Connect4GameBoard.prototype.IsPlayersTurn(Move) {
 	}
 }
 
-exports.Connect4GameBoard.prototype.GetNextTurnsPlayerID() {
+exports.Connect4GameBoard.prototype.GetNextTurnsPlayerID = function() {
 	ValidateObjectController.ValidateNumber(currentID);
 	var nextPlayersID = null;
 	var turnPlayersID = userToPlay.id;
@@ -219,6 +230,7 @@ exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(move)
 	if (connect4GamePiece == undefined) {
 		this.grid[iterator.GetIndex()] = new Connect4GamePiece.Connect4GamePiece(Move.GetPlayer());
 		userToPlay = this.GetNextTurnsPlayerID();
+		this.moves.push(move);
 	}
 	else {
 		throw new Error('A game piece already exists at this location.');

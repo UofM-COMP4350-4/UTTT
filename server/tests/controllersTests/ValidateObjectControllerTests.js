@@ -12,9 +12,14 @@ describe('Controller Test Suite', function(){
 			assert.equal(ValidateObjectController.ValidateObject(1.432423), true);
 			assert.equal(ValidateObjectController.ValidateObject([]), true);
 			assert.equal(ValidateObjectController.ValidateObject('Hello, World!'), true);
+			assert.equal(ValidateObjectController.ValidateObject({a:'hello',b:'blah'}), true);
+			assert.equal(ValidateObjectController.ValidateObject({a:'hello',b:{c:1,d:1}}), true);
 			
 			assert.throws(function() { ValidateObjectController.ValidateObject(null) }, Error);
 			assert.throws(function() { ValidateObjectController.ValidateObject(undefined) }, Error);
+			assert.throws(function() { ValidateObjectController.ValidateObject({a:null}) }, Error);
+			assert.throws(function() { ValidateObjectController.ValidateObject({a:undefined}) }, Error);
+			assert.throws(function() { ValidateObjectController.ValidateObject({a:NaN}) }, Error);
 			assert.throws(function() { ValidateObjectController.ValidateObject(NaN) }, Error);
 			
 			assert.throws(function() { ValidateObjectController.ValidateNumber(null) }, Error);
@@ -65,6 +70,12 @@ describe('Controller Test Suite', function(){
 			
 			assert.throws(function() { ValidateObjectController.ValidateString(NaN) }, Error);
 			assert.throws(function() { ValidateObjectController.ValidateBoolean(NaN) }, Error);
+		});
+		
+		it('Test: Empty Data', function() {
+			assert.equal(ValidateObjectController.ValidateObject({}), true);
+			assert.equal(ValidateObjectController.ValidateString(''), true);
+			assert.equal(ValidateObjectController.ValidateObject([]), true);
 		});
 	});
 });
