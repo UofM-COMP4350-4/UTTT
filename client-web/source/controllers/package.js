@@ -1,3 +1,3 @@
 enyo.depends(
-	"MainController.js"
+	"AppController.js"
 );
