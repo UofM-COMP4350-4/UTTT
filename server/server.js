@@ -9,17 +9,21 @@ console.log("Server started & listening on port 80");
 server.use(restify.queryParser());
 
 server.get("/createGame", function(request, response, next){
-	//We need to setup a new game in the database between two players
+	//We need to Setup a new game in the database between two players
 	//Create a flat file for the board data
-	//Then send back the board object 
+	//Then send back the board object
 	console.log("Client msg received " + request.params.fun);
-	//console.log("Received request from Client " + request.fun);
-	response.end("");
+	response.writeHead(200, {"content-type": "application/json"});
+	response.end("Game created Successfully");
 });
 
 server.get("/initialize", function(request, response) {
 	console.log("Received initialize request from Client " + request.params.userID); 
-	response.end("");
+	//Setup a Client Id if the id passed was not found in the database
+	var text = {userID: "Initialized successfully"};
+	response.writeHead( 200, {"content-type": "application/json"});
+	response.write(JSON.stringify(text));
+	response.end();
 });
 
 

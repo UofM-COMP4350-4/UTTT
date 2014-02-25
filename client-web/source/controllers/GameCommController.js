@@ -5,12 +5,13 @@ enyo.kind({
 	
 	create: function() {
 		this.inherited(arguments);
-		this.initialize(undefined, enyo.bind(this, "initCallback"));
+		this.initialize( "Bob", enyo.bind(this, "initCallback"));
 	},
 	
 	initCallback: function(userID) {
 		//Sets the user id for this Client to 
 		//the userID passed back
+		this.log(userID);
 	},
 	
 	createNewGame: function() {
@@ -41,11 +42,13 @@ enyo.kind({
 		if(!response) return;
 		
 		//Send back the user id passed
-		callback(response.params.userID);
+		this.log(response);
+		callback(response.userID);
 	},
 	
 	createGameResponse: function(inRequest, inResponse) {
-		if (!inResponse) return; //if there is nothing in the response then return early.
+		//if (!inResponse) return; //if there is nothing in the response then return early.
 		//code to handle the response goes here.
+		this.log(inResponse.data);
 	}
 });
