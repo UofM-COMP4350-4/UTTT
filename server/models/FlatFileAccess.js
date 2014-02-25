@@ -10,7 +10,7 @@ var FileSystem = require('fs');
 exports.FlatFileAccess = function()
 {
 	
-}
+};
 
 exports.FlatFileAccess.prototype.SaveJSONObject = function(JSONObject, pathToSave) {
 	ValidateObjectController.ValidateString(pathToSave);
@@ -22,9 +22,9 @@ exports.FlatFileAccess.prototype.SaveJSONObject = function(JSONObject, pathToSav
 	else {
 		throw new Error('Argument is not an object.');
 	}
-	
+
 	return true;
-}
+};
 
 exports.FlatFileAccess.prototype.IsPathCreated = function(path) {
 	var isPathCreated = false;
@@ -35,18 +35,18 @@ exports.FlatFileAccess.prototype.IsPathCreated = function(path) {
   			isPathCreated = true;
   		}
 	});
-	
+
 	return isPathCreated;
-}
+};
 
 exports.FlatFileAccess.prototype.LoadJSONObject = function(pathToFile) {
 	ValidateObjectController.ValidateString(pathToFile);
 	var readData = FileSystem.readFileSync(pathToFile);
 	return JSON.parse(readData);
-}
+};
 
 exports.FlatFileAccess.prototype.DeleteFile = function(pathToFile) {
 	ValidateObjectController.ValidateString(pathToFile);
 	FileSystem.unlinkSync(pathToFile);
 	return true;
-}
+};

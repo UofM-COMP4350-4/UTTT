@@ -1,4 +1,4 @@
-var ValidateObjectController = require("../controllers/ValidateObjectController.js")
+var ValidateObjectController = require("../controllers/ValidateObjectController.js");
 
 exports.Player = function Player(id, name)
 {
@@ -6,4 +6,4 @@ exports.Player = function Player(id, name)
 	ValidateObjectController.ValidateString(name);
 	this.id = id;
 	this.name = name;
-}
+};

@@ -9,7 +9,7 @@ var flatFileAccess = new FlatFileAccessJS.FlatFileAccess();
 var jsonObj = {a: 1, b: 'test', c: 3};
 var path = './../../../server/games/test.txt';
 
-describe('Controller Test Suite', function(){
+describe('Controller Test Suite', function() {
 	describe('FlatFileAccess Test Class', function() {
 		it('Test: Save JSON Object with Existing Path', function() {
 			assert.equal(flatFileAccess.SaveJSONObject(jsonObj, path), true);

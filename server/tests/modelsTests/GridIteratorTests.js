@@ -11,13 +11,13 @@ function createGrid(size) {
 		grid.push(i);
 	}
 	return grid;
-}
+};
 
 function assertGridInformation(iterator, index, row, col) {
 	assert.equal(iterator.GetIndex(), index);
 	assert.equal(iterator.row, row);
 	assert.equal(iterator.column, col);
-}
+};
 
 describe('Connect4 Test Suite', function(){
 	describe('Iterator Test Class', function() {
@@ -49,7 +49,7 @@ describe('Connect4 Test Suite', function(){
 			
 			invalidGrid = createGrid(35);
 			assert.throws(function() { new GridGridIteratorJS.GridIterator(invalidGrid, 0, 0, 6, 7) }, Error);
-		})
+		});
 		
 		it('Test: Null / Undefined Parameters', function() {
 			assert.throws(function() { new GridIteratorJS.GridIterator(null, 0, 0, 6, 7) }, Error);

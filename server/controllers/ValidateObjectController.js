@@ -1,5 +1,5 @@
 exports.ValidateObject = function(object) {
-	if (object == null || object == undefined) {
+	if (object == null || object === undefined) {
 		throw new Error('Argument cannot be null or undefined.');
 	}
 	else if (typeof object == 'number' && isNaN(object)) {
@@ -14,18 +14,18 @@ exports.ValidateObject = function(object) {
 	}
 	
 	return true;
-}
+};
 
-exports.ValidateBoolean = function(boolean) {
+exports.ValidateBoolean = function(bool) {
 	exports.ValidateObject(boolean);
 	
-	if (typeof boolean == "boolean") {
+	if (typeof bool == "boolean") {
 		return true;
 	}
 	else {
 		throw new Error('Argument is not a boolean.');
 	}	
-}
+};
 
 exports.ValidateString = function(string) {
 	exports.ValidateObject(string);
@@ -37,7 +37,7 @@ exports.ValidateString = function(string) {
 	else {
 		throw new Error('Argument is not a string.');
 	}	
-}
+};
 
 exports.ValidateNumber = function(number) {
 	exports.ValidateObject(number);
@@ -48,16 +48,16 @@ exports.ValidateNumber = function(number) {
 	else {
 		throw new Error('Argument is not a number.');
 	}
-}
+};
 
 exports.ValidateObjectIsOneDimensionalArray = function(array) {
 	exports.ValidateObject(array);
 
 	if (array instanceof Array) {
-		if (array.length == 0) {
+		if (array.length === 0) {
 			return true;
 		}
-		else if ((typeof array[0] == 'char') || typeof array[0] == 'string') {
+		else if (typeof array[0] == 'string') {
 			return true;
 		}
 		else if (array[0].length == undefined) {
@@ -70,4 +70,4 @@ exports.ValidateObjectIsOneDimensionalArray = function(array) {
 	else {
 		throw new Error('Argument is not an array.');
 	}
-}
+};

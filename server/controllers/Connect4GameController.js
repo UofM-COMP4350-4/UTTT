@@ -1,18 +1,17 @@
 var connect4GameBoard = require("../models/connect4/Connect4GameBoard.js");
-var connect4Move = require("../models/connect4/Connect4Move.js");
 
 exports.Connect4GameController = function Connect4GameController()
 {
 	
-}
+};
 
 exports.Connect4GameController.CreateGame() {
 	
-}
+};
 
 exports.Connect4GameController.CompleteGame() {
 	
-}
+};
 
 exports.Connect4GameController.RequestMove(move) {
 	// 1. read game from database using gameID to get Connect4GameBoard object
@@ -47,4 +46,4 @@ exports.Connect4GameController.RequestMove(move) {
 	else {
 		// move is invalid because it was made out of turn
 	}
-}
+};

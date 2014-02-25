@@ -1,5 +1,5 @@
-var ValidateObjectController = require("../controllers/ValidateObjectController.js")
-var GridValidationController = require("../controllers/GridValidationController.js")
+var ValidateObjectController = require("../controllers/ValidateObjectController.js");
+var GridValidationController = require("../controllers/GridValidationController.js");
 
 /*	Grid Iterator
  *  Use: To be used to iterate and step through the elements in a grid of any size.
@@ -23,7 +23,7 @@ exports.GridIterator = function(grid, column, row, row_size, col_size)
 	this.column = column;
 	this.row = row;
 	this.index = row * this.row_size + column;
-}
+};
 
 exports.GridIterator.prototype.Move = function(rowDiff, colDiff)
 {
@@ -31,7 +31,7 @@ exports.GridIterator.prototype.Move = function(rowDiff, colDiff)
 	ValidateObjectController.ValidateNumber(colDiff);
 	
 	return rowDiff * this.col_size + colDiff;
-}
+};
 
 exports.GridIterator.prototype.StepRowBackward = function ()
 {
@@ -42,7 +42,7 @@ exports.GridIterator.prototype.StepRowBackward = function ()
 	else {
 		return null;
 	}
-}
+};
 
 exports.GridIterator.prototype.StepColumnBackward = function ()
 {
@@ -53,7 +53,7 @@ exports.GridIterator.prototype.StepColumnBackward = function ()
 	else {
 		return null;
 	}
-}
+};
 
 exports.GridIterator.prototype.StepRowForward = function ()
 {	
@@ -64,7 +64,7 @@ exports.GridIterator.prototype.StepRowForward = function ()
 	else {
 		return null;
 	}
-}
+};
 
 exports.GridIterator.prototype.StepColumnForward = function ()
 {
@@ -75,7 +75,7 @@ exports.GridIterator.prototype.StepColumnForward = function ()
 	else {
 		return null;
 	}
-}
+};
 
 exports.GridIterator.prototype.StepDiagonalForward = function ()
 {
@@ -87,7 +87,7 @@ exports.GridIterator.prototype.StepDiagonalForward = function ()
 	else {
 		return null;
 	}
-}
+};
 
 exports.GridIterator.prototype.StepDiagonalBackward = function ()
 {
@@ -99,7 +99,7 @@ exports.GridIterator.prototype.StepDiagonalBackward = function ()
 	else {
 		return null;
 	}
-}
+};
 
 exports.GridIterator.prototype.StepToLocation = function(row, column)
 {
@@ -116,9 +116,9 @@ exports.GridIterator.prototype.StepToLocation = function(row, column)
 	else {
 		throw new Error('Cannot step to row ' + row + ' col ' + column + '.');
 	}
-}
+};
 
 exports.GridIterator.prototype.GetIndex = function()
 {
 	return this.index;
-}
+};
