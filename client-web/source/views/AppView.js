@@ -3,14 +3,19 @@ enyo.kind({
 	kind: "View",
 	controllerKind: "AppController",
 	components:[
-		{name:"upperPanels", kind: "Panels", index:0, arrangerKind: "CollapsingArranger", realtimeFit: true, wrap: false, classes:"panels enyo-fit", draggable:false, onTransitionFinish:"controller.upperTransition", components:[
-			{classes:"menu-container"},
-			{name:"lowerPanels", kind:"Panels", index:1, arrangerKind: "CollapsingRightArranger", wrap: false, realtimeFit: true, classes:"main-container enyo-border-box", draggable:false, onTransitionFinish:"controller.lowerTransition", components:[
-				{layoutKind:"FittableRowsLayout", components:[
-					{classes:"game-container"},
-					{classes:"chat-container"}
+		{name:"upperPanels", kind: "Panels", index:0, arrangerKind: "CollapsingArranger", realtimeFit: false, wrap: false, classes:"panels enyo-fit", draggable:false, onTransitionFinish:"controller.upperTransition", components:[
+			{kind:"MenuView", classes:"menu-container"},
+			{name:"lowerPanels", kind:"Panels", index:1, arrangerKind: "CollapsingRightArranger", wrap: false, realtimeFit: true, classes:"main-container enyo-border-box", draggable:true, onTransitionFinish:"controller.lowerTransition", components:[
+				{layoutKind:"FittableRowsLayout", fit:true, components:[
+					{kind:"GameView", classes:"game-container", fit:true},
+					{kind:"ChatView", classes:"chat-container"},
+					{kind:"onyx.Toolbar", style:"padding-top:4px; padding-bottom:4px;", components:[
+						{kind:"onyx.IconButton", src:"assets/onyx-profile.png", ontap:"controller.toggleSocial", style:"float:right"},
+						{kind:"onyx.Grabber", ontap:"toggleMenu", ontap:"controller.toggleMenu"}
+						
+					]}
 				]},
-				{classes:"social-container"}
+				{kind:"SocialView", classes:"social-container"}
 			]}
 			
 		]}
