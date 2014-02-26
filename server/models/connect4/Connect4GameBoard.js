@@ -46,15 +46,18 @@ exports.Connect4GameBoard.prototype.GetLocationIfDropGamePieceAtCol = function(c
 
 	var iterator = new GridIteratorJS.GridIterator(this.grid, col, 0, this.ROW_SIZE, this.COL_SIZE);
 	var currentGamePiece = this.grid[iterator.GetIndex()];
-	
-	if (currentGamePiece == undefined) {
-		while (currentGamePiece != null && currentGamePiece == undefined) {
-			iterator.StepRowForward();
+	var moved = true;
+	if (currentGamePiece) {
+		while (currentGamePiece && moved) {
+			moved = iterator.StepRowForward();
 			currentGamePiece = this.grid[iterator.GetIndex()];
 		}
 		
-		iterator.StepRowBackward();
-		move = new Connect4Move(iterator.row,iterator.col);
+		if (moved)
+			iterator.StepRowBackward();
+		
+		currentGamePiece = this.grid[iterator.GetIndex()];
+		move = {x:iterator.column, y:iterator.row, player:currentGamePiece.player};	
 	}
 	
 	return move;
@@ -219,33 +222,39 @@ exports.Connect4GameBoard.prototype.IsPlayersTurn = function(Move) {
 	}
 }
 
-exports.Connect4GameBoard.prototype.GetNextTurnsPlayerID = function() {
-	ValidateObjectController.ValidateNumber(this.userToPlay.id);
-	var nextPlayersID = null;
-	var turnPlayersID = this.userToPlay.id;
+exports.Connect4GameBoard.prototype.GetNextTurnsPlayer = function() {
+	ValidateObjectController.ValidateObject(this.userToPlay);
+	var nextPlayer = null;
+	var turnPlayer = this.userToPlay;
 	
 	for (var index = 0; index < this.players.length; index++) {
-		if (turnPlayersID != this.players[index].id) {
-			nextPlayersID = this.players[index].id;
+		if (turnPlayer != this.players[index]) {
+			nextPlayer = this.players[index];
 		}
 	}
 	
-	return nextPlayersID
+	return nextPlayer;
 }
 
 exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(move)
 {
 	ValidateObjectController.ValidateObject(move);
-	var iterator = new GridIteratorJS.GridIterator(this.grid, move.x, move.y, this.ROW_SIZE, this.COL_SIZE);
+	var lmove = this.GetLocationIfDropGamePieceAtCol(move.x);
+	var y = 0;
+
+	if (lmove && y < this.ROW_SIZE -1)
+		y = lmove.y+1;
+	
+	var iterator = new GridIteratorJS.GridIterator(this.grid, move.x, y, this.ROW_SIZE, this.COL_SIZE);
 	var connect4GamePiece = this.grid[iterator.GetIndex()];
 	
-	if (connect4GamePiece == undefined) {
+	if (!connect4GamePiece) {
 		this.grid[iterator.GetIndex()] = new Connect4GamePiece.Connect4GamePiece({
-			player: move.GetPlayer(), 
+			player: move.player, 
 			pieceID: this.lastPieceID
 			});
 		this.lastPieceID++;
-		userToPlay = this.GetNextTurnsPlayerID();
+		this.userToPlay = this.GetNextTurnsPlayer();
 		this.moves.push(move);
 	}
 	else {

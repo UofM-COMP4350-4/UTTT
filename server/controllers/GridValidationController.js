@@ -21,6 +21,13 @@ exports.ValidateColumnRowLocations = function(column, row, row_size, col_size) {
 	ValidateObjectController.ValidateNumber(row_size);
 	ValidateObjectController.ValidateNumber(col_size);
 	
+	if (column < 0) {
+		throw new Error('Column must be equal to or greater than 0');
+	}
+	if (row < 0) {
+		throw new Error('Row must be equal to or greater than 0');
+	}
+	
 	if (column >= col_size) {
 		throw new Error('Column must be less than ' + col_size + '.');
 	}

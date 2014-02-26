@@ -17,7 +17,7 @@ exports.ValidateObject = function(object) {
 };
 
 exports.ValidateBoolean = function(bool) {
-	exports.ValidateObject(boolean);
+	exports.ValidateObject(bool);
 	
 	if (typeof bool == "boolean") {
 		return true;
