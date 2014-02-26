@@ -6,10 +6,10 @@
 
 enyo.kind({
 	name: "Application",
-	kind: "SamMainView",
+	kind: "AppView",
 	classes:"enyo-fit enyo-unselectable"
 });
 
 enyo.ready(function () {
-	new Application().renderInto(document.body);
+	new Application({name:"app"}).renderInto(document.body);
 });

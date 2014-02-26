@@ -3,6 +3,7 @@ CREATE DATABASE Games_Users;
 CREATE TABLE Games (
 	gameID BIGINT NOT NULL AUTO_INCREMENT,
 	gameName VARCHAR(100),
+	maxPlayers BIGINT,
 	PRIMARY KEY(gameID)
 );
 
