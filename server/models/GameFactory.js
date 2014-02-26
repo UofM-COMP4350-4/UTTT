@@ -16,7 +16,7 @@ exports.GameFactory.prototype.GameTypeConstructor = Connect4GameBoard.Connect4Ga
 exports.GameFactory.prototype.GamePieceConstructor = Connect4GamePiece.Connect4GamePiece; // default is Connect4
 
 exports.GameFactory.prototype.CreateGameBoard = function(gameInfo) {
-	ValidateObjectController.Object(gameInfo);
+	ValidateObjectController.ValidateObject(gameInfo);
 	switch(gameInfo.gameID) {
 		case 1: // create Connect4 GameBoard
 			console.log('Created Connect4 GameBoard ID-' + gameInfo.gameID + '.');
@@ -28,7 +28,7 @@ exports.GameFactory.prototype.CreateGameBoard = function(gameInfo) {
 };
 
 exports.GameFactory.prototype.CreateGamePiece = function(pieceInfo) {
-	ValidateObjectController.Object(pieceInfo);
+	ValidateObjectController.ValidateObject(pieceInfo);
 	switch(pieceInfo.gameID) {
 		case 1: // create Connect4 GamePiece
 			console.log('Created Connect4 GamePiece ID-' + pieceInfo.pieceID + '.');

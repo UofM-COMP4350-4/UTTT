@@ -9,7 +9,7 @@ exports.ValidateGridSize = function(grid, row_size, col_size) {
 		throw new Error('Grid size must be size ' + (row_size * col_size) + '.');
 	}
 	else if (grid.length % (row_size * col_size) !== 0 && grid.length !== 0) {
-		throw new Error('Grid size must be size ' + (row_size * col_size) + '.');
+		throw new Error('Grid is of size ' + grid.length + ' but it must be size ' + (row_size * col_size) + '.');
 	}
 	
 	return true;
@@ -20,6 +20,13 @@ exports.ValidateColumnRowLocations = function(column, row, row_size, col_size) {
 	ValidateObjectController.ValidateNumber(row);
 	ValidateObjectController.ValidateNumber(row_size);
 	ValidateObjectController.ValidateNumber(col_size);
+	
+	if (column < 0) {
+		throw new Error('Column must be equal to or greater than 0');
+	}
+	if (row < 0) {
+		throw new Error('Row must be equal to or greater than 0');
+	}
 	
 	if (column >= col_size) {
 		throw new Error('Column must be less than ' + col_size + '.');

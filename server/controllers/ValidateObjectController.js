@@ -17,7 +17,7 @@ exports.ValidateObject = function(object) {
 };
 
 exports.ValidateBoolean = function(bool) {
-	exports.ValidateObject(boolean);
+	exports.ValidateObject(bool);
 	
 	if (typeof bool == "boolean") {
 		return true;
@@ -60,7 +60,7 @@ exports.ValidateObjectIsOneDimensionalArray = function(array) {
 		else if (typeof array[0] == 'string') {
 			return true;
 		}
-		else if (array[0].length == undefined) {
+		else if (!(array[0] instanceof Array)) {
 			return true;
 		}
 		else {
