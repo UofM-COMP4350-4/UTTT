@@ -1,18 +1,18 @@
 //
-//  AddToDoItemViewController.m
+//  GameViewController.m
 //  NBGI
 //
-//  Created by Cameron McKay on 2/25/2014.
+//  Created by Cameron McKay on 2/26/2014.
 //  Copyright (c) 2014 Christopher Catton. All rights reserved.
 //
 
-#import "AddToDoItemViewController.h"
+#import "GameViewController.h"
 
-@interface AddToDoItemViewController ()
+@interface GameViewController ()
 
 @end
 
-@implementation AddToDoItemViewController
+@implementation GameViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

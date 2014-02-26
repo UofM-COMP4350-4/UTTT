@@ -20,8 +20,8 @@
 		1969759F18A2E379004AC6EE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1969759D18A2E379004AC6EE /* InfoPlist.strings */; };
 		196975A118A2E379004AC6EE /* NBGITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 196975A018A2E379004AC6EE /* NBGITests.m */; };
 		3236694318BC54E40067A632 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3236694218BC54E40067A632 /* Main.storyboard */; };
-		3236694618BC76A40067A632 /* AddToDoItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3236694518BC76A40067A632 /* AddToDoItemViewController.m */; };
-		3236694C18BC79100067A632 /* ToDoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3236694B18BC79100067A632 /* ToDoListViewController.m */; };
+		3236695818BDD99B0067A632 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3236695718BDD99B0067A632 /* GameViewController.m */; };
+		3236696418BDDD2A0067A632 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3236696318BDDD2A0067A632 /* MainViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,10 +52,10 @@
 		1969759E18A2E379004AC6EE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		196975A018A2E379004AC6EE /* NBGITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NBGITests.m; sourceTree = "<group>"; };
 		3236694218BC54E40067A632 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../Main.storyboard; sourceTree = "<group>"; };
-		3236694418BC76A40067A632 /* AddToDoItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddToDoItemViewController.h; sourceTree = "<group>"; };
-		3236694518BC76A40067A632 /* AddToDoItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddToDoItemViewController.m; sourceTree = "<group>"; };
-		3236694A18BC79100067A632 /* ToDoListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToDoListViewController.h; sourceTree = "<group>"; };
-		3236694B18BC79100067A632 /* ToDoListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToDoListViewController.m; sourceTree = "<group>"; };
+		3236695618BDD99B0067A632 /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
+		3236695718BDD99B0067A632 /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
+		3236696218BDDD2A0067A632 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		3236696318BDDD2A0067A632 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,13 +115,11 @@
 		1969758118A2E379004AC6EE /* NBGI */ = {
 			isa = PBXGroup;
 			children = (
-				3236694A18BC79100067A632 /* ToDoListViewController.h */,
-				3236694B18BC79100067A632 /* ToDoListViewController.m */,
-				3236694418BC76A40067A632 /* AddToDoItemViewController.h */,
-				3236694518BC76A40067A632 /* AddToDoItemViewController.m */,
-				3236694218BC54E40067A632 /* Main.storyboard */,
+				3236695418BDD1C90067A632 /* models */,
+				3236695318BDD16F0067A632 /* controllers */,
 				1969758A18A2E379004AC6EE /* AppDelegate.h */,
 				1969758B18A2E379004AC6EE /* AppDelegate.m */,
+				3236694218BC54E40067A632 /* Main.storyboard */,
 				1969758D18A2E379004AC6EE /* Images.xcassets */,
 				1969758218A2E379004AC6EE /* Supporting Files */,
 			);
@@ -155,6 +153,24 @@
 				1969759D18A2E379004AC6EE /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3236695318BDD16F0067A632 /* controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3236696218BDDD2A0067A632 /* MainViewController.h */,
+				3236696318BDDD2A0067A632 /* MainViewController.m */,
+				3236695618BDD99B0067A632 /* GameViewController.h */,
+				3236695718BDD99B0067A632 /* GameViewController.m */,
+			);
+			name = controllers;
+			sourceTree = "<group>";
+		};
+		3236695418BDD1C90067A632 /* models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -253,10 +269,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3236694C18BC79100067A632 /* ToDoListViewController.m in Sources */,
 				1969758C18A2E379004AC6EE /* AppDelegate.m in Sources */,
 				1969758818A2E379004AC6EE /* main.m in Sources */,
-				3236694618BC76A40067A632 /* AddToDoItemViewController.m in Sources */,
+				3236695818BDD99B0067A632 /* GameViewController.m in Sources */,
+				3236696418BDDD2A0067A632 /* MainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
