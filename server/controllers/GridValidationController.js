@@ -9,7 +9,7 @@ exports.ValidateGridSize = function(grid, row_size, col_size) {
 		throw new Error('Grid size must be size ' + (row_size * col_size) + '.');
 	}
 	else if (grid.length % (row_size * col_size) !== 0 && grid.length !== 0) {
-		throw new Error('Grid size must be size ' + (row_size * col_size) + '.');
+		throw new Error('Grid is of size ' + grid.length + ' but it must be size ' + (row_size * col_size) + '.');
 	}
 	
 	return true;

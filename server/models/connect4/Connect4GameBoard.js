@@ -4,6 +4,17 @@ var Connect4GamePiece = require("./Connect4GamePiece.js")
 
 var PIECES_TO_WIN = 4;
 
+exports.Connect4Move = function Connect4Move(x, y, player)
+{
+	this.x = x;
+	this.y = y;
+	this.player = player;
+}
+exports.Connect4Move.prototype.GetPlayer = function()
+{
+	return this.player;
+}
+
 exports.Connect4GameBoard = function Connect4GameBoard(gameInfo)
 {
 	ValidateObjectController.ValidateObject(gameInfo);
@@ -19,8 +30,9 @@ exports.Connect4GameBoard = function Connect4GameBoard(gameInfo)
 	this.COL_SIZE = 7;
 	this.maxPlayers = 2;
 	this.players = [gameInfo.player1, gameInfo.player2];
-	this.grid = [this.ROW_SIZE * this.COL_SIZE];
+	this.grid = new Array(this.ROW_SIZE * this.COL_SIZE);
 	this.IsWinner = false;
+	this.lastPieceID = 0;
 	this.moves = [];
 }
 
@@ -208,13 +220,13 @@ exports.Connect4GameBoard.prototype.IsPlayersTurn = function(Move) {
 }
 
 exports.Connect4GameBoard.prototype.GetNextTurnsPlayerID = function() {
-	ValidateObjectController.ValidateNumber(currentID);
+	ValidateObjectController.ValidateNumber(this.userToPlay.id);
 	var nextPlayersID = null;
-	var turnPlayersID = userToPlay.id;
+	var turnPlayersID = this.userToPlay.id;
 	
-	for (var index = 0; index < players.length; index++) {
-		if (turnPlayersID != players[index].id) {
-			nextPlayersID = players[index].id;
+	for (var index = 0; index < this.players.length; index++) {
+		if (turnPlayersID != this.players[index].id) {
+			nextPlayersID = this.players[index].id;
 		}
 	}
 	
@@ -224,11 +236,15 @@ exports.Connect4GameBoard.prototype.GetNextTurnsPlayerID = function() {
 exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(move)
 {
 	ValidateObjectController.ValidateObject(move);
-	var iterator = new GridIteratorJS.GridIterator(grid, move.x, move.y, ROW_SIZE, COL_SIZE);
+	var iterator = new GridIteratorJS.GridIterator(this.grid, move.x, move.y, this.ROW_SIZE, this.COL_SIZE);
 	var connect4GamePiece = this.grid[iterator.GetIndex()];
 	
 	if (connect4GamePiece == undefined) {
-		this.grid[iterator.GetIndex()] = new Connect4GamePiece.Connect4GamePiece(Move.GetPlayer());
+		this.grid[iterator.GetIndex()] = new Connect4GamePiece.Connect4GamePiece({
+			player: move.GetPlayer(), 
+			pieceID: this.lastPieceID
+			});
+		this.lastPieceID++;
 		userToPlay = this.GetNextTurnsPlayerID();
 		this.moves.push(move);
 	}

@@ -60,7 +60,7 @@ exports.ValidateObjectIsOneDimensionalArray = function(array) {
 		else if (typeof array[0] == 'string') {
 			return true;
 		}
-		else if (array[0].length == undefined) {
+		else if (!(array[0] instanceof Array)) {
 			return true;
 		}
 		else {
