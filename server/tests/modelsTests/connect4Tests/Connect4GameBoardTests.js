@@ -50,7 +50,6 @@ describe('Model Test Suite', function() {
 			}, Error);
 		});
 		it ('Test: Get Location On Drop Piece', function() {
-			
 		});
 		it ('Test: Is Draw', function() {
 		});
