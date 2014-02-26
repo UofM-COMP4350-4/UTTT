@@ -53,9 +53,9 @@ exports.Connect4GameBoard.prototype.GetLocationIfDropGamePieceAtCol = function(c
 			currentGamePiece = this.grid[iterator.GetIndex()];
 		}
 		
-		if (moved)
+		if (moved) {
 			iterator.StepRowBackward();
-		
+		}
 		currentGamePiece = this.grid[iterator.GetIndex()];
 		move = {x:iterator.column, y:iterator.row, player:currentGamePiece.player};	
 	}
@@ -242,9 +242,9 @@ exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(move)
 	var lmove = this.GetLocationIfDropGamePieceAtCol(move.x);
 	var y = 0;
 
-	if (lmove && y < this.ROW_SIZE -1)
+	if (lmove && y < this.ROW_SIZE -1) {
 		y = lmove.y+1;
-	
+	}
 	var iterator = new GridIteratorJS.GridIterator(this.grid, move.x, y, this.ROW_SIZE, this.COL_SIZE);
 	var connect4GamePiece = this.grid[iterator.GetIndex()];
 	
