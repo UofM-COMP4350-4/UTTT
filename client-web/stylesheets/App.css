@@ -4,8 +4,8 @@
 }
 
 .menu-container {
-	width: 320px;
-	background-color: #EAEAEA;
+	width: 250px;
+	background-color: #333333;
 }
 
 .main-container {
@@ -18,16 +18,16 @@
 }
 
 .game-container {
-
+	background-color: #EAEAEA;
 }
 
 .chat-container {
-
+	background-color: #EAEAEA;
 }
 
 .social-container {
-	width: 320px;
-	background-color: #EAEAEA;
+	width: 250px;
+	background-color: #333333;
 	-moz-box-shadow: inset 4px 0 4px rgba(0,0,0,0.3);
 	-webkit-box-shadow: inset 4px 0 4px rgba(0,0,0,0.3);
 	box-shadow: inset 4px 0 4px rgba(0,0,0,0.3);
