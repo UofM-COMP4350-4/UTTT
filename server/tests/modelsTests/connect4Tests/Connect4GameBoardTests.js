@@ -49,7 +49,31 @@ describe('Model Test Suite', function() {
 				})
 			}, Error);
 		});
-		it ('Test: Get Location On Drop Piece', function() {
+		it ('Test: Play Move on Board', function() {
+			var Player1 = new playerJS.Player(12, 'Player 1');
+			var Player2 = new playerJS.Player(401, 'Player 2');
+			var Game = new connect4GameBoardJS.Connect4GameBoard({
+				gameID: 07,
+				instanceID:532744,
+				userToPlay:Player1,
+				player1:Player1,
+				player2:Player2
+			});
+			//assert.doesNotThrow(function() {
+			var move = new connect4GameBoardJS.Connect4Move(0,0, Player1);
+				//}, Error);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+		});
+		it ('Test: Get Location If Drop Piece', function() {
+			var Player1 = new playerJS.Player(12, 'Player 1');
+			var Player2 = new playerJS.Player(401, 'Player 2');
+			var Game = new connect4GameBoardJS.Connect4GameBoard({
+				gameID: 07,
+				instanceID:532744,
+				userToPlay:Player1,
+				player1:Player1,
+				player2:Player2
+			});
 		});
 		it ('Test: Is Draw', function() {
 		});
@@ -68,8 +92,6 @@ describe('Model Test Suite', function() {
 		it ('Test: Is Player Turn', function() {
 		});
 		it ('Test: Get Next Turn Player ID', function() {
-		});
-		it ('Test: Play Move on Board', function() {
 		});
 	});
 });
