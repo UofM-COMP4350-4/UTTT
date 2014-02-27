@@ -30,7 +30,7 @@ describe('Model Test Suite', function() {
 				userToPlay:Player1,
 				player1:Player1,
 				player2:Player2
-				})
+				});
 			}, Error);
 			assert.throws(function() {new connect4GameBoardJS.Connect4GameBoard({
 				gameID: 07,
@@ -38,7 +38,7 @@ describe('Model Test Suite', function() {
 				userToPlay:Player1,
 				player1:Player1,
 				player2:Player2
-				})
+				});
 			}, Error);
 			assert.throws(function() {new connect4GameBoardJS.Connect4GameBoard({
 				gameID: 'ABCD',
@@ -46,7 +46,7 @@ describe('Model Test Suite', function() {
 				userToPlay:Player1,
 				player1:Player1,
 				player2:Player1
-				})
+				});
 			}, Error);
 		});
 		it ('Test: Play Move on Board', function() {
