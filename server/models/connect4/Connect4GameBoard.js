@@ -9,11 +9,11 @@ exports.Connect4Move = function Connect4Move(x, y, player)
 	this.x = x;
 	this.y = y;
 	this.player = player;
-}
+};
 exports.Connect4Move.prototype.GetPlayer = function()
 {
 	return this.player;
-}
+};
 
 exports.Connect4GameBoard = function Connect4GameBoard(gameInfo)
 {
@@ -34,13 +34,15 @@ exports.Connect4GameBoard = function Connect4GameBoard(gameInfo)
 	this.IsWinner = false;
 	this.lastPieceID = 0;
 	this.moves = [];
-}
+};
 
-exports.Connect4GameBoard.prototype.IsDraw = function() {
+exports.Connect4GameBoard.prototype.IsDraw = function()
+{
 	return moves.length == grid.length;
-}
+};
 
-exports.Connect4GameBoard.prototype.GetLocationIfDropGamePieceAtCol = function(col) {
+exports.Connect4GameBoard.prototype.GetLocationIfDropGamePieceAtCol = function(col)
+{
 	ValidateObjectController.ValidateNumber(col);
 	var move = null;
 
@@ -61,31 +63,33 @@ exports.Connect4GameBoard.prototype.GetLocationIfDropGamePieceAtCol = function(c
 	}
 	
 	return move;
-}
+};
 
-exports.Connect4GameBoard.prototype.IsWinner = function(row, col) {
+exports.Connect4GameBoard.prototype.IsWinner = function(row, col)
+{
 	ValidateObjectController.ValidateNumber(row);
 	ValidateObjectController.ValidateNumber(col);
-	var isWinner = IsWinnerSouthWestToNorthEast(this.grid, row, col);
+	var isWinner = this.IsWinnerSouthWestToNorthEast(this.grid, row, col);
 	
 	if (!isWinner) {
-		isWinner = IsWinnerSouthEastToNorthWest(this.grid, row, col);
+		isWinner = this.IsWinnerSouthEastToNorthWest(this.grid, row, col);
 	}
 	
 	if (!isWinner) {
-		isWinner = IsWinnerHorizontally(row);
+		isWinner = this.IsWinnerHorizontally(row);
 	}
 	
 	if (!isWinner) {
-		isWinner = IsWinnerVertically(col);
+		isWinner = this.IsWinnerVertically(col);
 	}
 	
 	this.IsWinner = isWinner;
 	
 	return isWinner;
-}
+};
 
-function IsWinnerSouthWestToNorthEast(grid, row, col) {
+function IsWinnerSouthWestToNorthEast(grid, row, col)
+{
 	ValidateObjectController.ValidateObject(grid);
 	ValidateObjectController.ValidateNumber(row);
 	ValidateObjectController.ValidateNumber(col);
@@ -113,7 +117,8 @@ function IsWinnerSouthWestToNorthEast(grid, row, col) {
 	}
 }
 
-function IsWinnerSouthEastToNorthWest(grid, row, col) {
+function IsWinnerSouthEastToNorthWest(grid, row, col)
+{
 	ValidateObjectController.ValidateObject(grid);
 	ValidateObjectController.ValidateNumber(row);
 	ValidateObjectController.ValidateNumber(col);
@@ -141,7 +146,8 @@ function IsWinnerSouthEastToNorthWest(grid, row, col) {
 	}
 }
 
-function IsWinnerHorizontally(row) {
+function IsWinnerHorizontally(row) 
+{
 	ValidateObjectController.ValidateNumber(row);
 	var iterator = new GridIteratorJS.GridIterator(grid, 0, row, ROW_SIZE, COL_SIZE);
 	var currentGamePiece = this.grid[iterator.GetIndex()];	
@@ -208,9 +214,10 @@ exports.Connect4GameBoard.prototype.AddPlayer = function(player)
 	{
 		throw new UserException("Attempted to add more players than maximum allowed");
 	}
-}
+};
 
-exports.Connect4GameBoard.prototype.IsPlayersTurn = function(Move) {
+exports.Connect4GameBoard.prototype.IsPlayersTurn = function(Move)
+{
 	ValidateObjectController.ValidateObject(move);
 	var playerID = move.player.id;
 	
@@ -220,9 +227,10 @@ exports.Connect4GameBoard.prototype.IsPlayersTurn = function(Move) {
 	else {
 		return false;
 	}
-}
+};
 
-exports.Connect4GameBoard.prototype.GetNextTurnsPlayer = function() {
+exports.Connect4GameBoard.prototype.GetNextTurnsPlayer = function()
+{
 	ValidateObjectController.ValidateObject(this.userToPlay);
 	var nextPlayer = null;
 	var turnPlayer = this.userToPlay;
@@ -234,7 +242,7 @@ exports.Connect4GameBoard.prototype.GetNextTurnsPlayer = function() {
 	}
 	
 	return nextPlayer;
-}
+};
 
 exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(move)
 {
@@ -260,4 +268,4 @@ exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(move)
 	else {
 		throw new Error('A game piece already exists at this location.');
 	}
-}
+};
