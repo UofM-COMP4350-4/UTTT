@@ -119,7 +119,7 @@ exports.Connect4GameBoard.prototype.IsWinnerSouthWestToNorthEast = function(grid
 			isWinner = previousOwnerID;
 		}
 	}
-}
+};
 
 exports.Connect4GameBoard.prototype.IsWinnerSouthEastToNorthWest = function(grid, col, row, ROW_SIZE, COL_SIZE)
 {
@@ -151,7 +151,7 @@ exports.Connect4GameBoard.prototype.IsWinnerSouthEastToNorthWest = function(grid
 			isWinner = previousOwnerID;
 		}
 	}
-}
+};
 
 exports.Connect4GameBoard.prototype.IsWinnerHorizontally = function(grid, col, row, ROW_SIZE, COL_SIZE) 
 {
@@ -183,7 +183,7 @@ exports.Connect4GameBoard.prototype.IsWinnerHorizontally = function(grid, col, r
 	}
 	
 	return isWinner;
-}
+};
 
 exports.Connect4GameBoard.prototype.IsWinnerVertically = function(grid, col, row, ROW_SIZE, COL_SIZE) {
 	ValidateObjectController.ValidateNumber(col);
@@ -216,7 +216,7 @@ exports.Connect4GameBoard.prototype.IsWinnerVertically = function(grid, col, row
 	}
 	
 	return isWinner;
-}
+};
 
 exports.Connect4GameBoard.prototype.AddPlayer = function(player)
 {
