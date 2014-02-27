@@ -1,6 +1,6 @@
 var assert = require("assert");
 var connect4GameBoardJS = require("../../../models/connect4/Connect4GameBoard.js");
-var connect4GamePieceJS = require("../../../models/connect4/Connect4GamePiece.js");
+//var connect4GamePieceJS = require("../../../models/connect4/Connect4GamePiece.js");
 var playerJS = require("../../../models/Player.js");
 
 describe('Model Test Suite', function() {
