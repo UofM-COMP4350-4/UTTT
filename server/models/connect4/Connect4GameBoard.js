@@ -1,6 +1,6 @@
 var GridIteratorJS = require(".././GridIterator.js");
-var ValidateObjectController = require("../.././controllers/ValidateObjectController.js")
-var Connect4GamePiece = require("./Connect4GamePiece.js")
+var ValidateObjectController = require("../.././controllers/ValidateObjectController.js");
+var Connect4GamePiece = require("./Connect4GamePiece.js");
 
 var PIECES_TO_WIN = 4;
 
