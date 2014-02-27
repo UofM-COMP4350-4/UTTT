@@ -51,5 +51,8 @@ enyo.kind({
 			this.view.$.upperPanels.setIndexDirect(1);
 		}
 		return true;
+	},
+	draggingHandler: function(inSender, inEvent) {
+		this.view.$.lowerPanels.draggable = (inEvent.clientX > (enyo.dom.getWindowWidth()/2));
 	}
 });
