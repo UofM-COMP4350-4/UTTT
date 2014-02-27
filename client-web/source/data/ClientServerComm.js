@@ -29,11 +29,11 @@ enyo.singleton({
 	listOfGamesResponse: function(callback, request, response)
 	{
 		this.log("response received");
-		if(!response)
-			return;
-		
-		this.log(response);
-		callback(response.games);
+		if(response)
+		{		
+			this.log(response);
+			callback(response.games);
+		}
 	},
 	
 	queueForGame: function(callback, userID, gameID) {
@@ -61,7 +61,7 @@ enyo.singleton({
 		var request = new enyo.Ajax({
 			url: "/createNewGame", //URL goes here
 			method: "GET", //You can also use POST
-			handleAs: "json", //options are "json", "text", or "xml"
+			handleAs: "json" //options are "json", "text", or "xml"
 		});
 		this.view.$.createGameButton.setContent("Game Created 1");
 		request.response(enyo.bind(this, "createGameResponse", callback)); //tells Ajax what the callback function is
@@ -72,24 +72,26 @@ enyo.singleton({
 		var request = new enyo.Ajax({
 			url: "/initialize", //URL goes here
 			method: "GET", //You can also use POST
-			handleAs: "json", //options are "json", "text", or "xml"
+			handleAs: "json" //options are "json", "text", or "xml"
 		});
 		request.response(enyo.bind(this, "initializeResponse", callback)); //tells Ajax what the callback function is
 		request.go({userid: userID});
 	},
 	
 	initializeResponse: function(callback, request, response) {
-		if(!response) return;
-		
-		//Send back the user id passed
-		this.log(response);
-		callback(response.userID);
+		if(response)
+		{
+			//Send back the user id passed
+			this.log(response);
+			callback(response.userID);
+		}		
 	},
 	
 	createGameResponse: function(callback, request, response) {
-		if (!response) return; //if there is nothing in the response then return early.
-		//code to handle the response goes here.
-		this.log(response);
-		callback(response.instanceID, response.url);
+		if (response) 
+		{
+			this.log(response);
+			callback(response.instanceID, response.url);
+		}		
 	}
 });
