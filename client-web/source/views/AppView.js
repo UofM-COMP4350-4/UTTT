@@ -11,7 +11,7 @@ enyo.kind({
 					{kind:"ChatView", classes:"chat-container"},
 					{kind:"onyx.Toolbar", style:"padding-top:4px; padding-bottom:4px;", components:[
 						{kind:"onyx.IconButton", src:"assets/onyx-profile.png", ontap:"controller.toggleSocial", style:"float:right"},
-						{kind:"onyx.Grabber", ontap:"toggleMenu", ontap:"controller.toggleMenu"}
+						{kind:"onyx.Grabber", ontap:"controller.toggleMenu"}
 						
 					]}
 				]},
