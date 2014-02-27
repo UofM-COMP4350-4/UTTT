@@ -15,9 +15,11 @@ enyo.kind({
 	},
 	toggleMenu: function() {
 		this.setMenuShowing(!this.menuShowing);
+		return true;
 	},
 	toggleSocial: function() {
 		this.setSocialShowing(!this.socialShowing);
+		return true;
 	},
 	menuShowingChanged: function() {
 		if(this.menuShowing) {
@@ -41,11 +43,13 @@ enyo.kind({
 	},
 	upperTransition: function(inSender, inEvent) {
 		this.menuShowing = (inEvent.toIndex===0);
+		return true;
 	},
 	lowerTransition: function(inSender, inEvent) {
 		this.socialShowing = (inEvent.toIndex===1);
 		if(this.narrowFit && !this.menuShowing) {
 			this.view.$.upperPanels.setIndexDirect(1);
 		}
+		return true;
 	}
 });
