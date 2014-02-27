@@ -20,8 +20,9 @@
 		1969759F18A2E379004AC6EE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1969759D18A2E379004AC6EE /* InfoPlist.strings */; };
 		196975A118A2E379004AC6EE /* NBGITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 196975A018A2E379004AC6EE /* NBGITests.m */; };
 		3236694318BC54E40067A632 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3236694218BC54E40067A632 /* Main.storyboard */; };
-		3236695818BDD99B0067A632 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3236695718BDD99B0067A632 /* GameViewController.m */; };
 		3236696418BDDD2A0067A632 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3236696318BDDD2A0067A632 /* MainViewController.m */; };
+		3298A01618BEBD860060DE8C /* Connect4Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 3298A01518BEBD860060DE8C /* Connect4Scene.m */; };
+		32EC03EB18BEABDB00E3F7C7 /* Connect4ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EC03EA18BEABDB00E3F7C7 /* Connect4ViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,10 +53,12 @@
 		1969759E18A2E379004AC6EE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		196975A018A2E379004AC6EE /* NBGITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NBGITests.m; sourceTree = "<group>"; };
 		3236694218BC54E40067A632 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../Main.storyboard; sourceTree = "<group>"; };
-		3236695618BDD99B0067A632 /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
-		3236695718BDD99B0067A632 /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
 		3236696218BDDD2A0067A632 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		3236696318BDDD2A0067A632 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		3298A01418BEBD860060DE8C /* Connect4Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Connect4Scene.h; path = ../Connect4Scene.h; sourceTree = "<group>"; };
+		3298A01518BEBD860060DE8C /* Connect4Scene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Connect4Scene.m; path = ../Connect4Scene.m; sourceTree = "<group>"; };
+		32EC03E918BEABDB00E3F7C7 /* Connect4ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Connect4ViewController.h; sourceTree = "<group>"; };
+		32EC03EA18BEABDB00E3F7C7 /* Connect4ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Connect4ViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +118,8 @@
 		1969758118A2E379004AC6EE /* NBGI */ = {
 			isa = PBXGroup;
 			children = (
+				3298A01818BEC1D70060DE8C /* scenes */,
+				3298A01718BEC1D00060DE8C /* assets */,
 				3236695418BDD1C90067A632 /* models */,
 				3236695318BDD16F0067A632 /* controllers */,
 				1969758A18A2E379004AC6EE /* AppDelegate.h */,
@@ -160,8 +165,8 @@
 			children = (
 				3236696218BDDD2A0067A632 /* MainViewController.h */,
 				3236696318BDDD2A0067A632 /* MainViewController.m */,
-				3236695618BDD99B0067A632 /* GameViewController.h */,
-				3236695718BDD99B0067A632 /* GameViewController.m */,
+				32EC03E918BEABDB00E3F7C7 /* Connect4ViewController.h */,
+				32EC03EA18BEABDB00E3F7C7 /* Connect4ViewController.m */,
 			);
 			name = controllers;
 			sourceTree = "<group>";
@@ -171,6 +176,22 @@
 			children = (
 			);
 			name = models;
+			sourceTree = "<group>";
+		};
+		3298A01718BEC1D00060DE8C /* assets */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = assets;
+			sourceTree = "<group>";
+		};
+		3298A01818BEC1D70060DE8C /* scenes */ = {
+			isa = PBXGroup;
+			children = (
+				3298A01418BEBD860060DE8C /* Connect4Scene.h */,
+				3298A01518BEBD860060DE8C /* Connect4Scene.m */,
+			);
+			name = scenes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -271,8 +292,9 @@
 			files = (
 				1969758C18A2E379004AC6EE /* AppDelegate.m in Sources */,
 				1969758818A2E379004AC6EE /* main.m in Sources */,
-				3236695818BDD99B0067A632 /* GameViewController.m in Sources */,
 				3236696418BDDD2A0067A632 /* MainViewController.m in Sources */,
+				3298A01618BEBD860060DE8C /* Connect4Scene.m in Sources */,
+				32EC03EB18BEABDB00E3F7C7 /* Connect4ViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
