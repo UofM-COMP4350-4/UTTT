@@ -41,7 +41,8 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Play Connect4"/>
                                 <connections>
-                                    <segue destination="tU3-jv-7ws" kind="push" id="s0Q-vH-2Tw"/>
+                                    <action selector="PlayConnect4:" destination="CS8-Tz-Iq1" eventType="touchUpInside" id="oXW-Jd-VaL"/>
+                                    <segue destination="tU3-jv-7ws" kind="modal" id="olA-Bw-Cfs"/>
                                 </connections>
                             </button>
                         </subviews>

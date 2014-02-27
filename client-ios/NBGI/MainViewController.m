@@ -10,6 +10,8 @@
 
 @interface MainViewController ()
 
+- (IBAction)PlayConnect4:(id)sender;
+
 @end
 
 @implementation MainViewController
@@ -35,4 +37,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)PlayConnect4:(id)sender {
+    
+}
 @end
