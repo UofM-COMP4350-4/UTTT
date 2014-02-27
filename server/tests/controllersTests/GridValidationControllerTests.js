@@ -44,7 +44,7 @@ describe('Controller Test Suite', function(){
 			assert.throws(function() { GridValidationController.ValidateGridSize(null, 1, 2) }, Error);
 			assert.throws(function() { GridValidationController.ValidateGridSize(undefined, 2, 2) }, Error);
 			assert.throws(function() { GridValidationController.ValidateGridSize([], NaN, 0) }, Error);
-			assert.throws(function() { GridValidationController.ValidateGridSize([1,2], 2, Nan) }, Error);
+			assert.throws(function() { GridValidationController.ValidateGridSize([1,2], 2, NaN) }, Error);
 			assert.throws(function() { GridValidationController.ValidateGridSize([1,2], null, 0) }, Error);
 			assert.throws(function() { GridValidationController.ValidateGridSize([1,2,3], undefined, 0) }, Error);
 			assert.throws(function() { GridValidationController.ValidateGridSize([], 1, undefined) }, Error);
