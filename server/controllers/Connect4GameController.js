@@ -1,15 +1,15 @@
 var connect4GameBoard = require("../models/connect4/Connect4GameBoard.js");
 
-exports.Connect4GameController = function Connect4GameController()
+exports.Connect4GameController = function Connect4GameController() {
+	
+};
+
+exports.Connect4GameController = function CreateGame() 
 {
 	
 };
 
-exports.Connect4GameController.CreateGame() {
-	
-};
-
-exports.Connect4GameController.CompleteGame() {
+exports.Connect4GameController = function CompleteGame(){
 	
 };
 
