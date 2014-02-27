@@ -15,7 +15,7 @@ exports.Connect4Move.prototype.GetPlayer = function()
 	return this.player;
 };
 
-exports.Connect4GameBoard = function Connect4GameBoard(gameInfo)
+exports.Connect4GameBoard.prototype.Connect4GameBoard = function(gameInfo)
 {
 	ValidateObjectController.ValidateObject(gameInfo);
 	ValidateObjectController.ValidateNumber(gameInfo.gameID);
