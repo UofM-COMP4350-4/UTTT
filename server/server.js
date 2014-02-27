@@ -8,11 +8,20 @@ server.listen(process.env.PORT || 80, process.env.IP);
 console.log("Server started & listening on port 80");
 server.use(restify.queryParser());
 
-server.get("/createGame", function(request, response, next){
+server.get("/queueForGame", function(request, response, next){
 	//We need to Setup a new game in the database between two players
 	//Create a flat file for the board data
 	//Then send back the board object
-	console.log("Client msg received " + request.params.fun);
+	console.log("Queue request received from Client " + request.params.fun);
+	response.writeHead(200, {"content-type": "application/json"});
+	response.end(JSON.stringify({}));
+});
+
+server.get("/createNewGame", function(request, response, next){
+	//We need to Setup a new game in the database between two players
+	//Create a flat file for the board data
+	//Then send back the board object
+	console.log("New game request received from Client " + request.params.fun);
 	response.writeHead(200, {"content-type": "application/json"});
 	response.end("Game created Successfully");
 });
