@@ -103,7 +103,7 @@ function IsWinnerSouthWestToNorthEast(grid, row, col)
 		iterator.StepDiagonalForward();
 		currentGamePiece = this.grid[iterator.GetIndex()];
 		
-		if (previousOwnerID = currentGamePiece.GetOwnerID()) {
+		if (previousOwnerID == currentGamePiece.GetOwnerID()) {
 			countSameOwner = countSameOwner + 1;
 		}
 		else {
@@ -132,7 +132,7 @@ function IsWinnerSouthEastToNorthWest(grid, row, col)
 		iterator.StepDiagonalBackward();
 		currentGamePiece = this.grid[iterator.GetIndex()];
 		
-		if (previousOwnerID = currentGamePiece.GetOwnerID()) {
+		if (previousOwnerID == currentGamePiece.GetOwnerID()) {
 			countSameOwner = countSameOwner + 1;
 		}
 		else {
@@ -159,7 +159,7 @@ function IsWinnerHorizontally(row)
 		iterator.StepColumnForward();
 		currentGamePiece = this.grid[iterator.GetIndex()];
 		
-		if (previousOwnerID = currentGamePiece.GetOwnerID()) {
+		if (previousOwnerID == currentGamePiece.GetOwnerID()) {
 			countSameOwner = countSameOwner + 1;
 		}
 		else {
@@ -187,7 +187,7 @@ function IsWinnerVertically(col) {
 		iterator.StepRowForward();
 		currentGamePiece = this.grid[iterator.GetIndex()];
 		
-		if (previousOwnerID = currentGamePiece.GetOwnerID()) {
+		if (previousOwnerID == currentGamePiece.GetOwnerID()) {
 			countSameOwner = countSameOwner + 1;
 		}
 		else {
