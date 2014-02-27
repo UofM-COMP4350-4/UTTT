@@ -8,7 +8,7 @@ var playerJS = require("../../models/Player.js");
 
 describe('Controller Test Suite', function(){
 	describe('GridValidationController Test Class', function() {
-		it('Test: Inivialize Valid Data', function() {
+		it('Test: Initialize Valid Data', function() {
 			var gameFactory = new gameFactoryJS.GameFactory();
 			var player1 = new playerJS.Player(12,'Player 1');
 			var player2 = new playerJS.Player(17,'Player 2');
