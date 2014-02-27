@@ -11,8 +11,8 @@ enyo.depends(
 	"controllers",
 	// View definitions
 	"views",
-	// Game Module Definitions
-	"games",
+	//data
+	"data",
 	// Default webapp entry point
 	"App.js"
 );

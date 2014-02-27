@@ -13,6 +13,12 @@ enyo.kind({
 			this.view.$.lowerPanels.setIndexDirect(0);
 		}
 	},
+	toggleMenu: function() {
+		this.setMenuShowing(!this.menuShowing);
+	},
+	toggleSocial: function() {
+		this.setSocialShowing(!this.socialShowing);
+	},
 	menuShowingChanged: function() {
 		if(this.menuShowing) {
 			this.view.$.upperPanels.setIndex(0);

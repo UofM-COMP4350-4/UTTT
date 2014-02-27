@@ -19,6 +19,7 @@
         "console": false
     },
     "-W024": true,
+    "-W099": true,
     "expr": true,
     "es3": true,
     "evil": false,
@@ -30,8 +31,8 @@
     "eqnull": true,
     "laxbreak": true,
     "curly": true,
-    "indent": 4,
     "newcap": true,
     "undef": true,
-    "unused": "vars"
+    "unused": "vars",
+    "lastsemic": true
 }
