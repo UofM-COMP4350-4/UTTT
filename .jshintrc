@@ -34,5 +34,5 @@
     "newcap": true,
     "undef": true,
     "unused": "vars",
-    "lastsemic":false
+    "lastsemic": true
 }
