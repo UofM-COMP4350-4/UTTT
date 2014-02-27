@@ -47,5 +47,5 @@ enyo.kind({
 		if(this.narrowFit && !this.menuShowing) {
 			this.view.$.upperPanels.setIndexDirect(1);
 		}
-	},
+	}
 });
