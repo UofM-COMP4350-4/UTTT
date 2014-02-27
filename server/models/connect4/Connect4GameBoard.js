@@ -38,7 +38,7 @@ exports.Connect4GameBoard.prototype.Connect4GameBoard = function(gameInfo)
 
 exports.Connect4GameBoard.prototype.IsDraw = function()
 {
-	return moves.length == grid.length;
+	return this.moves.length == this.grid.length;
 };
 
 exports.Connect4GameBoard.prototype.GetLocationIfDropGamePieceAtCol = function(col)
@@ -93,7 +93,7 @@ function IsWinnerSouthWestToNorthEast(grid, row, col)
 	ValidateObjectController.ValidateObject(grid);
 	ValidateObjectController.ValidateNumber(row);
 	ValidateObjectController.ValidateNumber(col);
-	var iterator = new GridIteratorJS.GridIterator(grid, col-Math.min(col,row), row-Math.min(col,row), ROW_SIZE, COL_SIZE);
+	var iterator = new GridIteratorJS.GridIterator(grid, col-Math.min(col,row), row-Math.min(col,row), this.ROW_SIZE, this.COL_SIZE);
 	var currentGamePiece = this.grid[iterator.GetIndex()];	
 	var countSameOwner = 0;
 	var previousOwnerID = currentGamePiece.GetOwnerID();
@@ -122,7 +122,7 @@ function IsWinnerSouthEastToNorthWest(grid, row, col)
 	ValidateObjectController.ValidateObject(grid);
 	ValidateObjectController.ValidateNumber(row);
 	ValidateObjectController.ValidateNumber(col);
-	var iterator = new GridIteratorJS.GridIterator(grid, col+Math.min(col,row), row-Math.min(col,row), ROW_SIZE, COL_SIZE);
+	var iterator = new GridIteratorJS.GridIterator(grid, col+Math.min(col,row), row-Math.min(col,row), this.ROW_SIZE, this.COL_SIZE);
 	var currentGamePiece = this.grid[iterator.GetIndex()];	
 	var countSameOwner = 0;
 	var previousOwnerID = currentGamePiece.GetOwnerID();
@@ -149,7 +149,7 @@ function IsWinnerSouthEastToNorthWest(grid, row, col)
 function IsWinnerHorizontally(row) 
 {
 	ValidateObjectController.ValidateNumber(row);
-	var iterator = new GridIteratorJS.GridIterator(grid, 0, row, ROW_SIZE, COL_SIZE);
+	var iterator = new GridIteratorJS.GridIterator(this.grid, 0, row, this.ROW_SIZE, this.COL_SIZE);
 	var currentGamePiece = this.grid[iterator.GetIndex()];	
 	var countSameOwner = 0;
 	var previousOwnerID = currentGamePiece.GetOwnerID();
@@ -177,7 +177,7 @@ function IsWinnerHorizontally(row)
 
 function IsWinnerVertically(col) {
 	ValidateObjectController.ValidateNumber(col);
-	var iterator = new GridIteratorJS.GridIterator(grid, 0, row, ROW_SIZE, COL_SIZE);
+	var iterator = new GridIteratorJS.GridIterator(this.grid, 0, row, this.ROW_SIZE, this.COL_SIZE);
 	var currentGamePiece = this.grid[iterator.GetIndex()];	
 	var countSameOwner = 0;
 	var previousOwnerID = currentGamePiece.GetOwnerID();
@@ -208,20 +208,20 @@ exports.Connect4GameBoard.prototype.AddPlayer = function(player)
 	ValidateObjectController.ValidateObject(player);
 	if (this.players.length < 2)
 	{
-		this.players.push(Player);
+		this.players.push(player);
 	}
 	else
 	{
-		throw new UserException("Attempted to add more players than maximum allowed");
+		throw new Error("Attempted to add more players than maximum allowed");
 	}
 };
 
-exports.Connect4GameBoard.prototype.IsPlayersTurn = function(Move)
+exports.Connect4GameBoard.prototype.IsPlayersTurn = function(move)
 {
 	ValidateObjectController.ValidateObject(move);
 	var playerID = move.player.id;
 	
-	if (userToPlay.id == playerID) {
+	if (this.userToPlay.id == playerID) {
 		return true;
 	}
 	else {
