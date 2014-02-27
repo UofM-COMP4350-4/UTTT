@@ -11,6 +11,8 @@ enyo.depends(
 	"controllers",
 	// View definitions
 	"views",
+	//data
+	"data",
 	// Default webapp entry point
 	"App.js"
 );
