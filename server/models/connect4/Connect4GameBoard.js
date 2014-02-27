@@ -2,7 +2,7 @@ var GridIteratorJS = require(".././GridIterator.js");
 var ValidateObjectController = require("../.././controllers/ValidateObjectController.js");
 var Connect4GamePiece = require("./Connect4GamePiece.js");
 
-exports.Connect4Move.prototype.Connect4Move = function(x, y, player)
+exports.Connect4Move = function(x, y, player)
 {
 	this.x = x;
 	this.y = y;
@@ -13,7 +13,7 @@ exports.Connect4Move.prototype.GetPlayer = function()
 	return this.player;
 };
 
-exports.Connect4GameBoard.prototype.Connect4GameBoard = function(gameInfo)
+exports.Connect4GameBoard = function(gameInfo)
 {
 	ValidateObjectController.ValidateObject(gameInfo);
 	ValidateObjectController.ValidateNumber(gameInfo.gameID);
@@ -86,7 +86,7 @@ exports.Connect4GameBoard.prototype.IsWinner = function(row, col)
 	return isWinner;
 };
 
-function IsWinnerSouthWestToNorthEast(grid, row, col)
+/*function IsWinnerSouthWestToNorthEast(grid, row, col)
 {
 	ValidateObjectController.ValidateObject(grid);
 	ValidateObjectController.ValidateNumber(row);
@@ -113,9 +113,9 @@ function IsWinnerSouthWestToNorthEast(grid, row, col)
 			isWinner = previousOwnerID;
 		}
 	}
-}
+}*/
 
-function IsWinnerSouthEastToNorthWest(grid, row, col)
+/*function IsWinnerSouthEastToNorthWest(grid, row, col)
 {
 	ValidateObjectController.ValidateObject(grid);
 	ValidateObjectController.ValidateNumber(row);
@@ -142,7 +142,7 @@ function IsWinnerSouthEastToNorthWest(grid, row, col)
 			isWinner = previousOwnerID;
 		}
 	}
-}
+}*/
 
 function IsWinnerHorizontally(row) 
 {
@@ -175,7 +175,7 @@ function IsWinnerHorizontally(row)
 
 function IsWinnerVertically(col) {
 	ValidateObjectController.ValidateNumber(col);
-	var iterator = new GridIteratorJS.GridIterator(this.grid, 0, row, this.ROW_SIZE, this.COL_SIZE);
+	var iterator = new GridIteratorJS.GridIterator(this.grid, col, 0, this.ROW_SIZE, this.COL_SIZE);
 	var currentGamePiece = this.grid[iterator.GetIndex()];	
 	var countSameOwner = 0;
 	var previousOwnerID = currentGamePiece.GetOwnerID();
