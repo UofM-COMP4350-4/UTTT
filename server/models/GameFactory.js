@@ -1,5 +1,5 @@
 var ValidateObjectController = require("../controllers/ValidateObjectController.js");
-var GridValidationController = require("../controllers/GridValidationController.js");
+//var GridValidationController = require("../controllers/GridValidationController.js");
 var Connect4GamePiece = require("./connect4/Connect4GamePiece");
 var Connect4GameBoard = require("./connect4/Connect4GameBoard");
 
