@@ -5,7 +5,7 @@ var serverInstanceBase = 0;
 // All game instances currently loaded in memory.
 // Games get saved to database when all users disconnect
 // Note: Guest users do not have their data retained
-var matches:{};
+var matches = {};
 
 module.exports = {
 	// Gets the static list of game IDs, game names, and max players

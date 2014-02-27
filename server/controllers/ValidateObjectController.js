@@ -81,9 +81,9 @@ exports.ValidateObjectIsOneDimensionalArray = function(array) {
 };
 
 exports.ValidateFunction = function(fn) {
-	exports.ValidateObject(array);
+	exports.ValidateObject(fn);
 
-	if (array instanceof Function) {
+	if (fn instanceof Function) {
 			return true;
 	}
 	else {
@@ -103,7 +103,7 @@ exports.ValidateFunction = function(fn) {
  * that arg2 is a String, and that arg3 is a Number.
  */
 exports.ValidateArgs = function() {
-	if(argument.length>0 && (arguments[0] instanceof Array)
+	if(arguments.length>0 && (arguments[0] instanceof Array)
 			&& arguments[0].length==arguments.length-1) {
 		for(var i=1; i<arguments.length; i++) {
 			if(arguments[i] == Number) {
