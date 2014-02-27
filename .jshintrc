@@ -19,6 +19,7 @@
         "console": false
     },
     "-W024": true,
+    "-W099": true,
     "expr": true,
     "es3": true,
     "evil": false,
