@@ -63,7 +63,7 @@ module.exports = {
 	},
 	findByUser: function(userID, callback) {
 		Validator.validateArgs(arguments, String, Function);
-		var userState: {};
+		var userState = {};
 		for(var x in matches) {
 			if(matches[x].players.indexOf(userID)) {
 				userState[x] = matches[x];

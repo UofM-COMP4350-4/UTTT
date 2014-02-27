@@ -65,7 +65,10 @@ exports.ValidateObjectIsOneDimensionalArray = function(array) {
 	exports.ValidateObject(array);
 
 	if (exports.ValidateArray(array)) {
-		if (typeof array[0] == 'string') {
+		if(array.length==0) {
+			return true;
+		}
+		else if (typeof array[0] == 'string') {
 			return true;
 		}
 		else if (!(array[0] instanceof Array)) {
