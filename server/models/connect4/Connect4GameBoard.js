@@ -97,8 +97,9 @@ exports.Connect4GameBoard.prototype.IsWinnerSouthWestToNorthEast = function(grid
 	var currentGamePiece = grid[iterator.GetIndex()];	
 	var countSameOwner = 0;
 	
-	if (!currentGamePiece)
+	if (!currentGamePiece) {
 		return false;
+	}
 	
 	var previousOwnerID = currentGamePiece.GetOwnerID();
 	var isWinner = false;
@@ -127,8 +128,9 @@ exports.Connect4GameBoard.prototype.IsWinnerSouthEastToNorthWest = function(grid
 	ValidateObjectController.ValidateNumber(col);
 	var iterator = new GridIteratorJS.GridIterator(grid, Math.min(PIECES_TO_WIN+col, COL_SIZE-1), Math.max(row-PIECES_TO_WIN,0), ROW_SIZE, COL_SIZE);
 	var currentGamePiece = grid[iterator.GetIndex()];	
-	if (!currentGamePiece)
+	if (!currentGamePiece) {
 		return false;
+	}
 	var countSameOwner = 0;
 	var previousOwnerID = currentGamePiece.GetOwnerID();
 	var isWinner = false;
@@ -157,8 +159,9 @@ exports.Connect4GameBoard.prototype.IsWinnerHorizontally = function(grid, col, r
 	var iterator = new GridIteratorJS.GridIterator(this.grid, 0, row, this.ROW_SIZE, this.COL_SIZE);
 	var currentGamePiece = grid[iterator.GetIndex()];	
 	var countSameOwner = 0;
-	if (!currentGamePiece)
+	if (!currentGamePiece) {
 		return false;
+	}
 	var previousOwnerID = currentGamePiece.GetOwnerID();
 	var isWinner = false;
 	
@@ -188,9 +191,9 @@ exports.Connect4GameBoard.prototype.IsWinnerVertically = function(grid, col, row
 	var currentGamePiece = grid[iterator.GetIndex()];	
 	var countSameOwner = 0;
 	
-	if (!currentGamePiece)
+	if (!currentGamePiece) {
 		return false;
-	
+	}	
 	var previousOwnerID = currentGamePiece.GetOwnerID();
 	var isWinner = false;
 	
