@@ -4,7 +4,7 @@ var Connect4GamePiece = require("./Connect4GamePiece.js");
 
 var PIECES_TO_WIN = 4;
 
-exports.Connect4Move = function Connect4Move(x, y, player)
+exports.Connect4Move.prototype.Connect4Move = function(x, y, player)
 {
 	this.x = x;
 	this.y = y;
