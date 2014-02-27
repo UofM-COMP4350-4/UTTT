@@ -21,20 +21,22 @@ enyo.singleton({
 			method: "GET",
 			handleAs: "json"
 		});
-		this.log("list of games request sent");
+		//this.log("list of games request sent");
 		request.response(enyo.bind(this, "listOfGamesResponse", callback));
 		request.go();
 	},
 	
-	listOfGamesResponse: function(request, response, callback)
+	listOfGamesResponse: function(callback, request, response)
 	{
-		if(response == undefined)
+		this.log("response received");
+		if(!response)
 			return;
 		
+		this.log(response);
 		callback(response.games);
 	},
 	
-	queueForGame: function(userID, gameID, callback) {
+	queueForGame: function(callback, userID, gameID) {
 		//This method is supposed to send an AJAX call
 		// to the Server to create a new game (userID, gameID) and use the
 		// resulting object from the server to create a game view
@@ -48,11 +50,11 @@ enyo.singleton({
 		request.go({userid: userID, gameid: gameID});		
 	},
 	
-	queueResponse: function(request, response, callback){
+	queueResponse: function(callback, request, response){
 		callback(response.err);
 	},
 	
-	createNewGame: function(userID, gameID, callback) {
+	createNewGame: function(callback, userID, gameID) {
 		//This method is supposed to send an AJAX call
 		// to the Server to create a new game (userID, gameID) and use the
 		// resulting object from the server to create a game view
@@ -66,7 +68,7 @@ enyo.singleton({
 		request.go({userid: userID, gameid: gameID});		
 	},
 	
-	initialize: function(userID, callback) {
+	initialize: function(callback, userID) {
 		var request = new enyo.Ajax({
 			url: "/initialize", //URL goes here
 			method: "GET", //You can also use POST
@@ -76,7 +78,7 @@ enyo.singleton({
 		request.go({userid: userID});
 	},
 	
-	initializeResponse: function(request, response, callback) {
+	initializeResponse: function(callback, request, response) {
 		if(!response) return;
 		
 		//Send back the user id passed
@@ -84,7 +86,7 @@ enyo.singleton({
 		callback(response.userID);
 	},
 	
-	createGameResponse: function(request, response, callback) {
+	createGameResponse: function(callback, request, response) {
 		if (!response) return; //if there is nothing in the response then return early.
 		//code to handle the response goes here.
 		this.log(response);

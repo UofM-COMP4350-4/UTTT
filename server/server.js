@@ -35,4 +35,15 @@ server.get("/initialize", function(request, response) {
 	response.end();
 });
 
+server.get("/listOfGames", function(request, response)
+{
+	console.log("List of games request received from the Client");
+	
+	var games = {"abc123":"game name", "go jason":"good work"};
+	
+	response.writeHead(200, {"content-type": "application/json"});
+	response.write(JSON.stringify(games));
+	response.end();
+});
+
 
