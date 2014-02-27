@@ -32,6 +32,5 @@
     "curly": true,
     "newcap": true,
     "undef": true,
-    "unused": "vars",
-    "white":true
+    "unused": "vars"
 }
