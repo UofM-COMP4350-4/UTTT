@@ -1,19 +1,21 @@
 var connect4GameBoard = require("../models/connect4/Connect4GameBoard.js");
 
-exports.Connect4GameController = function Connect4GameController() {
+exports.Connect4GameController.prototype.Connect4GameController = function() {
 	
 };
 
-exports.Connect4GameController = function CreateGame() 
+exports.Connect4GameController.prototype.CreateGame = function() 
 {
 	
 };
 
-exports.Connect4GameController = function CompleteGame(){
+exports.Connect4GameController.prototype.CompleteGame = function() 
+{
 	
 };
 
-exports.Connect4GameController.RequestMove(move) {
+exports.Connect4GameController.prototype.RequestMove = function(move) 
+{
 	// 1. read game from database using gameID to get Connect4GameBoard object
 	// faked for now
 	var gameBoard = new connect4GameBoard.Connect4GameBoard();
