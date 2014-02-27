@@ -196,127 +196,127 @@ describe('Model Test Suite', function() {
 			var move = {x:0,y:0,player:Player1};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:1,y:0,player:Player2};
+			move = {x:1,y:0,player:Player2};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:2,y:0,player:Player1};
+			move = {x:2,y:0,player:Player1};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:3,y:0,player:Player2};
+			move = {x:3,y:0,player:Player2};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:4,y:0,player:Player1};
+			move = {x:4,y:0,player:Player1};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:5,y:0,player:Player2};
+			move = {x:5,y:0,player:Player2};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:6,y:0,player:Player1};
+			move = {x:6,y:0,player:Player1};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:0,y:1,player:Player2};
+			move = {x:0,y:1,player:Player2};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:1,y:1,player:Player1};
+			move = {x:1,y:1,player:Player1};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:2,y:1,player:Player2};
+			move = {x:2,y:1,player:Player2};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:3,y:1,player:Player1};
+			move = {x:3,y:1,player:Player1};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:4,y:1,player:Player2};
+			move = {x:4,y:1,player:Player2};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:5,y:1,player:Player1};
+			move = {x:5,y:1,player:Player1};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:6,y:1,player:Player2};
+			move = {x:6,y:1,player:Player2};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:0,y:2,player:Player1};
+			move = {x:0,y:2,player:Player1};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:1,y:2,player:Player2};
+			move = {x:1,y:2,player:Player2};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:2,y:2,player:Player1};
+			move = {x:2,y:2,player:Player1};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:3,y:2,player:Player2};
+			move = {x:3,y:2,player:Player2};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:4,y:2,player:Player1};
+			move = {x:4,y:2,player:Player1};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:5,y:2,player:Player2};
+			move = {x:5,y:2,player:Player2};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:6,y:2,player:Player1};
+			move = {x:6,y:2,player:Player1};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:0,y:3,player:Player2};
+			move = {x:0,y:3,player:Player2};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:1,y:3,player:Player1};
+			move = {x:1,y:3,player:Player1};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:2,y:3,player:Player2};
+			move = {x:2,y:3,player:Player2};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:3,y:3,player:Player1};
+			move = {x:3,y:3,player:Player1};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:4,y:3,player:Player2};
+			move = {x:4,y:3,player:Player2};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:5,y:3,player:Player1};
+			move = {x:5,y:3,player:Player1};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:6,y:3,player:Player2};
+			move = {x:6,y:3,player:Player2};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:0,y:4,player:Player1};
+			move = {x:0,y:4,player:Player1};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:1,y:4,player:Player2};
+			move = {x:1,y:4,player:Player2};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:2,y:4,player:Player1};
+			move = {x:2,y:4,player:Player1};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:3,y:4,player:Player2};
+			move = {x:3,y:4,player:Player2};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:4,y:4,player:Player1};
+			move = {x:4,y:4,player:Player1};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:5,y:4,player:Player2};
+			move = {x:5,y:4,player:Player2};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:6,y:4,player:Player1};
+			move = {x:6,y:4,player:Player1};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:0,y:5,player:Player2};
+			move = {x:0,y:5,player:Player2};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:1,y:5,player:Player1};
+			move = {x:1,y:5,player:Player1};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:2,y:5,player:Player2};
+			move = {x:2,y:5,player:Player2};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:3,y:5,player:Player1};
+			move = {x:3,y:5,player:Player1};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:4,y:5,player:Player2};
+			move = {x:4,y:5,player:Player2};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:5,y:5,player:Player1};
+			move = {x:5,y:5,player:Player1};
 			Game.PlayMoveOnBoard(move);
 			
-			var move = {x:6,y:5,player:Player2};
+			move = {x:6,y:5,player:Player2};
 			Game.PlayMoveOnBoard(move);
 			
 			//assert.equal(Game.IsDraw(), true);
