@@ -16,7 +16,7 @@ function setup(path, text, callback){
 	
 	var req = http.request(options, callback);
 	req.end();
-};
+}
 			
 describe('Server Test Suite', function(){
 	describe('Server Test Class', function() {
@@ -25,7 +25,7 @@ describe('Server Test Suite', function(){
 			var text = "userID=5";
 			var userData = "";
 						
-			callback = function(response)
+			var callback = function(response)
 			{
 				response.on('error', function(err){
 					console.log("Error received" + err);
