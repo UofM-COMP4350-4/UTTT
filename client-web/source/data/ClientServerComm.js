@@ -13,7 +13,7 @@ enyo.singleton({
 		this.log(userID);
 	},
 	
-	//create a list games method
+	//request a list of games from the Server
 	listGames: function(callback)
 	{
 		var request = new enyo.Ajax({

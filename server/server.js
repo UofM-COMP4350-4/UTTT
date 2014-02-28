@@ -29,7 +29,7 @@ server.get("/createNewGame", function(request, response, next){
 server.get("/initialize", function(request, response) {
 	console.log("Received initialize request from Client " + request.params.userID); 
 	//Setup a Client Id if the id passed was not found in the database
-	var text = {userID: "Initialized successfully"};
+	var text = {userID: 1};//send back 1 for every client until we create a new user id for everyone
 	response.writeHead( 200, {"content-type": "application/json"});
 	response.write(JSON.stringify(text));
 	response.end();
