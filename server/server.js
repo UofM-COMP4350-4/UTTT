@@ -40,8 +40,9 @@ server.get("/initialize", function(request, response) {
 	}
 	else
 	{
-		//response not found
+		//response not found (404) but I guess any error code would work
 		response.writeHead( 500, {"content-type": "application/json"});
+		response.write(JSON.stringify({}));
 	}
 	
 	response.end();
@@ -51,7 +52,9 @@ server.get("/listOfGames", function(request, response)
 {
 	console.log("List of games request received from the Client");
 	
-	var games = {"abc123":"game name", "go jason":"good work"};
+	//Ideally we want to call the database to get the list of games we have
+	//before returning the response
+	var games = {"gameID1":"game name 1", "gameID2":"game name 2"};
 	
 	response.writeHead(200, {"content-type": "application/json"});
 	response.write(JSON.stringify(games));
