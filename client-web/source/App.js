@@ -11,5 +11,7 @@ enyo.kind({
 });
 
 enyo.ready(function () {
-	new Application({name:"app"}).renderInto(document.body);
+	if(!enyo.testing) {
+		new Application({name:"app"}).renderInto(document.body);
+	}
 });
