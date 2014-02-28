@@ -20,6 +20,7 @@ function setup(path, text, callback){
 			
 describe('Server Test Suite', function(){
 	describe('Server Test Class', function() {
+		//Test valid data sent to the Server's /initialize method
 		it('Test: Valid Initialize Data', function() {
 			var path = "/initialize";
 			var text = "userID=5";
@@ -38,8 +39,37 @@ describe('Server Test Suite', function(){
 				response.on('end', function(){
 					userData = JSON.parse(userData);//parse out the JSON object
 					console.log("Data received " + userData.userID);
+					assert.equal(response.statusCode, 200);
 					assert.notEqual(userData, undefined);
 					assert.equal(userData.userID, 1);
+				});		
+			};
+			
+			setup(path, text, callback);
+		});
+		
+		//Test invalid data sent to the Server's /initialize method
+		it('Test: Invalid Initialize Data', function() {
+			var path = "/initialize";
+			var text = "userID=-1";
+			var userData = "{}";
+						
+			callback = function(response)
+			{
+				response.on('error', function(err){
+					console.log("Error received" + err);
+				});
+				
+				response.on('data', function(chunk){					
+					userData += chunk;
+				});
+				
+				response.on('end', function(){
+					userData = JSON.parse(userData);//parse out the JSON object
+					console.log("Data received " + userData.userID);
+					assert.notEqual(response.statusCode, 200);
+					assert.notEqual(userData, undefined);
+					assert.equal(userData.userID, undefined);
 				});		
 			};
 			
