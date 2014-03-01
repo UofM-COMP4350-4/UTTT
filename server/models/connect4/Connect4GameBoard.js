@@ -45,7 +45,7 @@ exports.Connect4GameBoard.prototype.IsDraw = function()
 exports.Connect4GameBoard.prototype.GetLocationIfDropGamePieceAtCol = function(col)
 {
 	ValidateObjectController.ValidateNumber(col);
-	var move = null;
+	var move = {x:-1, y:-1, player:null};
 
 	var iterator = new GridIteratorJS.GridIterator(this.grid, col, 0, this.ROW_SIZE, this.COL_SIZE);
 	var currentGamePiece = this.grid[iterator.GetIndex()];
@@ -60,6 +60,9 @@ exports.Connect4GameBoard.prototype.GetLocationIfDropGamePieceAtCol = function(c
 			iterator.StepRowBackward();
 		}
 		currentGamePiece = this.grid[iterator.GetIndex()];
+		if (col != iterator.column) {
+			throw ("Error: col != iterator.column");
+		}
 		move = {x:iterator.column, y:iterator.row, player:currentGamePiece.player};	
 	}
 	
@@ -269,27 +272,27 @@ exports.Connect4GameBoard.prototype.GetNextTurnsPlayer = function()
 	return nextPlayer;
 };
 
-exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(init_move)
+exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(initmove)
 {
-	ValidateObjectController.ValidateObject(init_move);
+	ValidateObjectController.ValidateObject(initmove);
 	
 	if (this.isWinner) {
 		return;
 	}
 	
-	var lmove = this.GetLocationIfDropGamePieceAtCol(init_move.x);
+	var lmove = this.GetLocationIfDropGamePieceAtCol(initmove.x);
 	var newy = 0;
 
-	if (lmove && (lmove.y+1) < this.ROW_SIZE) {
+	if (lmove) {
 		newy = lmove.y+1;
 	}
 	else {
 		newy = 0;
 	}
 	
-	var move = {x:init_move.x, y:newy, player:init_move.player};
+	var move = {x:initmove.x, y:newy, player:initmove.player};
 	
-	var iterator = new GridIteratorJS.GridIterator(this.grid, move.x, move.y, this.ROW_SIZE, this.COL_SIZE);
+	var iterator = new GridIteratorJS.GridIterator(this.grid,move.x, move.y, this.ROW_SIZE, this.COL_SIZE);
 	var connect4GamePiece = this.grid[iterator.GetIndex()];
 	
 	if (!connect4GamePiece) {
