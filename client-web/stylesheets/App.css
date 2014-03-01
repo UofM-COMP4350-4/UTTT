@@ -1,35 +1,39 @@
+.app {
+	background-color: #333333 !important;
+}
+
 .full {
 	width: 100%;
 	height: 100%;
 }
 
 .menu-container {
-	width: 320px;
-	background-color: #EAEAEA;
+	width: 250px;
+	background-color: #333333;
 }
 
 .main-container {
-
 	background-color: white;
 	-moz-box-shadow: -4px 0 4px rgba(0,0,0,0.3);
 	-webkit-box-shadow: -4px 0 4px rgba(0,0,0,0.3);
 	box-shadow: -4px 0 4px rgba(0,0,0,0.3);
-	border: 0px black inset;
 }
 
 .game-container {
-
+	background-color: #EAEAEA;
 }
 
 .chat-container {
-
+	background-color: #EAEAEA;
 }
 
 .social-container {
-	width: 320px;
-	background-color: #EAEAEA;
-	-moz-box-shadow: inset 4px 0 4px rgba(0,0,0,0.3);
-	-webkit-box-shadow: inset 4px 0 4px rgba(0,0,0,0.3);
-	box-shadow: inset 4px 0 4px rgba(0,0,0,0.3);
-	border: 0px black inset;
+	width: 250px;
+	background-color: #333333;
+}
+
+.social-shadow {
+	-moz-box-shadow: inset 4px 0 4px rgba(0,0,0,0.2) !important;
+	-webkit-box-shadow: inset 4px 0 4px rgba(0,0,0,0.2) !important;
+	box-shadow: inset 4px 0 4px rgba(0,0,0,0.2) !important;
 }

@@ -1,18 +1,20 @@
 //
-//  AddToDoItemViewController.m
+//  MainViewController.m
 //  NBGI
 //
-//  Created by Cameron McKay on 2/25/2014.
+//  Created by Cameron McKay on 2/26/2014.
 //  Copyright (c) 2014 Christopher Catton. All rights reserved.
 //
 
-#import "AddToDoItemViewController.h"
+#import "MainViewController.h"
 
-@interface AddToDoItemViewController ()
+@interface MainViewController ()
+
+- (IBAction)PlayConnect4:(id)sender;
 
 @end
 
-@implementation AddToDoItemViewController
+@implementation MainViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,4 +37,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)PlayConnect4:(id)sender {
+    
+}
 @end

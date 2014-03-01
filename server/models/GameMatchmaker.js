@@ -1,22 +1,20 @@
 // GameMatchmaker.js
-// Controller that gets called when users click the "Play game" button
-// adds users to a FIFO queue (First-in-First-Out for the ADT un-initiated)
-// once two users or more are in the queue, two (or more) users with the same settings (same game for now) will be selected together and each will be sent a response.
-// If both users respond to the response within an arbitrary ammount of time, they will be passed to the GameCreator(sp?) opject which will send them the game objects
+// Model that holds the matchmaking queues for each game
 
-// the queue runs in an infitite loop and listens on port TBD for the action of the user pressing a play button
-
+var validator = require('../controllers/ValidateObjectController');
 var _ = require('underscore');
 var gameQueue = [];
-GameMatchmaker = function() {}; // constructor
+exports.GameMatchmaker = function() {}; // constructor
 
-GameMatchmaker.joinQueue = function(player,game,callback){
+exports.GameMatchmaker.joinQueue = function(player,game,callback){
+	validator.ValidateArgs(arguments, Object, Object, Function);
 	newPlayer = {'player':player,'game':game};
 	gameQueue.push(newPlayer);
 	callback(gameQueue);
 };
 
-GameMatchmaker.getGameQueue = function(game,callback){
+exports.GameMatchmaker.getGameQueue = function(game,callback){
+	validator.ValidateArgs(arguments, Object, Function);
 	gameQ = _.groupBy(gameQueue,'game')[game];
 	if(gameQ == null){
 		gameQ = [];
@@ -24,12 +22,26 @@ GameMatchmaker.getGameQueue = function(game,callback){
 	callback(gameQ);
 };
 
-GameMatchmaker.totalPlayers = function(callback){
+exports.GameMatchmaker.totalPlayers = function(callback){
+	validator.ValidateArgs(arguments,Function);
 	callback(gameQueue.length);
 };
 
-GameMatchmaker.queueTotal = function(game,callback){
+exports.GameMatchmaker.queueTotal = function(game,callback){
+	validator.ValidateArgs(arguments, Object, Function);
 	GameMatchmaker.getGameQueue(game, function(q){
 		callback(q.length);	
 	});
 };
+
+exports.GameMatchmaker.removeFromQueue = function(player,callback){
+	validator.ValidateArgs(arguments, Object, Function);
+	var newList = []
+	for(var i = 0; i<gameQueue.length;i++){
+		if(gameQueue[i]['player']!=player){
+			newList.push(gameQueue[i]);
+		}	
+	}
+	gameQueue = newList;
+	callback();
+}

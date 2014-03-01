@@ -1,4 +1,4 @@
-var ValidateObjectController = require("../controllers/ValidateObjectController.js")
+var ValidateObjectController = require("../controllers/ValidateObjectController.js");
 var FileSystem = require('fs');
 
 /*	Flat File Access

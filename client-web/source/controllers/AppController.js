@@ -12,6 +12,18 @@ enyo.kind({
 			this.socialShowing = false;
 			this.view.$.lowerPanels.setIndexDirect(0);
 		}
+		
+		//Assume that no cookie & userID exists yet
+		//So we pass an undefined userID to the ClientServerCommunication script
+		window.ClientServerComm.initialize(undefined, function(){});//empty callback function
+	},
+	toggleMenu: function() {
+		this.setMenuShowing(!this.menuShowing);
+		return true;
+	},
+	toggleSocial: function() {
+		this.setSocialShowing(!this.socialShowing);
+		return true;
 	},
 	menuShowingChanged: function() {
 		if(this.menuShowing) {
@@ -35,11 +47,16 @@ enyo.kind({
 	},
 	upperTransition: function(inSender, inEvent) {
 		this.menuShowing = (inEvent.toIndex===0);
+		return true;
 	},
 	lowerTransition: function(inSender, inEvent) {
 		this.socialShowing = (inEvent.toIndex===1);
 		if(this.narrowFit && !this.menuShowing) {
 			this.view.$.upperPanels.setIndexDirect(1);
 		}
+		return true;
+	},
+	draggingHandler: function(inSender, inEvent) {
+		this.view.$.lowerPanels.draggable = (inEvent.clientX > (enyo.dom.getWindowWidth()/2));
 	}
 });

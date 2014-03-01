@@ -6,26 +6,26 @@ var GridValidationController = require("../controllers/GridValidationController.
  *  Note: Data structure used to represent the Grid must be a one dimensional array.
  */
 
-exports.GridIterator = function(grid, column, row, row_size, col_size)
+exports.GridIterator = function(grid, x, y, row_size, col_size)
 {
 	ValidateObjectController.ValidateObject(grid);
-	ValidateObjectController.ValidateNumber(column);
-	ValidateObjectController.ValidateNumber(row);
+	ValidateObjectController.ValidateNumber(x);
+	ValidateObjectController.ValidateNumber(y);
 	ValidateObjectController.ValidateNumber(row_size);
 	ValidateObjectController.ValidateNumber(col_size);
 	ValidateObjectController.ValidateObjectIsOneDimensionalArray(grid);
-	GridValidationController.ValidateColumnRowLocations(column, row, row_size, col_size);
+	GridValidationController.ValidateColumnRowLocations(x, y, row_size, col_size);
 	GridValidationController.ValidateGridSize(grid, row_size, col_size);
 
 	this.row_size = row_size;
 	this.col_size = col_size;	
 	this.grid = grid;
-	this.column = column;
-	this.row = row;
-	this.index = row * this.row_size + column;
+	this.column = x;
+	this.row = y;
+	this.index = y * this.col_size + x;
 };
 
-exports.GridIterator.prototype.Move = function(rowDiff, colDiff)
+exports.GridIterator.prototype.Move = function(colDiff, rowDiff)
 {
 	ValidateObjectController.ValidateNumber(rowDiff);
 	ValidateObjectController.ValidateNumber(colDiff);
@@ -36,69 +36,63 @@ exports.GridIterator.prototype.Move = function(rowDiff, colDiff)
 exports.GridIterator.prototype.StepRowBackward = function ()
 {
 	if (this.row >= 0) {
-		this.index = this.index - this.Move(1,0);
+		this.index = this.index - this.Move(0,1);
 		this.row = this.row - 1;
+		return true;
 	}
-	else {
-		return null;
-	}
+	return false;
 };
 
 exports.GridIterator.prototype.StepColumnBackward = function ()
 {
 	if (this.column >= 0) {
-		this.index = this.index - this.Move(0,1);
+		this.index = this.index - this.Move(1,0);
 		this.column = this.column - 1;
+		return true;
 	}
-	else {
-		return null;
-	}
+	return false;
 };
 
 exports.GridIterator.prototype.StepRowForward = function ()
 {	
-	if (this.row < this.row_size - 1) {
-		this.index = this.index + this.Move(1,0);
+	if (this.row < this.row_size-1) {
+		this.index = this.index + this.Move(0,1);
 		this.row = this.row + 1;
+		return true;
 	}
-	else {
-		return null;
-	}
+	return false;
 };
 
 exports.GridIterator.prototype.StepColumnForward = function ()
 {
 	if (this.column < this.col_size - 1) {
-		this.index = this.index + this.Move(0,1);
+		this.index = this.index + this.Move(1,0);
 		this.column = this.column + 1;
+		return true;
 	}
-	else {
-		return null;
-	}
+	return false;
 };
 
-exports.GridIterator.prototype.StepDiagonalForward = function ()
+exports.GridIterator.prototype.StepNE = function ()
 {
 	if (this.row < this.row_size - 1 && this.column < this.col_size - 1) {
 		this.index = this.index + this.Move(1,1);
 		this.row = this.row + 1;
 		this.column = this.column + 1;
+		return true;
 	}
-	else {
-		return null;
-	}
+	return false;
 };
 
-exports.GridIterator.prototype.StepDiagonalBackward = function ()
+exports.GridIterator.prototype.StepNW = function ()
 {
-	if (this.row > 0 && this.column > 0) {
-		this.index = this.index - this.Move(1,1);
-		this.row = this.row - 1;
+	if (this.row >= 0 && this.row < this.row_size - 1 && this.column >= 0) {
+		this.index = this.index + this.Move(0,1) - this.Move(1, 0);
+		this.row = this.row + 1;
 		this.column = this.column - 1;
+		return true;
 	}
-	else {
-		return null;
-	}
+	return false;
 };
 
 exports.GridIterator.prototype.StepToLocation = function(row, column)
