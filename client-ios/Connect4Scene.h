@@ -7,6 +7,7 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "Move.h"
 
 @interface Connect4Scene : SKScene
 

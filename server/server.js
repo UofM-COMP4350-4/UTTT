@@ -29,9 +29,22 @@ server.get("/createNewGame", function(request, response, next){
 server.get("/initialize", function(request, response) {
 	console.log("Received initialize request from Client " + request.params.userID); 
 	//Setup a Client Id if the id passed was not found in the database
-	var text = {userID: "Initialized successfully"};
-	response.writeHead( 200, {"content-type": "application/json"});
-	response.write(JSON.stringify(text));
+	//We have to verify that the user id passed is valid (i.e. > 0 or undefined)
+	var id = request.params.userID;
+	if (id > 0 || id === undefined) {
+		//valid values: either the user doesn't have an id or the user does
+		
+		var text = {userID: 1};//send back 1 for every client until we create a new user id for everyone
+		response.writeHead( 200, {"content-type": "application/json"});
+		response.write(JSON.stringify(text));
+	}
+	else
+	{
+		//response not found (404) but I guess any error code would work
+		response.writeHead( 500, {"content-type": "application/json"});
+		response.write(JSON.stringify({}));
+	}
+	
 	response.end();
 });
 
@@ -39,7 +52,9 @@ server.get("/listOfGames", function(request, response)
 {
 	console.log("List of games request received from the Client");
 	
-	var games = {"abc123":"game name", "go jason":"good work"};
+	//Ideally we want to call the database to get the list of games we have
+	//before returning the response
+	var games = {"gameID1":"game name 1", "gameID2":"game name 2"};
 	
 	response.writeHead(200, {"content-type": "application/json"});
 	response.write(JSON.stringify(games));
