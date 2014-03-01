@@ -341,7 +341,7 @@ describe('Model Test Suite', function() {
 				player2:Player2
 			});
 			
-			move = {x:0,y:0,player:Player1};
+			var move = {x:0,y:0,player:Player1};
 			Game.PlayMoveOnBoard(move);
 
 			move = {x:0,y:1,player:Player1};
