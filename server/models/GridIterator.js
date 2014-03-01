@@ -38,10 +38,9 @@ exports.GridIterator.prototype.StepRowBackward = function ()
 	if (this.row >= 0) {
 		this.index = this.index - this.Move(0,1);
 		this.row = this.row - 1;
+		return true;
 	}
-	else {
-		return null;
-	}
+	return false;
 };
 
 exports.GridIterator.prototype.StepColumnBackward = function ()
@@ -49,10 +48,9 @@ exports.GridIterator.prototype.StepColumnBackward = function ()
 	if (this.column >= 0) {
 		this.index = this.index - this.Move(1,0);
 		this.column = this.column - 1;
+		return true;
 	}
-	else {
-		return null;
-	}
+	return false;
 };
 
 exports.GridIterator.prototype.StepRowForward = function ()
@@ -70,34 +68,31 @@ exports.GridIterator.prototype.StepColumnForward = function ()
 	if (this.column < this.col_size - 1) {
 		this.index = this.index + this.Move(1,0);
 		this.column = this.column + 1;
+		return true;
 	}
-	else {
-		return null;
-	}
+	return false;
 };
 
-exports.GridIterator.prototype.StepDiagonalForward = function ()
+exports.GridIterator.prototype.StepNE = function ()
 {
 	if (this.row < this.row_size - 1 && this.column < this.col_size - 1) {
 		this.index = this.index + this.Move(1,1);
 		this.row = this.row + 1;
 		this.column = this.column + 1;
+		return true;
 	}
-	else {
-		return null;
-	}
+	return false;
 };
 
-exports.GridIterator.prototype.StepDiagonalBackward = function ()
+exports.GridIterator.prototype.StepNW = function ()
 {
-	if (this.row > 0 && this.column > 0) {
-		this.index = this.index - this.Move(1,1);
-		this.row = this.row - 1;
+	if (this.row >= 0 && this.row < this.row_size - 1 && this.column >= 0) {
+		this.index = this.index + this.Move(0,1) - this.Move(1, 0);
+		this.row = this.row + 1;
 		this.column = this.column - 1;
+		return true;
 	}
-	else {
-		return null;
-	}
+	return false;
 };
 
 exports.GridIterator.prototype.StepToLocation = function(row, column)
