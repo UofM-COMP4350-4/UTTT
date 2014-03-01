@@ -65,7 +65,7 @@ describe('Server Test Suite', function(){
 		//Test invalid data sent to the Server's /initialize method
 		it('Test: Invalid Initialize Data', function() {
 			var path = "/initialize";
-			var text = "userID=-1";
+			var text = "userID=bob";
 			var userData = "";
 						
 			var callback = function(response)
@@ -86,6 +86,7 @@ describe('Server Test Suite', function(){
 					
 					assert.notEqual(userData, undefined);
 					assert.equal(userData.userID, undefined);
+					//assert.equal(userData.userID, un);
 				});		
 			};
 			

@@ -12,6 +12,10 @@ enyo.kind({
 			this.socialShowing = false;
 			this.view.$.lowerPanels.setIndexDirect(0);
 		}
+		
+		//Assume that no cookie & userID exists yet
+		//So we pass an undefined userID to the ClientServerCommunication script
+		ClientServerComm.initialize(undefined, function(){});//empty callback function
 	},
 	toggleMenu: function() {
 		this.setMenuShowing(!this.menuShowing);
