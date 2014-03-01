@@ -73,8 +73,3 @@ MatchmakingController.gameValidate = function(games,game){
 	}
 	return false;
 };
-
-
-MatchmakingController.joinMatchmaking({name:'Pete',id:'0'},{gameName:"Connect4",maxPlayers:2}, function(){});
-MatchmakingController.joinMatchmaking({name:'Doug',id:'1'},{gameName:"Connect4",maxPlayers:2},function(){});
-MatchmakingController.joinMatchmaking({name:'Carl',id:'2'},{gameName:"Connect4",maxPlayers:2},function(){});
