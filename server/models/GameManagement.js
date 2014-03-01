@@ -10,7 +10,7 @@ var matches = {};
 module.exports = {
 	// Gets the static list of game IDs, game names, and max players
 	availableGames: function(callback) {
-		Validator.ValidateArgs(arguments, Function);
+		Validator.validateArgs(arguments, Function);
 		// TODO: implement once DB access is defined
 		// Temporary static return
 		var games = {
@@ -24,17 +24,17 @@ module.exports = {
 	},
 	// Creates a new game for a game ID and then 
 	createMatch: function(gameID) {
-		Validator.ValidateArgs(arguments, Number);
+		Validator.validateArgs(arguments, Number);
 		// TODO: Create game instance
 		// Temporary object until then
-		var game = {gameID:0, players:[], maxPlayers:2,gameboard:'001101010101010101'};
+		var game = {gameID:0, players:[], maxPlayers:2};
 		var id = ((new Date().getTime())*10) + serverInstanceBase;
 		matches[id] = game;
 		serverInstanceBase++;
 		return id;
 	},
 	joinMatch: function(userID, instanceID, callback) {
-		Validator.ValidateArgs(arguments, String, Number, Function);
+		Validator.validateArgs(arguments, String, Number, Function);
 		if(matches[instanceID]) {
 			if(matches[instanceID].players.length <
 					matches[instanceID].maxPlayers) {
@@ -50,7 +50,7 @@ module.exports = {
 		}
 	},
 	leaveMatch: function(userID, instanceID, callback) {
-		Validator.ValidateArgs(arguments, String, Number, Function);
+		Validator.validateArgs(arguments, String, Number, Function);
 		if(matches[instanceID]) {
 			// TODO: add function call to game match to remove user
 			matches[instanceID].players.splice(
@@ -62,7 +62,7 @@ module.exports = {
 		}
 	},
 	findByUser: function(userID, callback) {
-		Validator.ValidateArgs(arguments, String, Function);
+		Validator.validateArgs(arguments, String, Function);
 		var userState = {};
 		for(var x in matches) {
 			if(matches[x].players.indexOf(userID)) {
@@ -73,10 +73,10 @@ module.exports = {
 		callback(userState);
 	},
 	getGameboard: function(instanceID, callback) {
-		Validator.ValidateArgs(arguments, Number, Function);
+		Validator.validateArgs(arguments, Number, Function);
 		if(matches[instanceID]) {
 			// TODO: replace with actual gameboard api from game
-			callback(matches[instanceID]['gameboard']);
+			callback(matches[instanceID].gameboard);
 		} else {
 			// TODO: search db for active, but not in-memory games
 			callback({});
