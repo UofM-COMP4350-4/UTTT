@@ -8,14 +8,14 @@ exports.GameMatchmaker = function() {}; // constructor
 
 exports.GameMatchmaker.joinQueue = function(player,game,callback){
 	validator.ValidateArgs(arguments, Object, Object, Function);
-	newPlayer = {'player':player,'game':game};
+	var newPlayer = {'player':player,'game':game};
 	gameQueue.push(newPlayer);
 	callback(gameQueue);
 };
 
 exports.GameMatchmaker.getGameQueue = function(game,callback){
 	validator.ValidateArgs(arguments, Object, Function);
-	gameQ = _.groupBy(gameQueue,'game')[game];
+	var gameQ = _.groupBy(gameQueue,'game')[game];
 	if(gameQ == null){
 		gameQ = [];
 	}
@@ -36,7 +36,7 @@ exports.GameMatchmaker.queueTotal = function(game,callback){
 
 exports.GameMatchmaker.removeFromQueue = function(player,callback){
 	validator.ValidateArgs(arguments, Object, Function);
-	var newList = []
+	var newList = [];
 	for(var i = 0; i<gameQueue.length;i++){
 		if(gameQueue[i]['player']!=player){
 			newList.push(gameQueue[i]);
@@ -44,4 +44,4 @@ exports.GameMatchmaker.removeFromQueue = function(player,callback){
 	}
 	gameQueue = newList;
 	callback();
-}
+};
