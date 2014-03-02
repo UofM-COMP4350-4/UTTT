@@ -3,11 +3,11 @@ var gameMgmnt = require('../models/GameManagement.js');
 var _ = require('underscore');
 var validator = require('./ValidateObjectController');
 
-MatchmakingController = function(){
+exportsMatchmakingController = function(){
 
 };
 // recieves inital queue request, validates it and passes it on to matchmaking
-MatchmakingController.joinMatchmaking = function(player, game, response){
+exports.MatchmakingController.joinMatchmaking = function(player, game, response){
 	validator.ValidateArgs(arguments, Object, Object, Function);
 	var gameList =[];
 	var result = {};
@@ -20,7 +20,7 @@ MatchmakingController.joinMatchmaking = function(player, game, response){
 	}
 };
 
-MatchmakingController.Match= function(player,game,callback){
+exports.MatchmakingController.Match= function(player,game,callback){
 	validator.ValidateArgs(arguments, Object, Object, Function);
 	result = "";
 	var gameList = [];
@@ -42,7 +42,7 @@ MatchmakingController.Match= function(player,game,callback){
 			}
 		}
 		var gameObj = gameMgmnt.createMatch(0); // TODO once GameManager returns game IDs, get game IDs
-	        for(var i = 0; i< playersFound.length;i++){
+	        for(i = 0; i< playersFound.length;i++){
 			gameMgmnt.joinMatch(playersFound[i]['id'],gameObj, 
 				function(err){if(err){
 					console.log(err);
@@ -51,7 +51,7 @@ MatchmakingController.Match= function(player,game,callback){
 		}
 
 		// remove both players from the matchmaking queue and return the game object;
-		for(var i = 0;i<playersFound.length;i++){
+		for(i = 0;i<playersFound.length;i++){
 			queues.GameMatchmaker.removeFromQueue(playersFound[i]['player'],function(){});
 		}
 		var gameBoard = {};
@@ -64,12 +64,13 @@ MatchmakingController.Match= function(player,game,callback){
 	}
 };
 
-MatchmakingController.gameValidate = function(games,game){
+exports.MatchmakingController.gameValidate = function(games,game){
 	validator.ValidateArgs(arguments, Object, Object);
+	var result = false;
 	var keys = Object.keys(games);
 	for(var i = 0;i<keys.length;i++){
 		if(_.isEqual(games[keys[i]],game))
-			return true;	
+			result=true;	
 	}
-	return false;
+	return result;
 };
