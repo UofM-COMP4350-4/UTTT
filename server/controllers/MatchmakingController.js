@@ -12,22 +12,29 @@ exports.MatchmakingController.joinMatchmaking = function(player, game, response)
 	var gameList =[];
 	var result = {};
 	gameMgmnt.availableGames(function(gList){gameList = gList;});
-	if(MatchmakingController.gameValidate(gameList,game)){ // make sure the game the client asks to queue for is a game we actually support.
+	if(this.gameValidate(gameList,game)){ // make sure the game the client asks to queue for is a game we actually support.
 		queues.GameMatchmaker.joinQueue(player,game,function(){
-			MatchmakingController.Match(player,game,function(gameObj){result = gameObj;});
+			this.Match(player,game,function(gameObj){result = gameObj;});
 			});
 		console.log(""+result);
 	}
 };
 
-emptyFunction = function(){
+exports.MatchmakingController.emptyFunction = function(){
 	return function(){
+	};
+};
+exports.MatchmakingController.errLogging = function(){
+	return function(err){
+		if(err){
+			console.log(err);
+		}
 	};
 };
 
 exports.MatchmakingController.Match= function(player,game,callback){
 	validator.ValidateArgs(arguments, Object, Object, Function);
-	result = "";
+	var result = "";
 	var gameList = [];
 	queues.GameMatchmaker.getGameQueue(game, function(queue){gameList = queue});
 	var numPlayers = 0;
@@ -48,16 +55,12 @@ exports.MatchmakingController.Match= function(player,game,callback){
 		}
 		var gameObj = gameMgmnt.createMatch(0); // TODO once GameManager returns game IDs, get game IDs
 	        for(i = 0; i< playersFound.length;i++){
-			gameMgmnt.joinMatch(playersFound[i]['id'],gameObj, 
-				function(err){if(err){
-					console.log(err);
-				}	
-			});
+			gameMgmnt.joinMatch(playersFound[i]['id'],gameObj, this.errLogging());
 		}
 
 		// remove both players from the matchmaking queue and return the game object;
 		for(i = 0;i<playersFound.length;i++){
-			queues.GameMatchmaker.removeFromQueue(playersFound[i]['player'],emptyFunction());
+			queues.GameMatchmaker.removeFromQueue(playersFound[i]['player'],this.emptyFunction());
 		}
 		var gameBoard = {};
 		gameMgmnt.getGameboard(gameObj,function(board){gameBoard = board});
@@ -74,8 +77,9 @@ exports.MatchmakingController.gameValidate = function(games,game){
 	var result = false;
 	var keys = Object.keys(games);
 	for(var i = 0;i<keys.length;i++){
-		if(_.isEqual(games[keys[i]],game))
+		if(_.isEqual(games[keys[i]],game)){
 			result=true;	
+		}
 	}
 	return result;
 };
