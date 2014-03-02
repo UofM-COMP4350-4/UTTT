@@ -1,6 +1,6 @@
 // GameMatchmaker.js
 // Model that holds the matchmaking queues for each game
-
+/*globals GameMatchmaker */
 var validator = require('../controllers/ValidateObjectController');
 var _ = require('underscore');
 var gameQueue = [];
@@ -29,7 +29,7 @@ exports.GameMatchmaker.totalPlayers = function(callback){
 
 exports.GameMatchmaker.queueTotal = function(game,callback){
 	validator.ValidateArgs(arguments, Object, Function);
-	GameMatchmaker.getGameQueue(game, function(q){
+	this.getGameQueue(game, function(q){
 		callback(q.length);	
 	});
 };
