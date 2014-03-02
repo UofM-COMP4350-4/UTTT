@@ -3,7 +3,7 @@ var gameMgmnt = require('../models/GameManagement.js');
 var _ = require('underscore');
 var validator = require('./ValidateObjectController');
 
-exportsMatchmakingController = function(){
+exports.MatchmakingController = function(){
 
 };
 // recieves inital queue request, validates it and passes it on to matchmaking
@@ -16,8 +16,13 @@ exports.MatchmakingController.joinMatchmaking = function(player, game, response)
 		queues.GameMatchmaker.joinQueue(player,game,function(){
 			MatchmakingController.Match(player,game,function(gameObj){result = gameObj;});
 			});
-		console.log(result);
+		console.log(""+result);
 	}
+};
+
+emptyFunction = function(){
+	return function(){
+	};
 };
 
 exports.MatchmakingController.Match= function(player,game,callback){
@@ -52,7 +57,7 @@ exports.MatchmakingController.Match= function(player,game,callback){
 
 		// remove both players from the matchmaking queue and return the game object;
 		for(i = 0;i<playersFound.length;i++){
-			queues.GameMatchmaker.removeFromQueue(playersFound[i]['player'],function(){});
+			queues.GameMatchmaker.removeFromQueue(playersFound[i]['player'],emptyFunction());
 		}
 		var gameBoard = {};
 		gameMgmnt.getGameboard(gameObj,function(board){gameBoard = board});
