@@ -16,8 +16,9 @@ exports.MatchmakingController.joinMatchmaking = function(player, game, response)
 		queues.GameMatchmaker.joinQueue(player,game,function(){
 			this.Match(player,game,function(gameObj){result = gameObj;});
 			});
-		console.log(""+result);
+		response(result);
 	}
+	else response("");
 };
 
 exports.MatchmakingController.emptyFunction = function(){
