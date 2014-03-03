@@ -9,7 +9,7 @@
 		"passport-twitter": "",
 		"passport-google": "",
 		"socket.io": "",
-		"underscore": ""
+		"sequelize" : ""
 	},
 	"devDependencies": {
 		"jshint": "",
