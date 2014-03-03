@@ -48,7 +48,7 @@ describe('Model Test Suite', function() {
 				});
 			}, Error);
 		});
-		it ('Test: Play Move on Board', function() {
+		it ('Test: Play Move Base Cases', function() {
 			var Player1 = new playerJS.Player(12, 'Player 1');
 			var Player2 = new playerJS.Player(401, 'Player 2');
 			var Game = new connect4GameBoardJS.Connect4GameBoard({
@@ -58,39 +58,399 @@ describe('Model Test Suite', function() {
 				player1:Player1,
 				player2:Player2
 			});
+			var move;
+			var dropLoc;
 			
-			
-			var move = new connect4GameBoardJS.Connect4Move(7,0, Player1);
-			assert.throws(function () { Game.PlayMoveOnBoard(move)}, Error, 'Column must be less than ' + Game.COL_SIZE);
 			move = new connect4GameBoardJS.Connect4Move(-1,0, Player1);
-			assert.throws(function () { Game.PlayMoveOnBoard(move)}, Error, 'Column must be equal to or greater than 0');
+			assert.throws(function () { Game.PlayMoveOnBoard(move)}, Error, 'Error: Connect4Move() accepted -1 as Column');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(0);
+			assert.equal(dropLoc.player, null);
 			
-			//will never throw
-			//move = new connect4GameBoardJS.Connect4Move(0,-1, Player1);
-			//assert.throws(function () { Game.PlayMoveOnBoard(move)}, Error, 'Row must be equal to or greater than 0');
+			move = new connect4GameBoardJS.Connect4Move(0,-1, Player1);
+			//we correct for y, Connect4Move will try to insert into next available row and throw an error if it does not exist.
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(0);
+			assert.equal(dropLoc.player, null);
+			
+			move = new connect4GameBoardJS.Connect4Move(Game.COL_SIZE,0, Player1);
+			assert.throws(function () { Game.PlayMoveOnBoard(move)}, Error, 'Error: Connect4Move() accepted' + Game.COL_SIZE + ' as Column');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(0);
+			assert.equal(dropLoc.player, null);
+			
+			move = new connect4GameBoardJS.Connect4Move(Game.ROW_SIZE,0, Player1);
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(0);
+			assert.equal(dropLoc.player, null);
+			
+			assert.equal(Game.isWinner, false);
+		});
+		it ('Test: Play Move on Board Horizontal, Linear, (0,0)-start, no win', function() {
+			var Player1 = new playerJS.Player(12, 'Player 1');
+			var Player2 = new playerJS.Player(401, 'Player 2');
+			var Game = new connect4GameBoardJS.Connect4GameBoard({
+				gameID: 07,
+				instanceID:532744,
+				userToPlay:Player1,
+				player1:Player1,
+				player2:Player2
+			});
+			var move;
+			var dropLoc;
 			
 			move = new connect4GameBoardJS.Connect4Move(0,0, Player1); //valid
 			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
-			move = new connect4GameBoardJS.Connect4Move(5,0, Player1);
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(0);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(1,0, Player2);
 			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(1);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
 			move = new connect4GameBoardJS.Connect4Move(2,0, Player1);
 			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
-			move = new connect4GameBoardJS.Connect4Move(0,1, Player1);
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(2);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(3,0, Player2);
 			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
-			move = new connect4GameBoardJS.Connect4Move(6,1, Player1);
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(3);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(0,0, Player1); //valid
 			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
-			move = new connect4GameBoardJS.Connect4Move(6,5, Player1); //pos(7) in row, pos(6) in col
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(0);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y+1);
+			
+			move = new connect4GameBoardJS.Connect4Move(1,0, Player2);
 			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
-			move = new connect4GameBoardJS.Connect4Move(0,2, Player2);
-			/*assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, Error, 'Row must be less than ' + Game.ROW_SIZE);
-			move = new connect4GameBoardJS.Connect4Move(0,3, Player1);
-			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, Error, 'Row must be less than ' + Game.ROW_SIZE);
-			move = new connect4GameBoardJS.Connect4Move(0,4, Player2);
-			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, Error, 'Row must be less than ' + Game.ROW_SIZE);
-			move = new connect4GameBoardJS.Connect4Move(0,5, Player1);
-			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, Error, 'Row must be less than ' + Game.ROW_SIZE);
-			move = new connect4GameBoardJS.Connect4Move(0,6, Player2);
-			assert.throws(function () { Game.PlayMoveOnBoard(move)}, Error, 'Row must be less than ' + Game.ROW_SIZE);*/
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(1);
+			assert.notEqual(dropLoc, null);
+			assert.equal(Game.moves.length, 6);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y+1);
+			
+			move = new connect4GameBoardJS.Connect4Move(2,0, Player1);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(2);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y+1);
+			move = new connect4GameBoardJS.Connect4Move(3,0, Player2);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(3);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y+1);
+			
+			assert.equal(Game.isWinner, false);
+		});
+		it ('Test: Play Move on Board Horizontal, Linear, (0,0)-start, win', function() {
+			var Player1 = new playerJS.Player(12, 'Player 1');
+			var Player2 = new playerJS.Player(401, 'Player 2');
+			var Game = new connect4GameBoardJS.Connect4GameBoard({
+				gameID: 07,
+				instanceID:532744,
+				userToPlay:Player1,
+				player1:Player1,
+				player2:Player2
+			});
+			var move;
+			var dropLoc;
+			
+			move = new connect4GameBoardJS.Connect4Move(0,0, Player1); //valid
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(0);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(0,1, Player2);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(0);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(1,0, Player1);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(1);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(1,1, Player2);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(1);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(2,0, Player1); //valid
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(2);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(2,1, Player2);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(2);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(3,0, Player1);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(3);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(3,1, Player2);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(3);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.notEqual(dropLoc.y, move.y); //game already won
+			
+			assert.equal(Game.isWinner, true);
+		});
+		it ('Test: Play Move on Board Horizontal, Linear, (1,0)-start, no-win', function() {
+			var Player1 = new playerJS.Player(12, 'Player 1');
+			var Player2 = new playerJS.Player(401, 'Player 2');
+			var Game = new connect4GameBoardJS.Connect4GameBoard({
+				gameID: 07,
+				instanceID:532744,
+				userToPlay:Player1,
+				player1:Player1,
+				player2:Player2
+			});
+			var move;
+			var dropLoc;
+			
+			move = new connect4GameBoardJS.Connect4Move(1,0, Player2);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(1);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(2,0, Player1);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(2);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(3,0, Player2);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(3);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(4,0, Player1); //valid
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(4);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(1,0, Player2);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(1);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y+1);
+			
+			move = new connect4GameBoardJS.Connect4Move(2,0, Player1);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(2);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y+1);
+			
+			move = new connect4GameBoardJS.Connect4Move(3,0, Player2);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(3);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y+1);
+			
+			move = new connect4GameBoardJS.Connect4Move(4,0, Player1); //valid
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(4);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y+1);
+			
+			assert.equal(Game.isWinner, false);
+		});
+		it ('Test: Play Move on Board Horizontal, Linear, (1,0)-start, win', function() {
+			var Player1 = new playerJS.Player(12, 'Player 1');
+			var Player2 = new playerJS.Player(401, 'Player 2');
+			var Game = new connect4GameBoardJS.Connect4GameBoard({
+				gameID: 07,
+				instanceID:532744,
+				userToPlay:Player1,
+				player1:Player1,
+				player2:Player2
+			});
+			var move;
+			var dropLoc;
+			
+			move = new connect4GameBoardJS.Connect4Move(1,0, Player1);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(1);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(1,1, Player2);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(1);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(2,0, Player1); //valid
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(2);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(2,1, Player2);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(2);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(3,0, Player1);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(3);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(3,1, Player2);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(3);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(4,0, Player1); //valid
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(4);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(4,1, Player2);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(4);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.notEqual(dropLoc.y, move.y); //game already won
+			
+			assert.equal(Game.isWinner, true);
+		});
+		it ('Test: Play Move on Board Horizontal, Discontinous, (1,0)-start, no-win', function() {
+			var Player1 = new playerJS.Player(12, 'Player 1');
+			var Player2 = new playerJS.Player(401, 'Player 2');
+			var Game = new connect4GameBoardJS.Connect4GameBoard({
+				gameID: 07,
+				instanceID:532744,
+				userToPlay:Player1,
+				player1:Player1,
+				player2:Player2
+			});
+			var move;
+			var dropLoc;
+			
+			move = new connect4GameBoardJS.Connect4Move(1,0, Player1);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(1);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(1,1, Player2);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(1);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(2,0, Player1); //valid
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(2);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(2,1, Player2);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(2);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(3,0, Player1);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(3);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(3,1, Player2);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(3);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(5,0, Player1); //valid
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(5);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			move = new connect4GameBoardJS.Connect4Move(5,1, Player2);
+			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
+			dropLoc = Game.GetLocationIfDropGamePieceAtCol(5);
+			assert.notEqual(dropLoc, null);
+			assert.equal(dropLoc.x, move.x);
+			assert.equal(dropLoc.y, move.y);
+			
+			assert.equal(Game.isWinner, false);
+		});
+		it ('Test: Play Move on Board Vertical, Linear, (0,0)-start, win', function() {
+		
+		});
+		it ('Test: Play Move on Board Vertical, Linear, (0,0)-start, no-win', function() {
+		
+		});
+		it ('Test: Play Move on Board Vertical, Linear, (1,0)-start, no-win', function() {
+		
+		});
+		it ('Test: Play Move on Board Vertical, Linear, (1,0)-start, win', function() {
+		
+		});
+		it ('Test: Play Move on Board Vertical, Discontinous, (0,0)-start, win', function() {
+		
 		});
 		it ('Test: Get Location If Drop Piece', function() {
 			var Player1 = new playerJS.Player(12, 'Player 1');
@@ -190,6 +550,9 @@ describe('Model Test Suite', function() {
 			assert.notEqual(dropLoc, null);
 			assert.equal(dropLoc.x, move.x);
 			assert.equal(dropLoc.y, 2);
+			
+			assert.equal(Game.isWinner, false);
+			
 		});
 		it ('Test: Is Draw', function() {
 			var Player1 = new playerJS.Player(12, 'Player 1');
@@ -330,7 +693,7 @@ describe('Model Test Suite', function() {
 			
 			//assert.equal(Game.IsDraw(), true);
 		});
-		it ('Test: Is Winner SE to NW', function() {
+		it ('Test: Is Winner SE to NW (0,3)-(3,0)', function() {
 			var Player1 = new playerJS.Player(13, 'Player 1');
 			var Player2 = new playerJS.Player(402, 'Player 2');
 			var Game = new connect4GameBoardJS.Connect4GameBoard({
@@ -379,7 +742,9 @@ describe('Model Test Suite', function() {
 			assert.equal(Game.isWinner, true);
 			assert.equal(Game.winner, Player2);
 		});
-		it ('Test: Is Winner SW to NE', function() {
+		it ('Test: Is Winner SE to NW (4,1)-(1,4)', function() {
+		});
+		it ('Test: Is Winner SW to NE (3,3)-(0,0)', function() {
 			var Player1 = new playerJS.Player(12, 'Player 1');
 			var Player2 = new playerJS.Player(401, 'Player 2');
 			var Game = new connect4GameBoardJS.Connect4GameBoard({
@@ -438,6 +803,8 @@ describe('Model Test Suite', function() {
 			
 			assert.equal(Game.isWinner, true);
 			assert.equal(Game.winner, Player2);
+		});
+		it ('Test: Is Winner SW to NE (4,4)-(1,1)', function() {
 		});
 		it ('Test: Is Winner W to E', function() {
 			var Player1 = new playerJS.Player(12, 'Player 1');
