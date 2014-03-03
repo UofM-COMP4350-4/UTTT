@@ -1,70 +1,52 @@
-exports.ValidateObject = function(object) {
-	if (object == null || object === undefined) {
+exports.ValidateObject = function(obj) {
+	if(obj == null || obj === undefined) {
 		throw new Error('Argument cannot be null or undefined.');
+	} else if(typeof obj == 'object') {
+		return true;
+	} else {
+		throw new Error('Argument is not an object.');
 	}
-	else if (typeof object == 'number' && isNaN(object)) {
-		throw new Error('Argument cannot be null or undefined.');
-	}
-	else if (typeof object == 'object') {
-		var keys = Object.keys(object);
-
-		for (var index = 0; index < keys.length; index++) {
-			exports.ValidateObject(object[keys[index]]);	
-		}
-	}
-	
-	return true;
 };
 
 exports.ValidateBoolean = function(bool) {
-	exports.ValidateObject(bool);
-	
-	if (typeof bool == "boolean") {
+	if(typeof bool == "boolean") {
 		return true;
-	}
-	else {
+	} else {
 		throw new Error('Argument is not a boolean.');
 	}	
 };
 
 exports.ValidateString = function(string) {
-	exports.ValidateObject(string);
-	
-	
 	if (typeof string == "string") {
 		return true;
-	}
-	else {
+	} else {
 		throw new Error('Argument is not a string.');
 	}	
 };
 
 exports.ValidateNumber = function(number) {
-	exports.ValidateObject(number);
-
-	if (typeof number == 'number') {
-		return true;
-	}
-	else {
+	if(typeof number == 'number') {
+		if(isNaN(number)) {
+			throw new Error('Argument cannot be NaN');
+		} else {
+			return true;
+		}
+	} else {
 		throw new Error('Argument is not a number.');
 	}
 };
 
 exports.ValidateArray = function(array) {
 	exports.ValidateObject(array);
-
-	if (array instanceof Array) {
-			return true;
-	}
-	else {
+	if(array instanceof Array) {
+		return true;
+	} else {
 		throw new Error('Argument is not an array.');
 	}
 };
 
 exports.ValidateObjectIsOneDimensionalArray = function(array) {
-	exports.ValidateObject(array);
-
-	if (exports.ValidateArray(array)) {
+	if(exports.ValidateArray(array)) {
 		if(array.length===0) {
 			return true;
 		}
@@ -77,19 +59,17 @@ exports.ValidateObjectIsOneDimensionalArray = function(array) {
 		else {
 			throw new Error('Array is not one dimensional.');
 		}	
-	}
-	else {
+	} else {
 		throw new Error('Argument is not an array.');
 	}
 };
 
 exports.ValidateFunction = function(fn) {
-	exports.ValidateObject(fn);
-
-	if (fn instanceof Function) {
-			return true;
-	}
-	else {
+	if(fn == null || fn === undefined) {
+		throw new Error('Argument cannot be null or undefined.');
+	} else if(typeof fn == 'function') {
+		return true;
+	} else {
 		throw new Error('Argument is not a function.');
 	}
 };
@@ -103,11 +83,11 @@ exports.ValidateFunction = function(fn) {
  *			...
  *		}
  * This will validate the function's 3 arguments, validating arg1 is a Boolean,
- * that arg2 is a String, and that arg3 is a Number.
+ * that arg2 is a String, and that arg3 is a Number. Optional parameters can be declared
+ * with the type definition of Validator.OPTIONAL
  */
 exports.ValidateArgs = function() {
-	if(arguments.length>0 && (arguments[0] instanceof Array)
-			&& arguments[0].length==arguments.length-1) {
+	if(arguments.length>0) {
 		for(var i=1; i<arguments.length; i++) {
 			if(arguments[i] == Number) {
 				exports.ValidateNumber(arguments[0][i-1]);
@@ -120,8 +100,10 @@ exports.ValidateArgs = function() {
 			} else if(arguments[i] == Object) {
 				exports.ValidateObject(arguments[0][i-1]);
 			} else if(arguments[i] == Function) {
-				exports.ValidateObject(arguments[0][i-1]);
+				exports.ValidateFunction(arguments[0][i-1]);
 			}
 		}
 	}
+	return true;
 };
+exports.OPTIONAL = undefined;
