@@ -1,52 +1,36 @@
-var ValidateObjectController = require("../controllers/ValidateObjectController.js");
-var FileSystem = require('fs');
+var Validator = require("../controllers/ValidateObjectController.js");
+var fs = require('fs');
 
 /*	Flat File Access
  *  Use: Reads, Saves and Updates JSON objects saved in flat files.
  */
 
-// need to install https://github.com/substack/node-mkdirp
-
-exports.FlatFileAccess = function()
-{
-	
-};
-
-exports.FlatFileAccess.prototype.SaveJSONObject = function(JSONObject, pathToSave) {
-	ValidateObjectController.ValidateString(pathToSave);
-	ValidateObjectController.ValidateObject(JSONObject);
-	
-	if (typeof JSONObject == 'object') {
-		FileSystem.writeFileSync(pathToSave, JSON.stringify(JSONObject, null));
+module.exports = {
+	saveJSONObject: function(obj, path, callback) {
+		Validator.ValidateArgs(arguments, Object, String, Function);
+		fs.writeFile(path, JSON.stringify(obj, null, "\t"), callback);
+	},
+	loadJSONObject: function(path, callback) {
+		Validator.ValidateArgs(arguments, String, Function);
+		fs.readFile(path, function(err, data) {
+			if(err) {
+				callback(err, {});
+			} else {
+				try {
+					var o = JSON.parse(data || "{}");
+					callback(undefined, o);
+				} catch(e) {
+					callback(e, {});
+				}
+			}
+		});
+	},
+	isPathCreated: function(path, callback) {
+		Validator.ValidateArgs(arguments, String, Function);
+		fs.exists(path, callback);
+	},
+	deleteFile: function(path, callback) {
+		Validator.ValidateArgs(arguments, String, Function);
+		fs.unlink(path, callback);
 	}
-	else {
-		throw new Error('Argument is not an object.');
-	}
-
-	return true;
-};
-
-exports.FlatFileAccess.prototype.IsPathCreated = function(path) {
-	var isPathCreated = false;
-	
-	ValidateObjectController.ValidateString(path);
-	FileSystem.exists(path, function (exists) {
-  		if (exists) {
-  			isPathCreated = true;
-  		}
-	});
-
-	return isPathCreated;
-};
-
-exports.FlatFileAccess.prototype.LoadJSONObject = function(pathToFile) {
-	ValidateObjectController.ValidateString(pathToFile);
-	var readData = FileSystem.readFileSync(pathToFile);
-	return JSON.parse(readData);
-};
-
-exports.FlatFileAccess.prototype.DeleteFile = function(pathToFile) {
-	ValidateObjectController.ValidateString(pathToFile);
-	FileSystem.unlinkSync(pathToFile);
-	return true;
 };
