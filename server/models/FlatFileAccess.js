@@ -1,52 +1,56 @@
-var ValidateObjectController = require("../controllers/ValidateObjectController.js");
-var FileSystem = require('fs');
+var Validator = require("../controllers/ValidateObjectController.js");
+var fs = require('fs');
+var noop = function(){};
 
 /*	Flat File Access
  *  Use: Reads, Saves and Updates JSON objects saved in flat files.
  */
 
-// need to install https://github.com/substack/node-mkdirp
-
-exports.FlatFileAccess = function()
-{
-	
-};
-
-exports.FlatFileAccess.prototype.SaveJSONObject = function(JSONObject, pathToSave) {
-	ValidateObjectController.ValidateString(pathToSave);
-	ValidateObjectController.ValidateObject(JSONObject);
-	
-	if (typeof JSONObject == 'object') {
-		FileSystem.writeFileSync(pathToSave, JSON.stringify(JSONObject, null));
+var jsonFilePathValidate = function(path) {
+	var i=path.indexOf(".json");
+	if(i==-1 || i!=(path.length-5)) {
+		throw new Error("Path argument must me a *.json filepath.");
 	}
-	else {
-		throw new Error('Argument is not an object.');
+};
+
+module.exports = {
+	saveJSONObject: function(path, obj, callback) {
+		callback = callback || noop;
+		Validator.ValidateArgs(arguments, String, Object, Validator.OPTIONAL);
+		jsonFilePathValidate(path);
+		fs.writeFile(path, JSON.stringify(obj, null, "\t"), callback);
+	},
+	loadJSONObject: function(path, callback) {
+		callback = callback || noop;
+		Validator.ValidateArgs(arguments, String, Validator.OPTIONAL);
+		jsonFilePathValidate(path);
+		fs.readFile(path, 'utf8', function(err, data) {
+			if(err) {
+				callback(err, {});
+			} else {
+				var o;
+				var parseErr;
+				try {
+					o = JSON.parse(data || "{}");
+				} catch(e) {
+					parseErr = e;
+				}
+				if(parseErr) {
+					callback(parseErr, {});
+				} else {
+					callback(undefined, o);
+				}
+				
+			}
+		});
+	},
+	isPathCreated: function(path, callback) {
+		Validator.ValidateArgs(arguments, String, Function);
+		fs.exists(path, callback);
+	},
+	deleteFile: function(path, callback) {
+		callback = callback || noop;
+		Validator.ValidateArgs(arguments, String, Validator.OPTIONAL);
+		fs.unlink(path, callback);
 	}
-
-	return true;
-};
-
-exports.FlatFileAccess.prototype.IsPathCreated = function(path) {
-	var isPathCreated = false;
-	
-	ValidateObjectController.ValidateString(path);
-	FileSystem.exists(path, function (exists) {
-  		if (exists) {
-  			isPathCreated = true;
-  		}
-	});
-
-	return isPathCreated;
-};
-
-exports.FlatFileAccess.prototype.LoadJSONObject = function(pathToFile) {
-	ValidateObjectController.ValidateString(pathToFile);
-	var readData = FileSystem.readFileSync(pathToFile);
-	return JSON.parse(readData);
-};
-
-exports.FlatFileAccess.prototype.DeleteFile = function(pathToFile) {
-	ValidateObjectController.ValidateString(pathToFile);
-	FileSystem.unlinkSync(pathToFile);
-	return true;
 };
