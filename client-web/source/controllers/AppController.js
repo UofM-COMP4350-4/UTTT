@@ -11,6 +11,8 @@ enyo.kind({
 		if(this.narrowFit) {
 			this.socialShowing = false;
 			this.view.$.lowerPanels.setIndexDirect(0);
+			this.view.$.upperPanels.realtimeFit = false;
+			this.view.$.lowerPanels.realtimeFit = false;
 		}
 		
 		//Assume that no cookie & userID exists yet
