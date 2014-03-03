@@ -8,7 +8,8 @@
 		"passport-facebook": "",
 		"passport-twitter": "",
 		"passport-google": "",
-		"socket.io": ""
+		"socket.io": "",
+		"sequelize" : ""
 	},
 	"devDependencies": {
 		"jshint": "",
