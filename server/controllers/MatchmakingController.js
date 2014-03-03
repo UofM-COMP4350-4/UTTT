@@ -18,7 +18,7 @@ exports.MatchmakingController.joinMatchmaking = function(player, game, response)
 			});
 		response(result);
 	}
-	else response("");
+	else {response("");}
 };
 
 exports.MatchmakingController.emptyFunction = function(){
@@ -35,6 +35,9 @@ exports.MatchmakingController.errLogging = function(){
 
 exports.MatchmakingController.Match= function(player,game,callback){
 	validator.ValidateArgs(arguments, Object, Object, Function);
+	if(game == null || game === undefined || game == {}){
+		throw new Error("Invalid game");
+	}
 	var result = "";
 	var gameList = [];
 	queues.GameMatchmaker.getGameQueue(game, function(queue){gameList = queue});
