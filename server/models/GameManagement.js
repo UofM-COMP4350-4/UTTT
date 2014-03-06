@@ -6,29 +6,40 @@ var serverInstanceBase = 0;
 // Games get saved to database when all users disconnect
 // Note: Guest users do not have their data retained
 var matches = {};
+// All online userIDs
+var onlineUsers = [];
+// Cache of available games
+var availGames;
+var gameDefinitions = {};
 
 module.exports = {
 	// Gets the static list of game IDs, game names, and max players
 	availableGames: function(callback) {
 		Validator.validateArgs(arguments, Function);
-		// TODO: implement once DB access is defined
-		// Temporary static return
-		var games = {
-			"0": {gameName:"Connect4", maxPlayers:2},
-			"1": {gameName:"Chess", maxPlayers:2},
-			"2": {gameName:"Scrabble", maxPlayers:2},
-			"3": {gameName:"BattleShip", maxPlayers:2},
-			"4": {gameName:"Ultimate TicTacToe", maxPlayers:2}
-		};
-		callback(games);
+		if(!availGames) {
+			// TODO: implement once DB access is defined
+			(function(gamesEntries) {
+				availGames = gamesEntries;
+				callback(availGames);
+			})({
+				"connect4": {gameName:"Connect4", maxPlayers:2},
+				"chess": {gameName:"Chess", maxPlayers:2},
+				"scrabble": {gameName:"Scrabble", maxPlayers:2},
+				"battleship": {gameName:"BattleShip", maxPlayers:2},
+				"ultimateTicTacToe": {gameName:"Ultimate TicTacToe", maxPlayers:2}
+			});
+		} else {
+			callback(availGames);
+		}
 	},
 	// Creates a new game for a game ID and then 
 	createMatch: function(gameID) {
 		Validator.validateArgs(arguments, Number);
-		// TODO: Create game instance
-		// Temporary object until then
-		var game = {gameID:0, players:[], maxPlayers:2};
+		if(!gameDefinitions[gameID]) {
+			gameDefinitions[gameID] = require("../controllers/" + gameID + "GameController");
+		}
 		var id = ((new Date().getTime())*10) + serverInstanceBase;
+		var game = new gameDefinitions[gameID](id);
 		matches[id] = game;
 		serverInstanceBase++;
 		return id;
@@ -36,8 +47,7 @@ module.exports = {
 	joinMatch: function(userID, instanceID, callback) {
 		Validator.validateArgs(arguments, String, Number, Function);
 		if(matches[instanceID]) {
-			if(matches[instanceID].players.length <
-					matches[instanceID].maxPlayers) {
+			if(matches[instanceID].players.length < matches[instanceID].maxPlayers) {
 				// TODO: add function call to game match to remove user
 				matches[instanceID].players.push(userID);
 				callback();
@@ -45,21 +55,72 @@ module.exports = {
 				callback({errorCode:1, errorText:"Game full"});
 			}
 		} else {
-			// TODO: search db for active, but not in-memory games
-			callback();
+			// TODO: search db for match with instance id
+			(function(entry) {
+				if(!gameDefinitions[entry.gameID]) {
+					gameDefinitions[entry.gameID] = require("../controllers/" + entry.gameID + "GameController");
+				}
+				matches[entry.instanceID] = new gameDefinitions[entry.gameID](entry.instanceID);
+				module.exports.joinMatch(userID, instanceID, callback);
+			})();
 		}
 	},
 	leaveMatch: function(userID, instanceID, callback) {
 		Validator.validateArgs(arguments, String, Number, Function);
-		if(matches[instanceID]) {
-			// TODO: add function call to game match to remove user
-			matches[instanceID].players.splice(
-					matches[instanceID].players.indexOf(userID), 1);
+		// TODO: remove user from match in the db if present
+		(function() {
+			if(matches[instanceID]) {
+				// TODO: add function call to game match to remove user
+				(function() {
+					// temporary
+					matches[instanceID].players.splice(
+							matches[instanceID].players.indexOf(userID), 1);
+					callback();
+				})();
+			} else {
+				callback();
+			}
+		})();
+	},
+	useConnected: function(userID, callback) {
+		onlineUsers.push(userID);
+		module.exports.findByUser(userID, function(state) {
+			var inactiveMatches = [];
+			for(var x in state) {
+				if(!matches[x]) {
+					if(!gameDefinitions[state[x].gameID]) {
+						gameDefinitions[state[x].gameID] = require("../controllers/" + state[x].gameID + "GameController");
+					}
+					matches[x] = new gameDefinitions[state[x].gameID](x);
+				}
+			}
 			callback();
-		} else {
-			// TODO: search db for active, but not in-memory games
-			callback();
-		}
+		});
+	},
+	userDisconnected: function(userID, callback) {
+		onlineUsers.splice(onlineUsers.indexOf(userID), 1);
+		module.exports.findByUser(userID, function(state) {
+			var inactiveMatches = [];
+			for(var x in state) {
+				for(var i=0; i<state[x].players.length; i++) {
+					if(onlineUsers.indexOf(state[x].players[i])>-1) {
+						inactiveMatches.push(x);
+						break;
+					}
+				}
+			}
+			var saveInactiveMatch = function() {
+				if(inactiveMatches.length>0) {
+					var curr = inactiveMatches.pop();
+					(function() {
+						saveInactiveMatch();
+					})();
+				} else {
+					callback();
+				}
+			};
+			saveInactiveMatch();
+		});
 	},
 	findByUser: function(userID, callback) {
 		Validator.validateArgs(arguments, String, Function);
@@ -70,7 +131,12 @@ module.exports = {
 			}
 		}
 		// TODO query database for all games with user as a player
-		callback(userState);
+		(function(dbMatches) {
+			for(var x in dbMatches) {
+				userState[x] = userState[x] || dbMatches[x];
+			}
+			callback(userState);
+		})({});
 	},
 	getGameboard: function(instanceID, callback) {
 		Validator.validateArgs(arguments, Number, Function);
@@ -78,8 +144,14 @@ module.exports = {
 			// TODO: replace with actual gameboard api from game
 			callback(matches[instanceID].gameboard);
 		} else {
-			// TODO: search db for active, but not in-memory games
-			callback({});
+			// TODO: attempt to grab an instance id gameboard flat file
+			(function(err, data) {
+				if(err) {
+					callback({});
+				} else {
+					callback(data);
+				}
+			})();
 		}
 	}
 };

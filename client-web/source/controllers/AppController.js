@@ -1,4 +1,3 @@
-//var ValidateObjectController = require("../../../server/controllers/ValidateObjectController.js");
 enyo.kind({
 	name: "AppController",
 	kind: "Component",
@@ -16,24 +15,18 @@ enyo.kind({
 			this.view.$.lowerPanels.realtimeFit = false;
 		}
 		this.log("Client started");
-		this.initializeClient();
-	},		
-	initializeClient: function() {
 		//if the client has a userID, do nothing
 		//else send an initialize request to the database
-		var clientID = localStorage.getItem('clientID');
-		
-		if(!clientID || typeof clientID == 'undefined' || clientID == 'undefined'){
-			this.log("The client does not have a user id");
-			window.ClientServerComm.initialize(undefined, function(newClientID){
-				localStorage.setItem('clientID', newClientID);
-			});
-		}
-		else
-		{
-			this.log("The client has a user id " + clientID);
-		}
-	},	
+		window.userID = localStorage.getItem('clientID');
+	    window.userID = window.ClientServerComm.initialize(window.userID, function(baseState) {
+	    	window.userID = baseState.user.userID;
+	    	window.userName = baseState.user.userName;
+			delete baseState.user;
+			window.availableGames = baseState.availableGames;
+			delete baseState.availableGames;
+			enyo.stage.menu.controller.loadActiveGames(baseState);
+	    });
+	},		
 	toggleMenu: function() {
 		this.setMenuShowing(!this.menuShowing);
 		return true;
