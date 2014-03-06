@@ -1,12 +1,12 @@
 var RelationalDB = require('../models/RelationalDBAccess.js');
-var FlatFile = require('../models/FlatFileAccess.js');
+var flatFile = require('../models/FlatFileAccess.js');
 var relationalDB;
-var flatFile;
+//var flatFile;
 
 function DataStoreController(database)
 {
 	//Initialize all the variables
-	flatFile = new FlatFile.FlatFileAccess();
+	//flatFile = new FlatFile.FlatFileAccess();
 	relationalDB = new RelationalDB(database);
 }
 
@@ -20,7 +20,7 @@ DataStoreController.prototype.getListOfGames = function(callback)
 };
 
 DataStoreController.prototype.getNewClientID = function(callback)
-{
+{	
 	//Call validate object on the relationalDB object
 	relationalDB.getNewClientID(function(newClientID){
 		console.log('new client id is: ' + newClientID);
