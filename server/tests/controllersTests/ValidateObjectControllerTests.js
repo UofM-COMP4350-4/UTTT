@@ -8,18 +8,12 @@ var ValidateObjectController = require("../../controllers/ValidateObjectControll
 describe('Controller Test Suite', function(){
 	describe('ValidateObjectController Test Class', function() {
 		it('Test: Valid Data', function() {
-			assert.equal(ValidateObjectController.ValidateObject(1), true);
-			assert.equal(ValidateObjectController.ValidateObject(1.432423), true);
 			assert.equal(ValidateObjectController.ValidateObject([]), true);
-			assert.equal(ValidateObjectController.ValidateObject('Hello, World!'), true);
 			assert.equal(ValidateObjectController.ValidateObject({a:'hello',b:'blah'}), true);
 			assert.equal(ValidateObjectController.ValidateObject({a:'hello',b:{c:1,d:1}}), true);
 			
 			assert.throws(function() { ValidateObjectController.ValidateObject(null) }, Error);
 			assert.throws(function() { ValidateObjectController.ValidateObject(undefined) }, Error);
-			assert.throws(function() { ValidateObjectController.ValidateObject({a:null}) }, Error);
-			assert.throws(function() { ValidateObjectController.ValidateObject({a:undefined}) }, Error);
-			assert.throws(function() { ValidateObjectController.ValidateObject({a:NaN}) }, Error);
 			assert.throws(function() { ValidateObjectController.ValidateObject(NaN) }, Error);
 			
 			assert.throws(function() { ValidateObjectController.ValidateNumber(null) }, Error);

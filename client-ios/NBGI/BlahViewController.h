@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#include "Move.h";
+#include "Move.h"
 
 @interface BlahViewController : UICollectionViewController
 
