@@ -54,7 +54,7 @@ enyo.singleton({
 		callback(response.err);
 	},
 	
-	createNewGame: function(userID, gameID, callback) {
+	createNewGame: function(userid, gameID, callback) {
 		//This method is supposed to send an AJAX call
 		// to the Server to create a new game (userID, gameID) and use the
 		// resulting object from the server to create a game view
@@ -65,7 +65,7 @@ enyo.singleton({
 		});
 		this.view.$.createGameButton.setContent("Game Created 1");
 		request.response(enyo.bind(this, "createGameResponse", callback)); //tells Ajax what the callback function is
-		request.go({userid: userID, gameid: gameID});		
+		request.go({userID: userid, gameid: gameID});		
 	},
 	
 	initialize: function(userID, callback) {
@@ -82,7 +82,7 @@ enyo.singleton({
 		if(response)
 		{
 			//Send back the user id passed
-			this.log(response);
+			this.log(response.userID);
 			callback(response.userID);
 		}		
 	},
