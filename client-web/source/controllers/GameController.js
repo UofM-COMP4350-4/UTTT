@@ -11,8 +11,8 @@ enyo.kind({
 		}
 		this.active = this.view.createComponent(this.view.launcher);
 		this.active.render();
-		this.active.$.repeater.setCount(this.gamesList.length);
-		this.active.$.repeater.render();
+		this.view.$.grid.setCount(this.gamesList.length);
+		this.view.$.grid.render();
 	},
 	loadGame: function(gameboard) {
 		this.instanceID = gameboard.instanceID;
@@ -22,7 +22,7 @@ enyo.kind({
 		if(this.active) {
 			this.active.destroy();
 		}
-		this.active = this.view.createComponent({kind:gameID + "View", classes:"fill"});
+		this.active = this.view.createComponent({kind:gameID + "View", classes:"full"});
 		this.active.render();
 		return this.active;
 	},

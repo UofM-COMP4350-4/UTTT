@@ -3,9 +3,13 @@ enyo.kind({
 	kind: "View",
 	controllerKind: "AppController",
 	classes: "app",
+	handlers: {
+		onLoadGame:"controller.loadGame",
+		onShowLauncher:"controller.showLauncher"
+	},
 	components:[
 		{name:"upperPanels", kind: "Panels", index:0, arrangerKind: "CollapsingArranger", realtimeFit: true, wrap: false, classes:"panels enyo-fit app", draggable:true, onTransitionFinish:"controller.upperTransition", components:[
-			{name:"menu", kind:"MenuView", classes:"menu-container", onLoadGame:"controller.loadGame", onShowLauncher:"controller.showLauncher"},
+			{name:"menu", kind:"MenuView", classes:"menu-container"},
 			{name:"lowerPanels", kind:"Panels", index:1, arrangerKind: "CollapsingRightArranger", wrap: false, realtimeFit: true, classes:"main-container enyo-border-box app", draggable:true, onTransitionFinish:"controller.lowerTransition", components:[
 				{layoutKind:"FittableRowsLayout", fit:true, ondragstart:"controller.draggingHandler", components:[
 					{name:"game", kind:"GameView", classes:"game-container", fit:true},
