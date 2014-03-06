@@ -42,6 +42,7 @@ enyo.kind({
 	showGameArea: function() {
 		if(this.narrowFit) {
 			this.setMenuShowing(false);
+			this.setSocialShowing(false);
 		}
 	},
 	menuShowingChanged: function() {
