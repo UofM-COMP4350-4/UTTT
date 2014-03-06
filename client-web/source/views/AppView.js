@@ -3,6 +3,10 @@ enyo.kind({
 	kind: "View",
 	controllerKind: "AppController",
 	classes: "app",
+	handlers: {
+		onLoadGame:"controller.loadGame",
+		onShowLauncher:"controller.showLauncher"
+	},
 	components:[
 		{name:"upperPanels", kind: "Panels", index:0, arrangerKind: "CollapsingArranger", realtimeFit: true, wrap: false, classes:"panels enyo-fit app", draggable:true, onTransitionFinish:"controller.upperTransition", components:[
 			{name:"menu", kind:"MenuView", classes:"menu-container"},
@@ -13,7 +17,6 @@ enyo.kind({
 					{kind:"onyx.Toolbar", style:"padding-top:4px; padding-bottom:4px;", components:[
 						{kind:"onyx.IconButton", src:"assets/onyx-profile.png", ontap:"controller.toggleSocial", style:"float:right"},
 						{kind:"onyx.IconButton", src:"assets/onyx-menu.png", ontap:"controller.toggleMenu"}
-						
 					]}
 				]},
 				{name:"social", kind:"SocialView", classes:"social-container social-shadow"}

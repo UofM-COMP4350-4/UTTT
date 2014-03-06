@@ -11,7 +11,7 @@ enyo.singleton({
 	listGames: function(callback)
 	{
 		var request = new enyo.Ajax({
-			url: "http://localhost/listOfGames",
+			url: "listOfGames",
 			method: "GET",
 			handleAs: "json"
 		});
@@ -35,7 +35,7 @@ enyo.singleton({
 		// to the Server to create a new game (userID, gameID) and use the
 		// resulting object from the server to create a game view
 		var request = new enyo.Ajax({
-			url: "http://localhost/queueForGame", //URL goes here
+			url: "queueForGame", //URL goes here
 			method: "GET", //You can also use POST
 			handleAs: "json" //options are "json", "text", or "xml"
 		});
@@ -53,7 +53,7 @@ enyo.singleton({
 		// to the Server to create a new game (userID, gameID) and use the
 		// resulting object from the server to create a game view
 		var request = new enyo.Ajax({
-			url: "http://localhost/createNewGame", //URL goes here
+			url: "createNewGame", //URL goes here
 			method: "GET", //You can also use POST
 			handleAs: "json" //options are "json", "text", or "xml"
 		});
@@ -64,7 +64,7 @@ enyo.singleton({
 	
 	initialize: function(userID, callback) {
 		var request = new enyo.Ajax({
-			url: "http://localhost/initialize", //URL goes here
+			url: "initialize", //URL goes here
 			method: "GET", //You can also use POST
 			handleAs: "json" //options are "json", "text", or "xml"
 		});

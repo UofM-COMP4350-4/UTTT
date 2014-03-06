@@ -1,3 +1,3 @@
 enyo.depends(
-	"example.js"
+	"AppControllerTests.js"
 );
