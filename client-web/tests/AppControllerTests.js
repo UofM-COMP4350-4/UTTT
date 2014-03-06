@@ -1,5 +1,5 @@
 describe("AppController", function() {
-	var appC = new AppView().controller;
+	var appC = new window.AppView().controller;
 
 	describe("#setMenuShowing()", function() {
 		it("should set the upper panels' index to the menu view when set true", function() {
