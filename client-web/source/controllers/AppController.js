@@ -1,3 +1,4 @@
+//var ValidateObjectController = require("../../../server/controllers/ValidateObjectController.js");
 enyo.kind({
 	name: "AppController",
 	kind: "Component",
@@ -12,11 +13,29 @@ enyo.kind({
 			this.socialShowing = false;
 			this.view.$.lowerPanels.setIndexDirect(0);
 		}
-		
+		this.log("Client started");
 		//Assume that no cookie & userID exists yet
 		//So we pass an undefined userID to the ClientServerCommunication script
-		window.ClientServerComm.initialize(undefined, function(){});//empty callback function
-	},
+		this.initializeClient();
+	},		
+	initializeClient: function() {
+		//if the client has a userID, do nothing
+		//else send an initialize request to the database
+		var clientID = localStorage.getItem('clientID');
+		
+		if(!clientID){
+			this.log("The client does not have a user id");
+			window.ClientServerComm.initialize(clientID, function(newClientID){
+				//ValidateObjectController.ValidateString(newClientID);
+				//this.log("The server sent back a user id of " + newClientID);
+				localStorage.setItem('clientID', JSON.stringify(newClientID));
+			});
+		}
+		else
+		{
+			this.log("The client has a user id " + clientID);
+		}
+	},	
 	toggleMenu: function() {
 		this.setMenuShowing(!this.menuShowing);
 		return true;
