@@ -17,9 +17,10 @@ enyo.kind({
 		this.log("Client started");
 		//if the client has a userID, do nothing
 		//else send an initialize request to the database
-		window.userID = localStorage.getItem('clientID');
+		window.userID = localStorage.getItem("clientID");
 	    window.userID = window.ClientServerComm.initialize(window.userID, function(baseState) {
 	    	window.userID = baseState.user.userID;
+	    	localStorage.setItem("clientID", window.userID);
 	    	window.userName = baseState.user.userName;
 			delete baseState.user;
 			window.availableGames = baseState.availableGames;
@@ -79,11 +80,18 @@ enyo.kind({
 	},
 	loadGame: function(inSender, inEvent) {
 		this.showGameArea();
+		document.title = "NBGI - " + window.availableGames[inEvent.gameboard.gameID];
+		// TODO hash code update/handling
 		enyo.stage.game.controller.loadGame(inEvent.gameboard);
 		return true;
 	},
 	showLauncher: function(inSender, inEvent) {
 		this.showGameArea();
+		document.title = "NBGI - Game Launcher";
+		// TODO hash code update/handling
 		enyo.stage.game.controller.showLauncher(inEvent.mode);
+	},
+	hashChange: funstion(inSender, inEvent) {
+		// TODO
 	}
 });
