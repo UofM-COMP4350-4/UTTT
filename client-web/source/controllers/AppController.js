@@ -35,12 +35,17 @@ enyo.kind({
 		this.setSocialShowing(!this.socialShowing);
 		return true;
 	},
+	showGameArea: function() {
+		if(this.narrowFit) {
+			this.setMenuShowing(false);
+		}
+	},
 	menuShowingChanged: function() {
 		if(this.menuShowing) {
-			this.view.$.upperPanels.setIndex(0);
 			if(this.narrowFit) {
 				this.view.$.lowerPanels.setIndexDirect(0);
 			}
+			this.view.$.upperPanels.setIndex(0);
 		} else {
 			if(this.narrowFit) {
 				this.view.$.lowerPanels.setIndexDirect(0);
@@ -52,6 +57,9 @@ enyo.kind({
 		if(this.socialShowing) {
 			this.view.$.lowerPanels.setIndex(1);
 		} else {
+			if(this.narrowFit) {
+				this.view.$.upperPanels.setIndexDirect(1);
+			}
 			this.view.$.lowerPanels.setIndex(0);
 		}
 	},
@@ -68,5 +76,14 @@ enyo.kind({
 	},
 	draggingHandler: function(inSender, inEvent) {
 		this.view.$.lowerPanels.draggable = (inEvent.clientX > (enyo.dom.getWindowWidth()/2));
+	},
+	loadGame: function(inSender, inEvent) {
+		this.showGameArea();
+		enyo.stage.game.controller.loadGame(inEvent.gameboard);
+		return true;
+	},
+	showLauncher: function(inSender, inEvent) {
+		this.showGameArea();
+		enyo.stage.game.controller.showLauncher(inEvent.mode);
 	}
 });
