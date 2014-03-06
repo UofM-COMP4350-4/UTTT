@@ -6,7 +6,7 @@ enyo.kind({
 		socialShowing: true
 	},
 	components: [
-		{kind:"Signals", onhashchange:"hashChange"},
+		{kind:"Signals", onhashchange:"hashChange"}
 	],
 	create:function() {
 		this.inherited(arguments);
