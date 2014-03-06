@@ -5,6 +5,9 @@ enyo.kind({
 		menuShowing: true,
 		socialShowing: true
 	},
+	components: [
+		{kind:"Signals", onhashchange:"hashChange"},
+	],
 	create:function() {
 		this.inherited(arguments);
 		this.narrowFit = enyo.Panels.isScreenNarrow();
