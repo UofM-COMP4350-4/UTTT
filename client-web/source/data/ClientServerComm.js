@@ -7,12 +7,6 @@ enyo.singleton({
 		//this.initialize( "1", enyo.bind(this, "initCallback"));
 	},
 	
-	initCallback: function(userID) {
-		//Sets the user id for this Client to 
-		//the userID passed back
-		this.log(userID);
-	},
-	
 	//request a list of games from the Server
 	listGames: function(callback)
 	{
@@ -81,8 +75,7 @@ enyo.singleton({
 	initializeResponse: function(callback, request, response) {
 		if(response)
 		{
-			//Send back the user id passed
-			this.log(response.userID);
+			this.log('Server responded with userID: ' + response.userID);
 			callback(response.userID);
 		}		
 	},

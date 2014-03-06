@@ -16,8 +16,6 @@ enyo.kind({
 			this.view.$.lowerPanels.realtimeFit = false;
 		}
 		this.log("Client started");
-		//Assume that no cookie & userID exists yet
-		//So we pass an undefined userID to the ClientServerCommunication script
 		this.initializeClient();
 	},		
 	initializeClient: function() {
@@ -25,12 +23,10 @@ enyo.kind({
 		//else send an initialize request to the database
 		var clientID = localStorage.getItem('clientID');
 		
-		if(!clientID){
+		if(!clientID || typeof clientID == 'undefined' || clientID == 'undefined'){
 			this.log("The client does not have a user id");
-			window.ClientServerComm.initialize(clientID, function(newClientID){
-				//ValidateObjectController.ValidateString(newClientID);
-				//this.log("The server sent back a user id of " + newClientID);
-				localStorage.setItem('clientID', JSON.stringify(newClientID));
+			window.ClientServerComm.initialize(undefined, function(newClientID){
+				localStorage.setItem('clientID', newClientID);
 			});
 		}
 		else

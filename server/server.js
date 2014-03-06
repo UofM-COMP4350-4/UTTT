@@ -38,32 +38,38 @@ server.get("/initialize", function(request, response) {
 	//**Account for the fact that a user id might be a string** - Right now only numbers are allowed
 	//Validate the dbController Object
 	var text = {};
-	var id = request.params.userID;
-	if (id > 0 || id === undefined) {
+	var id = request.params.userid;
+	if (id === undefined || id > 0) {
 		//valid values: either the user doesn't have an id or the user does
 		if (id !== undefined)
 		{
 			//just return back the userID received
 			//maybe verify that it exists in the database?
 			text = {userID: id};
+			response.writeHead( 200, {'content-type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
+			response.write(JSON.stringify(text));
+			response.end();
 		}
 		else
 		{
 			//call DatabaseController and get a new userID for the user
 			dbController.getNewClientID( function(newID){
+				console.log('Server gets here: ' + newID);
 				text = {userID: newID};
+				
+				response.writeHead( 200, {'content-type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
+				response.write(JSON.stringify(text));
+				response.end();
 			});
 		}
-		
-		response.writeHead( 200, {'content-type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
 	}
 	else
 	{
 		//response not found (404) but I guess any error code would work
 		response.writeHead( 500, {'content-type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
+		response.write(JSON.stringify(text));
+		response.end();
 	}
-	response.write(JSON.stringify(text));
-	response.end();
 	//return next();
 });
 
