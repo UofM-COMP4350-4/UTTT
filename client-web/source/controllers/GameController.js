@@ -22,9 +22,8 @@ enyo.kind({
 		if(this.active) {
 			this.active.destroy();
 		}
-		this.active = this.view.createComponent({kind:gameboard.gameID + "View", classes:"fill"});
+		this.active = this.view.createComponent({kind:gameID + "View", classes:"fill"});
 		this.active.render();
-		this.createGame(gameboard.gameID);
 		return this.active;
 	},
 	setupGameGrid: function(inSender, inEvent) {
@@ -37,12 +36,12 @@ enyo.kind({
 	gameLaunch: function(inSender, inEvent) {
 		var gameID = this.gamesList[inEvent.index].gameID;
 		this.createGame(gameID);
-		if(mode==="newMatch") {
-			ClientServerComm.queueForGame(window.userID, gameID, enyo.bind(this, function(response) {
+		if(this.mode==="newMatch") {
+			window.ClientServerComm.queueForGame(window.userID, gameID, enyo.bind(this, function(response) {
 				// TODO
 			}));
-		} else if (mode==="invite") {
-			ClientServerComm.createNewGame(window.userID, gameID, enyo.bind(this, function(response) {
+		} else if(this.mode==="invite") {
+			window.ClientServerComm.createNewGame(window.userID, gameID, enyo.bind(this, function(response) {
 				// TODO: popup dialog giving url to share
 			}));
 		}
