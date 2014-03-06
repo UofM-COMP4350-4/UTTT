@@ -5,11 +5,11 @@ function RelationalDBAccess(database)
 {
 	if (database === undefined)
 	{
-		InitializeDB();
+		new InitializeDB();
 	}
 	else
 	{
-		InitializeOtherDB(database.username, database.password, database.hostname);
+		new InitializeOtherDB(database.username, database.password, database.hostname);
 	}
 }
 
