@@ -1,4 +1,5 @@
 var Sequelize = require('sequelize');
+var dbConnection;
 
 function RelationalDBAccess(database)
 {
@@ -10,10 +11,10 @@ function RelationalDBAccess(database)
 	{
 		InitializeOtherDB(database.username, database.password, database.hostname);
 	}
-};
+}
 
 //Connects to the default (main) database
-InitializeDB = function(){
+var InitializeDB = function(){
 	dbConnection = new Sequelize('test', 'ubuntu', '', {
 		host: '54.186.20.243',
 		port: 3306
@@ -21,7 +22,7 @@ InitializeDB = function(){
 };
 
 //Connects to a different database
-InitializeOtherDB = function(username, password, hostname){	
+var InitializeOtherDB = function(username, password, hostname){	
 	dbConnection = new Sequelize('test', username, password || '', {
 		host: hostname,
 		port: 3306

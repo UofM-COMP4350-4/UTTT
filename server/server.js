@@ -18,7 +18,7 @@ server.get("/queueForGame", function(request, response, next){
 	console.log("Queue request received from Client " + request.params.fun);
 	response.writeHead(200, {"content-type": "application/json"});
 	response.end(JSON.stringify({}));
-	return next();
+	//return next();
 });
 
 server.get("/createNewGame", function(request, response, next){
@@ -28,7 +28,7 @@ server.get("/createNewGame", function(request, response, next){
 	console.log("New game request received from Client " + request.params.fun);
 	response.writeHead(200, {"content-type": "application/json"});
 	response.end("Game created Successfully");
-	return next();
+	//return next();
 });
 
 server.get("/initialize", function(request, response) {
@@ -64,7 +64,7 @@ server.get("/initialize", function(request, response) {
 	}
 	response.write(JSON.stringify(text));
 	response.end();
-	return next();
+	//return next();
 });
 
 server.get("/listOfGames", function(request, response)
@@ -76,7 +76,7 @@ server.get("/listOfGames", function(request, response)
 		response.writeHead(200, {"content-type": "application/json", 'Access-Control-Allow-Origin' : '*'});
 		response.write(JSON.stringify(games));
 		response.end();
-		return next();
+		//return next();
 	});
 });
 

@@ -8,7 +8,7 @@ function DataStoreController(database)
 	//Initialize all the variables
 	flatFile = new FlatFile.FlatFileAccess();
 	relationalDB = new RelationalDB(database);
-};
+}
 
 DataStoreController.prototype.getListOfGames = function(callback)
 {
