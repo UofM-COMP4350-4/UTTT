@@ -91,7 +91,7 @@ enyo.kind({
 		// TODO hash code update/handling
 		enyo.stage.game.controller.showLauncher(inEvent.mode);
 	},
-	hashChange: funstion(inSender, inEvent) {
+	hashChange: function(inSender, inEvent) {
 		// TODO
 	}
 });
