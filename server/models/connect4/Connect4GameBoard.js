@@ -1,19 +1,8 @@
 var GridIteratorJS = require(".././GridIterator.js");
 var ValidateObjectController = require("../.././controllers/ValidateObjectController.js");
 var Connect4GamePiece = require("./Connect4GamePiece.js");
-
+var Connect4Move = require("./Connect4Move.js");
 var PIECES_TO_WIN = 4;
-
-exports.Connect4Move = function(x, y, player)
-{
-	this.x = x;
-	this.y = y;
-	this.player = player;
-};
-exports.Connect4Move.prototype.GetPlayer = function()
-{
-	return this.player;
-};
 
 exports.Connect4GameBoard = function(gameInfo)
 {
@@ -21,20 +10,47 @@ exports.Connect4GameBoard = function(gameInfo)
 	ValidateObjectController.ValidateNumber(gameInfo.gameID);
 	ValidateObjectController.ValidateNumber(gameInfo.instanceID);
 	ValidateObjectController.ValidateObject(gameInfo.userToPlay);
-	ValidateObjectController.ValidateObject(gameInfo.player1);
-	ValidateObjectController.ValidateObject(gameInfo.player2);
+	
 	this.gameID = gameInfo.gameID;
 	this.instanceID = gameInfo.instanceID;
-	this.userToPlay = gameInfo.player1;
-	this.ROW_SIZE = 6;
-	this.COL_SIZE = 7;
-	this.maxPlayers = 2;
-	this.players = [gameInfo.player1, gameInfo.player2];
-	this.grid = new Array(this.ROW_SIZE * this.COL_SIZE);
-	this.isWinner = false;
-	this.winner = null;
-	this.lastPieceID = 0;
-	this.moves = [];
+	
+	if (typeof gameInfo.player1 != 'undefined' && typeof gameInfo.player2 != 'undefined') {
+		ValidateObjectController.ValidateObject(gameInfo.player1);
+		ValidateObjectController.ValidateObject(gameInfo.player2);
+		this.players = [gameInfo.player1, gameInfo.player2];
+		this.userToPlay = gameInfo.player1;
+		this.ROW_SIZE = 6;
+		this.COL_SIZE = 7;
+		this.grid = new Array(this.ROW_SIZE * this.COL_SIZE);
+		this.moves = [];
+		this.isWinner = false;
+		this.winner = null;
+		this.maxPlayers = 2;
+		this.lastPieceID = 0;	
+	}
+	else { // create game board object using an existing game board object
+		ValidateObjectController.ValidateObject(gameInfo.players);
+		ValidateObjectController.ValidateObject(gameInfo.grid);
+		ValidateObjectController.ValidateObject(gameInfo.moves);
+		ValidateObjectController.ValidateObjectIsOneDimensionalArray(gameInfo.players);
+		ValidateObjectController.ValidateObjectIsOneDimensionalArray(gameInfo.grid);
+		ValidateObjectController.ValidateObjectIsOneDimensionalArray(gameInfo.moves);
+		ValidateObjectController.ValidateBoolean(gameInfo.isWinner);
+		ValidateObjectController.ValidateNumber(gameInfo.ROW_SIZE);
+		ValidateObjectController.ValidateNumber(gameInfo.COL_SIZE);
+		ValidateObjectController.ValidateNumber(gameInfo.maxPlayers);
+		ValidateObjectController.ValidateNumber(gameInfo.lastPieceID);
+		this.players = gameInfo.players;
+		this.userToPlay = gameInfo.userToPlay;
+		this.grid = gameInfo.grid;
+		this.moves = gameInfo.moves;
+		this.isWinner = gameInfo.isWinner;
+		this.winner = gameInfo.winner;
+		this.ROW_SIZE = gameInfo.ROW_SIZE;
+		this.COL_SIZE = gameInfo.COL_SIZE;
+		this.maxPlayers = gameInfo.maxPlayers;
+		this.lastPieceID = gameInfo.lastPieceID;
+	}
 };
 
 exports.Connect4GameBoard.prototype.IsDraw = function()

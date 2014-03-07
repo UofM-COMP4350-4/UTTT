@@ -1,7 +1,7 @@
 var connect4GameBoard = require("../models/connect4/Connect4GameBoard.js");
 
-exports.Connect4GameController = function() {
-	
+exports.Connect4GameController = function(gameInfo) {
+	this.gameBoard = new connect4GameBoard.Connect4GameBoard(gameInfo);
 };
 
 exports.Connect4GameController.prototype.CreateGame = function() {
@@ -12,25 +12,21 @@ exports.Connect4GameController.prototype.CompleteGame = function() {
 	
 };
 
-exports.Connect4GameController.prototype.RequestMove = function(move) {
-	// 1. read game from database using gameID to get Connect4GameBoard object
-	// faked for now
-	var gameBoard = new connect4GameBoard.Connect4GameBoard();
-	
+exports.Connect4GameController.prototype.RequestMove = function(move) {	
 	// 2. get proper placement of move based on the column
-	var updatedConnect4Move = gameBoard.GetLocationIfDropGamePieceAtCol(move.col);
+	var updatedConnect4Move = this.gameBoard.GetLocationIfDropGamePieceAtCol(move.col);
 	
-	if (gameBoard.IsPlayersTurn(move)) {
+	if (this.gameBoard.IsPlayersTurn(move)) {
 		if (updatedConnect4Move != null) {
 			// 3. Place the move on the game board
-			gameBoard.PlayMoveOnBoard(move.row, move.col);
+			this.gameBoard.PlayMoveOnBoard(move.row, move.col);
 			// 4. Check for a winner
-			var isGameWon = gameBoard.IsWinner();
+			var isGameWon = this.gameBoard.IsWinner();
 			
 			if (isGameWon) {
 				// send message to winner and opponent saying the game has been won
 			}
-			else if (gameBoard.IsDraw()) {
+			else if (this.gameBoard.IsDraw()) {
 				// send message to both players saying the game is a draw
 			}
 			else {
