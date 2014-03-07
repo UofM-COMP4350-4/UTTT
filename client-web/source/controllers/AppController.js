@@ -21,6 +21,9 @@ enyo.kind({
 		//if the client has a userID, do nothing
 		//else send an initialize request to the database
 		window.userID = localStorage.getItem("clientID");
+		window.userName = "Player";
+		window.availableGames = {};
+		window.active = {};
 	    window.userID = window.ClientServerComm.initialize(window.userID, enyo.bind(this, function(baseState) {
 	    	window.userID = baseState.user.userID;
 	    	localStorage.setItem("clientID", window.userID);
