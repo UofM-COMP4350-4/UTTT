@@ -28,7 +28,7 @@ enyo.kind({
 			window.availableGames = baseState.availableGames;
 			window.active = baseState.active;
 			enyo.stage.menu.controller.loadActiveGames();
-			if(!window.location.hash ||window.location.hash.length==0 || window.location.hash=="#") {
+			if(!window.location.hash ||window.location.hash.length===0 || window.location.hash=="#") {
 				// set initial hash location in url
 				window.location.hash = "launcher";
 			} else {
@@ -96,7 +96,7 @@ enyo.kind({
 		} else if(hash=="invite") {
 			document.title = "NBGI - Invite to Play";
 			enyo.stage.game.controller.showLauncher(true);
-		} else if(hash.indexOf("game-")==0) {
+		} else if(hash.indexOf("game-")===0) {
 			var instanceID = hash.replace("game-", "");
 			var gameboard = window.active[instanceID];
 			if(gameboard) { // switch to game
