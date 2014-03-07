@@ -7,8 +7,8 @@ enyo.kind({
 	},
 	loadBaseState: function(baseState) {
 		this.state = [];
-		for(var x in baseState) {
-			this.state.push(baseState[x]);
+		for(var x in window.active) {
+			this.state.push(window.active[x]);
 		}
 		this.loadGameList();
 	},
@@ -47,15 +47,15 @@ enyo.kind({
 		return true;
 	},
 	openMatch: function(inSender, inEvent) {
-		this.doLoadGame({gameboard:this.state[inEvent.index]});
+		window.location.hash = "game-" + this.state[inEvent.index].instanceID;
 		return true;
 	},
 	newMatch: function(inSender, inEvent) {
-		this.doShowLauncher({mode:"newMatch"});
+		window.location.hash = "launcher";
 		return true;
 	},
 	invite: function(inSender, inEvent) {
-		this.doShowLauncher({mode:"invite"});
+		window.location.hash = "invite";
 		return true;
 	}
 });
