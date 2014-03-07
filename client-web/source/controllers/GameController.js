@@ -1,7 +1,8 @@
 enyo.kind({
 	name: "GameController",
 	kind: "Component",
-	showLauncher: function(mode) {
+	showLauncher: function(inviteMode) {
+		this.inviteMode = inviteMode;
 		this.gamesList = [];
 		for(var x in window.availableGames) {
 			this.gamesList.push({gameID:x, gameName:window.availableGames[x]});
@@ -36,11 +37,11 @@ enyo.kind({
 	gameLaunch: function(inSender, inEvent) {
 		var gameID = this.gamesList[inEvent.index].gameID;
 		this.createGame(gameID);
-		if(this.mode==="newMatch") {
+		if(!this.inviteMode) {
 			window.ClientServerComm.queueForGame(window.userID, gameID, enyo.bind(this, function(response) {
 				// TODO
 			}));
-		} else if(this.mode==="invite") {
+		} else {
 			window.ClientServerComm.createNewGame(window.userID, gameID, enyo.bind(this, function(response) {
 				// TODO: popup dialog giving url to share
 			}));

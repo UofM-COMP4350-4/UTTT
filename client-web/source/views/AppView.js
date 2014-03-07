@@ -3,10 +3,6 @@ enyo.kind({
 	kind: "View",
 	controllerKind: "AppController",
 	classes: "app",
-	handlers: {
-		onLoadGame:"controller.loadGame",
-		onShowLauncher:"controller.showLauncher"
-	},
 	components:[
 		{name:"upperPanels", kind: "Panels", index:0, arrangerKind: "CollapsingArranger", realtimeFit: true, wrap: false, classes:"panels enyo-fit app", draggable:true, onTransitionFinish:"controller.upperTransition", components:[
 			{name:"menu", kind:"MenuView", classes:"menu-container"},

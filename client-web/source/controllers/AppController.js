@@ -21,15 +21,23 @@ enyo.kind({
 		//if the client has a userID, do nothing
 		//else send an initialize request to the database
 		window.userID = localStorage.getItem("clientID");
-	    window.userID = window.ClientServerComm.initialize(window.userID, function(baseState) {
+		window.userName = "Player";
+		window.availableGames = {};
+		window.active = {};
+	    window.userID = window.ClientServerComm.initialize(window.userID, enyo.bind(this, function(baseState) {
 	    	window.userID = baseState.user.userID;
 	    	localStorage.setItem("clientID", window.userID);
 	    	window.userName = baseState.user.userName;
-			delete baseState.user;
 			window.availableGames = baseState.availableGames;
-			delete baseState.availableGames;
-			enyo.stage.menu.controller.loadActiveGames(baseState);
-	    });
+			window.active = baseState.active;
+			enyo.stage.menu.controller.loadActiveGames();
+			if(!window.location.hash ||window.location.hash.length===0 || window.location.hash=="#") {
+				// set initial hash location in url
+				window.location.hash = "launcher";
+			} else {
+				this.hashChange();
+			}
+	    }));
 	},		
 	toggleMenu: function() {
 		this.setMenuShowing(!this.menuShowing);
@@ -82,20 +90,26 @@ enyo.kind({
 	draggingHandler: function(inSender, inEvent) {
 		this.view.$.lowerPanels.draggable = (inEvent.clientX > (enyo.dom.getWindowWidth()/2));
 	},
-	loadGame: function(inSender, inEvent) {
-		this.showGameArea();
-		document.title = "NBGI - " + window.availableGames[inEvent.gameboard.gameID];
-		// TODO hash code update/handling
-		enyo.stage.game.controller.loadGame(inEvent.gameboard);
-		return true;
-	},
-	showLauncher: function(inSender, inEvent) {
-		this.showGameArea();
-		document.title = "NBGI - Game Launcher";
-		// TODO hash code update/handling
-		enyo.stage.game.controller.showLauncher(inEvent.mode);
-	},
 	hashChange: function(inSender, inEvent) {
-		// TODO
+		this.showGameArea();
+		var hash = window.location.hash.slice(1);
+		if(hash=="launcher") {
+			document.title = "NBGI - Game Launcher";
+			enyo.stage.game.controller.showLauncher();
+		} else if(hash=="invite") {
+			document.title = "NBGI - Invite to Play";
+			enyo.stage.game.controller.showLauncher(true);
+		} else if(hash.indexOf("game-")===0) {
+			var instanceID = hash.replace("game-", "");
+			var gameboard = window.active[instanceID];
+			if(gameboard) { // switch to game
+				document.title = "NBGI - " + window.availableGames[inEvent.gameboard.gameID];
+				enyo.stage.game.controller.loadGame(gameboard);
+			} else { // attempt to join game
+				// TODO: attempt to join game and show if joined successfully
+			}
+		} else {
+			window.location.hash = "launcher";
+		}
 	}
 });
