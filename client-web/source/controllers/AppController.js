@@ -105,6 +105,8 @@ enyo.kind({
 			} else { // attempt to join game
 				// TODO: attempt to join game and show if joined successfully
 			}
+		} else {
+			window.location.hash = "launcher";
 		}
 	}
 });
