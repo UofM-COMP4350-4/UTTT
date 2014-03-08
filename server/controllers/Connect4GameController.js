@@ -1,8 +1,16 @@
 var connect4GameBoard = require("../models/connect4/Connect4GameBoard.js");
+var ValidateObjectController = require("./ValidateObjectController.js");
 
 exports.Connect4GameController = function(gameInfo) {
+	ValidateObjectController.ValidateObject(gameInfo);
 	this.gameBoard = new connect4GameBoard.Connect4GameBoard(gameInfo);
 };
+
+exports.Connect4GameController.LoadGame(game) {
+	ValidateObjectController.ValidateObject(game);
+	this.gameBoard = new connect4GameBoard.Connect4GameBoard(game);
+	return this.gameBoard;
+}
 
 exports.Connect4GameController.prototype.CreateGame = function() {
 	
@@ -13,17 +21,14 @@ exports.Connect4GameController.prototype.CompleteGame = function() {
 };
 
 exports.Connect4GameController.prototype.RequestMove = function(move) {	
-	// 2. get proper placement of move based on the column
+	ValidateObjectController.ValidateObject(move);
 	var updatedConnect4Move = this.gameBoard.GetLocationIfDropGamePieceAtCol(move.col);
 	
 	if (this.gameBoard.IsPlayersTurn(move)) {
 		if (updatedConnect4Move != null) {
-			// 3. Place the move on the game board
 			this.gameBoard.PlayMoveOnBoard(move.row, move.col);
-			// 4. Check for a winner
-			var isGameWon = this.gameBoard.IsWinner();
 			
-			if (isGameWon) {
+			if (this.gameBoard.IsWinner()) {
 				// send message to winner and opponent saying the game has been won
 			}
 			else if (this.gameBoard.IsDraw()) {
