@@ -107,20 +107,6 @@ describe('Model Test Suite', function() {
 				gameID: 1234,
 				instanceID:532744,
 				userToPlay:Player1,
-				players:[],
-				grid:[],
-				moves:[],
-				isWinner:false,
-				ROW_SIZE:5,
-				COL_SIZE:2,
-				maxPlayers:2,
-				lastPieceID:3
-				});
-			}, Error);
-			assert.throws(function() {new connect4GameBoardJS.Connect4GameBoard({
-				gameID: 1234,
-				instanceID:532744,
-				userToPlay:Player1,
 				players:[[Player1],[Player2]],
 				grid:[[1,2],[2,3]],
 				moves:[[1,2],[2,3]],
