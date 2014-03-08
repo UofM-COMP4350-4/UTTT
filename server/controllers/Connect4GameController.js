@@ -6,7 +6,7 @@ exports.Connect4GameController = function(gameInfo) {
 	this.gameBoard = new connect4GameBoard.Connect4GameBoard(gameInfo);
 };
 
-exports.Connect4GameController.LoadGame(game) {
+exports.Connect4GameController.LoadGame = function(game) {
 	ValidateObjectController.ValidateObject(game);
 	this.gameBoard = new connect4GameBoard.Connect4GameBoard(game);
 	return this.gameBoard;
