@@ -43,6 +43,25 @@ const int userID = 12;
     [self.view addGestureRecognizer:singleFingerTap];
 }
 
+- (BOOL)shouldAutorotate
+{
+    if (([self interfaceOrientation] == [self supportedInterfaceOrientations]) )
+    {
+        return NO;
+    }
+    return YES;
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    /*if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+     return UIInterfaceOrientationMaskAllButUpsideDown;
+     } else {
+     return UIInterfaceOrientationMaskAll;
+     }*/
+    return UIInterfaceOrientationMaskPortrait;
+}
+
 //The event handling method
 - (void)playerMadeMove:(UITapGestureRecognizer *)recognizer {
     CGPoint location = [recognizer locationInView:[recognizer.view superview]];

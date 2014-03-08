@@ -24,7 +24,16 @@
     }
     return self;
 }
-
+- (BOOL)shouldAutorotate {
+    /*if (self.interfaceOrientation == self.supportedInterfaceOrientations)
+    {
+        return NO;
+    }*/
+    return YES;
+}
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskAll;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
