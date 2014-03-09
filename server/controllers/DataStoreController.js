@@ -10,21 +10,27 @@ function DataStoreController(database)
 	relationalDB = new RelationalDB(database);
 }
 
+DataStoreController.prototype.getUserInformation = function(userID, callback)
+{
+	relationalDB.getUserInfo(userID, function(newUser){
+		callback(newUser);
+	});
+};
+
 DataStoreController.prototype.getListOfGames = function(callback)
 {
 	//Call validate object on the relationalDB object
 	relationalDB.getListOfGames(function(gameList){
-		console.log('list of games is: ' + gameList);
+		console.log('list of games is: ' + JSON.stringify(gameList[0]));
 		callback(gameList);
 	});
 };
 
-DataStoreController.prototype.getNewClientID = function(callback)
+DataStoreController.prototype.getNewUserInfo = function(callback)
 {	
 	//Call validate object on the relationalDB object
-	relationalDB.getNewClientID(function(newClientID){
-		console.log('new client id is: ' + newClientID);
-		callback(newClientID);
+	relationalDB.getNewUserInfo(function(newUser){
+		callback(newUser);
 	});
 };
 

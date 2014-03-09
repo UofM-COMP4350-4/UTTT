@@ -30,7 +30,7 @@ enyo.kind({
 	    	window.userName = baseState.user.userName;
 			window.availableGames = baseState.availableGames;
 			window.active = baseState.active;
-			enyo.stage.menu.controller.loadActiveGames();
+			//enyo.stage.menu.controller.loadActiveGames();
 			if(!window.location.hash ||window.location.hash.length===0 || window.location.hash=="#") {
 				// set initial hash location in url
 				window.location.hash = "launcher";

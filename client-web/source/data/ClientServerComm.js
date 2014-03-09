@@ -75,8 +75,8 @@ enyo.singleton({
 	initializeResponse: function(callback, request, response) {
 		if(response)
 		{
-			this.log('Server responded with userID: ' + response.userID);
-			callback(response.userID);
+			this.log('Server responded with userID: ' + response.user.userID);
+			callback(response);
 		}		
 	},
 	
