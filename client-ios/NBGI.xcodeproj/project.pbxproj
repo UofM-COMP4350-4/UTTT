@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		19449DDA18CBB94400B95D89 /* AppNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19449DD918CBB94400B95D89 /* AppNaviViewController.m */; };
 		1969757C18A2E379004AC6EE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1969757B18A2E379004AC6EE /* Foundation.framework */; };
 		1969757E18A2E379004AC6EE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1969757D18A2E379004AC6EE /* CoreGraphics.framework */; };
 		1969758018A2E379004AC6EE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1969757F18A2E379004AC6EE /* UIKit.framework */; };
@@ -42,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		19449DD818CBB94400B95D89 /* AppNaviViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppNaviViewController.h; sourceTree = "<group>"; };
+		19449DD918CBB94400B95D89 /* AppNaviViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppNaviViewController.m; sourceTree = "<group>"; };
 		1969757818A2E379004AC6EE /* NBGI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NBGI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1969757B18A2E379004AC6EE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1969757D18A2E379004AC6EE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -183,6 +186,8 @@
 				32EC03EA18BEABDB00E3F7C7 /* Connect4ViewController.m */,
 				22204A5518C00E6A00AD4637 /* BlahViewController.h */,
 				22204A5618C00E6A00AD4637 /* BlahViewController.m */,
+				19449DD818CBB94400B95D89 /* AppNaviViewController.h */,
+				19449DD918CBB94400B95D89 /* AppNaviViewController.m */,
 			);
 			name = controllers;
 			sourceTree = "<group>";
@@ -316,6 +321,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19449DDA18CBB94400B95D89 /* AppNaviViewController.m in Sources */,
 				1969758C18A2E379004AC6EE /* AppDelegate.m in Sources */,
 				1969758818A2E379004AC6EE /* main.m in Sources */,
 				3236696418BDDD2A0067A632 /* MainViewController.m in Sources */,

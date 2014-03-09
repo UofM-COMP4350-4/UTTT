@@ -29,8 +29,9 @@
             <objects>
                 <collectionViewController autoresizesArchivedViewToFullSize="NO" id="Kz0-ab-grV" customClass="BlahViewController" sceneMemberID="viewController">
                     <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="U08-KD-Ym4">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="oS4-1y-INd">
                             <size key="itemSize" width="100" height="100"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -74,7 +75,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Xg2-4w-taj"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="k5V-tn-YpM">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="13n-TY-CDB">
@@ -88,17 +89,20 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <navigationItem key="navigationItem" title="Main Screen" id="XAG-ue-BeA"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gbe-BL-8kF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-6026" y="-3386"/>
         </scene>
-        <!--Navigation Controller - Main Navigation-->
+        <!--App Navi View Controller - Main Navigation-->
         <scene sceneID="Sj5-Nl-YEM">
             <objects>
-                <navigationController title="Main Navigation" definesPresentationContext="YES" id="kH0-h3-BgA" sceneMemberID="viewController">
+                <navigationController title="Main Navigation" definesPresentationContext="YES" id="kH0-h3-BgA" customClass="AppNaviViewController" sceneMemberID="viewController">
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Utv-av-QUf">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
