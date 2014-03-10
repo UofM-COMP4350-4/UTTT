@@ -994,7 +994,6 @@ describe('Model Test Suite', function() {
 			assert.equal(boardGameJSONObject.status, undefined);
 			
 			boardGameJSONObject = Game.CreateBoardGameJSONObject('draw');
-			console.log(boardGameJSONObject);
 			assert.equal(boardGameJSONObject.gameID, 07);
 			assert.equal(boardGameJSONObject.instanceID, 532744);
 			assert.equal(boardGameJSONObject.userToPlay, Game.userToPlay);
