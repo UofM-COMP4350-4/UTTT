@@ -46,7 +46,7 @@ server.get("/initialize", function(request, response, next) {
 		{
 			console.log('Server gets here 1: ' + id);
 			//call DataStoreController and get a the user's information
-			dbController.getUserInformation( parseInt(id), function(newUserInfo){
+			dbController.getUserInformation( parseInt(id, 10), function(newUserInfo){
 				var userInfo = newUserInfo[0];
 				console.log('Server gets here 2: ' + userInfo.userID);
 				
