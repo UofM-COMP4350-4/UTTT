@@ -13,13 +13,11 @@ util.inherits(exports.Connect4GameController, events.EventEmitter);
 
 exports.Connect4GameController.prototype.RequestMove = function(move) {	
 	ValidateObjectController.ValidateObject(move);
-	var updatedConnect4Move = this.gameBoard.GetLocationIfDropGamePieceAtCol(move.col);
-	
+	var error = this.gameBoard.PlayMoveOnBoard(move);
+
 	if (this.gameBoard.IsPlayersTurn(move)) {
-		if (updatedConnect4Move != null) {
-			var error = this.gameBoard.PlayMoveOnBoard(move.row, move.col);
-			
-			if (this.gameBoard.IsWinner()) {
+		if (typeof error == 'undefined') {	
+			if (this.gameBoard.winner != undefined) {
 				this.emit('playResult',this.gameBoard.CreateBoardGameJSONObject('Winner'));
 			}
 			else if (this.gameBoard.IsDraw()) {
@@ -28,15 +26,13 @@ exports.Connect4GameController.prototype.RequestMove = function(move) {
 			else if (typeof error.err == 'undefined') {
 				this.emit('boardChanged', this.gameBoard.CreateBoardGameJSONObject(undefined));
 			}
-			else {
-				this.emit('moveFailure', this.gameBoard.CreateBoardGameJSONObject(error.err));
-			}
 		}
 		else {
-			this.emit('moveFailure',this.gameBoard.CreateBoardGameJSONObject('Invalid Move: Column is already full.'));
-		}	
+			this.emit('moveFailure', this.gameBoard.CreateBoardGameJSONObject(error));
+		}
 	}
 	else {
-		this.emit('moveFailure',this.gameBoard.CreateBoardGameJSONObject('Invalide Move: It is not your turn.'));
+		this.emit('moveFailure', this.gameBoard.CreateBoardGameJSONObject(error));
 	}
+	
 };
