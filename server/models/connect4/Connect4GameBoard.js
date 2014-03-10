@@ -293,7 +293,7 @@ exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(initmove)
 	ValidateObjectController.ValidateObject(initmove);
 	
 	if (this.isWinner) {
-		return;
+		return {err: "Invalid Move: This game already has a winner."};
 	}
 	
 	var lmove = this.GetLocationIfDropGamePieceAtCol(initmove.x);
@@ -328,6 +328,23 @@ exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(initmove)
 		}
 	}
 	else {
-		throw new Error('A game piece already exists at this location.');
+		return {err:"Invalid Move: A piece already exists at this location."}
 	}
+	
+	return {err:undefined};
 };
+
+exports.Connect4GameBoard.prototype.CreateJSONObjectOnGameBoardChanged(status) {
+	var playersJSON = {};
+	for (var index = 0; index < players.length; index++) {
+		playersJSON[players[index].id] = players[index].name;
+	}
+	
+	return {  instanceID: this.instanceID,
+				gameID: this.gameID,
+				userToPlay: this.userToPlay,
+				players: playersJSON,
+				currentBoard: this.moves,
+				status: status
+		   }
+}
