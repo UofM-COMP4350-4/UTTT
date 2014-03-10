@@ -16,7 +16,7 @@ exports.Connect4GameController.prototype.RequestMove = function(move) {
 	var error = this.gameBoard.PlayMoveOnBoard(move);
 
 	if (typeof error == 'undefined') {	
-		if (this.gameBoard.winner != undefined) {
+		if (this.gameBoard.winner !== undefined) {
 			this.emit('playResult',this.gameBoard.CreateBoardGameJSONObject('Winner'));
 		}
 		else if (this.gameBoard.IsDraw()) {

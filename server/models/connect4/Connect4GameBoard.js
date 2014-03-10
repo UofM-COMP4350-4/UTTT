@@ -357,6 +357,6 @@ exports.Connect4GameBoard.prototype.CreateBoardGameJSONObject = function(status)
 			  players: playersJSON,
 			  currentBoard: this.moves,
 			  winner: this.winner,
-			  status: status,
+			  status: status
 	};
 }
