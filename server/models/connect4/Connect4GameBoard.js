@@ -293,7 +293,7 @@ exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(initmove)
 	ValidateObjectController.ValidateObject(initmove);
 	
 	if (this.isWinner) {
-		return {err: "Invalid Move: This game already has a winner."};
+		return "Invalid Move: This game already has a winner.";
 	}
 	
 	var lmove = this.GetLocationIfDropGamePieceAtCol(initmove.x);
@@ -301,13 +301,16 @@ exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(initmove)
 
 	if (lmove) {
 		newy = lmove.y+1;
+		
+		if (newy >= this.COL_SIZE) {
+			return "Invalid Move: There are no valid moves in this column.";
+		}
 	}
 	else {
 		newy = 0;
 	}
 	
 	var move = {x:initmove.x, y:newy, player:initmove.player};
-	
 	var iterator = new GridIteratorJS.GridIterator(this.grid,move.x, move.y, this.ROW_SIZE, this.COL_SIZE);
 	var connect4GamePiece = this.grid[iterator.GetIndex()];
 	
@@ -328,7 +331,7 @@ exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(initmove)
 		}
 	}
 	else {
-		return {err:"Invalid Move: A piece already exists at this location."}
+		return "Invalid Move: A piece already exists at this location.";
 	}
 	
 	return {err:undefined};
