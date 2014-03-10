@@ -359,4 +359,4 @@ exports.Connect4GameBoard.prototype.CreateBoardGameJSONObject = function(status)
 			  winner: this.winner,
 			  status: status
 	};
-}
+};
