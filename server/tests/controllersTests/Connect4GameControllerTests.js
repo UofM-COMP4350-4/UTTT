@@ -50,8 +50,8 @@ describe('Controller Test Suite', function(){
 		
 		it('Test: Initialize Invalid Data', function() {
 			assert.throws(function() { new connect4GameControllerJS.Connect4GameController('hello') }, Error);
-			assert.throws(function() { new connect4GameControllerJS.Connect4GameController(True) }, Error);
-			assert.throws(function() { new connect4GameControllerJS.Connect4GameController(False) }, Error);
+			assert.throws(function() { new connect4GameControllerJS.Connect4GameController(true) }, Error);
+			assert.throws(function() { new connect4GameControllerJS.Connect4GameController(false) }, Error);
 			assert.throws(function() { new connect4GameControllerJS.Connect4GameController(9000) }, Error);
 		});
 		
@@ -129,13 +129,13 @@ describe('Controller Test Suite', function(){
 			var connect4GameController = new connect4GameControllerJS.Connect4GameController(Game);
 			connect4GameController.on('playResult', function(data) {
 				assert.equal(data.status,'Winner');
-			})
+			});
 			connect4GameController.on('moveFailure', function(data) {
 				assert.fail('moveFailure','playResult','Wrong event caught');
-			})
+			});
 			connect4GameController.on('boardChanged', function(data) {
 				assert.fail('boardChanged','playResult','Wrong event caught');
-			})			
+			});		
 			connect4GameController.RequestMove(new connect4MoveJS.Connect4Move(3,3,player1));
 		});
 		
@@ -171,13 +171,13 @@ describe('Controller Test Suite', function(){
 			var connect4GameController = new connect4GameControllerJS.Connect4GameController(Game);
 			connect4GameController.on('playResult', function(data) {
 				assert.equal(data.status,'Draw');
-			})
+			});
 			connect4GameController.on('moveFailure', function(data) {
 				assert.fail('moveFailure','playResult','Wrong event caught');
-			})
+			});
 			connect4GameController.on('boardChanged', function(data) {
 				assert.fail('boardChanged','playResult','Wrong event caught');
-			})			
+			});			
 			connect4GameController.RequestMove(new connect4MoveJS.Connect4Move(3,3,player1));
 		});
 		
@@ -193,13 +193,13 @@ describe('Controller Test Suite', function(){
 			var connect4GameController = new connect4GameControllerJS.Connect4GameController(Game);
 			connect4GameController.on('boardChanged', function(data) {
 				assert.equal(data.status,undefined);
-			})
+			});
 			connect4GameController.on('moveFailure', function(data) {
 				assert.fail('moveFailure','boardChanged','Wrong event caught');
-			})
+			});
 			connect4GameController.on('playResult', function(data) {
 				assert.fail('playResult','boardChanged','Wrong event caught');
-			})			
+			});			
 			connect4GameController.RequestMove(new connect4MoveJS.Connect4Move(2,3,player1));
 		});
 		
@@ -216,13 +216,13 @@ describe('Controller Test Suite', function(){
 			var connect4GameController = new connect4GameControllerJS.Connect4GameController(Game);
 			connect4GameController.on('moveFailure', function(data) {
 				assert.equal(data.status,'Invalid Move: It is not your turn.');
-			})
+			});
 			connect4GameController.on('boardChanged', function(data) {
 				assert.fail('boardChanged','moveFailure','Wrong event caught');
-			})
+			});
 			connect4GameController.on('playResult', function(data) {
 				assert.fail('playResult','moveFailure','Wrong event caught');
-			})	
+			});	
 			connect4GameController.RequestMove(new connect4MoveJS.Connect4Move(2,3,player2));
 		});
 		
@@ -249,13 +249,13 @@ describe('Controller Test Suite', function(){
 			var connect4GameController = new connect4GameControllerJS.Connect4GameController(Game);
 			connect4GameController.on('moveFailure', function(data) {
 				assert.equal(data.status,'Invalid Move: There are no valid moves in this column.');
-			})
+			});
 			connect4GameController.on('boardChanged', function(data) {
 				assert.fail('boardChanged','moveFailure','Wrong event caught');
-			})
+			});
 			connect4GameController.on('playResult', function(data) {
 				assert.fail('playResult','moveFailure','Wrong event caught');
-			})	
+			});	
 			connect4GameController.RequestMove(new connect4MoveJS.Connect4Move(0,0,player2));
 		});
 	});
