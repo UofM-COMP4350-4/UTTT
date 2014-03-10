@@ -303,7 +303,7 @@ exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(initmove)
 	if (!this.IsPlayersTurn(initmove)) {
 		return 'Invalid Move: It is not your turn.';
 	}
-	
+
 	var lmove = this.GetLocationIfDropGamePieceAtCol(initmove.x);
 	var newy = 0;
 

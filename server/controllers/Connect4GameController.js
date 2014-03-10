@@ -15,20 +15,15 @@ exports.Connect4GameController.prototype.RequestMove = function(move) {
 	ValidateObjectController.ValidateObject(move);
 	var error = this.gameBoard.PlayMoveOnBoard(move);
 
-	if (this.gameBoard.IsPlayersTurn(move)) {
-		if (typeof error == 'undefined') {	
-			if (this.gameBoard.winner != undefined) {
-				this.emit('playResult',this.gameBoard.CreateBoardGameJSONObject('Winner'));
-			}
-			else if (this.gameBoard.IsDraw()) {
-				this.emit('playResult',this.gameBoard.CreateBoardGameJSONObject('Draw'));
-			}
-			else if (typeof error.err == 'undefined') {
-				this.emit('boardChanged', this.gameBoard.CreateBoardGameJSONObject(undefined));
-			}
+	if (typeof error == 'undefined') {	
+		if (this.gameBoard.winner != undefined) {
+			this.emit('playResult',this.gameBoard.CreateBoardGameJSONObject('Winner'));
 		}
-		else {
-			this.emit('moveFailure', this.gameBoard.CreateBoardGameJSONObject(error));
+		else if (this.gameBoard.IsDraw()) {
+			this.emit('playResult',this.gameBoard.CreateBoardGameJSONObject('Draw'));
+		}
+		else if (typeof error == 'undefined') {
+			this.emit('boardChanged', this.gameBoard.CreateBoardGameJSONObject(undefined));
 		}
 	}
 	else {
