@@ -42,12 +42,12 @@ exports.Connect4GameBoard = function(gameInfo)
 		ValidateObjectController.ValidateNumber(gameInfo.lastPieceID);
 		this.players = gameInfo.players;
 		this.userToPlay = gameInfo.userToPlay;
+		this.ROW_SIZE = gameInfo.ROW_SIZE;
+		this.COL_SIZE = gameInfo.COL_SIZE;
 		this.grid = gameInfo.grid;
 		this.moves = gameInfo.moves;
 		this.isWinner = gameInfo.isWinner;
 		this.winner = gameInfo.winner;
-		this.ROW_SIZE = gameInfo.ROW_SIZE;
-		this.COL_SIZE = gameInfo.COL_SIZE;
 		this.maxPlayers = gameInfo.maxPlayers;
 		this.lastPieceID = gameInfo.lastPieceID;
 	}
