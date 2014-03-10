@@ -334,10 +334,10 @@ exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(initmove)
 	return {err:undefined};
 };
 
-exports.Connect4GameBoard.prototype.CreateBoardGameJSONObject(status) {
+exports.Connect4GameBoard.prototype.CreateBoardGameJSONObject = function(status) {
 	var playersJSON = {};
-	for (var index = 0; index < players.length; index++) {
-		playersJSON[players[index].id] = players[index].name;
+	for (var index = 0; index < this.players.length; index++) {
+		playersJSON[this.players[index].id] = this.players[index].name;
 	}
 	
 	return {  instanceID: this.instanceID,
