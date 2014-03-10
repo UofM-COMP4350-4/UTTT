@@ -975,5 +975,32 @@ describe('Model Test Suite', function() {
 				player2:Player2
 			});
 		});
+		it ('Test: CreateJSONObject with Valid Data', function() {
+			var Player1 = new playerJS.Player(12, 'Player 1');
+			var Player2 = new playerJS.Player(401, 'Player 2');
+			var Game = new connect4GameBoardJS.Connect4GameBoard({
+				gameID: 07,
+				instanceID:532744,
+				userToPlay:Player1,
+				player1:Player1,
+				player2:Player2
+			});
+			var boardGameJSONObject = Game.CreateBoardGameJSONObject(undefined);
+			assert.equal(boardGameJSONObject.gameID, 07);
+			assert.equal(boardGameJSONObject.instanceID, 532744);
+			assert.equal(boardGameJSONObject.userToPlay, Game.userToPlay);
+			assert.equal(boardGameJSONObject.currentBoard, Game.moves);
+			assert.equal(boardGameJSONObject.winner, Game.winner);
+			assert.equal(boardGameJSONObject.status, undefined);
+			
+			boardGameJSONObject = Game.CreateBoardGameJSONObject('draw');
+			console.log(boardGameJSONObject);
+			assert.equal(boardGameJSONObject.gameID, 07);
+			assert.equal(boardGameJSONObject.instanceID, 532744);
+			assert.equal(boardGameJSONObject.userToPlay, Game.userToPlay);
+			assert.equal(boardGameJSONObject.currentBoard, Game.moves);
+			assert.equal(boardGameJSONObject.winner, Game.winner);
+			assert.equal(boardGameJSONObject.status, 'draw');
+		});
 	});
 });
