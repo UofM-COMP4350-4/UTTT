@@ -25,23 +25,23 @@ exports.Connect4GameController.prototype.RequestMove = function(move) {
 			var error = this.gameBoard.PlayMoveOnBoard(move.row, move.col);
 			
 			if (this.gameBoard.IsWinner()) {
-				this.emit('gameWon','winner');
+				this.emit('playResult',this.gameBoard.CreateBoardGameJSONObject('Winner'));
 			}
 			else if (this.gameBoard.IsDraw()) {
-				this.emit('gameDraw','draw');
+				this.emit('playResult',this.gameBoard.CreateBoardGameJSONObject('Draw'));
 			}
 			else if (typeof error.err == 'undefined') {
-				this.emit('boardChanged', this.gameBoard.CreateJSONObjectOnGameBoardChanged(undefined));
+				this.emit('boardChanged', this.gameBoard.CreateBoardGameJSONObject(undefined));
 			}
 			else {
-				this.emit('invalidMove', error.err);
+				this.emit('moveFailure', this.gameBoard.CreateBoardGameJSONObject(error.err));
 			}
 		}
 		else {
-			this.emit('invalidMove','Invalid Move: Column is already full.');
+			this.emit('moveFailure',this.gameBoard.CreateBoardGameJSONObject('Invalid Move: Column is already full.'));
 		}	
 	}
 	else {
-		this.emit('invalidMove','Invalide Move: It is not your turn.');
+		this.emit('moveFailure',this.gameBoard.CreateBoardGameJSONObject('Invalide Move: It is not your turn.'));
 	}
 };
