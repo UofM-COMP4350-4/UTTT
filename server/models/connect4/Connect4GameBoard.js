@@ -13,12 +13,12 @@ exports.Connect4GameBoard = function(gameInfo)
 	
 	this.gameID = gameInfo.gameID;
 	this.instanceID = gameInfo.instanceID;
-	
+	this.userToPlay = gameInfo.userToPlay;
+
 	if (typeof gameInfo.player1 != 'undefined' && typeof gameInfo.player2 != 'undefined') {
 		ValidateObjectController.ValidateObject(gameInfo.player1);
 		ValidateObjectController.ValidateObject(gameInfo.player2);
 		this.players = [gameInfo.player1, gameInfo.player2];
-		this.userToPlay = gameInfo.player1;
 		this.ROW_SIZE = 6;
 		this.COL_SIZE = 7;
 		this.grid = new Array(this.ROW_SIZE * this.COL_SIZE);
@@ -264,7 +264,7 @@ exports.Connect4GameBoard.prototype.IsPlayersTurn = function(move)
 {
 	ValidateObjectController.ValidateObject(move);
 	var playerID = move.player.id;
-	
+
 	if (this.userToPlay.id == playerID) {
 		return true;
 	}
@@ -294,6 +294,14 @@ exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(initmove)
 	
 	if (this.isWinner) {
 		return "Invalid Move: This game already has a winner.";
+	}
+	
+	if (this.IsDraw()) {
+		return "Invalid Move: This game is a draw.";
+	}
+	
+	if (!this.IsPlayersTurn(initmove)) {
+		return 'Invalid Move: It is not your turn.';
 	}
 	
 	var lmove = this.GetLocationIfDropGamePieceAtCol(initmove.x);
@@ -334,7 +342,7 @@ exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(initmove)
 		return "Invalid Move: A piece already exists at this location.";
 	}
 	
-	return {err:undefined};
+	return undefined;
 };
 
 exports.Connect4GameBoard.prototype.CreateBoardGameJSONObject = function(status) {
