@@ -1,8 +1,7 @@
 var connect4GameBoard = require("../models/connect4/Connect4GameBoard.js");
 var ValidateObjectController = require("./ValidateObjectController.js");
 var events = require("events");
-
-exports.Connect4GameController.__proto__ = events.EventEmitter.prototype; // inherit from EventEmitter
+var util = require("util");
 
 exports.Connect4GameController = function(gameInfo) {
 	ValidateObjectController.ValidateObject(gameInfo);
@@ -10,11 +9,7 @@ exports.Connect4GameController = function(gameInfo) {
 	events.EventEmitter.call(this);
 };
 
-exports.Connect4GameController.LoadGame = function(game) {
-	ValidateObjectController.ValidateObject(game);
-	this.gameBoard = new connect4GameBoard.Connect4GameBoard(game);
-	return this.gameBoard;
-}
+util.inherits(exports.Connect4GameController, events.EventEmitter);
 
 exports.Connect4GameController.prototype.RequestMove = function(move) {	
 	ValidateObjectController.ValidateObject(move);
