@@ -334,17 +334,18 @@ exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(initmove)
 	return {err:undefined};
 };
 
-exports.Connect4GameBoard.prototype.CreateJSONObjectOnGameBoardChanged(status) {
+exports.Connect4GameBoard.prototype.CreateBoardGameJSONObject(status) {
 	var playersJSON = {};
 	for (var index = 0; index < players.length; index++) {
 		playersJSON[players[index].id] = players[index].name;
 	}
 	
 	return {  instanceID: this.instanceID,
-				gameID: this.gameID,
-				userToPlay: this.userToPlay,
-				players: playersJSON,
-				currentBoard: this.moves,
-				status: status
-		   }
+			  gameID: this.gameID,
+			  userToPlay: this.userToPlay,
+			  players: playersJSON,
+			  currentBoard: this.moves,
+			  winner: this.winner,
+			  status: status,
+	};
 }
