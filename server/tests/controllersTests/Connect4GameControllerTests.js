@@ -55,48 +55,6 @@ describe('Controller Test Suite', function(){
 			assert.throws(function() { new connect4GameControllerJS.Connect4GameController(9000) }, Error);
 		});
 		
-		// it('Test: Emit Event on Invalid Move Game is already a draw', function() {
-			// var player1 = new playerJS.Player(12, 'Player 1');
-			// var player2 = new playerJS.Player(401, 'Player 2');
-			// var connect4PiecePlayer1 = new connect4GamePieceJS.Connect4GamePiece({player:player1, pieceID:1});
-			// var connect4PiecePlayer2 = new connect4GamePieceJS.Connect4GamePiece({player:player2, pieceID:2});
-			// var Game = new connect4GameBoardJS.Connect4GameBoard( {
-				// gameID: 1234,
-				// instanceID:532744,
-				// userToPlay:player2,
-				// players:[player1, player2],
-				// grid:[connect4PiecePlayer1, connect4PiecePlayer1, connect4PiecePlayer1, connect4PiecePlayer2,
-					  // connect4PiecePlayer1, connect4PiecePlayer1, connect4PiecePlayer1, connect4PiecePlayer2,
-					  // connect4PiecePlayer1, connect4PiecePlayer1, connect4PiecePlayer1, connect4PiecePlayer2,
-					  // connect4PiecePlayer2, connect4PiecePlayer2, connect4PiecePlayer2, connect4PiecePlayer1],
-				// moves:[new connect4MoveJS.Connect4Move(0,0,player1), new connect4MoveJS.Connect4Move(0,1,player1),
-					   // new connect4MoveJS.Connect4Move(0,2,player1), new connect4MoveJS.Connect4Move(0,3,player2),
-					   // new connect4MoveJS.Connect4Move(1,0,player1), new connect4MoveJS.Connect4Move(1,1,player1),
-					   // new connect4MoveJS.Connect4Move(1,2,player1), new connect4MoveJS.Connect4Move(1,3,player2),
-					   // new connect4MoveJS.Connect4Move(2,0,player1), new connect4MoveJS.Connect4Move(2,1,player1),
-					   // new connect4MoveJS.Connect4Move(2,2,player1), new connect4MoveJS.Connect4Move(2,3,player2),
-					   // new connect4MoveJS.Connect4Move(3,0,player1), new connect4MoveJS.Connect4Move(3,1,player1),
-					   // new connect4MoveJS.Connect4Move(3,2,player1), new connect4MoveJS.Connect4Move(3,3,player2)],
-				// isWinner:false,
-				// ROW_SIZE:4,
-				// COL_SIZE:4,
-				// maxPlayers:2,
-				// lastPieceID:1
-			// });
-// 			
-			// var connect4GameController = new connect4GameControllerJS.Connect4GameController(Game);
-			// connect4GameController.on('moveFailure', function(data) {
-				// assert.equal(data.status,'Invalid Move: This game is a draw.');
-			// })
-			// connect4GameController.on('playResult', function(data) {
-				// assert.fail('playResult','moveFailure','Wrong event caught');
-			// })
-			// connect4GameController.on('boardChanged', function(data) {
-				// assert.fail('boardChanged','moveFailure','Wrong event caught');
-			// })
-			// connect4GameController.RequestMove(new connect4MoveJS.Connect4Move(0,0,player2));
-		// });
-		
 		it('Test: Emit Event on Winner', function() {
 			var player1 = new playerJS.Player(12, 'Player 1');
 			var player2 = new playerJS.Player(401, 'Player 2');
