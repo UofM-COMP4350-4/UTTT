@@ -14,7 +14,7 @@ exports.GameSocketController = function(port) {
 			ValidateObjectController.ValidateObject(user);
 			clientSocketIDHashTable[user.id] = socket.id;
 			
-			if (callback != undefined) {
+			if (callback !== undefined) {
 				callback(clientSocketIDHashTable);	
 			}
 		});
@@ -22,7 +22,7 @@ exports.GameSocketController = function(port) {
 		socket.on('gameCreated', function(gameInstanceID, callback) {
 			socket.join('game/' + gameInstanceID);
 			
-			if (callback != undefined) {
+			if (callback !== undefined) {
 				callback(socket.manager.rooms);	
 			}
 		});

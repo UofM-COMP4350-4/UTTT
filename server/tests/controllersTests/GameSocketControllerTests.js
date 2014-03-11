@@ -68,7 +68,7 @@ describe("Game Socket Communication Server Tests",function() {
 		
 		client1.on('moveReceived', function() {
 				done();
-		})
+		});
 	});
 	
 	it('Send data to Non-Existing User', function(done) {
@@ -116,7 +116,7 @@ describe("Game Socket Communication Server Tests",function() {
 		
 		client1.on('receivePlayResult', function(data) {
 			assert.equal('This is Data!',data);
-			numOfReceivedPlayResults = numOfReceivedPlayResults + 1
+			numOfReceivedPlayResults = numOfReceivedPlayResults + 1;
 
 			if (numOfReceivedPlayResults == 2) {
 				done();
@@ -125,7 +125,7 @@ describe("Game Socket Communication Server Tests",function() {
 		
 		client2.on('receivePlayResult', function(data) {
 			assert.equal('This is Data!',data);
-			numOfReceivedPlayResults = numOfReceivedPlayResults + 1
+			numOfReceivedPlayResults = numOfReceivedPlayResults + 1;
 
 			if (numOfReceivedPlayResults == 2) {
 				done();
