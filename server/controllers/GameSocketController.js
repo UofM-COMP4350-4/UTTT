@@ -13,29 +13,36 @@ exports.GameSocketController = function(port) {
 		socket.on('userSetup', function(user, callback) {
 			ValidateObjectController.ValidateObject(user);
 			clientSocketIDHashTable[user.id] = socket.id;
-			callback(clientSocketIDHashTable);
+			
+			if (callback != undefined) {
+				callback(clientSocketIDHashTable);	
+			}
 		});
 		
-		socket.on('gameCreated', function(user, gameInstanceID, callback) {
+		socket.on('gameCreated', function(gameInstanceID, callback) {
 			socket.join('game/' + gameInstanceID);
-			callback();
+			
+			if (callback != undefined) {
+				callback(socket.manager.rooms);	
+			}
+		});
+
+		socket.on('receiveMove', function(move) {
+			this.emit('moveReceived', move);
 		});
 	});
-
-	this.socketIO.sockets.on('receiveMove', function(move, callback) {
-		this.emit('receiveMove', move);
-		callback();
-	});
+	
+	this.SendDataToUser = function(userID, data) {
+		ValidateObjectController.ValidateNumber(userID);
+		ValidateObjectController.ValidateString(clientSocketIDHashTable[userID]);
+		this.socketIO.sockets.socket(clientSocketIDHashTable[userID]).emit('receivePlayResult', data);
+	};
+	
+	this.SendDataToAllUsersInGame = function(gameInstanceID, data) {
+		ValidateObjectController.ValidateNumber(gameInstanceID);
+		ValidateObjectController.ValidateObject(this.socketIO.sockets.manager.rooms[('/game/' + gameInstanceID)]);
+		this.socketIO.sockets.in('game/' + gameInstanceID).emit('receivePlayResult', data);
+	};
 };
 
 util.inherits(exports.GameSocketController, events.EventEmitter);
-
-exports.GameSocketController.prototype.SendDataToUser = function(userID, data) {
-	ValidateObjectController.ValidateNumber(userID);
-	this.socketIO.sockets.socket(this.clientSocketIDHashTable[userID].id).emit('receivePlayResult', data);
-};
-
-exports.GameSocketController.prototype.SendDataToAllUsersInGame = function(gameInstanceID, data) {
-	ValidateObjectController.ValidateNumber(gameInstanceID);
-	io.sockets.in(room).emit('game/' + gameInstanceID, data);
-};
