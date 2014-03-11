@@ -7,7 +7,6 @@ exports.ChatSocketController = function(port) {
 	this.socketIO = io.listen(port);
 	this.SetupConnectionEvents();
 	
-	function SetupConnectionEvents() {
 	this.socketIO.sockets.on('connection', function(socket) {
 		socket.on('createChatRoom', function(user, gameInstanceID) {
 			socket.join('chat/' + gameInstanceID);
@@ -18,13 +17,7 @@ exports.ChatSocketController = function(port) {
 		});
 	});
 	
-	this.SendDataToUser = function(userID, data) {
-		ValidateObjectController.ValidateNumber(userID);
-		ValidateObjectController.ValidateString(clientSocketIDHashTable[userID]);
-		this.socketIO.sockets.socket(clientSocketIDHashTable[userID]).emit('receivePlayResult', data);
-	};
-	
-	this.SendDataToAllUsersInGame = function(gameInstanceID, data) {
+	this.SendDataToAllUsersInRoom = function(gameInstanceID, data) {
 		ValidateObjectController.ValidateNumber(gameInstanceID);
 		ValidateObjectController.ValidateObject(this.socketIO.sockets.manager.rooms[('/chat/' + gameInstanceID)]);
 		this.socketIO.sockets.in('chat/' + gameInstanceID).emit('receivePlayResult', data);
