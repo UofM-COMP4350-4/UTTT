@@ -4,11 +4,11 @@ var util = require("util");
 var ValidateObjectController = require("./ValidateObjectController.js");
 
 exports.ChatSocketController = function(port) {
+	ValidateObjectController.ValidateNumber(port);
 	this.socketIO = io.listen(port);
-	this.SetupConnectionEvents();
 	
 	this.socketIO.sockets.on('connection', function(socket) {
-		socket.on('createChatRoom', function(user, gameInstanceID) {
+		socket.on('createChatRoom', function(gameInstanceID) {
 			socket.join('chat/' + gameInstanceID);
 		});
 		
