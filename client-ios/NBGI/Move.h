@@ -10,7 +10,9 @@
 
 @interface Move : NSObject
 
+- (Move *) initWithPositionAndUserID: (CGPoint) position userID: (int) userID;
+
 @property CGPoint position;
-@property int userID;
+@property NSNumber *userID;
 
 @end

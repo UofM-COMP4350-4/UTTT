@@ -10,4 +10,15 @@
 
 @implementation Move
 
+- (Move *) initWithPositionAndUserID:(CGPoint)position userID:(int)userID {
+    self = [super init];
+    
+    if (self) {
+        [self setUserID:[NSNumber numberWithInt:userID]];
+        [self setPosition:position];
+    }
+    
+    return self;
+}
+
 @end
