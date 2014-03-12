@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+//#import <Foundation/NSURL.h>
+#import "SocketIO.h"
 
 @interface MainViewController : UIViewController
 

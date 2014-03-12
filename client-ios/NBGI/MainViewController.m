@@ -38,6 +38,40 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    [self sendInitializeRequest];
+    SocketIO *socketIO = [[SocketIO alloc] initWithDelegate:self];
+    [socketIO connectToHost:@"localhost" onPort:3000]
+    
+}
+
+- (void)sendInitializeRequest
+{
+
+    NSString *s = @"http://localhost/initialize";
+    NSURL *url = [NSURL URLWithString:s];
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    [NSURLConnection sendAsynchronousRequest:urlRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
+     {
+         if (error)
+         {
+             //return [error localizedDescription];
+             NSLog(@"Error,%@", [error localizedDescription]);
+         }
+         else
+         {
+             //return [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+             //handle response from Server
+             NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
+             [self handleServerResponse:[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]];
+             NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
+         }
+     }];
+}
+
+- (void)handleServerResponse:(NSString *)responseData
+{
+    NSLog(@"I get here");
 }
 
 - (void)didReceiveMemoryWarning
