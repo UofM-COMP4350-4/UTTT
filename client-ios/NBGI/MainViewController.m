@@ -7,6 +7,8 @@
 //
 
 #import "MainViewController.h"
+#import "SocketIOPacket.h"
+#import "Player.h"
 
 @interface MainViewController ()
 
@@ -14,7 +16,16 @@
 
 @end
 
+
+SocketIO* gameSocket = NULL;
+bool isGameCreatedSuccessfully = false;
+const int GAME_SOCKET_PORT = 10089;
+
 @implementation MainViewController
+
++ (SocketIO*) GameSocket {
+    return gameSocket;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -52,6 +63,7 @@ typedef void (^success)(NSString *responseData);
     };
     
     [self sendHttpGetRequest: responseSuccess url: @"initialize"];
+    [self setupGameSocketConnection];
 }
 
 - (void)sendHttpGetRequest: (void (^)(NSString *responseData))success url:(NSString *) url
@@ -81,6 +93,24 @@ typedef void (^success)(NSString *responseData);
      }];
 }
 
+- (void)handleServerResponse:(NSString *)responseData
+{
+    NSLog(@"Handle Server Initialize Response");
+    
+    NSString *playerJSON = @"{userID:12, name:\"Player 1\"";
+    NSData *playerData = [playerJSON dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error = NULL;
+    
+    id jsonObject = [NSJSONSerialization JSONObjectWithData:playerData options:0 error:&error];
+    Player *player = (Player *) jsonObject;
+    [[MainViewController GameSocket] sendEvent:@"userSetup" withData:player.userID];
+}
+
+- (void)setupGameSocketConnection {
+    gameSocket = [[SocketIO alloc] initWithDelegate:self];
+    [gameSocket connectToHost:@"localhost" onPort:GAME_SOCKET_PORT];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -88,6 +118,27 @@ typedef void (^success)(NSString *responseData);
 }
 
 - (IBAction)PlayConnect4:(id)sender {
+    int gameInstanceID = 96;
     
+    // send http request to server to get an opponent to play against
+    // set isGameCreatedSuccessfully to True if successful
+    isGameCreatedSuccessfully = true;
+    
+    if (isGameCreatedSuccessfully) {
+        [gameSocket sendEvent:@"userSetup" withData:[NSNumber numberWithInt:gameInstanceID]];
+    }
 }
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    if ([identifier isEqualToString:@"PlayGameSegue"]) {
+        NSLog(@"Segue Blocked");
+        
+        if (!isGameCreatedSuccessfully) {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
 @end

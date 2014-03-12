@@ -12,6 +12,8 @@
 	<dict>
 		<key>031CE862-7EB8-4D48-B559-C924A9AE6BB7</key>
 		<string>https://github.com/UofM-COMP4350-4/NBGI.git</string>
+		<key>A5DF891E-9E02-4DE1-BCE5-A0BF74DBB0C6</key>
+		<string>https://github.com/pkyeck/socket.IO-objc.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>client-ios/NBGI.xcodeproj/project.xcworkspace</string>
@@ -19,6 +21,8 @@
 	<dict>
 		<key>031CE862-7EB8-4D48-B559-C924A9AE6BB7</key>
 		<string>../../..</string>
+		<key>A5DF891E-9E02-4DE1-BCE5-A0BF74DBB0C6</key>
+		<string>../../socket.IO-objc</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/UofM-COMP4350-4/NBGI.git</string>
@@ -35,6 +39,14 @@
 			<string>031CE862-7EB8-4D48-B559-C924A9AE6BB7</string>
 			<key>IDESourceControlWCCName</key>
 			<string>NBGI</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>A5DF891E-9E02-4DE1-BCE5-A0BF74DBB0C6</string>
+			<key>IDESourceControlWCCName</key>
+			<string>socket</string>
 		</dict>
 	</array>
 </dict>

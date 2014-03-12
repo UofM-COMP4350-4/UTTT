@@ -3,12 +3,15 @@ var ecstatic = require('ecstatic');
 var dataStoreController = require('./controllers/DataStoreController.js');
 var dbController = new dataStoreController({username:'ubuntu', password:'', hostname:'54.186.20.243'});
 var gameMGMT = require('./models/GameManagement.js');
+var gameSocketController = require('./controllers/GameSocketController.js');
 
 var server = restify.createServer();
 server.pre(ecstatic({ root: __dirname + '/public'}));
 
 server.listen(process.env.PORT || 80, process.env.IP);
 console.log("Server started & listening on port 80");
+
+var gameSocket = new gameSocketController.GameSocketController(10089);
 
 server.use(restify.queryParser());
 

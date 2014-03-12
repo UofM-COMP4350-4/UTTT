@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #include "Move.h"
+#include "MainViewController.h"
+#import "SocketIO.h"
 
-@interface BlahViewController : UICollectionViewController
+@interface BlahViewController : UICollectionViewController <SocketIODelegate>
 
 @property NSMutableArray* gameBoard;
 
