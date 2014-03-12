@@ -12,10 +12,10 @@ exports.GameSocketController = function(port) {
 	
 	this.socketIO.sockets.on('connection', function(socket) {
 		console.log('Connection received from client.');
-		socket.on('userSetup', function(user, callback) {
-			ValidateObjectController.ValidateObject(user);
-			clientSocketIDHashTable[user.id] = socket.id;
-			console.log('UserSetup Event Received from ' + user.id);
+		socket.on('userSetup', function(userID, callback) {
+			ValidateObjectController.ValidateNumber(userID);
+			clientSocketIDHashTable[userID] = socket.id;
+			console.log('UserSetup Event Received from ' + userID);
 			if (callback !== undefined) {
 				callback(clientSocketIDHashTable);	
 			}

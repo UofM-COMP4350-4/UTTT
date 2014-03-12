@@ -61,6 +61,25 @@ const int GAME_SOCKET_PORT = 10089;
     responseSuccess = ^(NSString *data){
         NSLog(@"I get here: Handle Server response called");
         NSLog(@"the data returned is: %@", data);
+        
+        NSData *responseJSON = [data dataUsingEncoding:NSUTF8StringEncoding];
+        NSError *error = NULL;
+        NSDictionary *jsonNSDict = [NSJSONSerialization JSONObjectWithData:responseJSON options:NSJSONReadingMutableContainers error:&error];
+        
+        if (error != NULL) {
+            NSLog(@" error => %@ ", error);
+        }
+        else {
+            NSLog(@"didReceiveEvent >>> data: %@", jsonNSDict);
+            NSDictionary *userDict = [jsonNSDict objectForKey:@"user"];
+            
+            if (userDict == nil) {
+                NSLog(@"Error: User data was not returned in response.");
+            }
+            else {
+                [[MainViewController GameSocket] sendEvent:@"userSetup" withData:[userDict objectForKey:@"userID"]];
+            }
+        }
     };
     
     [self sendHttpGetRequest: responseSuccess url: @"initialize"];
@@ -103,13 +122,6 @@ const int GAME_SOCKET_PORT = 10089;
 - (void)handleServerResponse:(NSString *)responseData
 {
     NSLog(@"Handle Server Initialize Response");
-    NSString *playerJSON = @"{userID:12, name:\"Player 1\"";
-    NSData *playerData = [playerJSON dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *error = NULL;
-    
-    id jsonObject = [NSJSONSerialization JSONObjectWithData:playerData options:0 error:&error];
-    Player *player = (Player *) jsonObject;
-    [[MainViewController GameSocket] sendEvent:@"userSetup" withData:player.userID];
 }
 
 - (void)setupGameSocketConnection {
