@@ -54,6 +54,7 @@
 		32A3FD1118D0513E0068AA03 /* AppNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FD0C18D0513E0068AA03 /* AppNaviViewController.m */; };
 		32A3FD1218D0513E0068AA03 /* Connect4ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FD0E18D0513E0068AA03 /* Connect4ViewController.m */; };
 		32A3FD1318D0513E0068AA03 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FD1018D0513E0068AA03 /* MainViewController.m */; };
+		32A3FD1618D068990068AA03 /* ValidationControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FD1518D068990068AA03 /* ValidationControllerTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,6 +146,7 @@
 		32A3FD0E18D0513E0068AA03 /* Connect4ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Connect4ViewController.m; path = controllers/Connect4ViewController.m; sourceTree = "<group>"; };
 		32A3FD0F18D0513E0068AA03 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = controllers/MainViewController.h; sourceTree = "<group>"; };
 		32A3FD1018D0513E0068AA03 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = controllers/MainViewController.m; sourceTree = "<group>"; };
+		32A3FD1518D068990068AA03 /* ValidationControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValidationControllerTests.m; path = modelsTests/controllersTests/ValidationControllerTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,6 +243,7 @@
 		1969759A18A2E379004AC6EE /* NBGITests */ = {
 			isa = PBXGroup;
 			children = (
+				32A3FD1418D068760068AA03 /* controllersTests */,
 				32A3FD0218D04C970068AA03 /* modelsTests */,
 				1969759B18A2E379004AC6EE /* Supporting Files */,
 			);
@@ -362,6 +365,14 @@
 				32A3FD0318D04CC80068AA03 /* PlayerTests.m */,
 			);
 			name = modelsTests;
+			sourceTree = "<group>";
+		};
+		32A3FD1418D068760068AA03 /* controllersTests */ = {
+			isa = PBXGroup;
+			children = (
+				32A3FD1518D068990068AA03 /* ValidationControllerTests.m */,
+			);
+			name = controllersTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -499,6 +510,7 @@
 			files = (
 				32A3FD0418D04CC80068AA03 /* PlayerTests.m in Sources */,
 				32A3FCFE18D042A30068AA03 /* MoveTests.m in Sources */,
+				32A3FD1618D068990068AA03 /* ValidationControllerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,7 +17,7 @@
 };
 
 + (void) ValidateValue : (void * ) data {
-    if (data == Nil || data == nil || data == NULL || data == @"undefined") {
+    if (data == Nil || data == nil || data == NULL) {
         [NSException raise:@"Invalid Value" format:@"Data cannot be Nil, nil or NULL."];
     }
 }

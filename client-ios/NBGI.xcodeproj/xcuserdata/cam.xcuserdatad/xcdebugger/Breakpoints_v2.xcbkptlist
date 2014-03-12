@@ -360,7 +360,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NBGI/controllers/ValidationController.h"
-            timestampString = "416304713.143573"
+            timestampString = "416311920.47439"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "13"
@@ -392,12 +392,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NBGI/models/Move.m"
-            timestampString = "416309164.442203"
+            timestampString = "416311920.47439"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
-            landmarkName = "-CreateJSONString"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "-initWithJSONString:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -430,6 +430,38 @@
             startingLineNumber = "25"
             endingLineNumber = "25"
             landmarkName = "-CreateJSONString"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NBGI/controllers/ValidationController.m"
+            timestampString = "416311405.516111"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "+ValidateValue:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NBGITests/modelsTests/controllersTests/ValidationControllerTests.m"
+            timestampString = "416312401.115408"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "-testValidData"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

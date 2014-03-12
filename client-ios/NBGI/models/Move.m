@@ -39,4 +39,32 @@
     return jsonString;
 };
 
+- (Move *) initWithJSONString:(NSString *) jsonString {
+    [ValidationController ValidateObject:jsonString];
+    Move *move;
+    NSData *playerJSONData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error = NULL;
+    
+    NSDictionary *jsonNSDict = [NSJSONSerialization JSONObjectWithData:playerJSONData options:NSJSONReadingMutableContainers error:&error];
+    
+    if ([jsonNSDict objectForKey:@"userID"] != nil &&
+        [jsonNSDict objectForKey:@"x"] != nil &&
+        [jsonNSDict objectForKey:@"y"] != nil) {
+        
+        int userID = [[jsonNSDict objectForKey:@"userID"] intValue];
+        int x = [[jsonNSDict objectForKey:@"x"] intValue];
+        int y = [[jsonNSDict objectForKey:@"y"] intValue];
+        [ValidationController ValidateValue:&userID];
+        [ValidationController ValidateValue:&x];
+        [ValidationController ValidateValue:&y];
+        
+        move = [self initWithPositionAndUserID:CGPointMake((float)x, (float)y) userID:userID];
+    }
+    else {
+        [NSException raise:@"Missing Data" format:@"JSON String is missing data for instantiating this object."];
+    }
+    
+    return move;
+};
+
 @end
