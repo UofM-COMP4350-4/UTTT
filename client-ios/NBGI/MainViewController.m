@@ -8,6 +8,10 @@
 
 #import "MainViewController.h"
 #import "SocketIOPacket.h"
+#import "Player.h"
+#import "JSONModelLib.h"
+#import "KivaFeed.h"
+#import "HUD.h"
 
 @interface MainViewController ()
 
@@ -79,7 +83,8 @@ const int GAME_SOCKET_PORT = 10089;
 
 - (void)handleServerResponse:(NSString *)responseData
 {
-    int userID = 5;  // this is the ID returned from the initialize call
+    Player* player = [[Player alloc] init];
+    player.userID = [NSNumber numberWithInt:5];
     NSLog(@"Handle Server Initialize Response");
     
     [gameSocket sendEvent:@"userSetup" withData:[NSNumber numberWithInt:userID]];
