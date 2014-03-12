@@ -8,7 +8,7 @@
 
 #import "MainViewController.h"
 #import "SocketIOPacket.h"
-#import "Player.h"
+
 
 @interface MainViewController ()
 
@@ -16,7 +16,9 @@
 
 @end
 
-
+//typedef void (^success)(NSURLRequest *request, NSHTTPURLResponse *response, id JSON);
+//defining a type of success we can reuse
+typedef void (^success)(NSString *responseData);
 SocketIO* gameSocket = NULL;
 bool isGameCreatedSuccessfully = false;
 const int GAME_SOCKET_PORT = 10089;
@@ -35,6 +37,8 @@ const int GAME_SOCKET_PORT = 10089;
     }
     return self;
 }
+
+
 - (BOOL)shouldAutorotate {
     /*if (self.interfaceOrientation == self.supportedInterfaceOrientations)
     {
@@ -42,13 +46,10 @@ const int GAME_SOCKET_PORT = 10089;
     }*/
     return YES;
 }
+
 - (NSUInteger)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskAll;
 }
-
-//typedef void (^success)(NSURLRequest *request, NSHTTPURLResponse *response, id JSON);
-//defining a type of success we can reuse
-typedef void (^success)(NSString *responseData);
 
 - (void)viewDidLoad
 {
@@ -64,6 +65,12 @@ typedef void (^success)(NSString *responseData);
     
     [self sendHttpGetRequest: responseSuccess url: @"initialize"];
     [self setupGameSocketConnection];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 - (void)sendHttpGetRequest: (void (^)(NSString *responseData))success url:(NSString *) url
@@ -109,12 +116,6 @@ typedef void (^success)(NSString *responseData);
 - (void)setupGameSocketConnection {
     gameSocket = [[SocketIO alloc] initWithDelegate:self];
     [gameSocket connectToHost:@"localhost" onPort:GAME_SOCKET_PORT];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (IBAction)PlayConnect4:(id)sender {

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SocketIO.h"
+#import "Player.h"
 
 @interface MainViewController : UIViewController <SocketIODelegate>
 + (SocketIO*) GameSocket;

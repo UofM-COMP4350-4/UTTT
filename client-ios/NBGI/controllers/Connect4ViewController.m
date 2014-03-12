@@ -37,10 +37,11 @@ const int gameInstanceID = 96;
     [super viewDidLoad];
     
     [self initializeGameBoard];
-    NSMutableArray* listOfMoves;
-    listOfMoves = [self initializeMutableArray:listOfMoves];
-    [self drawGameBoard:listOfMoves];
-    
+    [self drawGameBoard:self.gameBoard];
+    [self setupEvents];
+}
+
+- (void)setupEvents {
     UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(playerMadeMove:)];
     [self.view addGestureRecognizer:singleFingerTap];
 }
@@ -68,18 +69,25 @@ const int gameInstanceID = 96;
 - (void) socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet
 {
     NSString *playerJSON = packet.data;
-    NSData *playerData = [playerJSON dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *playerJSONData = [playerJSON dataUsingEncoding:NSUTF8StringEncoding];
     NSError *error = NULL;
     
-    id jsonObject = [NSJSONSerialization JSONObjectWithData:playerData options:0 error:&error];
+    NSDictionary *jsonNSDict = [NSJSONSerialization JSONObjectWithData:playerJSONData options:NSJSONReadingMutableContainers error:&error];
     
-    NSLog(@"didReceiveEvent >>> data: %@", jsonObject);
-    NSDictionary *playResultDict = jsonObject;
-    NSMutableArray *listOfMoves = [playResultDict objectForKey:@"gameBoard"];
-    
-    // convert receives jsonObject into list of moves
-    
-    [self drawGameBoard:listOfMoves];
+    if (error != NULL) {
+        NSLog(@" error => %@ ", error);
+    }
+    else {
+        NSLog(@"didReceiveEvent >>> data: %@", jsonNSDict);
+        NSMutableArray *listOfMoves = [jsonNSDict objectForKey:@"gameBoard"];
+        
+        if (listOfMoves == nil) {
+            NSLog(@"Error: Gameboard was not returned in response.");
+        }
+        else {
+            [self drawGameBoard:listOfMoves];
+        }
+    }
 }
 
 //The event handling method
@@ -87,28 +95,9 @@ const int gameInstanceID = 96;
     CGPoint location = [recognizer locationInView:[recognizer.view superview]];
     // translate screen coordinates into row and col
     
+    // convert move into json object
     // send message to server with location of move
     [[MainViewController GameSocket] sendEvent:@"receiveMove" withData:[NSNumber numberWithInt:gameInstanceID]];
-}
-
--(NSMutableArray*)initializeMutableArray:(NSMutableArray*) listOfMoves {
-    listOfMoves = [[NSMutableArray alloc]init];
-    Move *move;
-    
-    for (int row = 0; row < 4; row++) {
-        for (int col = 0; col < 5; col++) {
-            if (row % 2 == 0) {
-                move = [[Move alloc] initWithPositionAndUserID:CGPointMake(row, col) userID:12];
-            }
-            else {
-                move = [[Move alloc] initWithPositionAndUserID:CGPointMake(row, col) userID:17];
-            }
-            
-            [listOfMoves addObject:move];
-        }
-    }
-    
-    return listOfMoves;
 }
 
 - (void)initializeGameBoard {
