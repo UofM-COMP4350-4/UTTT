@@ -11,7 +11,7 @@ exports.ChatSocketController = function(port) {
 		socket.on('joinChatRoom', function(gameInstanceID, callback) {
 			socket.join('chat/' + gameInstanceID);
 			
-			if (callback != undefined) {
+			if (callback !== undefined) {
 				callback(socket.manager.rooms);
 			}
 		});

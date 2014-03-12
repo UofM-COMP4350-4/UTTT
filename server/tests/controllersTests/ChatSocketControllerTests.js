@@ -62,7 +62,7 @@ describe("Game Socket Communication Server Tests",function() {
 		client1.on('messageReceivedFromClient', function(message) {
 			assert.equal('Hello, World!',message);
 			done();
-		})
+		});
 	});
 	
 	// it('Send data to All Users in Chat', function(done) {
