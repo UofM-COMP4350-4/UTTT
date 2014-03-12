@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		19449DDA18CBB94400B95D89 /* AppNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 19449DD918CBB94400B95D89 /* AppNaviViewController.m */; };
 		1969757C18A2E379004AC6EE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1969757B18A2E379004AC6EE /* Foundation.framework */; };
 		1969757E18A2E379004AC6EE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1969757D18A2E379004AC6EE /* CoreGraphics.framework */; };
 		1969758018A2E379004AC6EE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1969757F18A2E379004AC6EE /* UIKit.framework */; };
@@ -19,14 +18,11 @@
 		1969759618A2E379004AC6EE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1969757B18A2E379004AC6EE /* Foundation.framework */; };
 		1969759718A2E379004AC6EE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1969757F18A2E379004AC6EE /* UIKit.framework */; };
 		1969759F18A2E379004AC6EE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1969759D18A2E379004AC6EE /* InfoPlist.strings */; };
-		22204A5718C00E6A00AD4637 /* Connect4ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22204A5618C00E6A00AD4637 /* Connect4ViewController.m */; };
 		3236694318BC54E40067A632 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3236694218BC54E40067A632 /* Main.storyboard */; };
-		3236696418BDDD2A0067A632 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3236696318BDDD2A0067A632 /* MainViewController.m */; };
 		3298A05F18BF23960060DE8C /* blueChip.png in Resources */ = {isa = PBXBuildFile; fileRef = 3298A05B18BF23960060DE8C /* blueChip.png */; };
 		3298A06018BF23960060DE8C /* board.png in Resources */ = {isa = PBXBuildFile; fileRef = 3298A05C18BF23960060DE8C /* board.png */; };
 		3298A06118BF23960060DE8C /* redChip.png in Resources */ = {isa = PBXBuildFile; fileRef = 3298A05D18BF23960060DE8C /* redChip.png */; };
 		3298A06218BF23960060DE8C /* whiteChip.png in Resources */ = {isa = PBXBuildFile; fileRef = 3298A05E18BF23960060DE8C /* whiteChip.png */; };
-		3298A06518BF2B8C0060DE8C /* Move.m in Sources */ = {isa = PBXBuildFile; fileRef = 3298A06418BF2B8C0060DE8C /* Move.m */; };
 		32A3FB0818D002BB0068AA03 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FAE218D002BB0068AA03 /* SBJsonParser.m */; };
 		32A3FB0918D002BB0068AA03 /* SBJsonStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FAE418D002BB0068AA03 /* SBJsonStreamParser.m */; };
 		32A3FB0A18D002BB0068AA03 /* SBJsonStreamParserAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FAE618D002BB0068AA03 /* SBJsonStreamParserAccumulator.m */; };
@@ -50,10 +46,14 @@
 		32A3FB2218D003BD0068AA03 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32A3FB2118D003BD0068AA03 /* Security.framework */; };
 		32A3FB2418D003C50068AA03 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32A3FB2318D003C50068AA03 /* MobileCoreServices.framework */; };
 		32A3FB2618D003DC0068AA03 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 32A3FB2518D003DC0068AA03 /* libicucore.dylib */; };
-		32A3FB2918D014A60068AA03 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FB2818D014A60068AA03 /* Player.m */; };
 		32A3FCFE18D042A30068AA03 /* MoveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FCFD18D042A30068AA03 /* MoveTests.m */; };
 		32A3FD0118D0485E0068AA03 /* ValidationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FD0018D0485E0068AA03 /* ValidationController.m */; };
 		32A3FD0418D04CC80068AA03 /* PlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FD0318D04CC80068AA03 /* PlayerTests.m */; };
+		32A3FD0918D050E20068AA03 /* Move.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FD0618D050E20068AA03 /* Move.m */; };
+		32A3FD0A18D050E20068AA03 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FD0818D050E20068AA03 /* Player.m */; };
+		32A3FD1118D0513E0068AA03 /* AppNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FD0C18D0513E0068AA03 /* AppNaviViewController.m */; };
+		32A3FD1218D0513E0068AA03 /* Connect4ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FD0E18D0513E0068AA03 /* Connect4ViewController.m */; };
+		32A3FD1318D0513E0068AA03 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FD1018D0513E0068AA03 /* MainViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,8 +67,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		19449DD818CBB94400B95D89 /* AppNaviViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppNaviViewController.h; sourceTree = "<group>"; };
-		19449DD918CBB94400B95D89 /* AppNaviViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppNaviViewController.m; sourceTree = "<group>"; };
 		1969757818A2E379004AC6EE /* NBGI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NBGI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1969757B18A2E379004AC6EE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1969757D18A2E379004AC6EE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -84,17 +82,11 @@
 		1969759418A2E379004AC6EE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		1969759C18A2E379004AC6EE /* NBGITests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NBGITests-Info.plist"; sourceTree = "<group>"; };
 		1969759E18A2E379004AC6EE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		22204A5518C00E6A00AD4637 /* Connect4ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Connect4ViewController.h; sourceTree = "<group>"; };
-		22204A5618C00E6A00AD4637 /* Connect4ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Connect4ViewController.m; sourceTree = "<group>"; };
 		3236694218BC54E40067A632 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../Main.storyboard; sourceTree = "<group>"; };
-		3236696218BDDD2A0067A632 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
-		3236696318BDDD2A0067A632 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		3298A05B18BF23960060DE8C /* blueChip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blueChip.png; path = assets/blueChip.png; sourceTree = "<group>"; };
 		3298A05C18BF23960060DE8C /* board.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = board.png; path = assets/board.png; sourceTree = "<group>"; };
 		3298A05D18BF23960060DE8C /* redChip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = redChip.png; path = assets/redChip.png; sourceTree = "<group>"; };
 		3298A05E18BF23960060DE8C /* whiteChip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = whiteChip.png; path = assets/whiteChip.png; sourceTree = "<group>"; };
-		3298A06318BF2B8C0060DE8C /* Move.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Move.h; sourceTree = "<group>"; };
-		3298A06418BF2B8C0060DE8C /* Move.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Move.m; sourceTree = "<group>"; };
 		32A3FAE018D002BB0068AA03 /* SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson.h; sourceTree = "<group>"; };
 		32A3FAE118D002BB0068AA03 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
 		32A3FAE218D002BB0068AA03 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
@@ -139,12 +131,20 @@
 		32A3FB2118D003BD0068AA03 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		32A3FB2318D003C50068AA03 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		32A3FB2518D003DC0068AA03 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
-		32A3FB2718D014A60068AA03 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
-		32A3FB2818D014A60068AA03 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
 		32A3FCFD18D042A30068AA03 /* MoveTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoveTests.m; sourceTree = "<group>"; };
 		32A3FCFF18D0485E0068AA03 /* ValidationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValidationController.h; path = controllers/ValidationController.h; sourceTree = "<group>"; };
 		32A3FD0018D0485E0068AA03 /* ValidationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValidationController.m; path = controllers/ValidationController.m; sourceTree = "<group>"; };
 		32A3FD0318D04CC80068AA03 /* PlayerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayerTests.m; path = modelsTests/PlayerTests.m; sourceTree = "<group>"; };
+		32A3FD0518D050E20068AA03 /* Move.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Move.h; path = models/Move.h; sourceTree = "<group>"; };
+		32A3FD0618D050E20068AA03 /* Move.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Move.m; path = models/Move.m; sourceTree = "<group>"; };
+		32A3FD0718D050E20068AA03 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = models/Player.h; sourceTree = "<group>"; };
+		32A3FD0818D050E20068AA03 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Player.m; path = models/Player.m; sourceTree = "<group>"; };
+		32A3FD0B18D0513E0068AA03 /* AppNaviViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppNaviViewController.h; path = controllers/AppNaviViewController.h; sourceTree = "<group>"; };
+		32A3FD0C18D0513E0068AA03 /* AppNaviViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppNaviViewController.m; path = controllers/AppNaviViewController.m; sourceTree = "<group>"; };
+		32A3FD0D18D0513E0068AA03 /* Connect4ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Connect4ViewController.h; path = controllers/Connect4ViewController.h; sourceTree = "<group>"; };
+		32A3FD0E18D0513E0068AA03 /* Connect4ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Connect4ViewController.m; path = controllers/Connect4ViewController.m; sourceTree = "<group>"; };
+		32A3FD0F18D0513E0068AA03 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = controllers/MainViewController.h; sourceTree = "<group>"; };
+		32A3FD1018D0513E0068AA03 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = controllers/MainViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,12 +259,12 @@
 		3236695318BDD16F0067A632 /* controllers */ = {
 			isa = PBXGroup;
 			children = (
-				3236696218BDDD2A0067A632 /* MainViewController.h */,
-				3236696318BDDD2A0067A632 /* MainViewController.m */,
-				22204A5518C00E6A00AD4637 /* Connect4ViewController.h */,
-				22204A5618C00E6A00AD4637 /* Connect4ViewController.m */,
-				19449DD818CBB94400B95D89 /* AppNaviViewController.h */,
-				19449DD918CBB94400B95D89 /* AppNaviViewController.m */,
+				32A3FD0B18D0513E0068AA03 /* AppNaviViewController.h */,
+				32A3FD0C18D0513E0068AA03 /* AppNaviViewController.m */,
+				32A3FD0D18D0513E0068AA03 /* Connect4ViewController.h */,
+				32A3FD0E18D0513E0068AA03 /* Connect4ViewController.m */,
+				32A3FD0F18D0513E0068AA03 /* MainViewController.h */,
+				32A3FD1018D0513E0068AA03 /* MainViewController.m */,
 				32A3FCFF18D0485E0068AA03 /* ValidationController.h */,
 				32A3FD0018D0485E0068AA03 /* ValidationController.m */,
 			);
@@ -274,10 +274,10 @@
 		3236695418BDD1C90067A632 /* models */ = {
 			isa = PBXGroup;
 			children = (
-				3298A06318BF2B8C0060DE8C /* Move.h */,
-				3298A06418BF2B8C0060DE8C /* Move.m */,
-				32A3FB2718D014A60068AA03 /* Player.h */,
-				32A3FB2818D014A60068AA03 /* Player.m */,
+				32A3FD0518D050E20068AA03 /* Move.h */,
+				32A3FD0618D050E20068AA03 /* Move.m */,
+				32A3FD0718D050E20068AA03 /* Player.h */,
+				32A3FD0818D050E20068AA03 /* Player.m */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -464,25 +464,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32A3FD1118D0513E0068AA03 /* AppNaviViewController.m in Sources */,
 				32A3FB1618D002BB0068AA03 /* SocketIOTransportXHR.m in Sources */,
 				32A3FB1018D002BB0068AA03 /* SBJsonStreamWriterState.m in Sources */,
-				19449DDA18CBB94400B95D89 /* AppNaviViewController.m in Sources */,
 				32A3FB1418D002BB0068AA03 /* SocketIOPacket.m in Sources */,
 				1969758C18A2E379004AC6EE /* AppDelegate.m in Sources */,
 				32A3FB0F18D002BB0068AA03 /* SBJsonStreamWriterAccumulator.m in Sources */,
 				32A3FB0C18D002BB0068AA03 /* SBJsonStreamParserState.m in Sources */,
 				1969758818A2E379004AC6EE /* main.m in Sources */,
-				3236696418BDDD2A0067A632 /* MainViewController.m in Sources */,
 				32A3FB1318D002BB0068AA03 /* SocketIOJSONSerialization.m in Sources */,
-				22204A5718C00E6A00AD4637 /* Connect4ViewController.m in Sources */,
+				32A3FD0918D050E20068AA03 /* Move.m in Sources */,
 				32A3FB1218D002BB0068AA03 /* SocketIO.m in Sources */,
 				32A3FB0A18D002BB0068AA03 /* SBJsonStreamParserAccumulator.m in Sources */,
 				32A3FB0818D002BB0068AA03 /* SBJsonParser.m in Sources */,
-				3298A06518BF2B8C0060DE8C /* Move.m in Sources */,
-				32A3FB2918D014A60068AA03 /* Player.m in Sources */,
 				32A3FD0118D0485E0068AA03 /* ValidationController.m in Sources */,
+				32A3FD0A18D050E20068AA03 /* Player.m in Sources */,
 				32A3FB1118D002BB0068AA03 /* SBJsonWriter.m in Sources */,
 				32A3FB0918D002BB0068AA03 /* SBJsonStreamParser.m in Sources */,
+				32A3FD1318D0513E0068AA03 /* MainViewController.m in Sources */,
 				32A3FB1518D002BB0068AA03 /* SocketIOTransportWebsocket.m in Sources */,
 				32A3FB1818D002BB0068AA03 /* NSData+SRB64Additions.m in Sources */,
 				32A3FB0B18D002BB0068AA03 /* SBJsonStreamParserAdapter.m in Sources */,
@@ -490,6 +489,7 @@
 				32A3FB1718D002BB0068AA03 /* base64.c in Sources */,
 				32A3FB1C18D0033F0068AA03 /* SRWebSocket.m in Sources */,
 				32A3FB0D18D002BB0068AA03 /* SBJsonStreamTokeniser.m in Sources */,
+				32A3FD1218D0513E0068AA03 /* Connect4ViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

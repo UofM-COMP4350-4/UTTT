@@ -131,7 +131,7 @@ const int gameInstanceID = 96;
         col = currentMove.position.x;
         row = currentMove.position.y;
         gameBoardIndex = col * COL_SIZE + row;
-        currUserID = currentMove.userID;
+        currUserID = [currentMove.userID intValue];
         
         if (currUserID == userID) {
             [self.gameBoard replaceObjectAtIndex:gameBoardIndex withObject:blueChip];
