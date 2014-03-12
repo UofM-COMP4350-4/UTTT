@@ -19,7 +19,9 @@ server.get("/queueForGame", function(request, response, next){
 	//We need to Setup a new game in the database between two players
 	//Create a flat file for the board data
 	//Then send back the board object
-	console.log("Queue request received from Client " + request.params.fun);
+	var parameters = request.params;
+	console.log("Queue request received from Client " + parameters.gameID);
+	console.log("Queue request received from Client " + parameters.clientID);
 	response.writeHead(200, {"content-type": "application/json"});
 	response.end(JSON.stringify({}));
 	return next();
