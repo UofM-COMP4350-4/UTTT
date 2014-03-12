@@ -321,56 +321,56 @@ describe('Model Test Suite', function() {
 			var move;
 			var dropLoc;
 			
-			move = new connect4MoveJS.Connect4Move(1,0, Player2);
+			move = new connect4MoveJS.Connect4Move(1,0, Player1);
 			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
 			dropLoc = Game.GetLocationIfDropGamePieceAtCol(1);
 			assert.notEqual(dropLoc, null);
 			assert.equal(dropLoc.x, move.x);
 			assert.equal(dropLoc.y, move.y);
 			
-			move = new connect4MoveJS.Connect4Move(2,0, Player1);
+			move = new connect4MoveJS.Connect4Move(2,0, Player2);
 			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
 			dropLoc = Game.GetLocationIfDropGamePieceAtCol(2);
 			assert.notEqual(dropLoc, null);
 			assert.equal(dropLoc.x, move.x);
 			assert.equal(dropLoc.y, move.y);
 			
-			move = new connect4MoveJS.Connect4Move(3,0, Player2);
+			move = new connect4MoveJS.Connect4Move(3,0, Player1);
 			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
 			dropLoc = Game.GetLocationIfDropGamePieceAtCol(3);
 			assert.notEqual(dropLoc, null);
 			assert.equal(dropLoc.x, move.x);
 			assert.equal(dropLoc.y, move.y);
 			
-			move = new connect4MoveJS.Connect4Move(4,0, Player1); //valid
+			move = new connect4MoveJS.Connect4Move(4,0, Player2); //valid
 			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
 			dropLoc = Game.GetLocationIfDropGamePieceAtCol(4);
 			assert.notEqual(dropLoc, null);
 			assert.equal(dropLoc.x, move.x);
 			assert.equal(dropLoc.y, move.y);
 			
-			move = new connect4MoveJS.Connect4Move(1,0, Player2);
+			move = new connect4MoveJS.Connect4Move(1,0, Player1);
 			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
 			dropLoc = Game.GetLocationIfDropGamePieceAtCol(1);
 			assert.notEqual(dropLoc, null);
 			assert.equal(dropLoc.x, move.x);
 			assert.equal(dropLoc.y, move.y+1);
 			
-			move = new connect4MoveJS.Connect4Move(2,0, Player1);
+			move = new connect4MoveJS.Connect4Move(2,0, Player2);
 			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
 			dropLoc = Game.GetLocationIfDropGamePieceAtCol(2);
 			assert.notEqual(dropLoc, null);
 			assert.equal(dropLoc.x, move.x);
 			assert.equal(dropLoc.y, move.y+1);
 			
-			move = new connect4MoveJS.Connect4Move(3,0, Player2);
+			move = new connect4MoveJS.Connect4Move(3,0, Player1);
 			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
 			dropLoc = Game.GetLocationIfDropGamePieceAtCol(3);
 			assert.notEqual(dropLoc, null);
 			assert.equal(dropLoc.x, move.x);
 			assert.equal(dropLoc.y, move.y+1);
 			
-			move = new connect4MoveJS.Connect4Move(4,0, Player1); //valid
+			move = new connect4MoveJS.Connect4Move(4,0, Player2); //valid
 			assert.doesNotThrow(function () { Game.PlayMoveOnBoard(move)}, 'A game piece already exists at this location.');
 			dropLoc = Game.GetLocationIfDropGamePieceAtCol(4);
 			assert.notEqual(dropLoc, null);
@@ -627,7 +627,7 @@ describe('Model Test Suite', function() {
 			assert.equal(dropLoc.x, move.x);
 			assert.equal(dropLoc.y, 1);
 			
-			move = {x:6,y:5,player:Player2};//new connect4GameBoardJS.Connect4Move(0,0, Player1); //valid
+			move = {x:6,y:5,player:Player1};//new connect4GameBoardJS.Connect4Move(0,0, Player1); //valid
 			Game.PlayMoveOnBoard(move);
 			dropLoc = Game.GetLocationIfDropGamePieceAtCol(6);
 			assert.notEqual(Game.isWinner, true);
@@ -788,35 +788,16 @@ describe('Model Test Suite', function() {
 				player2:Player2
 			});
 			
-			var move = {x:0,y:0,player:Player1};
-			Game.PlayMoveOnBoard(move);
-
-			move = {x:0,y:1,player:Player1};
-			Game.PlayMoveOnBoard(move);
-			
-			move = {x:0,y:2,player:Player1};
-			Game.PlayMoveOnBoard(move);
-			
-			move = {x:0,y:3,player:Player2};
-			Game.PlayMoveOnBoard(move);
-
-			move = {x:1,y:0,player:Player1};
-			Game.PlayMoveOnBoard(move);
-
-			move = {x:1,y:1,player:Player1};
-			Game.PlayMoveOnBoard(move);
-			
-			move = {x:1,y:2,player:Player2};
-			Game.PlayMoveOnBoard(move);
-			
-			move = {x:2,y:0,player:Player2};
-			Game.PlayMoveOnBoard(move);
-			
-			move = {x:2,y:1,player:Player2};
-			Game.PlayMoveOnBoard(move);
-			
-			move = {x:3,y:0,player:Player2};
-			Game.PlayMoveOnBoard(move);
+			Game.PlayMoveOnBoard({x:0,y:0,player:Player1});
+			Game.PlayMoveOnBoard({x:2,y:0,player:Player2});
+			Game.PlayMoveOnBoard({x:0,y:1,player:Player1});
+			Game.PlayMoveOnBoard({x:2,y:1,player:Player2});
+			Game.PlayMoveOnBoard({x:0,y:2,player:Player1});
+			Game.PlayMoveOnBoard({x:0,y:3,player:Player2});
+			Game.PlayMoveOnBoard({x:1,y:0,player:Player1});
+			Game.PlayMoveOnBoard({x:3,y:0,player:Player2});
+			Game.PlayMoveOnBoard({x:1,y:1,player:Player1});
+			Game.PlayMoveOnBoard({x:1,y:0,player:Player2});
 
 			//o
 			//xo
@@ -901,18 +882,14 @@ describe('Model Test Suite', function() {
 				player2:Player2
 			});
 			
-			var move = {x:1,y:0,player:Player1};
-			Game.PlayMoveOnBoard(move);
-
-			move = {x:2,y:0,player:Player1};
-			Game.PlayMoveOnBoard(move);
+			Game.PlayMoveOnBoard({x:1,y:0,player:Player1});
+			Game.PlayMoveOnBoard({x:1,y:1,player:Player2});
+			Game.PlayMoveOnBoard({x:2,y:0,player:Player1});
+			Game.PlayMoveOnBoard({x:2,y:1,player:Player2});
+			Game.PlayMoveOnBoard({x:3,y:0,player:Player1});
+			Game.PlayMoveOnBoard({x:3,y:0,player:Player2});
+			Game.PlayMoveOnBoard({x:4,y:0,player:Player1});
 			
-			move = {x:3,y:0,player:Player1};
-			Game.PlayMoveOnBoard(move);
-			
-			move = {x:4,y:0,player:Player1};
-			Game.PlayMoveOnBoard(move);
-						
 			assert.equal(Game.isWinner, true);
 			assert.equal(Game.winner, Player1);
 		});
@@ -926,18 +903,14 @@ describe('Model Test Suite', function() {
 				player1:Player1,
 				player2:Player2
 			});
-			
-			var move = {x:0,y:1,player:Player1};
-			Game.PlayMoveOnBoard(move);
 						
-			move = {x:0,y:2,player:Player1};
-			Game.PlayMoveOnBoard(move);
-
-			move = {x:0,y:3,player:Player1};
-			Game.PlayMoveOnBoard(move);
-			
-			move = {x:0,y:4,player:Player1};
-			Game.PlayMoveOnBoard(move);
+			Game.PlayMoveOnBoard({x:0,y:1,player:Player1});
+			Game.PlayMoveOnBoard({x:1,y:2,player:Player2});
+			Game.PlayMoveOnBoard({x:0,y:2,player:Player1});
+			Game.PlayMoveOnBoard({x:2,y:2,player:Player2});
+			Game.PlayMoveOnBoard({x:0,y:2,player:Player1});
+			Game.PlayMoveOnBoard({x:3,y:3,player:Player2});
+			Game.PlayMoveOnBoard({x:0,y:3,player:Player1});
 						
 			assert.equal(Game.isWinner, true);
 			assert.equal(Game.winner, Player1);
@@ -974,6 +947,32 @@ describe('Model Test Suite', function() {
 				player1:Player1,
 				player2:Player2
 			});
+		});
+		it ('Test: CreateJSONObject with Valid Data', function() {
+			var Player1 = new playerJS.Player(12, 'Player 1');
+			var Player2 = new playerJS.Player(401, 'Player 2');
+			var Game = new connect4GameBoardJS.Connect4GameBoard({
+				gameID: 07,
+				instanceID:532744,
+				userToPlay:Player1,
+				player1:Player1,
+				player2:Player2
+			});
+			var boardGameJSONObject = Game.CreateBoardGameJSONObject(undefined);
+			assert.equal(boardGameJSONObject.gameID, 07);
+			assert.equal(boardGameJSONObject.instanceID, 532744);
+			assert.equal(boardGameJSONObject.userToPlay, Game.userToPlay);
+			assert.equal(boardGameJSONObject.currentBoard, Game.moves);
+			assert.equal(boardGameJSONObject.winner, Game.winner);
+			assert.equal(boardGameJSONObject.status, undefined);
+			
+			boardGameJSONObject = Game.CreateBoardGameJSONObject('draw');
+			assert.equal(boardGameJSONObject.gameID, 07);
+			assert.equal(boardGameJSONObject.instanceID, 532744);
+			assert.equal(boardGameJSONObject.userToPlay, Game.userToPlay);
+			assert.equal(boardGameJSONObject.currentBoard, Game.moves);
+			assert.equal(boardGameJSONObject.winner, Game.winner);
+			assert.equal(boardGameJSONObject.status, 'draw');
 		});
 	});
 });

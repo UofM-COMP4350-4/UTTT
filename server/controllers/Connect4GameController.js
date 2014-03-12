@@ -1,49 +1,33 @@
 var connect4GameBoard = require("../models/connect4/Connect4GameBoard.js");
 var ValidateObjectController = require("./ValidateObjectController.js");
+var events = require("events");
+var util = require("util");
 
 exports.Connect4GameController = function(gameInfo) {
 	ValidateObjectController.ValidateObject(gameInfo);
 	this.gameBoard = new connect4GameBoard.Connect4GameBoard(gameInfo);
+	events.EventEmitter.call(this);
 };
 
-exports.Connect4GameController.LoadGame = function(game) {
-	ValidateObjectController.ValidateObject(game);
-	this.gameBoard = new connect4GameBoard.Connect4GameBoard(game);
-	return this.gameBoard;
-}
-
-exports.Connect4GameController.prototype.CreateGame = function() {
-	
-};
-
-exports.Connect4GameController.prototype.CompleteGame = function() {
-	
-};
+util.inherits(exports.Connect4GameController, events.EventEmitter);
 
 exports.Connect4GameController.prototype.RequestMove = function(move) {	
 	ValidateObjectController.ValidateObject(move);
-	var updatedConnect4Move = this.gameBoard.GetLocationIfDropGamePieceAtCol(move.col);
-	
-	if (this.gameBoard.IsPlayersTurn(move)) {
-		if (updatedConnect4Move != null) {
-			this.gameBoard.PlayMoveOnBoard(move.row, move.col);
-			
-			if (this.gameBoard.IsWinner()) {
-				// send message to winner and opponent saying the game has been won
-			}
-			else if (this.gameBoard.IsDraw()) {
-				// send message to both players saying the game is a draw
-			}
-			else {
-				// send message to opponent with updated game board state
-			}
+	var error = this.gameBoard.PlayMoveOnBoard(move);
+
+	if (typeof error == 'undefined') {	
+		if (this.gameBoard.winner !== undefined) {
+			this.emit('playResult',this.gameBoard.CreateBoardGameJSONObject('Winner'));
 		}
-		else {
-			// move is invalid because column is already full
-			// send message to client saying that this is an invalid move
-		}	
+		else if (this.gameBoard.IsDraw()) {
+			this.emit('playResult',this.gameBoard.CreateBoardGameJSONObject('Draw'));
+		}
+		else if (typeof error == 'undefined') {
+			this.emit('boardChanged', this.gameBoard.CreateBoardGameJSONObject(undefined));
+		}
 	}
 	else {
-		// move is invalid because it was made out of turn
+		this.emit('moveFailure', this.gameBoard.CreateBoardGameJSONObject(error));
 	}
+	
 };
