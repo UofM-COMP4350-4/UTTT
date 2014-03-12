@@ -5,11 +5,13 @@ var ValidateObjectController = require("./ValidateObjectController.js");
 
 exports.GameSocketController = function(port) {
 	ValidateObjectController.ValidateNumber(port);
+	console.log('Socket connection opened on port ' + port);
 	this.socketIO = io.listen(port);
 	
 	var clientSocketIDHashTable = {};
 	
 	this.socketIO.sockets.on('connection', function(socket) {
+		console.log('Connection received from client.');
 		socket.on('userSetup', function(user, callback) {
 			ValidateObjectController.ValidateObject(user);
 			clientSocketIDHashTable[user.id] = socket.id;
