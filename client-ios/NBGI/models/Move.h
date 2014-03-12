@@ -12,6 +12,7 @@
 @interface Move : NSObject
 
 - (Move *) initWithPositionAndUserID: (CGPoint) position userID: (int) userID;
+- (NSString *) CreateJSONString;
 
 @property CGPoint position;
 @property NSNumber *userID;

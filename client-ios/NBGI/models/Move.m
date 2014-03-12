@@ -19,8 +19,24 @@
     }
     
     return self;
-}
+};
 
-
+- (NSString *) CreateJSONString {
+    NSError *writeError = nil;
+    NSString *jsonString = nil;
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:self.userID,@"userID",
+                                [NSNumber numberWithInt:self.position.x],@"x",
+                                [NSNumber numberWithInt:self.position.y],@"y", nil];
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:&writeError];
+    
+    if (writeError != nil) {
+        NSLog(@" error => %@ ", writeError);
+    }
+    else {
+        jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    }
+    
+    return jsonString;
+};
 
 @end

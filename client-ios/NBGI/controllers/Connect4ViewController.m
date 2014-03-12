@@ -96,6 +96,7 @@ const int gameInstanceID = 96;
     // translate screen coordinates into row and col
     
     // convert move into json object
+    
     // send message to server with location of move
     [[MainViewController GameSocket] sendEvent:@"receiveMove" withData:[NSNumber numberWithInt:gameInstanceID]];
 }
