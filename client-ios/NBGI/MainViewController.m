@@ -7,6 +7,7 @@
 //
 
 #import "MainViewController.h"
+#import "SocketIOPacket.h"
 
 @interface MainViewController ()
 
@@ -14,7 +15,16 @@
 
 @end
 
+
+SocketIO* gameSocket = NULL;
+bool isGameCreatedSuccessfully = false;
+const int GAME_SOCKET_PORT = 10089;
+
 @implementation MainViewController
+
++ (SocketIO*) GameSocket {
+    return gameSocket;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,9 +49,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [self sendInitializeRequest];
-    SocketIO *socketIO = [[SocketIO alloc] initWithDelegate:self];
-    [socketIO connectToHost:@"localhost" onPort:3000]
-    
+    [self setupGameSocketConnection];
 }
 
 - (void)sendInitializeRequest
@@ -71,7 +79,15 @@
 
 - (void)handleServerResponse:(NSString *)responseData
 {
-    NSLog(@"I get here");
+    int userID = 5;  // this is the ID returned from the initialize call
+    NSLog(@"Handle Server Initialize Response");
+    
+    [gameSocket sendEvent:@"userSetup" withData:[NSNumber numberWithInt:userID]];
+}
+
+- (void)setupGameSocketConnection {
+    gameSocket = [[SocketIO alloc] initWithDelegate:self];
+    [gameSocket connectToHost:@"localhost" onPort:GAME_SOCKET_PORT];
 }
 
 - (void)didReceiveMemoryWarning
@@ -81,6 +97,27 @@
 }
 
 - (IBAction)PlayConnect4:(id)sender {
+    int gameInstanceID = 96;
     
+    // send http request to server to get an opponent to play against
+    // set isGameCreatedSuccessfully to True if successful
+    //isGameCreatedSuccessfully = true;
+    
+    if (isGameCreatedSuccessfully) {
+        [gameSocket sendEvent:@"userSetup" withData:[NSNumber numberWithInt:gameInstanceID]];
+    }
 }
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    if ([identifier isEqualToString:@"PlayGameSegue"]) {
+        NSLog(@"Segue Blocked");
+        
+        if (!isGameCreatedSuccessfully) {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
 @end
