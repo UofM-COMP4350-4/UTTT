@@ -67,8 +67,19 @@ const int gameInstanceID = 96;
 
 - (void) socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet
 {
+    NSString *playerJSON = packet.data;
+    NSData *playerData = [playerJSON dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error = NULL;
     
-    NSLog(@"didReceiveEvent >>> data: %@", packet.data);
+    id jsonObject = [NSJSONSerialization JSONObjectWithData:playerData options:0 error:&error];
+    
+    NSLog(@"didReceiveEvent >>> data: %@", jsonObject);
+    NSDictionary *playResultDict = jsonObject;
+    NSMutableArray *listOfMoves = [playResultDict objectForKey:@"gameBoard"];
+    
+    // convert receives jsonObject into list of moves
+    
+    [self drawGameBoard:listOfMoves];
 }
 
 //The event handling method
