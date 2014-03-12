@@ -13,6 +13,7 @@
 
 - (Move *) initWithPositionAndUserID: (CGPoint) position userID: (int) userID;
 - (NSString *) CreateJSONString;
+- (Move *) initWithJSONString:(NSString *) jsonString;
 
 @property CGPoint position;
 @property NSNumber *userID;

@@ -47,4 +47,47 @@
     XCTAssertEqual(y, 3, "Y should be 3.");
 }
 
+- (void)testParseValidJSONString {
+    Move *move = [[Move alloc]initWithPositionAndUserID:CGPointMake(1, 3) userID:5];
+    NSString *jsonString = [move CreateJSONString];
+    Move *newMove = [move initWithJSONString:jsonString];
+    
+    XCTAssertEqual(move.userID, newMove.userID, "Should be 5");
+    XCTAssertEqual(move.position.x, newMove.position.x, "Should be 3");
+    XCTAssertEqual(move.position.y, newMove.position.y, "Should be 1");
+}
+
+- (void)testParseJSONStringWithMissingElements {
+    NSString *jsonString = @"{ \"id\": 5, \"x\": 5 }";
+    Move *move = [Move alloc];
+    XCTAssertThrows([move initWithJSONString:jsonString], "Should throw an error");
+    
+    jsonString = @"{ \"y\": 5, \"x\": 5 }";
+    XCTAssertThrows([move initWithJSONString:jsonString], "Should throw an error");
+    
+    jsonString = @"{ \"y\": 5, \"x\": 5 }";
+    XCTAssertThrows([move initWithJSONString:jsonString], "Should throw an error");
+    
+    jsonString = @"{ \"y\": 5 }";
+    XCTAssertThrows([move initWithJSONString:jsonString], "Should throw an error");
+    
+    jsonString = @"{ }";
+    XCTAssertThrows([move initWithJSONString:jsonString], "Should throw an error");
+}
+
+- (void)testParseJSONStringWithAdditionalElements {
+    NSString *jsonString = @"{ \"userID\": 5, \"id\": 11, \"x\": 3, \"y\": 1 }";
+    Move *newMove = [[Move alloc] initWithJSONString:jsonString];
+    
+    XCTAssertEqual(5, [newMove.userID intValue], "Should be 5");
+    XCTAssertEqual((float)3, newMove.position.x, "Should be 3");
+    XCTAssertEqual((float)1, newMove.position.y, "Should be 1");
+}
+
+- (void)testParseNilData {
+    XCTAssertThrows([[Move alloc] initWithJSONString:nil], "Should throw an error");
+    XCTAssertThrows([[Move alloc] initWithJSONString:Nil], "Should throw an error");
+    XCTAssertThrows([[Move alloc] initWithJSONString:NULL], "Should throw an error");
+}
+
 @end
