@@ -21,7 +21,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        //[sendInitializeRequest];
     }
     return self;
 }
@@ -40,6 +39,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [self sendInitializeRequest];
+    SocketIO *socketIO = [[SocketIO alloc] initWithDelegate:self];
+    [socketIO connectToHost:@"localhost" onPort:3000]
     
 }
 
