@@ -8,11 +8,13 @@ exports.GameSocketController = function(port) {
 	console.log('Socket connection opened on port ' + port);
 	this.socketIO = io.listen(port);
 	
+	//var userID;	
 	var clientSocketIDHashTable = {};
 	
 	this.socketIO.sockets.on('connection', function(socket) {
 		console.log('Connection received from client.');
 		socket.on('userSetup', function(userID, callback) {
+			userID = userID;
 			ValidateObjectController.ValidateNumber(userID);
 			clientSocketIDHashTable[userID] = socket.id;
 			console.log('UserSetup Event Received from ' + userID);
@@ -33,7 +35,7 @@ exports.GameSocketController = function(port) {
 		socket.on('receiveMove', function(move) {
 			console.log('Received move event from client.  Move: ' + move);
 			this.emit('moveReceived', move);
-			this.socketIO.sockets.socket(clientSocketIDHashTable[userID]).emit('receivePlayResult', data);
+			this.socketIO.sockets.socket(clientSocketIDHashTable[move.player]).emit('receivePlayResult', move);
 		});
 	});
 	
