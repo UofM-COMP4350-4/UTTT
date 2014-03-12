@@ -52,6 +52,7 @@
 		32A3FB2218D003BD0068AA03 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32A3FB2118D003BD0068AA03 /* Security.framework */; };
 		32A3FB2418D003C50068AA03 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32A3FB2318D003C50068AA03 /* MobileCoreServices.framework */; };
 		32A3FB2618D003DC0068AA03 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 32A3FB2518D003DC0068AA03 /* libicucore.dylib */; };
+		32A3FB2918D014A60068AA03 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FB2818D014A60068AA03 /* Player.m */; };
 		32EC03EB18BEABDB00E3F7C7 /* Connect4ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EC03EA18BEABDB00E3F7C7 /* Connect4ViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -141,6 +142,8 @@
 		32A3FB2118D003BD0068AA03 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		32A3FB2318D003C50068AA03 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		32A3FB2518D003DC0068AA03 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		32A3FB2718D014A60068AA03 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		32A3FB2818D014A60068AA03 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
 		32EC03E918BEABDB00E3F7C7 /* Connect4ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Connect4ViewController.h; sourceTree = "<group>"; };
 		32EC03EA18BEABDB00E3F7C7 /* Connect4ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Connect4ViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -275,6 +278,8 @@
 			children = (
 				3298A06318BF2B8C0060DE8C /* Move.h */,
 				3298A06418BF2B8C0060DE8C /* Move.m */,
+				32A3FB2718D014A60068AA03 /* Player.h */,
+				32A3FB2818D014A60068AA03 /* Player.m */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -477,6 +482,7 @@
 				32A3FB0A18D002BB0068AA03 /* SBJsonStreamParserAccumulator.m in Sources */,
 				32A3FB0818D002BB0068AA03 /* SBJsonParser.m in Sources */,
 				3298A06518BF2B8C0060DE8C /* Move.m in Sources */,
+				32A3FB2918D014A60068AA03 /* Player.m in Sources */,
 				32EC03EB18BEABDB00E3F7C7 /* Connect4ViewController.m in Sources */,
 				32A3FB1118D002BB0068AA03 /* SBJsonWriter.m in Sources */,
 				32A3FB0918D002BB0068AA03 /* SBJsonStreamParser.m in Sources */,
