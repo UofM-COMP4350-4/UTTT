@@ -10,4 +10,15 @@
 
 @implementation Player
 
+- (Player *) initWithUserIDAndName:(int)userID name:(NSString *)name {
+    self = [super init];
+    
+    if (self) {
+        [self setUserID:[NSNumber numberWithInt:userID]];
+        [self setName:name];
+    }
+    
+    return self;
+}
+
 @end
