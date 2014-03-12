@@ -53,6 +53,7 @@
 		32A3FB2918D014A60068AA03 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FB2818D014A60068AA03 /* Player.m */; };
 		32A3FCFE18D042A30068AA03 /* MoveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FCFD18D042A30068AA03 /* MoveTests.m */; };
 		32A3FD0118D0485E0068AA03 /* ValidationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FD0018D0485E0068AA03 /* ValidationController.m */; };
+		32A3FD0418D04CC80068AA03 /* PlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FD0318D04CC80068AA03 /* PlayerTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +144,7 @@
 		32A3FCFD18D042A30068AA03 /* MoveTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoveTests.m; sourceTree = "<group>"; };
 		32A3FCFF18D0485E0068AA03 /* ValidationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValidationController.h; path = controllers/ValidationController.h; sourceTree = "<group>"; };
 		32A3FD0018D0485E0068AA03 /* ValidationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValidationController.m; path = controllers/ValidationController.m; sourceTree = "<group>"; };
+		32A3FD0318D04CC80068AA03 /* PlayerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayerTests.m; path = modelsTests/PlayerTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,8 +241,8 @@
 		1969759A18A2E379004AC6EE /* NBGITests */ = {
 			isa = PBXGroup;
 			children = (
+				32A3FD0218D04C970068AA03 /* modelsTests */,
 				1969759B18A2E379004AC6EE /* Supporting Files */,
-				32A3FCFD18D042A30068AA03 /* MoveTests.m */,
 			);
 			path = NBGITests;
 			sourceTree = "<group>";
@@ -351,6 +353,15 @@
 				32A3FB0518D002BB0068AA03 /* SocketRocket-Prefix.pch */,
 			);
 			path = SocketRocket;
+			sourceTree = "<group>";
+		};
+		32A3FD0218D04C970068AA03 /* modelsTests */ = {
+			isa = PBXGroup;
+			children = (
+				32A3FCFD18D042A30068AA03 /* MoveTests.m */,
+				32A3FD0318D04CC80068AA03 /* PlayerTests.m */,
+			);
+			name = modelsTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -486,6 +497,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32A3FD0418D04CC80068AA03 /* PlayerTests.m in Sources */,
 				32A3FCFE18D042A30068AA03 /* MoveTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
