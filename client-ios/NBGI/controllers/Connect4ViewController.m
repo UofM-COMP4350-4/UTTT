@@ -92,7 +92,7 @@ const int gameInstanceID = 96;
 
 //The event handling method
 - (void)playerMadeMove:(UITapGestureRecognizer *)recognizer {
-    CGPoint location = [recognizer locationInView:[recognizer.view superview]];
+   // CGPoint location = [recognizer locationInView:[recognizer.view superview]];
     // translate screen coordinates into row and col
     
     // convert move into json object

@@ -55,6 +55,7 @@
 		32A3FD1218D0513E0068AA03 /* Connect4ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FD0E18D0513E0068AA03 /* Connect4ViewController.m */; };
 		32A3FD1318D0513E0068AA03 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FD1018D0513E0068AA03 /* MainViewController.m */; };
 		32A3FD1618D068990068AA03 /* ValidationControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FD1518D068990068AA03 /* ValidationControllerTests.m */; };
+		32A3FD1818D07B940068AA03 /* Connect4ViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FD1718D07B940068AA03 /* Connect4ViewControllerTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,6 +148,7 @@
 		32A3FD0F18D0513E0068AA03 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = controllers/MainViewController.h; sourceTree = "<group>"; };
 		32A3FD1018D0513E0068AA03 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = controllers/MainViewController.m; sourceTree = "<group>"; };
 		32A3FD1518D068990068AA03 /* ValidationControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValidationControllerTests.m; path = modelsTests/controllersTests/ValidationControllerTests.m; sourceTree = "<group>"; };
+		32A3FD1718D07B940068AA03 /* Connect4ViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Connect4ViewControllerTests.m; path = controllersTests/Connect4ViewControllerTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -371,6 +373,7 @@
 			isa = PBXGroup;
 			children = (
 				32A3FD1518D068990068AA03 /* ValidationControllerTests.m */,
+				32A3FD1718D07B940068AA03 /* Connect4ViewControllerTests.m */,
 			);
 			name = controllersTests;
 			sourceTree = "<group>";
@@ -508,6 +511,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32A3FD1818D07B940068AA03 /* Connect4ViewControllerTests.m in Sources */,
 				32A3FD0418D04CC80068AA03 /* PlayerTests.m in Sources */,
 				32A3FCFE18D042A30068AA03 /* MoveTests.m in Sources */,
 				32A3FD1618D068990068AA03 /* ValidationControllerTests.m in Sources */,

@@ -103,7 +103,6 @@ const int GAME_SOCKET_PORT = 10089;
 - (void)handleServerResponse:(NSString *)responseData
 {
     NSLog(@"Handle Server Initialize Response");
-    
     NSString *playerJSON = @"{userID:12, name:\"Player 1\"";
     NSData *playerData = [playerJSON dataUsingEncoding:NSUTF8StringEncoding];
     NSError *error = NULL;
