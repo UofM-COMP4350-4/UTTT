@@ -7,6 +7,7 @@
 //
 
 #import "BlahViewController.h"
+#import "SocketIOPacket.h"
 
 @interface BlahViewController ()
 
@@ -20,6 +21,7 @@ const NSString* whiteChip = @"whiteChip.png";
 const int ROW_SIZE = 6;
 const int COL_SIZE = 7;
 const int userID = 12;
+const int gameInstanceID = 96;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,7 +35,7 @@ const int userID = 12;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    
     [self initializeGameBoard];
     NSMutableArray* listOfMoves;
     listOfMoves = [self initializeMutableArray:listOfMoves];
@@ -66,7 +68,9 @@ const int userID = 12;
 - (void)playerMadeMove:(UITapGestureRecognizer *)recognizer {
     CGPoint location = [recognizer locationInView:[recognizer.view superview]];
     // translate screen coordinates into row and col
+    
     // send message to server with location of move
+    
 }
 
 -(NSMutableArray*)initializeMutableArray:(NSMutableArray*) listOfMoves {
