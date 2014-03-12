@@ -37,7 +37,7 @@ const int gameInstanceID = 96;
     [super viewDidLoad];
     
     [self initializeGameBoard];
-    [self drawGameBoard:self.gameBoard];
+    [self drawGameBoard:[[NSMutableArray alloc]init]];
     [self setupEvents];
 }
 
@@ -79,7 +79,7 @@ const int gameInstanceID = 96;
     }
     else {
         NSLog(@"didReceiveEvent >>> data: %@", jsonNSDict);
-        NSMutableArray *listOfMoves = [jsonNSDict objectForKey:@"gameBoard"];
+        NSMutableArray *listOfMoves = [jsonNSDict objectForKey:@"currentBoard"];
         
         if (listOfMoves == nil) {
             NSLog(@"Error: Gameboard was not returned in response.");
@@ -98,7 +98,7 @@ const int gameInstanceID = 96;
     // convert move into json object
     
     // send message to server with location of move
-    [[MainViewController GameSocket] sendEvent:@"receiveMove" withData:[NSNumber numberWithInt:gameInstanceID]];
+    [[MainViewController GameSocket] sendEvent:@"receiveMove" withData:[NSNumber numberWithInt:0]];
 }
 
 - (void)initializeGameBoard {

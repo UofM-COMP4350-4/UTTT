@@ -33,6 +33,7 @@ exports.GameSocketController = function(port) {
 		socket.on('receiveMove', function(move) {
 			console.log('Received move event from client.  Move: ' + move);
 			this.emit('moveReceived', move);
+			this.socketIO.sockets.socket(clientSocketIDHashTable[userID]).emit('receivePlayResult', data);
 		});
 	});
 	

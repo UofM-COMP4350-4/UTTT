@@ -137,7 +137,7 @@ const int GAME_SOCKET_PORT = 10089;
     isGameCreatedSuccessfully = true;
     
     if (isGameCreatedSuccessfully) {
-        [gameSocket sendEvent:@"userSetup" withData:[NSNumber numberWithInt:gameInstanceID]];
+        [gameSocket sendEvent:@"gameCreated" withData:[NSNumber numberWithInt:gameInstanceID]];
     }
 }
 
