@@ -21,7 +21,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        //[sendInitializeRequest];
     }
     return self;
 }
@@ -35,42 +34,51 @@
 - (NSUInteger)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskAll;
 }
+
+//typedef void (^success)(NSURLRequest *request, NSHTTPURLResponse *response, id JSON);
+//defining a type of success we can reuse
+typedef void (^success)(NSString *responseData);
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    [self sendInitializeRequest];
+    success responseSuccess;
     
+    //callback method defined
+    responseSuccess = ^(NSString *data){
+        NSLog(@"I get here: Handle Server response called");
+        NSLog(@"the data returned is: %@", data);
+    };
+    
+    [self sendHttpGetRequest: responseSuccess url: @"initialize"];
 }
 
-- (void)sendInitializeRequest
+- (void)sendHttpGetRequest: (void (^)(NSString *responseData))success url:(NSString *) url
 {
-
-    NSString *s = @"http://localhost/initialize";
-    NSURL *url = [NSURL URLWithString:s];
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+    NSMutableString *s = [[NSMutableString alloc]init];
+    [s appendString:@"http://localhost/"];
+    [s appendString:url];
+    NSString *urlPath = [NSString stringWithString:s];
+    
+    NSURL *nsurl = [NSURL URLWithString:urlPath];
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:nsurl];
+    
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     [NSURLConnection sendAsynchronousRequest:urlRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
      {
          if (error)
          {
-             //return [error localizedDescription];
              NSLog(@"Error,%@", [error localizedDescription]);
          }
          else
          {
-             //return [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
              //handle response from Server
-             NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
-             [self handleServerResponse:[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]];
-             NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
+             NSString *response = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+             success(response);
+             NSLog(@"Finished calling callback method");
          }
      }];
-}
-
-- (void)handleServerResponse:(NSString *)responseData
-{
-    NSLog(@"I get here");
 }
 
 - (void)didReceiveMemoryWarning
