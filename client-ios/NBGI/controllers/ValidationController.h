@@ -11,5 +11,6 @@
 @interface ValidationController : NSObject
 
 + (void) ValidateObject: (id) data;
++ (void) ValidateValue: (void *) data;
 
 @end
