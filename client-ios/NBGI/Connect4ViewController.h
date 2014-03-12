@@ -2,13 +2,17 @@
 //  Connect4ViewController.h
 //  NBGI
 //
-//  Created by Cameron McKay on 2/26/2014.
+//  Created by Cameron Mckay on 2014-02-27.
 //  Copyright (c) 2014 Christopher Catton. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import <SpriteKit/SpriteKit.h>
+#include "Move.h"
+#include "MainViewController.h"
+#import "SocketIO.h"
 
-@interface Connect4ViewController : UIViewController
+@interface Connect4ViewController : UICollectionViewController <SocketIODelegate>
+
+@property NSMutableArray* gameBoard;
 
 @end

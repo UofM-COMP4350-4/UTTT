@@ -20,10 +20,9 @@
 		1969759718A2E379004AC6EE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1969757F18A2E379004AC6EE /* UIKit.framework */; };
 		1969759F18A2E379004AC6EE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1969759D18A2E379004AC6EE /* InfoPlist.strings */; };
 		196975A118A2E379004AC6EE /* NBGITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 196975A018A2E379004AC6EE /* NBGITests.m */; };
-		22204A5718C00E6A00AD4637 /* BlahViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22204A5618C00E6A00AD4637 /* BlahViewController.m */; };
+		22204A5718C00E6A00AD4637 /* Connect4ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22204A5618C00E6A00AD4637 /* Connect4ViewController.m */; };
 		3236694318BC54E40067A632 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3236694218BC54E40067A632 /* Main.storyboard */; };
 		3236696418BDDD2A0067A632 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3236696318BDDD2A0067A632 /* MainViewController.m */; };
-		3298A01618BEBD860060DE8C /* Connect4Scene.m in Sources */ = {isa = PBXBuildFile; fileRef = 3298A01518BEBD860060DE8C /* Connect4Scene.m */; };
 		3298A05F18BF23960060DE8C /* blueChip.png in Resources */ = {isa = PBXBuildFile; fileRef = 3298A05B18BF23960060DE8C /* blueChip.png */; };
 		3298A06018BF23960060DE8C /* board.png in Resources */ = {isa = PBXBuildFile; fileRef = 3298A05C18BF23960060DE8C /* board.png */; };
 		3298A06118BF23960060DE8C /* redChip.png in Resources */ = {isa = PBXBuildFile; fileRef = 3298A05D18BF23960060DE8C /* redChip.png */; };
@@ -53,7 +52,6 @@
 		32A3FB2418D003C50068AA03 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32A3FB2318D003C50068AA03 /* MobileCoreServices.framework */; };
 		32A3FB2618D003DC0068AA03 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 32A3FB2518D003DC0068AA03 /* libicucore.dylib */; };
 		32A3FB2918D014A60068AA03 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FB2818D014A60068AA03 /* Player.m */; };
-		32EC03EB18BEABDB00E3F7C7 /* Connect4ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EC03EA18BEABDB00E3F7C7 /* Connect4ViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,13 +83,11 @@
 		1969759C18A2E379004AC6EE /* NBGITests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NBGITests-Info.plist"; sourceTree = "<group>"; };
 		1969759E18A2E379004AC6EE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		196975A018A2E379004AC6EE /* NBGITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NBGITests.m; sourceTree = "<group>"; };
-		22204A5518C00E6A00AD4637 /* BlahViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlahViewController.h; sourceTree = "<group>"; };
-		22204A5618C00E6A00AD4637 /* BlahViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlahViewController.m; sourceTree = "<group>"; };
+		22204A5518C00E6A00AD4637 /* Connect4ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Connect4ViewController.h; sourceTree = "<group>"; };
+		22204A5618C00E6A00AD4637 /* Connect4ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Connect4ViewController.m; sourceTree = "<group>"; };
 		3236694218BC54E40067A632 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../Main.storyboard; sourceTree = "<group>"; };
 		3236696218BDDD2A0067A632 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		3236696318BDDD2A0067A632 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
-		3298A01418BEBD860060DE8C /* Connect4Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Connect4Scene.h; path = ../Connect4Scene.h; sourceTree = "<group>"; };
-		3298A01518BEBD860060DE8C /* Connect4Scene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Connect4Scene.m; path = ../Connect4Scene.m; sourceTree = "<group>"; };
 		3298A05B18BF23960060DE8C /* blueChip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blueChip.png; path = assets/blueChip.png; sourceTree = "<group>"; };
 		3298A05C18BF23960060DE8C /* board.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = board.png; path = assets/board.png; sourceTree = "<group>"; };
 		3298A05D18BF23960060DE8C /* redChip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = redChip.png; path = assets/redChip.png; sourceTree = "<group>"; };
@@ -144,8 +140,6 @@
 		32A3FB2518D003DC0068AA03 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		32A3FB2718D014A60068AA03 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		32A3FB2818D014A60068AA03 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
-		32EC03E918BEABDB00E3F7C7 /* Connect4ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Connect4ViewController.h; sourceTree = "<group>"; };
-		32EC03EA18BEABDB00E3F7C7 /* Connect4ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Connect4ViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,7 +210,6 @@
 			isa = PBXGroup;
 			children = (
 				32A3FADE18D002BB0068AA03 /* socketio.objc */,
-				3298A01818BEC1D70060DE8C /* scenes */,
 				3298A01718BEC1D00060DE8C /* assets */,
 				3236695418BDD1C90067A632 /* models */,
 				3236695318BDD16F0067A632 /* controllers */,
@@ -263,10 +256,8 @@
 			children = (
 				3236696218BDDD2A0067A632 /* MainViewController.h */,
 				3236696318BDDD2A0067A632 /* MainViewController.m */,
-				32EC03E918BEABDB00E3F7C7 /* Connect4ViewController.h */,
-				32EC03EA18BEABDB00E3F7C7 /* Connect4ViewController.m */,
-				22204A5518C00E6A00AD4637 /* BlahViewController.h */,
-				22204A5618C00E6A00AD4637 /* BlahViewController.m */,
+				22204A5518C00E6A00AD4637 /* Connect4ViewController.h */,
+				22204A5618C00E6A00AD4637 /* Connect4ViewController.m */,
 				19449DD818CBB94400B95D89 /* AppNaviViewController.h */,
 				19449DD918CBB94400B95D89 /* AppNaviViewController.m */,
 			);
@@ -293,15 +284,6 @@
 				3298A05E18BF23960060DE8C /* whiteChip.png */,
 			);
 			name = assets;
-			sourceTree = "<group>";
-		};
-		3298A01818BEC1D70060DE8C /* scenes */ = {
-			isa = PBXGroup;
-			children = (
-				3298A01418BEBD860060DE8C /* Connect4Scene.h */,
-				3298A01518BEBD860060DE8C /* Connect4Scene.m */,
-			);
-			name = scenes;
 			sourceTree = "<group>";
 		};
 		32A3FADE18D002BB0068AA03 /* socketio.objc */ = {
@@ -476,14 +458,12 @@
 				1969758818A2E379004AC6EE /* main.m in Sources */,
 				3236696418BDDD2A0067A632 /* MainViewController.m in Sources */,
 				32A3FB1318D002BB0068AA03 /* SocketIOJSONSerialization.m in Sources */,
-				3298A01618BEBD860060DE8C /* Connect4Scene.m in Sources */,
-				22204A5718C00E6A00AD4637 /* BlahViewController.m in Sources */,
+				22204A5718C00E6A00AD4637 /* Connect4ViewController.m in Sources */,
 				32A3FB1218D002BB0068AA03 /* SocketIO.m in Sources */,
 				32A3FB0A18D002BB0068AA03 /* SBJsonStreamParserAccumulator.m in Sources */,
 				32A3FB0818D002BB0068AA03 /* SBJsonParser.m in Sources */,
 				3298A06518BF2B8C0060DE8C /* Move.m in Sources */,
 				32A3FB2918D014A60068AA03 /* Player.m in Sources */,
-				32EC03EB18BEABDB00E3F7C7 /* Connect4ViewController.m in Sources */,
 				32A3FB1118D002BB0068AA03 /* SBJsonWriter.m in Sources */,
 				32A3FB0918D002BB0068AA03 /* SBJsonStreamParser.m in Sources */,
 				32A3FB1518D002BB0068AA03 /* SocketIOTransportWebsocket.m in Sources */,
