@@ -97,14 +97,11 @@ const int gameInstanceID = 96;
     
     for (int row = 0; row < 4; row++) {
         for (int col = 0; col < 5; col++) {
-            move = [[Move alloc]init];
-            move.position = CGPointMake(row, col);
-            
             if (row % 2 == 0) {
-                move.userID = 12;
+                move = [[Move alloc] initWithPositionAndUserID:CGPointMake(row, col) userID:12];
             }
             else {
-                move.userID = 17;
+                move = [[Move alloc] initWithPositionAndUserID:CGPointMake(row, col) userID:17];
             }
             
             [listOfMoves addObject:move];

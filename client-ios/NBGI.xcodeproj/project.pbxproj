@@ -19,7 +19,6 @@
 		1969759618A2E379004AC6EE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1969757B18A2E379004AC6EE /* Foundation.framework */; };
 		1969759718A2E379004AC6EE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1969757F18A2E379004AC6EE /* UIKit.framework */; };
 		1969759F18A2E379004AC6EE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1969759D18A2E379004AC6EE /* InfoPlist.strings */; };
-		196975A118A2E379004AC6EE /* NBGITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 196975A018A2E379004AC6EE /* NBGITests.m */; };
 		22204A5718C00E6A00AD4637 /* Connect4ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22204A5618C00E6A00AD4637 /* Connect4ViewController.m */; };
 		3236694318BC54E40067A632 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3236694218BC54E40067A632 /* Main.storyboard */; };
 		3236696418BDDD2A0067A632 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3236696318BDDD2A0067A632 /* MainViewController.m */; };
@@ -52,6 +51,8 @@
 		32A3FB2418D003C50068AA03 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32A3FB2318D003C50068AA03 /* MobileCoreServices.framework */; };
 		32A3FB2618D003DC0068AA03 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 32A3FB2518D003DC0068AA03 /* libicucore.dylib */; };
 		32A3FB2918D014A60068AA03 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FB2818D014A60068AA03 /* Player.m */; };
+		32A3FCFE18D042A30068AA03 /* MoveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FCFD18D042A30068AA03 /* MoveTests.m */; };
+		32A3FD0118D0485E0068AA03 /* ValidationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A3FD0018D0485E0068AA03 /* ValidationController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,7 +83,6 @@
 		1969759418A2E379004AC6EE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		1969759C18A2E379004AC6EE /* NBGITests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NBGITests-Info.plist"; sourceTree = "<group>"; };
 		1969759E18A2E379004AC6EE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		196975A018A2E379004AC6EE /* NBGITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NBGITests.m; sourceTree = "<group>"; };
 		22204A5518C00E6A00AD4637 /* Connect4ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Connect4ViewController.h; sourceTree = "<group>"; };
 		22204A5618C00E6A00AD4637 /* Connect4ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Connect4ViewController.m; sourceTree = "<group>"; };
 		3236694218BC54E40067A632 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../Main.storyboard; sourceTree = "<group>"; };
@@ -140,6 +140,9 @@
 		32A3FB2518D003DC0068AA03 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		32A3FB2718D014A60068AA03 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		32A3FB2818D014A60068AA03 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
+		32A3FCFD18D042A30068AA03 /* MoveTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoveTests.m; sourceTree = "<group>"; };
+		32A3FCFF18D0485E0068AA03 /* ValidationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValidationController.h; path = controllers/ValidationController.h; sourceTree = "<group>"; };
+		32A3FD0018D0485E0068AA03 /* ValidationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValidationController.m; path = controllers/ValidationController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,8 +239,8 @@
 		1969759A18A2E379004AC6EE /* NBGITests */ = {
 			isa = PBXGroup;
 			children = (
-				196975A018A2E379004AC6EE /* NBGITests.m */,
 				1969759B18A2E379004AC6EE /* Supporting Files */,
+				32A3FCFD18D042A30068AA03 /* MoveTests.m */,
 			);
 			path = NBGITests;
 			sourceTree = "<group>";
@@ -260,6 +263,8 @@
 				22204A5618C00E6A00AD4637 /* Connect4ViewController.m */,
 				19449DD818CBB94400B95D89 /* AppNaviViewController.h */,
 				19449DD918CBB94400B95D89 /* AppNaviViewController.m */,
+				32A3FCFF18D0485E0068AA03 /* ValidationController.h */,
+				32A3FD0018D0485E0068AA03 /* ValidationController.m */,
 			);
 			name = controllers;
 			sourceTree = "<group>";
@@ -464,6 +469,7 @@
 				32A3FB0818D002BB0068AA03 /* SBJsonParser.m in Sources */,
 				3298A06518BF2B8C0060DE8C /* Move.m in Sources */,
 				32A3FB2918D014A60068AA03 /* Player.m in Sources */,
+				32A3FD0118D0485E0068AA03 /* ValidationController.m in Sources */,
 				32A3FB1118D002BB0068AA03 /* SBJsonWriter.m in Sources */,
 				32A3FB0918D002BB0068AA03 /* SBJsonStreamParser.m in Sources */,
 				32A3FB1518D002BB0068AA03 /* SocketIOTransportWebsocket.m in Sources */,
@@ -480,7 +486,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				196975A118A2E379004AC6EE /* NBGITests.m in Sources */,
+				32A3FCFE18D042A30068AA03 /* MoveTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
