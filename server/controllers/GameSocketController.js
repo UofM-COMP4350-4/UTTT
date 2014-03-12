@@ -5,15 +5,19 @@ var ValidateObjectController = require("./ValidateObjectController.js");
 
 exports.GameSocketController = function(port) {
 	ValidateObjectController.ValidateNumber(port);
+	console.log('Socket connection opened on port ' + port);
 	this.socketIO = io.listen(port);
 	
+	//var userID;	
 	var clientSocketIDHashTable = {};
 	
 	this.socketIO.sockets.on('connection', function(socket) {
-		socket.on('userSetup', function(user, callback) {
-			ValidateObjectController.ValidateObject(user);
-			clientSocketIDHashTable[user.id] = socket.id;
-			
+		console.log('Connection received from client.');
+		socket.on('userSetup', function(userID, callback) {
+			userID = userID;
+			ValidateObjectController.ValidateNumber(userID);
+			clientSocketIDHashTable[userID] = socket.id;
+			console.log('UserSetup Event Received from ' + userID);
 			if (callback !== undefined) {
 				callback(clientSocketIDHashTable);	
 			}
@@ -21,6 +25,7 @@ exports.GameSocketController = function(port) {
 		
 		socket.on('gameCreated', function(gameInstanceID, callback) {
 			socket.join('game/' + gameInstanceID);
+			console.log('gameCreated event received for gameInstanceID ' + gameInstanceID);
 			
 			if (callback !== undefined) {
 				callback(socket.manager.rooms);	
@@ -28,7 +33,9 @@ exports.GameSocketController = function(port) {
 		});
 
 		socket.on('receiveMove', function(move) {
+			console.log('Received move event from client.  Move: ' + move);
 			this.emit('moveReceived', move);
+			this.socketIO.sockets.socket(clientSocketIDHashTable[move.player]).emit('receivePlayResult', move);
 		});
 	});
 	

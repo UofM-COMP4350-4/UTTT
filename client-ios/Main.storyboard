@@ -4,34 +4,14 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
-        <!--Connect4 View Controller - Game View-->
-        <scene sceneID="d8Y-dx-2HX">
-            <objects>
-                <viewController title="Game View" id="tU3-jv-7ws" customClass="Connect4ViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="tA3-K7-2CW"/>
-                        <viewControllerLayoutGuide type="bottom" id="GYF-oF-tgV"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="6U9-vo-LoX" customClass="SKView">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <gestureRecognizers/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Playing a Game" id="eXu-bF-alZ"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SF2-qm-kPu" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-4833" y="-2514"/>
-        </scene>
-        <!--Blah View Controller - Connect4-->
+        <!--Connect4 View Controller - Connect4-->
         <scene sceneID="bXk-1o-7jD">
             <objects>
-                <collectionViewController autoresizesArchivedViewToFullSize="NO" id="Kz0-ab-grV" customClass="BlahViewController" sceneMemberID="viewController">
+                <collectionViewController autoresizesArchivedViewToFullSize="NO" id="Kz0-ab-grV" customClass="Connect4ViewController" sceneMemberID="viewController">
                     <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="U08-KD-Ym4">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="oS4-1y-INd">
                             <size key="itemSize" width="100" height="100"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -40,7 +20,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="uUS-1m-WTC">
-                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                <rect key="frame" x="0.0" y="64" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
@@ -84,7 +64,7 @@
                                 <state key="normal" title="Play Connect4"/>
                                 <connections>
                                     <action selector="PlayConnect4:" destination="CS8-Tz-Iq1" eventType="touchUpInside" id="oXW-Jd-VaL"/>
-                                    <segue destination="tU3-jv-7ws" kind="push" id="OiS-ab-Kdk"/>
+                                    <segue destination="Kz0-ab-grV" kind="push" identifier="PlayGameSegue" id="ag1-xU-5pW"/>
                                 </connections>
                             </button>
                         </subviews>
