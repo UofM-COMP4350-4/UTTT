@@ -14,6 +14,8 @@
 		<string>https://github.com/UofM-COMP4350-4/NBGI.git</string>
 		<key>A5DF891E-9E02-4DE1-BCE5-A0BF74DBB0C6</key>
 		<string>https://github.com/pkyeck/socket.IO-objc.git</string>
+		<key>E92553D2-8C5A-4E80-ACB1-B3C175215ADE</key>
+		<string>https://github.com/Frahaan/2012-Olympics-iOS--iPad-and-iPhone--source-code.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>client-ios/NBGI.xcodeproj/project.xcworkspace</string>
@@ -23,15 +25,25 @@
 		<string>../../..</string>
 		<key>A5DF891E-9E02-4DE1-BCE5-A0BF74DBB0C6</key>
 		<string>../../socket.IO-objc</string>
+		<key>E92553D2-8C5A-4E80-ACB1-B3C175215ADE</key>
+		<string>../../NBGITests/2012-Olympics-iOS--iPad-and-iPhone--source-code</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/UofM-COMP4350-4/NBGI.git</string>
+	<string>file:///Users/cam/NBGI/client-ios/NBGI.xcodeproj/project.xcworkspace/</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
 	<string>031CE862-7EB8-4D48-B559-C924A9AE6BB7</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E92553D2-8C5A-4E80-ACB1-B3C175215ADE</string>
+			<key>IDESourceControlWCCName</key>
+			<string>2012-Olympics-iOS--iPad-and-iPhone--source-code</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
