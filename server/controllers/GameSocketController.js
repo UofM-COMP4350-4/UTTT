@@ -15,7 +15,7 @@ exports.GameSocketController = function(port) {
 		socket.on('userSetup', function(user, callback) {
 			ValidateObjectController.ValidateObject(user);
 			clientSocketIDHashTable[user.id] = socket.id;
-			
+			console.log('UserSetup Event Received from ' + user.id);
 			if (callback !== undefined) {
 				callback(clientSocketIDHashTable);	
 			}
@@ -23,6 +23,7 @@ exports.GameSocketController = function(port) {
 		
 		socket.on('gameCreated', function(gameInstanceID, callback) {
 			socket.join('game/' + gameInstanceID);
+			console.log('gameCreated event received for gameInstanceID ' + gameInstanceID);
 			
 			if (callback !== undefined) {
 				callback(socket.manager.rooms);	
@@ -30,6 +31,7 @@ exports.GameSocketController = function(port) {
 		});
 
 		socket.on('receiveMove', function(move) {
+			console.log('Received move event from client.  Move: ' + move);
 			this.emit('moveReceived', move);
 		});
 	});

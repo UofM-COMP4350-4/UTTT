@@ -101,7 +101,7 @@ const int GAME_SOCKET_PORT = 10089;
     
     // send http request to server to get an opponent to play against
     // set isGameCreatedSuccessfully to True if successful
-    //isGameCreatedSuccessfully = true;
+    isGameCreatedSuccessfully = true;
     
     if (isGameCreatedSuccessfully) {
         [gameSocket sendEvent:@"userSetup" withData:[NSNumber numberWithInt:gameInstanceID]];
