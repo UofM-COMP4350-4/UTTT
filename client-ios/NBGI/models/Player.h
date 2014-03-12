@@ -7,12 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ValidationController.h"
 
 @interface Player : NSObject
 
-- (Player *) initWithUserIDAndName: (int) userID name: (NSString *) name;
+- (Player *) initWithUserIDAndNameAndisOnlineAndAvatarURL: (int) userID userName: (NSString *) userName : (bool) isOnline avatarURL : (NSString *) avatarURL;
+- (Player *) initWithJSONString:(NSString *) jsonString;
+- (NSString *) CreateJSONString;
 
 @property NSNumber *userID;
-@property NSString *name;
+@property NSString *username;
+@property bool isOnline;
+@property NSString *avatarURL;
 
 @end
