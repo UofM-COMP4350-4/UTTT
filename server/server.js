@@ -11,7 +11,7 @@ server.pre(ecstatic({ root: __dirname + '/public'}));
 server.listen(process.env.PORT || 80, process.env.IP);
 console.log("Server started & listening on port 80");
 
-var gameSocket = new gameSocketController(10089);
+var gameSocket = new gameSocketController.GameSocketController(10089);
 
 server.use(restify.queryParser());
 
