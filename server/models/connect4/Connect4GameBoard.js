@@ -13,12 +13,12 @@ exports.Connect4GameBoard = function(gameInfo)
 	
 	this.gameID = gameInfo.gameID;
 	this.instanceID = gameInfo.instanceID;
-	
+	this.userToPlay = gameInfo.userToPlay;
+
 	if (typeof gameInfo.player1 != 'undefined' && typeof gameInfo.player2 != 'undefined') {
 		ValidateObjectController.ValidateObject(gameInfo.player1);
 		ValidateObjectController.ValidateObject(gameInfo.player2);
 		this.players = [gameInfo.player1, gameInfo.player2];
-		this.userToPlay = gameInfo.player1;
 		this.ROW_SIZE = 6;
 		this.COL_SIZE = 7;
 		this.grid = new Array(this.ROW_SIZE * this.COL_SIZE);
@@ -42,12 +42,12 @@ exports.Connect4GameBoard = function(gameInfo)
 		ValidateObjectController.ValidateNumber(gameInfo.lastPieceID);
 		this.players = gameInfo.players;
 		this.userToPlay = gameInfo.userToPlay;
+		this.ROW_SIZE = gameInfo.ROW_SIZE;
+		this.COL_SIZE = gameInfo.COL_SIZE;
 		this.grid = gameInfo.grid;
 		this.moves = gameInfo.moves;
 		this.isWinner = gameInfo.isWinner;
 		this.winner = gameInfo.winner;
-		this.ROW_SIZE = gameInfo.ROW_SIZE;
-		this.COL_SIZE = gameInfo.COL_SIZE;
 		this.maxPlayers = gameInfo.maxPlayers;
 		this.lastPieceID = gameInfo.lastPieceID;
 	}
@@ -264,7 +264,7 @@ exports.Connect4GameBoard.prototype.IsPlayersTurn = function(move)
 {
 	ValidateObjectController.ValidateObject(move);
 	var playerID = move.player.id;
-	
+
 	if (this.userToPlay.id == playerID) {
 		return true;
 	}
@@ -293,21 +293,32 @@ exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(initmove)
 	ValidateObjectController.ValidateObject(initmove);
 	
 	if (this.isWinner) {
-		return;
+		return "Invalid Move: This game already has a winner.";
 	}
 	
+	if (this.IsDraw()) {
+		return "Invalid Move: This game is a draw.";
+	}
+	
+	if (!this.IsPlayersTurn(initmove)) {
+		return 'Invalid Move: It is not your turn.';
+	}
+
 	var lmove = this.GetLocationIfDropGamePieceAtCol(initmove.x);
 	var newy = 0;
 
 	if (lmove) {
 		newy = lmove.y+1;
+		
+		if (newy >= this.COL_SIZE) {
+			return "Invalid Move: There are no valid moves in this column.";
+		}
 	}
 	else {
 		newy = 0;
 	}
 	
 	var move = {x:initmove.x, y:newy, player:initmove.player};
-	
 	var iterator = new GridIteratorJS.GridIterator(this.grid,move.x, move.y, this.ROW_SIZE, this.COL_SIZE);
 	var connect4GamePiece = this.grid[iterator.GetIndex()];
 	
@@ -328,6 +339,24 @@ exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(initmove)
 		}
 	}
 	else {
-		throw new Error('A game piece already exists at this location.');
+		return "Invalid Move: A piece already exists at this location.";
 	}
+	
+	return undefined;
+};
+
+exports.Connect4GameBoard.prototype.CreateBoardGameJSONObject = function(status) {
+	var playersJSON = {};
+	for (var index = 0; index < this.players.length; index++) {
+		playersJSON[this.players[index].id] = this.players[index].name;
+	}
+	
+	return {  instanceID: this.instanceID,
+			  gameID: this.gameID,
+			  userToPlay: this.userToPlay,
+			  players: playersJSON,
+			  currentBoard: this.moves,
+			  winner: this.winner,
+			  status: status
+	};
 };
