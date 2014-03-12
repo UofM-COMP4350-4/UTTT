@@ -10,7 +10,7 @@
 
 @interface Player : NSObject
 
-@property NSNumber userID;
-@property NSSTring name;
+@property NSNumber* userID;
+@property NSString* name;
 
 @end

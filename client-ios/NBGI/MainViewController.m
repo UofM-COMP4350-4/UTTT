@@ -9,9 +9,6 @@
 #import "MainViewController.h"
 #import "SocketIOPacket.h"
 #import "Player.h"
-#import "JSONModelLib.h"
-#import "KivaFeed.h"
-#import "HUD.h"
 
 @interface MainViewController ()
 
@@ -83,11 +80,15 @@ const int GAME_SOCKET_PORT = 10089;
 
 - (void)handleServerResponse:(NSString *)responseData
 {
-    Player* player = [[Player alloc] init];
-    player.userID = [NSNumber numberWithInt:5];
     NSLog(@"Handle Server Initialize Response");
     
-    [gameSocket sendEvent:@"userSetup" withData:[NSNumber numberWithInt:userID]];
+    NSString *playerJSON = @"{userID:12, name:\"Player 1\"";
+    NSData *playerData = [playerJSON dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error = NULL;
+    
+    id jsonObject = [NSJSONSerialization JSONObjectWithData:playerData options:0 error:&error];
+    Player *player = (Player *) jsonObject;
+    [[MainViewController GameSocket] sendEvent:@"userSetup" withData:player.userID];
 }
 
 - (void)setupGameSocketConnection {

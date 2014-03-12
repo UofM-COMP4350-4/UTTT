@@ -64,13 +64,20 @@ const int gameInstanceID = 96;
     return UIInterfaceOrientationMaskPortrait;
 }
 
+
+- (void) socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet
+{
+    
+    NSLog(@"didReceiveEvent >>> data: %@", packet.data);
+}
+
 //The event handling method
 - (void)playerMadeMove:(UITapGestureRecognizer *)recognizer {
     CGPoint location = [recognizer locationInView:[recognizer.view superview]];
     // translate screen coordinates into row and col
     
     // send message to server with location of move
-    
+    [[MainViewController GameSocket] sendEvent:@"receiveMove" withData:[NSNumber numberWithInt:gameInstanceID]];
 }
 
 -(NSMutableArray*)initializeMutableArray:(NSMutableArray*) listOfMoves {
