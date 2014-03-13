@@ -98,15 +98,15 @@ const int gameInstanceID = 96;
     CGRect screenRect = [[self view] bounds];
     CGFloat screenWidth = screenRect.size.width;
     int quadrantSize = screenWidth / COL_SIZE;
-    int row = -1, index = 1, currentQuadrantMax = quadrantSize;
+    int col = -1, index = 1, currentQuadrantMax = quadrantSize;
     
-    while (row == -1) {
+    while (col == -1) {
         if (touchX <= currentQuadrantMax) {
-            row = index - 1;
+            col = index - 1;
         }
         else {
             if (index >= COL_SIZE) {
-                row = COL_SIZE - 1;
+                col = COL_SIZE - 1;
             }
         }
         
@@ -114,8 +114,8 @@ const int gameInstanceID = 96;
         currentQuadrantMax = quadrantSize * index;
     }
     
-    NSString *moveJSON = [NSString stringWithFormat:@"{ \"user:\", \"x\":%d,\"y\":0 }",row];
-    
+    NSString *moveJSON = [NSString stringWithFormat:@"{ \"user:\", \"x\":%d,\"y\":5 }",col];
+    NSLog(@"player made a move im col %d", col);
     // send message to server with location of move
     [[MainViewController GameSocket] sendEvent:@"receiveMove" withData:moveJSON];
 }

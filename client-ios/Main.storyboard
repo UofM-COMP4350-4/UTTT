@@ -221,7 +221,6 @@
         <!--View Controller - Sign In-->
         <scene sceneID="Xem-Pg-R8i">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7km-ko-9Sm" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController title="Sign In" id="KaV-pE-qQh" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="XNX-Xv-IAc"/>
@@ -294,6 +293,7 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7km-ko-9Sm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3308" y="-3963"/>
         </scene>
