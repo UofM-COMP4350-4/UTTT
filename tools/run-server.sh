@@ -25,6 +25,10 @@ if [ "$2" != "" ] ; then
 	IP = $2
 fi
 
+if [ ! -e "$ROOT/server/gameboard" ] ; then
+	mkdir -p "$ROOT/server/gameboard"
+fi 
+
 node "$ROOT/server/server.js"
 
 echo " "
