@@ -117,6 +117,14 @@ const int gameInstanceID = 96;
     NSString *moveJSON = [NSString stringWithFormat:@"{ \"user:\", \"x\":%d,\"y\":5 }",col];
     NSLog(@"player made a move im col %d", col);
     // send message to server with location of move
+    
+    //Remove me
+    Move *move = [[Move alloc]initWithPositionAndUserID:CGPointMake(col,0) userID:userID];
+    NSMutableArray *list = [[NSMutableArray alloc]init];
+    [list addObject:move];
+    [self drawGameBoard:list];
+    //end
+    
     [[MainViewController GameSocket] sendEvent:@"receiveMove" withData:moveJSON];
 }
 
@@ -139,7 +147,7 @@ const int gameInstanceID = 96;
         currentMove = [moveList objectAtIndex:index];
         col = currentMove.position.x;
         row = currentMove.position.y;
-        gameBoardIndex = col * COL_SIZE + row;
+        gameBoardIndex = ROW_SIZE*COL_SIZE - ((row * COL_SIZE)+(COL_SIZE- col));
         currUserID = [currentMove.userID intValue];
         
         if (currUserID == userID) {
@@ -149,6 +157,7 @@ const int gameInstanceID = 96;
             [self.gameBoard replaceObjectAtIndex:gameBoardIndex withObject:redChip];
         }
     }
+    [self.collectionView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
