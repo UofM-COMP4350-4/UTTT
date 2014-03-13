@@ -76,15 +76,30 @@ RelationalDBAccess.prototype.getUserInfo = function(userID, callback) {
 };
 
 RelationalDBAccess.prototype.addToMatch = function(instanceID, userID, gameID, callback) {
+	var insertToDB = function() {
+		dbConnection
+			.query("INSERT INTO Matches (instanceID, userID, gameID) values (" + instanceID + ", " + userID + ", " + gameID + ")", null, {raw: true})
+			.success(function(){
+				callback();
+			})
+			.error(function(error){
+				console.log('error is ' + error);
+				callback(error);
+			});
+	}
 	dbConnection
-		.query("INSERT INTO Matches (instanceID, userID, gameID) values (" + instanceID + ", " + userID + ", " + gameID + ")", null, {raw: true})
-		.success(function(){
-			callback();
+		.query("SELECT * FROM Matches WHERE instanceID = " + instanceID + " and userID = " + userID, null, {raw: true})
+		.success(function(entries){
+			if(!entries || entries.length==0) {
+				insertToDB();
+			} else {
+				callback();
+			}
 		})
 		.error(function(error){
-			console.log('error is ' + error);
-			callback(error);
+			insertToDB()
 		});
+	
 };
 
 RelationalDBAccess.prototype.lookupMatch = function(instanceID,callback) {
