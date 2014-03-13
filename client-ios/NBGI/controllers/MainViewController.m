@@ -24,6 +24,7 @@ bool isGameCreatedSuccessfully = false;
 const int GAME_SOCKET_PORT = 10089;
 NSNumber *clientID = 0;
 NSArray *gameList;
+BOOL gameStarted =false;
 
 @implementation MainViewController
 
@@ -180,8 +181,19 @@ NSArray *gameList;
     //Send queue for game request
     [self sendHttpGetRequest: responseSuccess url: queueForGameUrl];
     
-    //Create a queueForGame http request
+    //Create a queueForGame http request -done
     //Call the matchmaking to match the two users
+    //Extend the IOSocket Delegate class and implement the didreceiveevent event
+    
+    //For now wait and release the waiting when the server returns
+    while(!gameStarted)
+    {
+        UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        spinner.center = CGPointMake(160, 240);
+        [self.view addSubview:spinner];
+        [spinner startAnimating];
+        [spinner release];
+    }
     
     // send http request to server to get an opponent to play against
     // set isGameCreatedSuccessfully to True if successful
