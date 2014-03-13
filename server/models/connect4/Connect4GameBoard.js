@@ -9,7 +9,6 @@ exports.Connect4GameBoard = function(gameInfo)
 	ValidateObjectController.ValidateObject(gameInfo);
 	ValidateObjectController.ValidateNumber(gameInfo.gameID);
 	ValidateObjectController.ValidateNumber(gameInfo.instanceID);
-	ValidateObjectController.ValidateObject(gameInfo.userToPlay);
 	
 	this.gameID = gameInfo.gameID;
 	this.instanceID = gameInfo.instanceID;
@@ -250,8 +249,11 @@ exports.Connect4GameBoard.prototype.IsWinnerVertically = function(grid, col, row
 exports.Connect4GameBoard.prototype.AddPlayer = function(player)
 {
 	ValidateObjectController.ValidateObject(player);
-	if (this.players.length < 2)
+	if (this.players.length < this.maxPlayers)
 	{
+		if(!this.userToPlay) {
+			this.userToPlay = player;
+		}
 		this.players.push(player);
 	}
 	else

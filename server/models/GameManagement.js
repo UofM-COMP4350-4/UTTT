@@ -1,4 +1,6 @@
 var Validator = require("../controllers/ValidateObjectController.js");
+var DataStore = require('../controllers/DataStoreController.js');
+var Player = require('./Player.js');
 
 //used to ensure a unique instanceID in conjunction with datetime
 var serverInstanceBase = 0;
@@ -6,7 +8,7 @@ var serverInstanceBase = 0;
 // Games get saved to database when all users disconnect
 // Note: Guest users do not have their data retained
 var matches = {};
-// All online userIDs
+// All online users
 var onlineUsers = [];
 // Cache of available games
 var availGames;
@@ -17,104 +19,132 @@ module.exports = {
 	availableGames: function(callback) {
 		Validator.validateArgs(arguments, Function);
 		if(!availGames) {
-			// TODO: implement once DB access is defined
-			(function(gamesEntries) {
+			DataStore.getListOfGames(function(gamesEntries) {
 				availGames = gamesEntries;
 				callback(availGames);
-			})({
-				"connect4": {gameName:"Connect4", maxPlayers:2},
-				"chess": {gameName:"Chess", maxPlayers:2},
-				"scrabble": {gameName:"Scrabble", maxPlayers:2},
-				"battleship": {gameName:"BattleShip", maxPlayers:2},
-				"ultimateTicTacToe": {gameName:"Ultimate TicTacToe", maxPlayers:2}
 			});
 		} else {
 			callback(availGames);
 		}
 	},
 	// Creates a new game for a game ID and then 
-	createMatch: function(gameID) {
+	setupMatch: function(gameID, instanceID, callback) {
 		Validator.validateArgs(arguments, Number);
-		if(!gameDefinitions[gameID]) {
-			gameDefinitions[gameID] = require("../controllers/" + gameID + "GameController");
-		}
-		var id = ((new Date().getTime())*10) + serverInstanceBase;
-		var game = new gameDefinitions[gameID](id);
-		matches[id] = game;
-		serverInstanceBase++;
-		return id;
+		module.exports.gameTypeFromID(gameID, function(gameType) {
+			if(!gameDefinitions[gameID]) {
+				gameDefinitions[gameID] = require("../controllers/" + gameType + "GameController");
+			}
+			if(instanceID) {
+				module.exports.getGameboard(instanceID, function(gb) {
+					matches[instanceID] = new gameDefinitions[gameID](gb);
+					callback(instanceID);
+				});
+			} else {
+				var id = ((new Date().getTime())*10) + serverInstanceBase;
+				var game = new gameDefinitions[gameID]({instanceID:id, gameID:gameID});
+				matches[id] = game;
+				serverInstanceBase++;
+				callback(id);
+			}
+		});
 	},
 	joinMatch: function(userID, instanceID, callback) {
 		Validator.validateArgs(arguments, String, Number, Function);
 		if(matches[instanceID]) {
-			if(matches[instanceID].players.length < matches[instanceID].maxPlayers) {
-				// TODO: add function call to game match to remove user
-				matches[instanceID].players.push(userID);
+			if(matches[instanceID].gameBoard.players.length < matches[instanceID].gameBoard.maxPlayers) {
+				matches[instanceID].gameBoard.AddPlayer(new Player(userID, module.exports.connectedUserName(userID)));
 				callback();
 			} else {
 				callback({errorCode:1, errorText:"Game full"});
 			}
 		} else {
-			// TODO: search db for match with instance id
-			(function(entry) {
-				if(!gameDefinitions[entry.gameID]) {
-					gameDefinitions[entry.gameID] = require("../controllers/" + entry.gameID + "GameController");
+			DataStore.lookupMatch(instanceID, function(entries) {
+				if(entries && entries.length>0) {
+					module.exports.setupMatch(entries[0].gameID, instanceID, function(id) {
+						module.exports.joinMatch(userID, instanceID, callback);
+					});
+				} else {
+					throw new Error("Instance does not exist: " + instanceID);
 				}
-				matches[entry.instanceID] = new gameDefinitions[entry.gameID](entry.instanceID);
-				module.exports.joinMatch(userID, instanceID, callback);
-			})();
+			});
 		}
 	},
 	leaveMatch: function(userID, instanceID, callback) {
 		Validator.validateArgs(arguments, String, Number, Function);
-		// TODO: remove user from match in the db if present
-		(function() {
+		DataStore.removeFromMatch(instanceID, userID, function(err) {
 			if(matches[instanceID]) {
-				// TODO: add function call to game match to remove user
-				(function() {
-					// temporary
-					matches[instanceID].players.splice(
-							matches[instanceID].players.indexOf(userID), 1);
-					callback();
-				})();
-			} else {
-				callback();
-			}
-		})();
-	},
-	useConnected: function(userID, callback) {
-		onlineUsers.push(userID);
-		module.exports.findByUser(userID, function(state) {
-			var inactiveMatches = [];
-			for(var x in state) {
-				if(!matches[x]) {
-					if(!gameDefinitions[state[x].gameID]) {
-						gameDefinitions[state[x].gameID] = require("../controllers/" + state[x].gameID + "GameController");
+				// TODO: add proper function call to game match to remove user
+				for(var i=0; i<matches[instanceID].gameBoard.players.length; i++) {
+					if(matches[instanceID].gameBoard.players[i].id == userID) {
+						matches[instanceID].gameBoard.players.splice(i, 1);
 					}
-					matches[x] = new gameDefinitions[state[x].gameID](x);
 				}
+				if(matches[instanceID].gameBoard.players.length<=1) {
+					// TODO handle win/draw/end of game to socket
+					DataStore.endMatch(instanceID, callback);
+				} else {
+					callback();
+				}
+			} else {
+				DataStore.lookupMatch(instanceID, function(entries) {
+					if(!entries || entries.length<=1) {
+						// Somehow we got to this sitatuation. Possibly magic? Do cleanup!
+						DataStore.endMatch(instanceID, callback);
+					} else {
+						callback();
+					}
+				});
 			}
-			callback();
+		});
+	},
+	userConnected: function(userID, callback) {
+		DataStore.getUserInformation(userID, function(userInfo) {
+			onlineUsers.push(userInfo);
+			module.exports.findByUser(userID, function(state) {
+				var inactiveMatches = [];
+				var instances = Object.keys(state);
+				var setupItem = function() {
+					if(instances.length>0) {
+						var curr = instances.pop();
+						module.exports.setupMatch(state[curr].gameID, curr, function() {
+							setupItem();
+						});
+					} else {
+						callback();
+					}
+				};
+			});
 		});
 	},
 	userDisconnected: function(userID, callback) {
-		onlineUsers.splice(onlineUsers.indexOf(userID), 1);
+		for(var i=0; i<onlineUsers.length; i++) {
+			if(onlineUsers[i].userID == userID) {
+				onlineUsers.splice(i, 1);
+				break;
+			}
+		}
 		module.exports.findByUser(userID, function(state) {
 			var inactiveMatches = [];
 			for(var x in state) {
-				for(var i=0; i<state[x].players.length; i++) {
-					if(onlineUsers.indexOf(state[x].players[i])>-1) {
-						inactiveMatches.push(x);
-						break;
+				var players = Object.keys(state[x].players);
+				var found = false;
+				for(var i=0; i<players.length && !found; i++) {
+					for(var j=0; j<onlineUsers.length && !found; j++) {
+						if(onlineUsers[j].userID==players[i]) {
+							inactiveMatches.push(x);
+							found = true;
+						}
 					}
 				}
 			}
 			var saveInactiveMatch = function() {
 				if(inactiveMatches.length>0) {
 					var curr = inactiveMatches.pop();
-					(function() {
-						saveInactiveMatch();
-					})();
+					DataStore.storeToMatch(curr.instanceID, userID, curr.gameID, function() {
+						DataStore.saveGameBoard(curr.instanceID, curr, function() {
+							saveInactiveMatch();
+						});
+					});
 				} else {
 					callback();
 				}
@@ -122,36 +152,57 @@ module.exports = {
 			saveInactiveMatch();
 		});
 	},
+	connectedUserName: function(userID) {
+		for(var i=0; i<onlineUsers.length; i++) {
+			if(onlineUsers[i].userID == userID) {
+				return onlineUsers[i].userName;
+			}
+		}
+	},
+	gameTypeFromID: function(gameID, callback) {
+		module.exports.availableGames(function(gameObj) {
+			for(var i=0; i<gameObj.length; i++) {
+				if(gameObj[i].gameID == gameID) {
+					callback(gameObj[i].gameType);
+					return;
+				}
+			}
+			callback();
+		});
+	},
 	findByUser: function(userID, callback) {
 		Validator.validateArgs(arguments, String, Function);
 		var userState = {};
 		for(var x in matches) {
-			if(matches[x].players.indexOf(userID)) {
-				userState[x] = matches[x];
+			for(var i=0; i<matches[x].gameBoard.players.length; i++) {
+				if(matches[x].gameBoard.players[i].id == userID) {
+					userState[x] = matches[x].gameBoard.CreateBoardGameJSONObject();
+				}
 			}
 		}
-		// TODO query database for all games with user as a player
-		(function(dbMatches) {
-			for(var x in dbMatches) {
-				userState[x] = userState[x] || dbMatches[x];
-			}
-			callback(userState);
-		})({});
+		DataStore.matchesByUser(userID, function(entries) {
+			var loadItem = function() {
+				if(entries.length>0) {
+					var curr = entries.pop();
+					if(!userState[curr.instanceID]) {
+						DataStore.loadGameBoard(curr.instanceID, function(gb) {
+							userState[curr.instanceID] = gb;
+							loadItem();
+						});
+					}
+				} else {
+					callback(userState);
+				}
+			};
+			loadItem();
+		});
 	},
 	getGameboard: function(instanceID, callback) {
 		Validator.validateArgs(arguments, Number, Function);
 		if(matches[instanceID]) {
-			// TODO: replace with actual gameboard api from game
-			callback(matches[instanceID].gameboard);
+			callback(matches[instanceID].gameBoard.CreateBoardGameJSONObject());
 		} else {
-			// TODO: attempt to grab an instance id gameboard flat file
-			(function(err, data) {
-				if(err) {
-					callback({});
-				} else {
-					callback(data);
-				}
-			})();
+			DataStore.loadGameBoard(instanceID, callback);
 		}
 	}
 };
