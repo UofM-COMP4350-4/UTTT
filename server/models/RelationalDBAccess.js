@@ -86,18 +86,18 @@ RelationalDBAccess.prototype.addToMatch = function(instanceID, userID, gameID, c
 				console.log('error is ' + error);
 				callback(error);
 			});
-	}
+	};
 	dbConnection
 		.query("SELECT * FROM Matches WHERE instanceID = " + instanceID + " and userID = " + userID, null, {raw: true})
 		.success(function(entries){
-			if(!entries || entries.length==0) {
+			if(!entries || entries.length===0) {
 				insertToDB();
 			} else {
 				callback();
 			}
 		})
 		.error(function(error){
-			insertToDB()
+			insertToDB();
 		});
 	
 };

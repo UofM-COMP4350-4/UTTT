@@ -115,11 +115,11 @@ exports.endMatch = function(instanceID, callback) {
 		relationalDB.endMatch(instanceID, function(err) {
 			flatFile.isPathCreated("/gameboard/" + instanceID + ".json", function(exists) {
 				if(exists) {
-					flatFile.deleteFile("/gameboard/" + instanceID + ".json", callback)
+					flatFile.deleteFile("/gameboard/" + instanceID + ".json", callback);
 				} else {
 					callback();
 				}
-			})
+			});
 		});
 	}
 };

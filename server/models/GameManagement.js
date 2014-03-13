@@ -30,7 +30,7 @@ module.exports = {
 	// Creates a new game for a game ID and then 
 	setupMatch: function(gameID, instanceID, callback) {
 		Validator.validateArgs(arguments, Number);
-		module.exports.gameTypeFromID(entries[0].gameID, function(gameType) {
+		module.exports.gameTypeFromID(gameID, function(gameType) {
 			if(!gameDefinitions[gameID]) {
 				gameDefinitions[gameID] = require("../controllers/" + gameType + "GameController");
 			}
@@ -41,7 +41,7 @@ module.exports = {
 				});
 			} else {
 				var id = ((new Date().getTime())*10) + serverInstanceBase;
-				var game = new gameDefinitions[gameID]({instanceID:id, gameID:gameID}});
+				var game = new gameDefinitions[gameID]({instanceID:id, gameID:gameID});
 				matches[id] = game;
 				serverInstanceBase++;
 				callback(id);
@@ -64,7 +64,7 @@ module.exports = {
 						module.exports.joinMatch(userID, instanceID, callback);
 					});
 				} else {
-					throw new Error("Instance does not exist: " + instanceID)
+					throw new Error("Instance does not exist: " + instanceID);
 				}
 			});
 		}
@@ -108,7 +108,7 @@ module.exports = {
 						var curr = instances.pop();
 						module.exports.setupMatch(state[curr].gameID, curr, function() {
 							setupItem();
-						})
+						});
 					} else {
 						callback();
 					}
