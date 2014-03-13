@@ -8,6 +8,7 @@
 
 #import "Connect4ViewController.h"
 #import "SocketIOPacket.h"
+#import "Move.h"
 
 @interface Connect4ViewController ()
 
@@ -92,13 +93,31 @@ const int gameInstanceID = 96;
 
 //The event handling method
 - (void)playerMadeMove:(UITapGestureRecognizer *)recognizer {
-   // CGPoint location = [recognizer locationInView:[recognizer.view superview]];
-    // translate screen coordinates into row and col
+    CGPoint location = [recognizer locationInView:[recognizer.view superview]];
+    CGFloat touchX = location.x;
+    CGRect screenRect = [[self view] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    int quadrantSize = screenWidth / COL_SIZE;
+    int row = -1, index = 1, currentQuadrantMax = quadrantSize;
     
-    // convert move into json object
+    while (row == -1) {
+        if (touchX <= currentQuadrantMax) {
+            row = index - 1;
+        }
+        else {
+            if (index >= COL_SIZE) {
+                row = COL_SIZE - 1;
+            }
+        }
+        
+        index++;
+        currentQuadrantMax = quadrantSize * index;
+    }
+    
+    NSString *moveJSON = [NSString stringWithFormat:@"{ \"user:\", \"x\":%d,\"y\":0 }",row];
     
     // send message to server with location of move
-    [[MainViewController GameSocket] sendEvent:@"receiveMove" withData:[NSNumber numberWithInt:0]];
+    [[MainViewController GameSocket] sendEvent:@"receiveMove" withData:moveJSON];
 }
 
 - (void)initializeGameBoard {
@@ -147,6 +166,7 @@ const int gameInstanceID = 96;
     static NSString *identifier = @"Cell";
     
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    
     
     UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
     recipeImageView.image = [UIImage imageNamed:[self.gameBoard objectAtIndex:indexPath.row]];
