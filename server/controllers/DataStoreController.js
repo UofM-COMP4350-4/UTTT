@@ -47,13 +47,22 @@ exports.loadGameBoard = function(instanceID, callback) {
 	});
 };
 
-exports.addToMatch = function(instanceID, userID, gameID, callback) {
+exports.storeToMatch = function(instanceID, userID, gameID, callback) {
 	if(exports.mock) {
-		exports.mockMatches.push({
-			userID:userID,
-			instanceID:instanceID,
-			gameID:gameID
-		});
+		var found = false;
+		for(var i=0; i<exports.mockMatches.length && !found; i++) {
+			if(exports.mockMatches[i].userID==userID
+					&& exports.mockMatches[i]==instanceID) {
+				found = true;
+			}
+		}
+		if(!found) {
+			exports.mockMatches.push({
+				userID:userID,
+				instanceID:instanceID,
+				gameID:gameID
+			});
+		}
 		callback();
 	} else {
 		//Call validate object on the relationalDB object
