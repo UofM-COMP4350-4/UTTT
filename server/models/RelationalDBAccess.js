@@ -87,6 +87,18 @@ RelationalDBAccess.prototype.addToMatch = function(instanceID, userID, gameID, c
 		});
 };
 
+RelationalDBAccess.prototype.lookupMatch = function(instanceID,callback) {
+	dbConnection
+		.query("SELECT * FROM Matches WHERE instanceID = " + instanceID, null, {raw: true})
+		.success(function(matchEntries){
+			callback(matchEntries);
+		})
+		.error(function(error){
+			console.log('error is ' + error);
+			callback();
+		});
+};
+
 RelationalDBAccess.prototype.removeFromMatch = function(instanceID, userID, callback) {
 	dbConnection
 		.query("DELETE FROM Matches WHERE instanceID = " + instanceID + " and userID = " + userID, null, {raw: true})
