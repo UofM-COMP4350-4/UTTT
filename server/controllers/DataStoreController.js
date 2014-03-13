@@ -25,7 +25,7 @@ exports.getListOfGames = function(callback) {
 	} else {
 		//Call validate object on the relationalDB object
 		relationalDB.getListOfGames(function(gameList){
-			console.log('list of games is: ' + JSON.stringify(gameList[0]));
+			console.log('list of games is: ' + JSON.stringify(gameList));
 			callback(gameList);
 		});
 	}
@@ -58,6 +58,21 @@ exports.addToMatch = function(instanceID, userID, gameID, callback) {
 	} else {
 		//Call validate object on the relationalDB object
 		relationalDB.addToMatch(instanceID, userID, gameID, callback);
+	}
+};
+
+exports.lookupMatch = function(instanceID, callback) {
+	if(exports.mock) {
+		var matchEntries = [];
+		for(var i=0; i<exports.mockMatches.length; i++) {
+			if(exports.mockMatches[i].instanceID == instanceID) {
+				matchEntries.push(exports.mockMatches[i]);
+			}
+		}
+		callback(matchEntries);
+	} else {
+		//Call validate object on the relationalDB object
+		relationalDB.lookupMatch(instanceID, callback);
 	}
 };
 
