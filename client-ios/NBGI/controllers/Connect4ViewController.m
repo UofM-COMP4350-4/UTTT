@@ -114,7 +114,7 @@ const int gameInstanceID = 96;
         currentQuadrantMax = quadrantSize * index;
     }
     
-    NSString *moveJSON = [NSString stringWithFormat:@"{ \"user:\", \"x\":%d,\"y\":5 }",col];
+    NSString *moveJSON = [NSString stringWithFormat:@"{ user:, x:%d,y:5 }",col];
     NSLog(@"player made a move im col %d", col);
     // send message to server with location of move
     

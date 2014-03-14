@@ -7,6 +7,7 @@
 //
 
 #import "MainViewController.h"
+#import "Connect4ViewController.h"
 #import "SocketIOPacket.h"
 
 
@@ -126,7 +127,8 @@ BOOL gameStarted =false;
                 clientID = [userDict objectForKey:@"userID"];
                 gameList = [jsonNSDict objectForKey:@"availableGames"];
                 NSLog(@"The game data contains: %@", [jsonNSDict objectForKey:@"availableGames"]);
-                [[MainViewController GameSocket] sendEvent:@"userSetup" withData:[userDict objectForKey:@"userID"]];
+                //[[MainViewController GameSocket] sendEvent:@"userSetup" withData:[userDict objectForKey:@"userID"]];
+                [[MainViewController GameSocket] sendEvent:@"userSetup" withData:@1];
             }
         }
     };
@@ -138,31 +140,72 @@ BOOL gameStarted =false;
     gameSocket = [[SocketIO alloc] initWithDelegate:self];
     //[gameSocket connectToHost:@"localhost" onPort:GAME_SOCKET_PORT];
     [gameSocket connectToHost:@"54.186.20.243" onPort:GAME_SOCKET_PORT];
+    [gameSocket setDelegate:self];
+}
+- (void) socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet
+{
+    NSLog(@"I'm recieving the event %@" , packet.data);
+    isGameCreatedSuccessfully = true;
+    NSError *error = NULL;
+    NSData *responseJSON = [packet.data dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *jsonNSDict = [NSJSONSerialization JSONObjectWithData:responseJSON options:NSJSONReadingMutableContainers error:&error];
+    NSString *name = [jsonNSDict objectForKey:@"name"];
+    
+    //responseJSON = [packet.data dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *args = [jsonNSDict objectForKey:@"args"];
+    NSLog(@"%@" , args);
+    //jsonNSDict = [NSJSONSerialization JSONObjectWithData:args options:NSJSONReadingMutableContainers error:&error];
+    
+    
+    if ([name isEqualToString:@"matchFound"]) {
+        NSLog(@"%@" , name);
+        NSNumber *gameInstanceID = [args valueForKey:@"gameInstanceID"];
+        NSLog(@"%@" , gameInstanceID);
+        [gameSocket sendEvent:@"gameCreated" withData:gameInstanceID];
+    }
+    else if  ([name isEqualToString:@"gameCreated"])
+    {
+        NSLog(@"Just touch it");
+    }
+    else
+    {
+        NSLog(@"Other event recieved");
+    }
+}
+
+- (void) socketIO:(SocketIO *)socket didReceiveMessage:(SocketIOPacket *)packet
+{
+    NSLog(@"I'm recieving the message %@" , packet.data);
 }
 
 - (IBAction)PlayConnect4:(id)sender {
     NSNumber *connect4 = [[NSNumber alloc] initWithInt:2];
-    int gameInstanceID = 96;
+    //int gameInstanceID = 96;
     NSMutableString *queueForGameUrl = [[NSMutableString alloc] initWithString:@"queueForGame?"];
-    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    //UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
     success responseSuccess;
-    
+    //isGameCreatedSuccessfully = true;
     //Respond to the queue for game request
     responseSuccess = ^(NSString *data)
     {
         //check for 200 response header or other response headers
         NSLog(@"I get a queue response %@", data);
-        gameStarted = true;
+        //
+        //SocketIOPacket* something = [[SocketIOPacket alloc] init ];
         
-        //Wait for a socket event
+        
+        //Wait for a socket event from server
+        //[self socketIO:gameSocket didReceiveEvent:something gameInstanceID:gameInstanceID];
     };
-    
+    //gameStarted = true;
     //Build queueForGame get request
     [queueForGameUrl appendString:@"clientID="];
-    [queueForGameUrl appendString: [clientID stringValue]];
+    //[queueForGameUrl appendString: [clientID stringValue]];
+    [queueForGameUrl appendString:@"1"];
     [queueForGameUrl appendString:@"&gameID="];
     [queueForGameUrl appendString: [connect4 stringValue]];
+    //[queueForGameUrl appendString:@"2"];
     
     //Send queue for game request
     [self sendHttpGetRequest: responseSuccess url: queueForGameUrl];
@@ -172,23 +215,24 @@ BOOL gameStarted =false;
     //Extend the IOSocket Delegate class and implement the didreceiveevent event
     
     //For now wait and release the waiting when the server returns
-    while(!gameStarted)
+    /*while(!gameStarted)
     {
         spinner.center = CGPointMake(160, 240);
         [self.view addSubview:spinner];
         [spinner startAnimating];
-    }
+    }*/
     
     // send http request to server to get an opponent to play against
     // set isGameCreatedSuccessfully to True if successful
     
-    isGameCreatedSuccessfully = true;
-    
-    if (isGameCreatedSuccessfully) {
-        [gameSocket sendEvent:@"gameCreated" withData:[NSNumber numberWithInt:gameInstanceID]];
     }
-}
-
+/*- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"PlayGameSegue"]) {
+        Connect4ViewController *myVC = [segue destinationViewController];
+        myVC.playIndependent = YES; // set your properties here
+    }
+}*/
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
     if ([identifier isEqualToString:@"PlayGameSegue"]) {
         NSLog(@"Segue Blocked");
