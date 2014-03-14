@@ -119,7 +119,7 @@ server.get("/initialize", function(request, response, next) {
 	var text = {};
 	//call DataStoreController and get a the user's information
 	dbController.getUserInformation(request.params.userid, function(newUserInfo){
-		var userInfo = newUserInfo;
+		var userInfo = newUserInfo[0];
 		//Get a list of games on the server
 		/*gameMGMT.availableGames(function(gameList){
 			var games = gameList;
