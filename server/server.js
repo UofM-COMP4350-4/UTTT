@@ -44,6 +44,7 @@ server.get("/initialize", function(request, response, next) {
 	dbController.getUserInformation(request.params.userid, function(newUserInfo){
 		var userInfo = newUserInfo[0];
 		//Get a list of games on the server
+		/*
 		gameMGMT.availableGames(function(gameList){
 			var games = gameList;
 			//get a list of active games for the user
@@ -55,7 +56,12 @@ server.get("/initialize", function(request, response, next) {
 				response.end();
 				next();
 			});
-		});
+		});*/
+		text = {'user': userInfo, 'availableGames': {}, 'active': {}};		
+		response.writeHead( 200, {'content-type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
+		response.write(JSON.stringify(text));
+		response.end();
+		next();
 	});
 });
 
