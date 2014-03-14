@@ -13,21 +13,17 @@ util.inherits(exports.Connect4GameController, events.EventEmitter);
 
 exports.Connect4GameController.prototype.RequestMove = function(move) {	
 	ValidateObjectController.ValidateObject(move);
-	var error = this.gameBoard.PlayMoveOnBoard(move);
+	var err = this.gameBoard.PlayMoveOnBoard(move);
 
-	if (typeof error == 'undefined') {	
-		if (this.gameBoard.winner !== undefined) {
+	if (!err) {	
+		if (this.gameBoard.winner) {
 			this.emit('playResult',this.gameBoard.CreateBoardGameJSONObject('Winner'));
-		}
-		else if (this.gameBoard.IsDraw()) {
+		} else if (this.gameBoard.IsDraw()) {
 			this.emit('playResult',this.gameBoard.CreateBoardGameJSONObject('Draw'));
+		} else {
+			this.emit('boardChanged', this.gameBoard.CreateBoardGameJSONObject());
 		}
-		else if (typeof error == 'undefined') {
-			this.emit('boardChanged', this.gameBoard.CreateBoardGameJSONObject(undefined));
-		}
+	} else {
+		this.emit('moveFailure', this.gameBoard.CreateBoardGameJSONObject(err));
 	}
-	else {
-		this.emit('moveFailure', this.gameBoard.CreateBoardGameJSONObject(error));
-	}
-	
 };

@@ -6,16 +6,17 @@ var PIECES_TO_WIN = 4;
 
 exports.Connect4GameBoard = function(gameInfo)
 {
-	ValidateObjectController.ValidateObject(gameInfo);
-	ValidateObjectController.ValidateNumber(gameInfo.gameID);
-	ValidateObjectController.ValidateNumber(gameInfo.instanceID);
-	ValidateObjectController.ValidateObject(gameInfo.userToPlay);
+	console.log('I get called');
+	//ValidateObjectController.ValidateObject(gameInfo);
+	//ValidateObjectController.ValidateNumber(gameInfo.gameID);
+	//ValidateObjectController.ValidateNumber(gameInfo.instanceID);
 	
 	this.gameID = gameInfo.gameID;
 	this.instanceID = gameInfo.instanceID;
 	this.userToPlay = gameInfo.userToPlay;
-
+	console.log('I get called');
 	if (typeof gameInfo.player1 != 'undefined' && typeof gameInfo.player2 != 'undefined') {
+		console.log('My target');
 		ValidateObjectController.ValidateObject(gameInfo.player1);
 		ValidateObjectController.ValidateObject(gameInfo.player2);
 		this.players = [gameInfo.player1, gameInfo.player2];
@@ -250,8 +251,11 @@ exports.Connect4GameBoard.prototype.IsWinnerVertically = function(grid, col, row
 exports.Connect4GameBoard.prototype.AddPlayer = function(player)
 {
 	ValidateObjectController.ValidateObject(player);
-	if (this.players.length < 2)
+	if (this.players.length < this.maxPlayers)
 	{
+		if(!this.userToPlay) {
+			this.userToPlay = player;
+		}
 		this.players.push(player);
 	}
 	else

@@ -14,9 +14,11 @@ exports.MatchmakingController.joinMatchmaking = function(player, game, response)
 	gameMgmnt.availableGames(function(gList){gameList = gList;});
 	if(this.gameValidate(gameList,game)){ // make sure the game the client asks to queue for is a game we actually support.
 		queues.GameMatchmaker.joinQueue(player,game,function(){
-			this.Match(player,game,function(gameObj){result = gameObj;});
+			this.Match(player,game,function(gameQueue){
+				result = gameQueue;
+				response(result);
+				});
 			});
-		response(result);
 	}
 	else {response("");}
 };
@@ -43,7 +45,8 @@ exports.MatchmakingController.Match= function(player,game,callback){
 	queues.GameMatchmaker.getGameQueue(game, function(queue){gameList = queue});
 	var numPlayers = 0;
 	var playersFound = [];
-	numPlayers = game['maxPlayers'];
+	//numPlayers = game['maxPlayers'];
+	numPlayers = 2;
 	if(gameList.length < numPlayers){
 		callback(""); // return no match found
 		return;
