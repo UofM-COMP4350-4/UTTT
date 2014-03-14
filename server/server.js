@@ -52,10 +52,13 @@ server.get("/queueForGame", function(request, response, next){
 		//send both players to the gameMGMT to start a new game
 		gameMGMT.setupMatch(params.gameID, undefined, function(gameInstanceID){
 			//use this to call joinMatch for both players
-			console.log("Users matched up successfully");
+			console.log("Users matched up successfully " + params.clientID);
+			console.log("Game instance ID returned to Server is " + gameInstanceID);
 			
 			//call gameSocketController.sendMatchEvent to both users
-			gameSocketController.sendMatchEvent(params.clientID);
+			gameSocket.sendMatchEvent(params.clientID, gameInstanceID);
+			
+			console.log('Event sent successfully');
 			//console.log(queueInfo["Player1"]);
 			/*
 			No need for this since the setup match requires 2 players to be passed in
@@ -87,7 +90,9 @@ server.get("/queueForGame", function(request, response, next){
 	console.log("queueForGameRequests is: " + queueForGameRequests);
 	
 	if(queueForGameRequests <= 2)
-	{		
+	{	
+		// _
+		//
 		response.writeHead(200, {"content-type": "application/json"});
 		response.end(JSON.stringify("User queue request received. Please wait"));
 	}
