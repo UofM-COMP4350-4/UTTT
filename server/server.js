@@ -18,11 +18,6 @@ server.get("/queueForGame", function(request, response, next){
 	//We need to Setup a new game in the database between two players
 	//Create a flat file for the board data
 	//Then send back the board object
-<<<<<<< HEAD
-	response.writeHead(200, {"content-type": "application/json"});
-	response.end(JSON.stringify({}));
-	return next();
-=======
 	//Ideally we want to this request sent to the MatchMakingController
 	//and that takes care of matching players who want to play the same
 	//game together
@@ -58,6 +53,9 @@ server.get("/queueForGame", function(request, response, next){
 		gameMGMT.setupMatch(params.gameID, undefined, function(gameInstanceID){
 			//use this to call joinMatch for both players
 			console.log("Users matched up successfully");
+			
+			//call gameSocketController.sendMatchEvent to both users
+			gameSocketController.sendMatchEvent(params.clientID);
 			//console.log(queueInfo["Player1"]);
 			/*
 			No need for this since the setup match requires 2 players to be passed in
@@ -101,7 +99,6 @@ server.get("/queueForGame", function(request, response, next){
 	
 	//response.end(JSON.stringify({}));
 	next();
->>>>>>> fc8ac3171d9ec477519678c6b9441f1db39b0858
 });
 
 server.get("/createNewGame", function(request, response, next){
