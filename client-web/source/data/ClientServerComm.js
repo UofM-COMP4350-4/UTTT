@@ -64,7 +64,7 @@ enyo.singleton({
 	
 	initialize: function(userID, callback) {
 		var request = new enyo.Ajax({
-			url: "initialize", //URL goes here
+			url: "http://localhost/initialize", //URL goes here
 			method: "GET", //You can also use POST
 			handleAs: "json" //options are "json", "text", or "xml"
 		});

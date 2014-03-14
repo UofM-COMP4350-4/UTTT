@@ -37,6 +37,12 @@ exports.GameSocketController = function(port) {
 		});
 	});
 	
+	this.sendMatchEvent = function(userID) {
+		//ValidateObjectController.ValidateNumber(userID);
+		//ValidateObjectController.ValidateString(clientSocketIDHashTable[userID]);
+		this.socketIO.sockets.socket(clientSocketIDHashTable[userID]).emit('matchFound', JSON.stringify("true"));
+	};
+	
 	this.SendDataToUser = function(userID, data) {
 		ValidateObjectController.ValidateNumber(userID);
 		ValidateObjectController.ValidateString(clientSocketIDHashTable[userID]);

@@ -122,7 +122,7 @@ BOOL gameStarted =false;
                 NSLog(@"Error: User data was not returned in response.");
             }
             else {
-                
+                NSLog(@"The game data contains: %@", userDict);
                 clientID = [userDict objectForKey:@"userID"];
                 gameList = [jsonNSDict objectForKey:@"availableGames"];
                 NSLog(@"The game data contains: %@", [jsonNSDict objectForKey:@"availableGames"]);
@@ -144,6 +144,7 @@ BOOL gameStarted =false;
     NSNumber *connect4 = [[NSNumber alloc] initWithInt:2];
     int gameInstanceID = 96;
     NSMutableString *queueForGameUrl = [[NSMutableString alloc] initWithString:@"queueForGame?"];
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
     success responseSuccess;
     
@@ -152,24 +153,9 @@ BOOL gameStarted =false;
     {
         //check for 200 response header or other response headers
         NSLog(@"I get a queue response %@", data);
+        gameStarted = true;
         
-        /*
-        NSError* error = NULL;
-        NSString *jsonString;
-        
-        //send userID & gameID
-        NSDictionary *queueInfo = [NSDictionary dictionaryWithObjectsAndKeys:clientID, @"userID", connect4, @"gameID", nil];
-        
-        
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:queueInfo
-                                                           options:NSJSONWritingPrettyPrinted error:&error];
-        
-        if (error != nil) {
-            NSLog(@" error => %@ ", error);
-        }
-        else {
-            jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        }*/
+        //Wait for a socket event
     };
     
     //Build queueForGame get request
@@ -188,11 +174,9 @@ BOOL gameStarted =false;
     //For now wait and release the waiting when the server returns
     while(!gameStarted)
     {
-        UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         spinner.center = CGPointMake(160, 240);
         [self.view addSubview:spinner];
         [spinner startAnimating];
-        [spinner release];
     }
     
     // send http request to server to get an opponent to play against
