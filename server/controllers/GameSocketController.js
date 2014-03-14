@@ -26,21 +26,25 @@ exports.GameSocketController = function(port) {
 			socket.join('game/' + gameInstanceID);
 			console.log('gameCreated event received for gameInstanceID ' + gameInstanceID);
 			
-			if (callback !== undefined) {
-				callback(socket.manager.rooms);	
-			}
+			//if (callback !== undefined) {
+				//callback(socket.manager.rooms);	
+			//}
+			socket.emit('gameCreated', {'gameInstanceID':gameInstanceID});
 		});
 
 		socket.on('receiveMove', function(move) {
 			console.log('Received move event from client.  Move: ' + move);
+			
 			this.emit('moveReceived', move);
 		});
 	});
 	
-	this.sendMatchEvent = function(userID) {
+	this.sendMatchEvent = function(userID, gameInstanceID) {
+		console.log("Sending match event to IOS " + gameInstanceID);
 		//ValidateObjectController.ValidateNumber(userID);
 		//ValidateObjectController.ValidateString(clientSocketIDHashTable[userID]);
-		this.socketIO.sockets.socket(clientSocketIDHashTable[userID]).emit('matchFound', JSON.stringify("true"));
+		this.socketIO.sockets.socket(clientSocketIDHashTable[userID]).emit('matchFound', {'gameInstanceID':gameInstanceID});
+		return;
 	};
 	
 	this.SendDataToUser = function(userID, data) {

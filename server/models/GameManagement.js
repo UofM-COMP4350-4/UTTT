@@ -43,7 +43,6 @@ module.exports = {
 				});
 			} else {
 				var id = ((new Date().getTime())*10) + serverInstanceBase;
-				console.log('After game definitions');
 				var initializeMethodName = gameType + "GameController";
 				//Change when you have more games
 				var player1 = new Player.Player(1, 'Sam');
@@ -51,6 +50,7 @@ module.exports = {
 				var game = new gameDefinitions[gameID].Connect4GameController({instanceID:id, gameID:gameID, player1: player1, player2:player2});
 				matches[id] = game;
 				serverInstanceBase++;
+				console.log('After game definitions. Game instance id is: ' + game);
 				callback(id);
 			}
 		});
