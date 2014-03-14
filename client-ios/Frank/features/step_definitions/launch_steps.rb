@@ -4,7 +4,7 @@ end
 
 Given /^I launch the app$/ do
   # latest sdk and iphone by default
-  launch_app app_path
+  launch_app app_path, "7.0", "ipad"
 end
 
 Given /^I launch the app using iOS (\d\.\d)$/ do |sdk|
@@ -18,3 +18,4 @@ end
 Given /^I launch the app using iOS (\d\.\d) and the (iphone|ipad) simulator$/ do |sdk, version|
   launch_app app_path, sdk, version
 end
+
