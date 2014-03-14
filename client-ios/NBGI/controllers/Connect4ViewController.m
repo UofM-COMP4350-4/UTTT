@@ -114,15 +114,15 @@ const int gameInstanceID = 96;
         currentQuadrantMax = quadrantSize * index;
     }
     
-    NSString *moveJSON = [NSString stringWithFormat:@"{ user:, x:%d,y:5 }",col];
+    NSString *moveJSON = [NSString stringWithFormat:@"{ player:%d, x:%d,y:%d }",1,col,5];
     NSLog(@"player made a move im col %d", col);
     // send message to server with location of move
     
     //Remove me
-    Move *move = [[Move alloc]initWithPositionAndUserID:CGPointMake(col,0) userID:userID];
+    /*Move *move = [[Move alloc]initWithPositionAndUserID:CGPointMake(col,0) userID:userID];
     NSMutableArray *list = [[NSMutableArray alloc]init];
     [list addObject:move];
-    [self drawGameBoard:list];
+    [self drawGameBoard:list];*/
     //end
     
     [[MainViewController GameSocket] sendEvent:@"receiveMove" withData:moveJSON];
@@ -142,6 +142,10 @@ const int gameInstanceID = 96;
     int col = 0;
     int currUserID = 0;
     Move* currentMove;
+    
+    /*for (int index = 0; index < 42; index++) {
+        [self.gameBoard addObject:whiteChip];
+    }*/
     
     for (int index = 0; index < [moveList count]; index++) {
         currentMove = [moveList objectAtIndex:index];

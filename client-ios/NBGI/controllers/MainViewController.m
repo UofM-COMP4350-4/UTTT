@@ -170,6 +170,7 @@ BOOL gameStarted =false;
     else
     {
         NSLog(@"Other event recieved");
+        //Connect4ViewController *connect4 = [Connect4ViewController [alloc] init];
     }
 }
 
