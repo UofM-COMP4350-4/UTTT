@@ -1,5 +1,6 @@
 var Validator = require("../controllers/ValidateObjectController.js");
 var DataStore = require('../controllers/DataStoreController.js');
+var connect4Controller = require("../controllers/Connect4GameController.js");
 var Player = require('./Player.js');
 
 //used to ensure a unique instanceID in conjunction with datetime
@@ -17,7 +18,7 @@ var gameDefinitions = {};
 module.exports = {
 	// Gets the static list of game IDs, game names, and max players
 	availableGames: function(callback) {
-		Validator.validateArgs(arguments, Function);
+		//Validator.validateArgs(arguments, Function);
 		if(!availGames) {
 			DataStore.getListOfGames(function(gamesEntries) {
 				availGames = gamesEntries;
@@ -27,12 +28,13 @@ module.exports = {
 			callback(availGames);
 		}
 	},
-	// Creates a new game for a game ID and then 
+	// Creates a new game for a game ID and then
 	setupMatch: function(gameID, instanceID, callback) {
-		Validator.validateArgs(arguments, Number);
+		//Validator.validateArgs(arguments, Number);
 		module.exports.gameTypeFromID(gameID, function(gameType) {
 			if(!gameDefinitions[gameID]) {
-				gameDefinitions[gameID] = require("../controllers/" + gameType + "GameController");
+				gameDefinitions[gameID] = require("../controllers/" + gameType + "GameController.js");
+				console.log('Testing get game type: ' + "../controllers/" + gameType + "GameController");
 			}
 			if(instanceID) {
 				module.exports.getGameboard(instanceID, function(gb) {
@@ -41,7 +43,12 @@ module.exports = {
 				});
 			} else {
 				var id = ((new Date().getTime())*10) + serverInstanceBase;
-				var game = new gameDefinitions[gameID]({instanceID:id, gameID:gameID});
+				console.log('After game definitions');
+				var initializeMethodName = gameType + "GameController";
+				//Change when you have more games
+				var player1 = new Player.Player(1, 'Sam');
+				var player2 = new Player.Player(2, 'Cameron');
+				var game = new gameDefinitions[gameID].Connect4GameController({instanceID:id, gameID:gameID, player1: player1, player2:player2});
 				matches[id] = game;
 				serverInstanceBase++;
 				callback(id);
@@ -49,8 +56,14 @@ module.exports = {
 		});
 	},
 	joinMatch: function(userID, instanceID, callback) {
-		Validator.validateArgs(arguments, String, Number, Function);
+		//Validator.validateArgs(arguments, String, Number, Function);
+		console.log('Join match get called');
+		callback();
+		/*
+		No need for this since the setup match requires 2 players to be passed in
+		and already adds the 2 players to the game
 		if(matches[instanceID]) {
+			console.log('Join match gets cascasasda called');
 			if(matches[instanceID].gameBoard.players.length < matches[instanceID].gameBoard.maxPlayers) {
 				matches[instanceID].gameBoard.AddPlayer(new Player(userID, module.exports.connectedUserName(userID)));
 				callback();
@@ -67,7 +80,7 @@ module.exports = {
 					throw new Error("Instance does not exist: " + instanceID);
 				}
 			});
-		}
+		}*/
 	},
 	leaveMatch: function(userID, instanceID, callback) {
 		Validator.validateArgs(arguments, String, Number, Function);
@@ -163,7 +176,7 @@ module.exports = {
 		module.exports.availableGames(function(gameObj) {
 			for(var i=0; i<gameObj.length; i++) {
 				if(gameObj[i].gameID == gameID) {
-					callback(gameObj[i].gameType);
+					callback(gameObj[i].gameName);
 					return;
 				}
 			}

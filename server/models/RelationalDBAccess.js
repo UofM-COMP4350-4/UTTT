@@ -64,7 +64,7 @@ RelationalDBAccess.prototype.getUserInfo = function(userID, callback) {
 		dbConnection
 			.query("SELECT userID, userName, isOnline, avatarURL FROM Users WHERE userID = " + userID, null, {raw: true})
 			.success(function(userInfo){
-				console.log('The data gotten back is: ' + userInfo);
+				console.log('The data gotten back is: ' + JSON.stringify(userInfo));
 				validateObjectLength(userInfo, 1);
 				callback(userInfo[0]); //Only one entry should be returned so test for this
 			})
