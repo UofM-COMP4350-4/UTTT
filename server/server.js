@@ -96,7 +96,6 @@ server.get("/queueForGame", function(request, response, next){
 	
 	//response.end(JSON.stringify({}));
 	next();
->>>>>>> master
 });
 
 server.get("/createNewGame", function(request, response, next){
