@@ -5,16 +5,17 @@ Winter 2014 Project for Software Engineering 2 Group 4
 
 Website Access: http://ec2-54-213-160-158.us-west-2.compute.amazonaws.com
 
-Database Access:
+##Database
+###Database Access:
 * Enter mysql -u root -p
 * Enter pass as Group4
 
-How to remotely connect to the database
+###How to remotely connect to the database
 - We can't access the database because we dont have remote access
 for our root user. It is strongly frowned upon to create remote access
 for the root user since its the admin user so i created a new user
-- GRANT ALL ON *.* TO 'ubuntu'@'localhost'; //local access
-- GRANT ALL ON *.* TO 'ubuntu'@'%'; //remote access
+- GRANT ALL ON \*.\* TO 'ubuntu'@'localhost'; //local access
+- GRANT ALL ON \*.\* TO 'ubuntu'@'%'; //remote access
 	- The above query creates a user 'ubuntu' with no password (forget the password for now)
 - Next to enable remote access, from your home directory (home/ubuntu/NBGI) run :
 	sudo vi ../../../etc/mysql/my.cnf
