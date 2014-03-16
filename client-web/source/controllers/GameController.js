@@ -44,7 +44,7 @@ enyo.kind({
 			console.log("ImageView " + inSender.index);
 			this.col_index = inSender.index;
 		}
-		if (typeof this.col != undefined && typeof this.row != undefined && this.col && this.row && typeof this.row_index != undefined && typeof this.col_index != undefined)
+		if (typeof this.col !== undefined && typeof this.row !== undefined && this.col && this.row && typeof this.row_index !== undefined && typeof this.col_index !== undefined)
 		{
 			if (this.row_index >= 0 && this.col_index >= 0)
 			{

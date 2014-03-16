@@ -6,7 +6,7 @@ enyo.kind({
 		{fit:true, onload:"controller.setupBoard", components: [
 			{kind: 'FittableRows', components:[
            {name: 'header', kind: 'onyx.Toolbar', components: [
-                {kind: "onyx.Button", content: "Load content", ontap:"tapload"}, 
+                {kind: "onyx.Button", content: "Load content", ontap:"tapload"} 
            ]},
            {name:'board', kind: 'FittableRows', fit:true, ontap:"controller.tapboard"}
       ]}
