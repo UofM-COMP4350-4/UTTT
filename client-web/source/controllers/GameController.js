@@ -24,6 +24,10 @@ enyo.kind({
 	{
 		this.col_index = -1;
 		this.row_index = -1;
+		this.lcol_index = -1;
+		this.lrow_index = -1;
+		this.COL_SIZE = 6;
+		this.ROW_SIZE = 7;
 		this.row = undefined;
 		this.col = undefined;
 	},
@@ -33,6 +37,7 @@ enyo.kind({
 			console.log("FittableColumns " + inSender.index);
 			this.col = inSender;
 			this.row_index = inSender.index;
+			this.lrow_index = (this.COL_SIZE-1)-this.row_index;
 		}
 		else if (inSender.kind == "FittableRows")
 		{
@@ -43,12 +48,14 @@ enyo.kind({
 		{
 			console.log("ImageView " + inSender.index);
 			this.col_index = inSender.index;
+			this.lcol_index = this.col_index;
 		}
 		if (typeof this.col !== undefined && typeof this.row !== undefined && this.col && this.row && typeof this.row_index !== undefined && typeof this.col_index !== undefined)
 		{
 			if (this.row_index >= 0 && this.col_index >= 0)
 			{
 				console.log("Hey Steve x: " + this.col_index + " y: " + this.row_index);
+				console.log("Hey Steve [logical] x: " + this.lcol_index + " y: " + this.lrow_index);
 				var el = this.row.getComponents();
 				el = el[this.row_index].getComponents();
 				el = el[this.col_index];

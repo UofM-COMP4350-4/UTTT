@@ -21,12 +21,12 @@ enyo.kind({
 		]}
 	]},
 	tapload:function(inSender, inEvent) {
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 6; i++) {
     	this.$.board.createComponent([{index:i, fit:true,kind:"FittableColumns",ontap:"controller.tapboard"}]);
     	var components = this.$.board.getComponents();
-    	for (var j = 0; j < 6; j++)
+    	for (var j = 0; j < 7; j++)
     	{
-    		components[i].createComponent([{index:j, kind: 'ImageView', src:'./../../assets/connectfourwhite.png', style:"width:100px; height:100px", ontap: "controller.tapboard"}]);
+    		components[i].createComponent([{index:j, kind: 'ImageView', src:'./../../assets/connectfourwhite.png', style:"width:74px; height:74px", ontap: "controller.tapboard"}]);
     	} 
   	}
     this.$.board.render();
