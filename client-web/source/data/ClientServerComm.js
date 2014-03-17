@@ -1,6 +1,9 @@
 enyo.singleton({
 	name: "ClientServerComm",
-	kind: "Object",
+	kind: "Component",
+	component: [
+		{ kind:"Socket", url:"http://localhost" }
+	]
 	
 	create: function() {
 		this.inherited(arguments);
