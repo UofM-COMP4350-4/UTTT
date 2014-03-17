@@ -27,8 +27,8 @@ for the root user since its the admin user so i created a new user
 - below is the code to grant a user local and remote access:
 
 ```mysql
-GRANT ALL ON . TO 'ubuntu'@'localhost'; //local access
-GRANT ALL ON . TO 'ubuntu'@'%'; //remote access
+GRANT ALL ON *.* TO 'ubuntu'@'localhost'; //local access
+GRANT ALL ON *.* TO 'ubuntu'@'%'; //remote access
 ``` 
 
 - Next to enable remote access, from your home directory (home/ubuntu/NBGI) run :
