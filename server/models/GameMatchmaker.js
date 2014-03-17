@@ -2,20 +2,25 @@
 // Model that holds the matchmaking queues for each game
 /*globals GameMatchmaker */
 var validator = require('../controllers/ValidateObjectController');
-var _ = require('underscore');
+//var _ = require('underscore');
 var gameQueue = [];
 exports.GameMatchmaker = function() {}; // constructor
 
+//Player joins the queue
 exports.GameMatchmaker.joinQueue = function(player,game,callback){
 	validator.ValidateArgs(arguments, Object, Object, Function);
-	var newPlayer = {'player':player,'game':game};
-	gameQueue.push(newPlayer);
+	var newPlayer = {'player':player};
+	if (!gameQueue[game])
+	{
+		gameQueue[game] = [];
+	}
+	gameQueue[qame].push(newPlayer);
 	callback(gameQueue);
 };
 
 exports.GameMatchmaker.getGameQueue = function(game,callback){
 	validator.ValidateArgs(arguments, Object, Function);
-	var gameQ = _.groupBy(gameQueue,'game')[game];
+	var gameQ = gameQueue[game];
 	if(gameQ == null){
 		gameQ = [];
 	}
@@ -37,11 +42,10 @@ exports.GameMatchmaker.queueTotal = function(game,callback){
 exports.GameMatchmaker.removeFromQueue = function(player,callback){
 	validator.ValidateArgs(arguments, Object, Function);
 	var newList = [];
-	for(var i = 0; i<gameQueue.length;i++){
-		if(gameQueue[i]['player']!=player){
-			newList.push(gameQueue[i]);
-		}	
+	for(var i in gameQueue){
+		if(gameQueue[i][player]){
+			gameQueue[i].splice(gameQueue[i].indexOf(player), 1);
+		}
 	}
-	gameQueue = newList;
 	callback();
 };

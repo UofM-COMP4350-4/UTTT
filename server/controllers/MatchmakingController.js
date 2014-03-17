@@ -20,11 +20,7 @@ exports.MatchmakingController.joinMatchmaking = function(player, game, response)
 	}
 	else {response("");}
 };
-
-exports.MatchmakingController.emptyFunction = function(){
-	return function(){
-	};
-};
+//returns a function to be run on client
 exports.MatchmakingController.errLogging = function(){
 	return function(err){
 		if(err){
@@ -43,7 +39,7 @@ exports.MatchmakingController.Match= function(player,game,callback){
 	queues.GameMatchmaker.getGameQueue(game, function(queue){gameList = queue});
 	var numPlayers = 0;
 	var playersFound = [];
-	numPlayers = game['maxPlayers'];
+	numPlayers = game.maxPlayers;
 	if(gameList.length < numPlayers){
 		callback(""); // return no match found
 		return;
