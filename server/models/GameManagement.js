@@ -16,10 +16,16 @@ var availGames;
 var GameDefinitions = {};
 var noop = function() {};
 
+GameSocket.on("userConnect", function(inEvent) {
+	module.exports.userConnected(inEvent.userID, noop);
+});
 GameSocket.on("moveReceived", function(inEvent) {
 	if(matches[inEvent.instanceID]) {
 		matches[inEvent.instanceID].RequestMove(inEvent);
 	}
+});
+GameSocket.on("userDisconnect", function(inEvent) {
+	module.exports.userDisconnected(inEvent.userID, noop);
 });
 
 var moveFailureHandler = function(inEvent) {
@@ -102,6 +108,7 @@ module.exports = {
 			if(matches[instanceID].gameBoard.players.length < matches[instanceID].gameBoard.maxPlayers) {
 				module.exports.userNameFromID(userID, function(userName) {
 					matches[instanceID].gameBoard.AddPlayer(new Player(userID, userName));
+					GameSocket.JoinRoom(userID, instanceID);
 					callback();
 				});
 			} else {
@@ -129,9 +136,11 @@ module.exports = {
 						matches[instanceID].gameBoard.players.splice(i, 1);
 					}
 				}
+				GameSocket.LeaveRoom(userID, instanceID);
 				if(matches[instanceID].gameBoard.players.length<=1) {
 					// TODO handle win/draw/end of game to socket
 					delete matches[instanceID];
+					GameSocket.CloseRoom(instanceID);
 					DataStore.endMatch(instanceID, callback);
 				} else {
 					callback();
