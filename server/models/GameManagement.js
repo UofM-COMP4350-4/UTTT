@@ -1,5 +1,6 @@
 var Validator = require("../controllers/ValidateObjectController.js");
 var DataStore = require('../controllers/DataStoreController.js');
+var GameSocket = require('../controllers/GameSocketController.js').GameSocketController;
 var Player = require('./Player.js').Player;
 
 //used to ensure a unique instanceID in conjunction with datetime
@@ -14,6 +15,22 @@ var onlineUsers = [];
 var availGames;
 var GameDefinitions = {};
 var noop = function() {};
+
+GameSocket.on("moveReceived", function(inEvent) {
+	if(matches[inEvent.instanceID]) {
+		matches[inEvent.instanceID].RequestMove(inEvent);
+	}
+});
+
+var moveFailureHandler = function(inEvent) {
+	GameSocket.SendDataToUser(inEvent.userToPlay, inEvent);
+};
+var boardChangedHandler = function(inEvent) {
+	GameSocket.SendDataToAllUsersInGame(inEvent.instanceID, inEvent);
+};
+var playResultHandler = function(inEvent) {
+	GameSocket.SendDataToAllUsersInGame(inEvent.instanceID, inEvent);
+};
 
 module.exports = {
 	// Gets the static list of game IDs, game names, and max players
@@ -33,7 +50,7 @@ module.exports = {
 		Validator.ValidateArgs(arguments, Number, Validator.OPTIONAL, Function);
 		module.exports.gameTypeFromID(gameID, function(gameType) {
 			if(!GameDefinitions[gameID]) {
-				GameDefinitions[gameID] = require("../controllers/" + gameType + "GameController")[gameType + "GameController"];
+				GameDefinitions[gameID] = require("../controllers/" + gameType + "GameController.js")[gameType + "GameController"];
 			}
 			if(instanceID!==undefined) {
 				instanceID = parseInt(instanceID, 10);
@@ -43,10 +60,16 @@ module.exports = {
 					module.exports.getGameboard(instanceID, function(gb) {
 						if(gb) {
 							matches[instanceID] = new GameDefinitions[gameID](gb);
+							matches[instanceID].on("moveFailure", moveFailureHandler);
+							matches[instanceID].on("boardChanged", boardChangedHandler);
+							matches[instanceID].on("playResult", playResultHandler);
 							callback(instanceID);
 						} else {
 							// Special case where game entry exists, but gameboard data missing
 							matches[instanceID] = new GameDefinitions[gameID]({instanceID:instanceID, gameID:gameID});
+							matches[instanceID].on("moveFailure", moveFailureHandler);
+							matches[instanceID].on("boardChanged", boardChangedHandler);
+							matches[instanceID].on("playResult", playResultHandler);
 							DataStore.lookupMatch(instanceID, function(entries) {
 								var loadPlayers = function() {
 									// load other players into game
@@ -64,8 +87,10 @@ module.exports = {
 				}
 			} else {
 				var id = ((new Date().getTime())*100) + (serverInstanceBase%100);
-				var game = new GameDefinitions[gameID]({instanceID:id, gameID:gameID});
-				matches[id] = game;
+				matches[id] = new GameDefinitions[gameID]({instanceID:id, gameID:gameID});
+				matches[id].on("moveFailure", moveFailureHandler);
+				matches[id].on("boardChanged", boardChangedHandler);
+				matches[id].on("playResult", playResultHandler);
 				serverInstanceBase++;
 				callback(id);
 			}
@@ -231,7 +256,7 @@ module.exports = {
 								// Special case where game match entry exists, but gameboard missing
 								if(!GameDefinitions[curr.gameID]) {
 									module.exports.gameTypeFromID(curr.gameID, function(type) {
-										GameDefinitions[curr.gameID] = require("../controllers/" + type + "GameController")[type + "GameController"];
+										GameDefinitions[curr.gameID] = require("../controllers/" + type + "GameController.js")[type + "GameController"];
 										var game = new GameDefinitions[curr.gameID]({instanceID:curr.instanceID, gameID:curr.gameID});
 										userState[curr.instanceID] = game.gameBoard.CreateBoardGameJSONObject();
 										loadItem();
