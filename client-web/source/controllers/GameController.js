@@ -30,6 +30,28 @@ enyo.kind({
 		this.ROW_SIZE = 7;
 		this.row = undefined;
 		this.col = undefined;
+		
+		if (!this.isGBSetup)
+		{
+			console.log("Hey David GB Setup=true");
+			this.isGBSetup = false;
+		}
+
+		if (typeof this.isGBSetup !== undefined && this.isGBSetup == false)
+		{
+			for (var i = 0; i < 6; i++) {
+				inSender.createComponent([{index:i, fit:true,kind:"FittableColumns",ontap:"controller.tapboard"}]);
+				var components = inSender.getComponents();
+				for (var j = 0; j < 7; j++)
+				{
+					components[i].createComponent([{index:j, kind: 'ImageView', src:'./../../assets/connectfourwhite.png', style:"width:74px; height:74px", ontap: "controller.tapboard"}]);
+				} 
+			}
+			console.log("printed board");
+			this.isGBSetup = true;
+		}
+		//console.log("Hey David");
+		//return true;
 	},
 	tapboard:function(inSender, inEvent) {
 		if (inSender.kind == "FittableColumns")
@@ -59,10 +81,14 @@ enyo.kind({
 				var el = this.row.getComponents();
 				el = el[this.row_index].getComponents();
 				el = el[this.col_index];
+				//playMove(lcol_index, lrow_index);
 				el.setSrc('./../../assets/connectfourblue.svg');
 			}
 		}
 		inSender.render();
+	},
+	playMove: function(lcol_index, lrow_index) {
+		
 	},
 	loadGame: function(gameboard) {
 		this.instanceID = gameboard.instanceID;

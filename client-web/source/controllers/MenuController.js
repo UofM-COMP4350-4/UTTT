@@ -52,6 +52,7 @@ enyo.kind({
 	},
 	newMatch: function(inSender, inEvent) {
 		window.location.hash = "launcher";
+		//this.waterfall("onNewMatch");
 		return true;
 	},
 	invite: function(inSender, inEvent) {
