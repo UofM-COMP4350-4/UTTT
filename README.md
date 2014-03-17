@@ -5,6 +5,14 @@ Winter 2014 Project for Software Engineering 2 Group 4
 
 Website Access: http://ec2-54-213-160-158.us-west-2.compute.amazonaws.com
 
+##Setup/Initialization
+###Server
+Run Tools:
+ 1. update-repo   
+ 2. initialize   
+ 3. build-web-app   
+ 4. run-server (in sudo and with & to run it in the background)   
+
 ##Database
 ###Database Access:
 
@@ -19,8 +27,8 @@ for the root user since its the admin user so i created a new user
 - below is the code to grant a user local and remote access:
 
 ```mysql
-GRANT ALL ON . TO 'ubuntu'@'localhost'; //local access
-GRANT ALL ON . TO 'ubuntu'@'%'; //remote access
+GRANT ALL ON *.* TO 'ubuntu'@'localhost'; //local access
+GRANT ALL ON *.* TO 'ubuntu'@'%'; //remote access
 ``` 
 
 - Next to enable remote access, from your home directory (home/ubuntu/NBGI) run :
