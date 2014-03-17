@@ -3,12 +3,12 @@ enyo.kind({
 	kind: "View",
 	controllerKind: "GameController",
 	components:[
-		{fit:true, onload:"controller.setupBoard", components: [
+		{fit:true, components: [
 			{kind: 'FittableRows', components:[
            {name: 'header', kind: 'onyx.Toolbar', components: [
                 {kind: "onyx.Button", content: "Load content", ontap:"tapload"} 
            ]},
-           {name:'board', kind: 'FittableRows', fit:true, ontap:"controller.tapboard"}
+           {name:'board', kind: 'FittableRows', fit:true, onload:"controller.setupBoard", ontap:"controller.tapboard"}
       ]}
 		]}
 	],
@@ -21,14 +21,17 @@ enyo.kind({
 		]}
 	]},
 	tapload:function(inSender, inEvent) {
-    for (var i = 0; i < 6; i++) {
+		//enyo.Signals.send("loadgame");
+		this.$.board.bubble("onload");
+		console.log("Yo");
+    /*for (var i = 0; i < 6; i++) {
     	this.$.board.createComponent([{index:i, fit:true,kind:"FittableColumns",ontap:"controller.tapboard"}]);
     	var components = this.$.board.getComponents();
     	for (var j = 0; j < 7; j++)
     	{
     		components[i].createComponent([{index:j, kind: 'ImageView', src:'./../../assets/connectfourwhite.png', style:"width:74px; height:74px", ontap: "controller.tapboard"}]);
     	} 
-  	}
+  	}*/
     this.$.board.render();
     this.render(); 
    }  
