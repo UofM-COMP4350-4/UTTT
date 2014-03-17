@@ -72,7 +72,7 @@ describe("GameManagement", function(){
 					assert.equal(prevIDs.indexOf(instanceID), -1);
 					done();
 				});
-			})
+			});
 		});
 		it("should load up an existing game when passed a valid instanceID", function(done) {
 			resetForTesting();
@@ -122,7 +122,7 @@ describe("GameManagement", function(){
 					var numPlayers = GameMgmt.getMatches()[0].gameBoard.players.length;
 					var maxPlayers = GameMgmt.getMatches()[0].gameBoard.maxPlayers;
 					assert.ok(err);
-					assert.equal(numPlayers, maxPlayers)
+					assert.equal(numPlayers, maxPlayers);
 					done();
 				});
 			});
@@ -143,7 +143,7 @@ describe("GameManagement", function(){
 			GameMgmt.userConnected(0, function() {
 				GameMgmt.leaveMatch(0, 0, function() {
 					// leaving results in a default winner and ending of game
-					assert.equal(GameMgmt.getMatches()[0], undefined)
+					assert.equal(GameMgmt.getMatches()[0], undefined);
 					done();
 				});
 			});

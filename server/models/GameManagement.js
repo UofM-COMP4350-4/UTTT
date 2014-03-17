@@ -36,7 +36,7 @@ module.exports = {
 				GameDefinitions[gameID] = require("../controllers/" + gameType + "GameController")[gameType + "GameController"];
 			}
 			if(instanceID!==undefined) {
-				instanceID = parseInt(instanceID);
+				instanceID = parseInt(instanceID, 10);
 				if(matches[instanceID]) {
 					callback(instanceID);
 				} else {
@@ -56,7 +56,7 @@ module.exports = {
 									} else {
 										callback(instanceID);
 									}
-								}
+								};
 								loadPlayers();
 							});
 						}
