@@ -14,10 +14,16 @@ exports.Connect4GameBoard = function(gameInfo)
 	this.instanceID = gameInfo.instanceID;
 	this.userToPlay = gameInfo.userToPlay;
 
-	if (typeof gameInfo.player1 != 'undefined' && typeof gameInfo.player2 != 'undefined') {
-		ValidateObjectController.ValidateObject(gameInfo.player1);
-		ValidateObjectController.ValidateObject(gameInfo.player2);
-		this.players = [gameInfo.player1, gameInfo.player2];
+	if (!gameInfo.grid) {
+		this.players = [];
+		if(gameInfo.player1) {
+			ValidateObjectController.ValidateObject(gameInfo.player1);
+			this.players.push(gameInfo.player1);
+		}
+		if(gameInfo.player2) {
+			ValidateObjectController.ValidateObject(gameInfo.player2);
+			this.players.push(gameInfo.player2);
+		}
 		this.ROW_SIZE = 6;
 		this.COL_SIZE = 7;
 		this.grid = new Array(this.ROW_SIZE * this.COL_SIZE);
