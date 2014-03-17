@@ -38,7 +38,7 @@ enyo.kind({
 			this.player = 0;
 		}
 
-		if (typeof this.isGBSetup !== undefined && this.isGBSetup == false)
+		if (typeof this.isGBSetup !== undefined && this.isGBSetup === false)
 		{
 			this.board = inSender;
 			for (var i = 0; i < 6; i++) {
@@ -100,7 +100,7 @@ enyo.kind({
 		var col_components = row.getComponents();
 		var piece = col_components[acol_index];
 		console.log(" x: " + acol_index + " y: " + arow_index + " " + player);
-		if (player == 0)
+		if (player === 0)
 		{
 			piece.setSrc('./../../assets/connectfourblue.svg');
 		}
