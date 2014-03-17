@@ -37,7 +37,7 @@ describe("Game Socket Communication Server Tests",function() {
   		var client1 = io.connect(socketURL, options);
 		//var client2 = io.connect(socketURL, options);
 		client1.on('connect', function() {
-			client1.emit('userSetup',{id:5},function (hashTable) {
+			client1.emit('userSetup',5,function (hashTable) {
 				assert.notEqual(hashTable[5], null);
 				assert.notEqual(hashTable[5], undefined);
 				done();
@@ -87,7 +87,7 @@ describe("Game Socket Communication Server Tests",function() {
 		var client1 = io.connect(socketURL, options);
 		
 		client1.on('connect', function() {
-			client1.emit('userSetup',{id:5},function (hashTable) {
+			client1.emit('userSetup',5,function (hashTable) {
 				assert.notEqual(hashTable[5], null);
 				assert.notEqual(hashTable[5], undefined);
 			});
