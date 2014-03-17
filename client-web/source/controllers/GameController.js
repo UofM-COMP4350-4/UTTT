@@ -35,10 +35,12 @@ enyo.kind({
 		{
 			console.log("Hey David GB Setup=true");
 			this.isGBSetup = false;
+			this.player = 0;
 		}
 
 		if (typeof this.isGBSetup !== undefined && this.isGBSetup == false)
 		{
+			this.board = inSender;
 			for (var i = 0; i < 6; i++) {
 				inSender.createComponent([{index:i, fit:true,kind:"FittableColumns",ontap:"controller.tapboard"}]);
 				var components = inSender.getComponents();
@@ -78,17 +80,34 @@ enyo.kind({
 			{
 				console.log("Hey Steve x: " + this.col_index + " y: " + this.row_index);
 				console.log("Hey Steve [logical] x: " + this.lcol_index + " y: " + this.lrow_index);
-				var el = this.row.getComponents();
+				var el = this.board.getComponents();
 				el = el[this.row_index].getComponents();
 				el = el[this.col_index];
-				//playMove(lcol_index, lrow_index);
-				el.setSrc('./../../assets/connectfourblue.svg');
+				
+				this.player = (this.player+1) % 2; //remove this				
+				this.playMove(this.lcol_index, this.lrow_index, this.player); //remove this
 			}
 		}
 		inSender.render();
 	},
-	playMove: function(lcol_index, lrow_index) {
+	playMove: function(col_index, row_index, player) 
+	{
+		var arow_index = (this.COL_SIZE-1)-row_index;
+		var acol_index = col_index;
 		
+		var row_components = this.board.getComponents();
+		var row = row_components[arow_index];
+		var col_components = row.getComponents();
+		var piece = col_components[acol_index];
+		console.log(" x: " + acol_index + " y: " + arow_index + " " + player);
+		if (player == 0)
+		{
+			piece.setSrc('./../../assets/connectfourblue.svg');
+		}
+		else
+		{
+			piece.setSrc('./../../assets/connectfourred.svg');
+		}
 	},
 	loadGame: function(gameboard) {
 		this.instanceID = gameboard.instanceID;
