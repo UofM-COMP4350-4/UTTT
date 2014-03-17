@@ -5,6 +5,14 @@ Winter 2014 Project for Software Engineering 2 Group 4
 
 Website Access: http://ec2-54-213-160-158.us-west-2.compute.amazonaws.com
 
+##Setup/Initialization
+###Server
+Run Tools:
+ 1. update-repo   
+ 2. initialize   
+ 3. build-web-app   
+ 4. run-server (in sudo and with & to run it in the background)   
+
 ##Database
 ###Database Access:
 
