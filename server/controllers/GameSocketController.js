@@ -38,6 +38,14 @@ exports.GameSocketController = function(port) {
 		});
 	});
 	
+	this.sendMatchEvent = function(userID, gameInstanceID) {
+		console.log("Sending match event to IOS " + gameInstanceID);
+		ValidateObjectController.ValidateNumber(userID);
+		ValidateObjectController.ValidateString(clientSocketIDHashTable[userID]);
+		this.socketIO.sockets.socket(clientSocketIDHashTable[userID]).emit('matchFound', {'gameInstanceID':gameInstanceID});
+		return;
+	};
+	
 	this.SendDataToUser = function(userID, data) {
 		ValidateObjectController.ValidateNumber(userID);
 		ValidateObjectController.ValidateString(clientSocketIDHashTable[userID]);
