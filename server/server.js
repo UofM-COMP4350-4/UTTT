@@ -10,7 +10,7 @@ var queueForGamesList = {};
 var server = restify.createServer();
 server.pre(ecstatic({ root: __dirname + '/public'}));
 
-var gameSocket = new gameSocketController.GameSocketController(10089);
+gameSocketController.GameSocketController(10089);
 
 server.use(restify.queryParser());
 
@@ -70,8 +70,8 @@ server.get("/queueForGame", function(request, response, next){
 					}					
 					
 					console.log('Event sent successfully');
-					gameSocket.sendMatchEvent(parseInt(queueForGamesList.Player1.clientID, 10), parseInt(gameInstanceID, 10));
-					gameSocket.sendMatchEvent(parseInt(queueForGamesList.Player1.clientID, 10), parseInt(gameInstanceID, 10));
+					gameSocketController.sendMatchEvent(parseInt(queueForGamesList.Player1.clientID, 10), parseInt(gameInstanceID, 10));
+					gameSocketController.sendMatchEvent(parseInt(queueForGamesList.Player1.clientID, 10), parseInt(gameInstanceID, 10));
 					response.end({});
 				});
 			});
