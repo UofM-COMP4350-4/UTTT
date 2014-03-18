@@ -3,5 +3,6 @@ enyo.depends(
 	"MenuView.js",
 	"GameView.js",
 	"ChatView.js",
-	"SocialView.js"
+	"SocialView.js",
+	"Connect4View.js"
 );
