@@ -1,7 +1,7 @@
 enyo.singleton({
 	name: "ClientServerComm",
 	kind: "Component",
-	component: [
+	components: [
 		{ kind:"Socket", name:"gameSocket", url:"http://localhost:10089", 
 			onmatchFound:"onMatchFound", onreceivePlayResult:"onReceivePlayResult" }
 	],
@@ -97,6 +97,7 @@ enyo.singleton({
 	initializeResponse: function(callback, request, response) {
 		if(response)
 		{
+			this.log(response);
 			this.log('Server responded with userID: ' + response.user.userID);
 			callback(response);
 		}		

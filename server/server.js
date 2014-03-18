@@ -37,18 +37,20 @@ server.get("/createNewGame", function(request, response, next){
 });
 
 server.get("/initialize", function(request, response, next) {
-	console.log("Received initialize request from Client " + request.params.userID); 
+	console.log("Received initialize request from Client " + request.params.userid); 
 	//Setup a Client Id if the id passed was not found in the database
 	var text = {};
 	//call DataStoreController and get a the user's information
 	dbController.getUserInformation(request.params.userid, function(newUserInfo){
 		var userInfo = newUserInfo[0];
+		console.log("User info received is " + userInfo);
 		//Get a list of games on the server
-		/*
+		
 		gameMGMT.availableGames(function(gameList){
 			var games = gameList;
+			console.log('Finished gettign game list ' + userInfo.userID);
 			//get a list of active games for the user
-			gameMGMT.findByUser(userInfo.userID, function(activeGames){					
+			gameMGMT.findByUser(parseInt(userInfo.userID), function(activeGames){					
 				//for now, send back the user and game list
 				text = {'user': userInfo, 'availableGames': games, 'active': activeGames};		
 				response.writeHead( 200, {'content-type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
@@ -56,12 +58,13 @@ server.get("/initialize", function(request, response, next) {
 				response.end();
 				next();
 			});
-		});*/
+		});
+		/*
 		text = {'user': userInfo, 'availableGames': {}, 'active': {}};		
 		response.writeHead( 200, {'content-type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
 		response.write(JSON.stringify(text));
 		response.end();
-		next();
+		next();*/
 	});
 });
 

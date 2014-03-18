@@ -66,7 +66,7 @@ RelationalDBAccess.prototype.getUserInfo = function(userID, callback) {
 			.success(function(userInfo){
 				console.log('The data gotten back is: ' + userInfo);
 				validateObjectLength(userInfo, 1);
-				callback(userInfo[0]); //Only one entry should be returned so test for this
+				callback(userInfo); //Only one entry should be returned so test for this
 			})
 			.error(function(error){
 				console.log('error is ' + error);
