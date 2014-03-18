@@ -24,6 +24,14 @@ exports.GameSocketController = function(port) {
 			self.emit('moveReceived', move);
 		});
 	});
+	
+	this.sendMatchEvent = function(userID, gameInstanceID) {
+		console.log("Sending match event to IOS " + gameInstanceID);
+		ValidateObjectController.ValidateNumber(userID);
+		ValidateObjectController.ValidateString(clientSocketIDHashTable[userID]);
+		this.socketIO.sockets.socket(clientSocketIDHashTable[userID]).emit('matchFound', {'gameInstanceID':gameInstanceID});
+		return;
+	};
 
 	this.JoinRoom = function(userID, instanceID) {
 		ValidateObjectController.ValidateNumber(userID);
