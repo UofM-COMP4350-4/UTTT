@@ -3,7 +3,7 @@ var events = require("events");
 var util = require("util");
 var ValidateObjectController = require("./ValidateObjectController.js");
 
-exports.GameSocketController = function(port) {
+function GameSocketController(port) {
 	ValidateObjectController.ValidateNumber(port);
 	this.socketIO = io.listen(port);
 	
@@ -67,6 +67,15 @@ exports.GameSocketController = function(port) {
 		ValidateObjectController.ValidateObject(data);
 		this.socketIO.sockets.in('game/' + gameInstanceID).emit('receivePlayResult', data);
 	};
+	
 };
 
-util.inherits(exports.GameSocketController, events.EventEmitter);
+util.inherits(GameSocketController, events.EventEmitter);
+var gameSocket;
+exports.createGameSocket = function(port){
+	if(!gameSocket){
+		gameSocket = new GameSocketController(port);
+	}
+	
+	return gameSocket;
+}

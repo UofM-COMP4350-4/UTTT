@@ -1,6 +1,6 @@
 var Validator = require("../controllers/ValidateObjectController.js");
 var DataStore = require('../controllers/DataStoreController.js');
-var GameSocket = require('../controllers/GameSocketController.js').GameSocketController;
+var GameSocket = require('../controllers/GameSocketController.js').createGameSocket(10086);
 var Player = require('./Player.js').Player;
 
 //used to ensure a unique instanceID in conjunction with datetime
@@ -105,6 +105,7 @@ module.exports = {
 	joinMatch: function(userID, instanceID, callback) {
 		Validator.ValidateArgs(arguments, Number, Number, Function);
 		if(matches[instanceID]) {
+			console.log("DEBUG 1");
 			if(matches[instanceID].gameBoard.players.length < matches[instanceID].gameBoard.maxPlayers) {
 				module.exports.userNameFromID(userID, function(userName) {
 					matches[instanceID].gameBoard.AddPlayer(new Player(userID, userName));
@@ -115,6 +116,7 @@ module.exports = {
 				callback({errorCode:1, errorText:"Game full"});
 			}
 		} else {
+			console.log("DEBUG 2");
 			DataStore.lookupMatch(instanceID, function(entries) {
 				if(entries && entries.length>0) {
 					module.exports.setupMatch(entries[0].gameID, instanceID, function(id) {
@@ -229,7 +231,9 @@ module.exports = {
 			}
 		}
 		DataStore.getUserInformation(userID, function(userInfo) {
-			callback(userInfo.userName);
+			console.log('Username received is ' + JSON.stringify(userInfo));
+			console.log('Username received  ' + JSON.stringify(userInfo[0]));
+			callback(userInfo[0].userName);
 		});
 	},
 	gameTypeFromID: function(gameID, callback) {
@@ -255,6 +259,7 @@ module.exports = {
 			}
 		}
 		DataStore.matchesByUser(userID, function(entries) {
+			console.log('Matches returned from the database ' + entries);
 			var loadItem = function() {
 				if(entries.length>0) {
 					var curr = entries.pop();

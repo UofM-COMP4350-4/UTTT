@@ -42,7 +42,7 @@ RelationalDBAccess.prototype.getUserInfo = function(userID, callback) {
 	var result = {};
 	if(!userID) {
 		dbConnection
-			.query("INSERT INTO Users (userName, isOnline, avatarURL) values (NULL, 1, '/assets/avatar_placeholder.jpg')", null, {raw: true})
+			.query("INSERT INTO Users (userName, isOnline, avatarURL) values ('', 1, '/assets/avatar_placeholder.jpg')")
 			.success(function(){
 				dbConnection
 					.query("SELECT * FROM Users ORDER BY userID DESC LIMIT 1")
@@ -62,7 +62,7 @@ RelationalDBAccess.prototype.getUserInfo = function(userID, callback) {
 			});
 	} else {
 		dbConnection
-			.query("SELECT userID, userName, isOnline, avatarURL FROM Users WHERE userID = " + userID, null, {raw: true})
+			.query("SELECT userID, userName, isOnline, avatarURL FROM Users WHERE userID = " + userID)
 			.success(function(userInfo){
 				console.log('The data gotten back is: ' + userInfo);
 				validateObjectLength(userInfo, 1);
