@@ -1,13 +1,32 @@
 enyo.singleton({
 	name: "ClientServerComm",
 	kind: "Component",
-	component: [
-		{ kind:"Socket", url:"http://localhost" }
-	]
+	components: [
+		{ kind:"Socket", name:"gameSocket", url:"http://localhost:10089", 
+			onmatchFound:"onMatchFound", onreceivePlayResult:"onReceivePlayResult" }
+	],
 	
 	create: function() {
 		this.inherited(arguments);
+		this.$.gameSocket.connect();
 		//this.initialize( "1", enyo.bind(this, "initCallback"));
+	},
+	
+	onMatchFound: function(inSender, inEvent) {
+		// initialize the game board
+	},
+	
+	onReceivePlayResult: function(inSender, inEvent) {
+		// draw the game board
+	},
+	
+	sendUserSetupEvent: function(userID) {
+		this.log("Sending " + userID + " to the server.");
+		this.$.gameSocket.emit('userSetup', userID);
+	},
+	
+	sendPlayMoveEvent: function(move) {
+		this.$.gameSocket.emit('receiveMove', move);
 	},
 	
 	//request a list of games from the Server
@@ -78,6 +97,7 @@ enyo.singleton({
 	initializeResponse: function(callback, request, response) {
 		if(response)
 		{
+			this.log(response);
 			this.log('Server responded with userID: ' + response.user.userID);
 			callback(response);
 		}		

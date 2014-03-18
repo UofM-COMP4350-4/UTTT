@@ -27,6 +27,8 @@ enyo.kind({
 	    window.userID = window.ClientServerComm.initialize(window.userID, enyo.bind(this, function(baseState) {
 	    	window.userID = baseState.user.userID;
 	    	localStorage.setItem("clientID", window.userID);
+	    	window.ClientServerComm.sendUserSetupEvent(window.userID);
+	    	this.log(window.userID + " sent successfully.");
 	    	window.userName = baseState.user.userName;
 			window.availableGames = baseState.availableGames;
 			window.active = baseState.active;

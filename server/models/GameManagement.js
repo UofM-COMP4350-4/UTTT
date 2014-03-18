@@ -1,6 +1,6 @@
 var Validator = require("../controllers/ValidateObjectController.js");
 var DataStore = require('../controllers/DataStoreController.js');
-var GameSocket = require('../controllers/GameSocketController.js').GameSocketController;
+var GameSocket = require('../controllers/GameSocketController.js').createGameSocket(10086);
 var Player = require('./Player.js').Player;
 
 //used to ensure a unique instanceID in conjunction with datetime
@@ -16,10 +16,16 @@ var availGames;
 var GameDefinitions = {};
 var noop = function() {};
 
+GameSocket.on("userConnect", function(inEvent) {
+	module.exports.userConnected(inEvent.userID, noop);
+});
 GameSocket.on("moveReceived", function(inEvent) {
 	if(matches[inEvent.instanceID]) {
 		matches[inEvent.instanceID].RequestMove(inEvent);
 	}
+});
+GameSocket.on("userDisconnect", function(inEvent) {
+	module.exports.userDisconnected(inEvent.userID, noop);
 });
 
 var moveFailureHandler = function(inEvent) {
@@ -99,15 +105,18 @@ module.exports = {
 	joinMatch: function(userID, instanceID, callback) {
 		Validator.ValidateArgs(arguments, Number, Number, Function);
 		if(matches[instanceID]) {
+			console.log("DEBUG 1");
 			if(matches[instanceID].gameBoard.players.length < matches[instanceID].gameBoard.maxPlayers) {
 				module.exports.userNameFromID(userID, function(userName) {
 					matches[instanceID].gameBoard.AddPlayer(new Player(userID, userName));
+					GameSocket.JoinRoom(userID, instanceID);
 					callback();
 				});
 			} else {
 				callback({errorCode:1, errorText:"Game full"});
 			}
 		} else {
+			console.log("DEBUG 2");
 			DataStore.lookupMatch(instanceID, function(entries) {
 				if(entries && entries.length>0) {
 					module.exports.setupMatch(entries[0].gameID, instanceID, function(id) {
@@ -129,9 +138,11 @@ module.exports = {
 						matches[instanceID].gameBoard.players.splice(i, 1);
 					}
 				}
+				GameSocket.LeaveRoom(userID, instanceID);
 				if(matches[instanceID].gameBoard.players.length<=1) {
 					// TODO handle win/draw/end of game to socket
 					delete matches[instanceID];
+					GameSocket.CloseRoom(instanceID);
 					DataStore.endMatch(instanceID, callback);
 				} else {
 					callback();
@@ -220,7 +231,9 @@ module.exports = {
 			}
 		}
 		DataStore.getUserInformation(userID, function(userInfo) {
-			callback(userInfo.userName);
+			console.log('Username received is ' + JSON.stringify(userInfo));
+			console.log('Username received  ' + JSON.stringify(userInfo[0]));
+			callback(userInfo[0].userName);
 		});
 	},
 	gameTypeFromID: function(gameID, callback) {
@@ -246,6 +259,7 @@ module.exports = {
 			}
 		}
 		DataStore.matchesByUser(userID, function(entries) {
+			console.log('Matches returned from the database ' + entries);
 			var loadItem = function() {
 				if(entries.length>0) {
 					var curr = entries.pop();
