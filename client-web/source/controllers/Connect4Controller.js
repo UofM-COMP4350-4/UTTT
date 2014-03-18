@@ -67,7 +67,7 @@ enyo.kind({
 		if(this.gameboard.userToPlay && this.gameboard.userToPlay.id==window.userID) {
 			this.moves.push({x:inSender.x, y:inSender.y, player:{id:window.userID, name:window.userName}});
 			this.update();
-			window.ClientServerComm.sendPlayMoveEvent({x:inSender.index, y:inSender.y, player:{id:window.userID, name:window.userName}});
+			window.ClientServerComm.sendPlayMoveEvent({x:inSender.x, y:inSender.y, player:{id:window.userID, name:window.userName}});
 		}
 	},
 	handleUpdateReceived: function(inSender, inEvent) {
