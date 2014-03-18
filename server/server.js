@@ -119,14 +119,16 @@ server.get("/initialize", function(request, response, next) {
 	//call DataStoreController and get a the user's information
 	dbController.getUserInformation(request.params.userid, function(newUserInfo){
 		var userInfo = newUserInfo[0];
+		
 		console.log('User info received is ' + userInfo);
 		//Get a list of games on the server
 		
 		gameMGMT.availableGames(function(gameList){
 			var games = gameList;
-			console.log('Finished getting game list ' + userInfo.userID);
+			
+			console.log('Finished gettign game list ' + userInfo.userID);
 			//get a list of active games for the user
-			gameMGMT.findByUser(parseInt(userInfo.userID), function(activeGames){					
+			gameMGMT.findByUser(parseInt(userInfo.userID, 10), function(activeGames){
 				//for now, send back the user and game list
 				text = {'user': userInfo, 'availableGames': games, 'active': activeGames};		
 				response.writeHead( 200, {'content-type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
