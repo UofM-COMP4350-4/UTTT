@@ -3,14 +3,12 @@ var ecstatic = require('ecstatic');
 var dbController = require('./controllers/DataStoreController.js');
 dbController.setup({username:'ubuntu', password:'', hostname:'54.186.20.243'});
 var gameMGMT = require('./models/GameManagement.js');
-var gameSocketController = require('./controllers/GameSocketController.js');
+var gameSocketController = require('./controllers/GameSocketController.js').createGameSocket(10086);
 var queueForGameRequests = 0;
 var queueForGamesList = {};
 
 var server = restify.createServer();
 server.pre(ecstatic({ root: __dirname + '/public'}));
-
-gameSocketController.GameSocketController(10089);
 
 server.use(restify.queryParser());
 
