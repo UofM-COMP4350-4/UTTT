@@ -50,7 +50,7 @@ server.get("/initialize", function(request, response, next) {
 			var games = gameList;
 			console.log('Finished gettign game list ' + userInfo.userID);
 			//get a list of active games for the user
-			gameMGMT.findByUser(parseInt(userInfo.userID), function(activeGames){					
+			gameMGMT.findByUser(parseInt(userInfo.userID, 10), function(activeGames){					
 				//for now, send back the user and game list
 				text = {'user': userInfo, 'availableGames': games, 'active': activeGames};		
 				response.writeHead( 200, {'content-type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
