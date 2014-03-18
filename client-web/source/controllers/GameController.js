@@ -41,6 +41,7 @@ enyo.kind({
 	},
 	gameLaunch: function(inSender, inEvent) {
 		var gameType = window.availableGames[inEvent.index].gameType;
+		var gameID = window.availableGames[inEvent.index];
 		this.createGame(gameType);
 		if(!this.inviteMode) {
 			window.ClientServerComm.queueForGame(window.userID, gameID, enyo.bind(this, function(response) {
