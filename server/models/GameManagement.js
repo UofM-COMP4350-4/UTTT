@@ -1,6 +1,6 @@
 var Validator = require("../controllers/ValidateObjectController.js");
 var DataStore = require('../controllers/DataStoreController.js');
-var GameSocket = require('../controllers/GameSocketController.js').GameSocketController;
+var GameSocket = require('../controllers/GameSocketController.js').createGameSocket(10086);
 var Player = require('./Player.js').Player;
 
 //used to ensure a unique instanceID in conjunction with datetime
