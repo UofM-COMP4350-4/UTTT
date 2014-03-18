@@ -17,7 +17,6 @@ enyo.kind({
 	    this.moves = this.gameboard.currentBoard;
 	},
 	load: function(gameboard) {
-		this.log("load");
 		if(gameboard) {
 			this.gameboard = gameboard;
 			this.moves = gameboard.currentBoard;
