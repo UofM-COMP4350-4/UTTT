@@ -15,21 +15,24 @@ var games = [
 describe('Machmaker Model Test Suite', function(){
 	describe('Queue test suite',function(){
 		it('should have 1 players in the queue', function(done){
-			matchmaker.GameMatchmaker.joinQueue(players[1],games[0],function(){});
-			matchmaker.GameMatchmaker.totalPlayers(function(tot){
+			mm = matchmaker.GameMatchmaker;
+			mm.clearQueue();
+			mm.joinQueue(players[1],games[0],function(){});
+			mm.totalPlayers(function(tot){
 				if(tot != 1){
 					throw Error("player count is: " + tot);
 				}
 				done();
 			});
 		});
-		/*it('should have 2 players in the queue', function(done){
-			matchmaker.GameMatchmaker.clearQueue();
-			matchmaker.GameMatchmaker.joinQueue(players[0],games[0],function(){});
-			matchmaker.GameMatchmaker.joinQueue(players[1],games[0],function(){});
-			matchmaker.GameMatchmaker.totalPlayers(function(tot){
+		it('should have 2 players in the queue', function(done){
+			mm = matchmaker.GameMatchmaker;
+			mm.clearQueue();
+			mm.joinQueue(players[0],games[0],function(){});
+			mm.joinQueue(players[1],games[0],function(){});
+			mm.totalPlayers(function(tot){
 				if(tot != 2){
-					throw tot;
+					throw Error("player count is: " + tot);
 				}
 				done();
 			});
@@ -41,7 +44,7 @@ describe('Machmaker Model Test Suite', function(){
 			matchmaker.GameMatchmaker.joinQueue(players[2],games[0],function(){});
 			matchmaker.GameMatchmaker.totalPlayers(function(tot){
 				if(tot != 3) {
-					throw Error;
+					throw Error("player count is: " + tot);
 				}
 				done();
 			});
@@ -49,37 +52,40 @@ describe('Machmaker Model Test Suite', function(){
 
 
 		it('should have one player after removing the second', function(done){
+			matchmaker.GameMatchmaker.clearQueue();
 			matchmaker.GameMatchmaker.joinQueue(players[0],games[0],function(){});
 			matchmaker.GameMatchmaker.joinQueue(players[1],games[0],function(){});
 			matchmaker.GameMatchmaker.removeFromQueue(players[1], function(){});
 			matchmaker.GameMatchmaker.totalPlayers(function(tot){
 				if(tot != 1){
-					throw tot;
+					throw Error("player count is: " + tot);
 				}
 				done();
 			});
-		});*/
+		});
 
-		/*it('should return a queue of only one item', function(done){
+		it('should return a queue of only one item', function(done){
+			matchmaker.GameMatchmaker.clearQueue();
 			matchmaker.GameMatchmaker.joinQueue(players[0],games[0],function(){});
 			matchmaker.GameMatchmaker.getGameQueue(games[0],function(res){
 				if(res.length !=1){
-					throw res.length;	
+					throw Error("game count is " + res.length);	
 				}
 				done();
 			});
-		});*/
+		});
 		
-		/*it('should return a queue with two items', function(done){
+		it('should return a queue with two items', function(done){
+			matchmaker.GameMatchmaker.clearQueue();
 			matchmaker.GameMatchmaker.joinQueue(players[0],games[0],function(){});
 			matchmaker.GameMatchmaker.joinQueue(players[1],games[0],function(){});
 			matchmaker.GameMatchmaker.getGameQueue(games[0],function(res){
 				if(res.length !=2){
-					throw res.length;	
+					throw Error("game count is " + res.length);
 				}
 				done();
 			});
-		});*/
+		});
 		
 		it('should respond appropriately when invalid arguments are given', function(done){
 			assert.throws(function() { matchmaker.GameMatchmaker.joinQueue(null,null,function(){}) },Error);
