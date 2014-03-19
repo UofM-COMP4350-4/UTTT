@@ -11,13 +11,13 @@ function GameSocketController(port) {
 	var clientSocketIDHashTable = {};
 	var self = this;
 	this.socketIO.sockets.on('connection', function(socket) {
-		socket.on('userSetup', function(userData) {
-			ValidateObjectController.ValidateObject(userData);
-			clientSocketIDHashTable[userData.userID] = socket;
-			self.emit('userConnect', {userID: userData.userID});
+		socket.on('userSetup', function(userID) {
+			ValidateObjectController.ValidateNumber(userID);
+			clientSocketIDHashTable[userID] = socket;
+			self.emit('userConnect', {userID: userID});
 			socket.on('disconnect', function() {
-				delete clientSocketIDHashTable[userData.userID];
-				self.emit('userDisconnect', {userID: userData.userID});
+				delete clientSocketIDHashTable[userID];
+				self.emit('userDisconnect', {userID: userID});
 			});
 		});
 		socket.on('receiveMove', function(move) {
@@ -28,7 +28,8 @@ function GameSocketController(port) {
 	this.sendMatchEvent = function(userID, gameInstanceID) {
 		console.log("Sending match event to IOS " + gameInstanceID);
 		ValidateObjectController.ValidateNumber(userID);
-		ValidateObjectController.ValidateString(clientSocketIDHashTable[userID]);
+		ValidateObjectController.ValidateNumber(gameInstanceID);
+		ValidateObjectController.ValidateObject(clientSocketIDHashTable[userID]);
 		this.socketIO.sockets.socket(clientSocketIDHashTable[userID]).emit('matchFound', {'gameInstanceID':gameInstanceID});
 		return;
 	};
