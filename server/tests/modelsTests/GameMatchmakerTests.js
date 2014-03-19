@@ -15,24 +15,22 @@ var games = [
 describe('Machmaker Model Test Suite', function(){
 	describe('Queue test suite',function(){
 		it('should have 1 players in the queue', function(done){
-			mm = matchmaker.GameMatchmaker;
-			mm.clearQueue();
-			mm.joinQueue(players[1],games[0],function(){});
-			mm.totalPlayers(function(tot){
+			matchmaker.GameMatchmaker.clearQueue();
+			matchmaker.GameMatchmaker.joinQueue(players[1],games[0],function(){});
+			matchmaker.GameMatchmaker.totalPlayers(function(tot){
 				if(tot != 1){
-					throw Error("player count is: " + tot);
+					throw new Error("player count is: " + tot);
 				}
 				done();
 			});
 		});
 		it('should have 2 players in the queue', function(done){
-			mm = matchmaker.GameMatchmaker;
-			mm.clearQueue();
-			mm.joinQueue(players[0],games[0],function(){});
-			mm.joinQueue(players[1],games[0],function(){});
-			mm.totalPlayers(function(tot){
+			matchmaker.GameMatchmaker.clearQueue();
+			matchmaker.GameMatchmaker.joinQueue(players[0],games[0],function(){});
+			matchmaker.GameMatchmaker.joinQueue(players[1],games[0],function(){});
+			matchmaker.GameMatchmaker.totalPlayers(function(tot){
 				if(tot != 2){
-					throw Error("player count is: " + tot);
+					throw new Error("player count is: " + tot);
 				}
 				done();
 			});
@@ -44,7 +42,7 @@ describe('Machmaker Model Test Suite', function(){
 			matchmaker.GameMatchmaker.joinQueue(players[2],games[0],function(){});
 			matchmaker.GameMatchmaker.totalPlayers(function(tot){
 				if(tot != 3) {
-					throw Error("player count is: " + tot);
+					throw new Error("player count is: " + tot);
 				}
 				done();
 			});
@@ -58,7 +56,7 @@ describe('Machmaker Model Test Suite', function(){
 			matchmaker.GameMatchmaker.removeFromQueue(players[1], function(){});
 			matchmaker.GameMatchmaker.totalPlayers(function(tot){
 				if(tot != 1){
-					throw Error("player count is: " + tot);
+					throw new Error("player count is: " + tot);
 				}
 				done();
 			});
@@ -69,7 +67,7 @@ describe('Machmaker Model Test Suite', function(){
 			matchmaker.GameMatchmaker.joinQueue(players[0],games[0],function(){});
 			matchmaker.GameMatchmaker.getGameQueue(games[0],function(res){
 				if(res.length !=1){
-					throw Error("game count is " + res.length);	
+					throw new Error("game count is " + res.length);	
 				}
 				done();
 			});
@@ -81,7 +79,7 @@ describe('Machmaker Model Test Suite', function(){
 			matchmaker.GameMatchmaker.joinQueue(players[1],games[0],function(){});
 			matchmaker.GameMatchmaker.getGameQueue(games[0],function(res){
 				if(res.length !=2){
-					throw Error("game count is " + res.length);
+					throw new Error("game count is " + res.length);
 				}
 				done();
 			});

@@ -34,7 +34,6 @@ exports.GameMatchmaker.getGameQueue = function(game,callback){
 exports.GameMatchmaker.totalPlayers = function(callback){
 	validator.ValidateArgs(arguments,Function);
 	var count = 0;
-	console.log("in array" +  gameQueue['0']);
 	for (var n in gameQueue) {
 		for (var u in gameQueue[n]) {
 			//console.log("bob " + gameQueue[0][u]);
