@@ -6,15 +6,21 @@ var validator = require('../controllers/ValidateObjectController');
 var gameQueue = [];
 exports.GameMatchmaker = function() {}; // constructor
 
+exports.GameMatchmaker.clearQueue = function() {
+	gameQueue = [];
+};
+
 //Player joins the queue
 exports.GameMatchmaker.joinQueue = function(player,game,callback){
-	validator.ValidateArgs(arguments, Object, Object, Function);
+	validator.ValidateObject(player);
+	validator.ValidateObject(game);
+	validator.ValidateFunction(callback);//(arguments, Object, Object, Function);
 	var newPlayer = {'player':player};
 	if (!gameQueue[game])
 	{
 		gameQueue[game] = [];
 	}
-	gameQueue[qame].push(newPlayer);
+	gameQueue[game].push(newPlayer);
 	callback(gameQueue);
 };
 
@@ -29,7 +35,11 @@ exports.GameMatchmaker.getGameQueue = function(game,callback){
 
 exports.GameMatchmaker.totalPlayers = function(callback){
 	validator.ValidateArgs(arguments,Function);
-	callback(gameQueue.length);
+	var count
+	for (var n in gameQueue) {
+		n += n.length;
+	}
+	callback(n);
 };
 
 exports.GameMatchmaker.queueTotal = function(game,callback){
