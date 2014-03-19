@@ -69,7 +69,7 @@ function GameSocketController(port) {
 		this.socketIO.sockets.in('game/' + gameInstanceID).emit('receivePlayResult', data);
 	};
 	
-};
+}
 
 util.inherits(GameSocketController, events.EventEmitter);
 var gameSocket;
@@ -79,4 +79,4 @@ exports.createGameSocket = function(port){
 	}
 	
 	return gameSocket;
-}
+};

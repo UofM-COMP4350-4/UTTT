@@ -5,7 +5,7 @@ enyo.kind({
 	layoutKind:"FittableRowsLayout",
 	components:[
 		{fit:true, components: [
-			{style:"font-size: 2em; color:silver; padding: 10px 10px 10px 30px;", content:"NBGI"},
+			{style:"font-size: 2em; color:silver; padding: 10px 10px 10px 30px;", content:"Let's Play"},
 			{tag:"hr", style:"margin-bottom:5px;"},
 			{kind:"Drawer", open:false, components:[
 				{kind: "onyx.Groupbox", components: [
