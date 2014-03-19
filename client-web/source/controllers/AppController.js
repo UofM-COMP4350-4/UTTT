@@ -96,16 +96,20 @@ enyo.kind({
 		this.showGameArea();
 		var hash = window.location.hash.slice(1);
 		if(hash=="launcher") {
-			document.title = "NBGI - Game Launcher";
+			document.title = "Let's Play - Game Launcher";
 			enyo.stage.game.controller.showLauncher();
 		} else if(hash=="invite") {
-			document.title = "NBGI - Invite to Play";
+			document.title = "Let's Play- Invite to Play";
 			enyo.stage.game.controller.showLauncher(true);
 		} else if(hash.indexOf("game-")===0) {
 			var instanceID = hash.replace("game-", "");
 			var gameboard = window.active[instanceID];
 			if(gameboard) { // switch to game
-				document.title = "NBGI - " + window.availableGames[inEvent.gameboard.gameID];
+				for(var i=0; i<window.availableGames.length; i++) {
+					if(window.availableGames[i].gameID==gameboard.gameID) {
+						document.title = "Let's Play - " + window.availableGames[i].gameName;
+					}
+				}
 				enyo.stage.game.controller.loadGame(gameboard);
 			} else { // attempt to join game
 				// TODO: attempt to join game and show if joined successfully

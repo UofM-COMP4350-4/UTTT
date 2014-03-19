@@ -17,7 +17,7 @@ enyo.singleton({
 	},
 	
 	onReceivePlayResult: function(inSender, inEvent) {
-		// draw the game board
+		enyo.Signals.send("playResult", {gameboard:inEvent});
 	},
 	
 	sendUserSetupEvent: function(userID) {

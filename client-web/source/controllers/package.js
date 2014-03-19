@@ -3,5 +3,6 @@ enyo.depends(
 	"MenuController.js",
 	"GameController.js",
 	"ChatController.js",
-	"SocialController.js"
+	"SocialController.js",
+	"Connect4Controller.js"
 );
