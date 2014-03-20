@@ -7,6 +7,10 @@ var ValidateObjectController = require("../../controllers/ValidateObjectControll
 
 describe('Controller Test Suite', function(){
 	describe('ValidateObjectController Test Class', function() {
+		function validArgs(a, b, c, d, e)
+		{
+			return ValidateObjectController.ValidateArgs(arguments, Number, Boolean, Array, String, Object);
+		}
 		it('Test: Valid Data', function() {
 			assert.equal(ValidateObjectController.ValidateObject([]), true);
 			assert.equal(ValidateObjectController.ValidateObject({a:'hello',b:'blah'}), true);
@@ -39,8 +43,10 @@ describe('Controller Test Suite', function(){
 			assert.throws(function() { ValidateObjectController.ValidateObjectIsOneDimensionalArray([[]]) }, Error);
 			assert.throws(function() { ValidateObjectController.ValidateObjectIsOneDimensionalArray([[1,2],[3,4]]) }, Error);
 			assert.throws(function() { ValidateObjectController.ValidateObjectIsOneDimensionalArray([['a'],['b'],['c','d']]) }, Error);
+			
+			var obj = {};
+			assert.equal(validArgs(1, true, [], "test", obj), true);
 		});
-		
 		it('Test: Invalid Data', function() {
 			assert.throws(function() { ValidateObjectController.ValidateObjectIsOneDimensionalArray(1) }, Error);
 			assert.throws(function() { ValidateObjectController.ValidateObjectIsOneDimensionalArray('Not an Array') }, Error);
