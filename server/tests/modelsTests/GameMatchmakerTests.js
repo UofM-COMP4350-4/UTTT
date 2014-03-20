@@ -20,13 +20,11 @@ describe('Machmaker Model Test Suite', function(){
 			matchmaker.GameMatchmaker.totalPlayers(function(tot){
 				if(tot != 2){
 					throw tot;
-					
 				}
 				done();
 			});
 
 		});
-
 
 		it('should have one player after removing the second', function(done){
 			matchmaker.GameMatchmaker.removeFromQueue(players[1], function(){});

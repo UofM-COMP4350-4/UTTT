@@ -61,7 +61,7 @@ function GameSocketController(port) {
 
 	this.CloseRoom = function(instanceID) {
 		ValidateObjectController.ValidateNumber(instanceID);
-		io.sockets.clients('game/' + instanceID).forEach(function(s) {
+		this.socketIO.sockets.clients('game/' + instanceID).forEach(function(s) {
 			s.leave('game/' + instanceID);
 		});
 	};
