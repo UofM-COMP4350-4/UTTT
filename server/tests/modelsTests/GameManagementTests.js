@@ -87,7 +87,7 @@ describe("GameManagement", function(){
 			// });
 		// });
 	// });
-	// describe("#joinMatch()", function() {
+	describe("#joinMatch()", function() {
 		// it('should handle undefined/null input', function() {
 			// assert.throws(function() { GameMgmt.joinMatch(undefined, undefined, undefined); }, Error);
 			// assert.throws(function() { GameMgmt.joinMatch(null, null, null); }, Error);
@@ -115,19 +115,19 @@ describe("GameManagement", function(){
 				// });
 			// });
 		// });
-		// it('should prevent users from joining if a match is full', function(done) {
-			// resetForTesting();
-			// GameMgmt.userConnected(2, function() {
-				// GameMgmt.joinMatch(2, 0, function(err) {
-					// var numPlayers = GameMgmt.getMatches()[0].gameBoard.players.length;
-					// var maxPlayers = GameMgmt.getMatches()[0].gameBoard.maxPlayers;
-					// assert.ok(err);
-					// assert.equal(numPlayers, maxPlayers);
-					// done();
-				// });
-			// });
-		// });
-	// });
+		it('should prevent users from joining if a match is full', function(done) {
+			resetForTesting();
+			GameMgmt.userConnected(2, function() {
+				GameMgmt.joinMatch(2, 0, function(err) {
+					var numPlayers = GameMgmt.getMatches()[0].gameBoard.players.length;
+					var maxPlayers = GameMgmt.getMatches()[0].gameBoard.maxPlayers;
+					assert.ok(err);
+					assert.equal(numPlayers, maxPlayers);
+					done();
+				});
+			});
+		});
+	});
 	// describe("#leaveMatch()", function() {
 		// it('should handle undefined/null input', function() {
 			// assert.throws(function() { GameMgmt.leaveMatch(undefined, undefined, undefined); }, Error);
@@ -170,38 +170,34 @@ describe("GameManagement", function(){
 			// });
 		// });
 	// });
-	describe("#userDisconnected()", function() {
-		it('should handle undefined/null input', function() {
-			assert.throws(function() { GameMgmt.userDisconnected(undefined, undefined); }, Error);
-			assert.throws(function() { GameMgmt.userDisconnected(null, null); }, Error);
-		});
-		it('should handle invalid input', function() {
-			assert.throws(function() { GameMgmt.userDisconnected(false, 12); }, Error);
-			assert.throws(function() { GameMgmt.userDisconnected("test", undefined); }, Error);
-			assert.throws(function() { GameMgmt.userDisconnected(0, "blah"); }, Error);
-			assert.throws(function() { GameMgmt.userDisconnected({a:1}, true); }, Error);
-			assert.throws(function() { GameMgmt.userDisconnected(noop, noop); }, Error);
-		});
-		it('should archive match data to the database when all users have disconnected from a match', function(done) {
-			resetForTesting();
-			GameMgmt.userConnected(0, function() {
-				console.log('test');
-				GameMgmt.userConnected(1, function() {
-					console.log('test2');
-					// all users in instance 0 connected
-					assert.notEqual(GameMgmt.getMatches()[0], undefined);
-					GameMgmt.userDisconnected(1, function() {
-						console.log('test3');
-						GameMgmt.userDisconnected(0, function() {
-							console.log('test4');
-							assert.equal(GameMgmt.getMatches()[0], undefined);
-							done();
-						});
-					});
-				});
-			});
-		});
-	});
+	// describe("#userDisconnected()", function() {
+		// it('should handle undefined/null input', function() {
+			// assert.throws(function() { GameMgmt.userDisconnected(undefined, undefined); }, Error);
+			// assert.throws(function() { GameMgmt.userDisconnected(null, null); }, Error);
+		// });
+		// it('should handle invalid input', function() {
+			// assert.throws(function() { GameMgmt.userDisconnected(false, 12); }, Error);
+			// assert.throws(function() { GameMgmt.userDisconnected("test", undefined); }, Error);
+			// assert.throws(function() { GameMgmt.userDisconnected(0, "blah"); }, Error);
+			// assert.throws(function() { GameMgmt.userDisconnected({a:1}, true); }, Error);
+			// assert.throws(function() { GameMgmt.userDisconnected(noop, noop); }, Error);
+		// });
+		// it('should archive match data to the database when all users have disconnected from a match', function(done) {
+			// resetForTesting();
+			// GameMgmt.userConnected(0, function() {
+				// GameMgmt.userConnected(1, function() {
+					// // all users in instance 0 connected
+					// assert.notEqual(GameMgmt.getMatches()[0], undefined);
+					// GameMgmt.userDisconnected(1, function() {
+						// GameMgmt.userDisconnected(0, function() {
+							// assert.equal(GameMgmt.getMatches()[0], undefined);
+							// done();
+						// });
+					// });
+				// });
+			// });
+		// });
+	// });
 	// describe("#userNameFromID()", function() {
 		// it('should handle undefined/null input', function() {
 			// assert.throws(function() { GameMgmt.userNameFromID(undefined); }, Error);
