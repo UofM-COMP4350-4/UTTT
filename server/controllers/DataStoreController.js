@@ -1,6 +1,9 @@
 var RelationalDB = require('../models/RelationalDBAccess.js');
 var flatFile = require('../models/FlatFileAccess.js');
+var ValidateObjectController = require("./ValidateObjectController.js");
+var connect4GameBoard = require("../models/connect4/Connect4GameBoard.js");
 var relationalDB;
+var absPath = "/Users/cam/NBGI/server/";
 
 exports.setup = function(database) {
 	relationalDB = new RelationalDB(database);
@@ -8,12 +11,23 @@ exports.setup = function(database) {
 
 exports.getUserInformation = function(userID, callback) {
 	if(exports.mock) {
+		var userInfo = undefined;
+		if ((typeof userID) === "undefined") {
+			var newUserID = 1;
+			for (var i=0; i < exports.mockUsers.length; i++) {
+				newUserID++;
+			}
+			userInfo = {userID:newUserID, userName:"", isOnline:true, avatarURL:"avatar.jpg"};
+			exports.mockUsers.push(userInfo);	
+		}
+		
 		for(var i=0; i<exports.mockUsers.length; i++) {
 			if(exports.mockUsers[i].userID == userID) {
-				callback(exports.mockUsers[i]);
-				break;
+				userInfo = exports.mockUsers[i];
 			}
 		}
+		callback(userInfo);
+		
 	} else {
 		relationalDB.getUserInfo(userID, callback);
 	}
@@ -32,13 +46,14 @@ exports.getListOfGames = function(callback) {
 };
 
 exports.saveGameBoard = function(instanceID, gameboard, callback) {
-	//Call validate object on the flatFile object
-	flatFile.saveJSONObject("/gameboard/" + instanceID + ".json", gameboard, callback);
+	ValidateObjectController.ValidateObject(gameboard);
+	ValidateObjectController.ValidateNumber(instanceID);
+	flatFile.saveJSONObject(absPath + "gameboard/" + instanceID + ".json", gameboard, callback);
 };
 
 exports.loadGameBoard = function(instanceID, callback) {
-	//Call validate object on the flatFile object
-	flatFile.loadJSONObject("/gameboard/" + instanceID + ".json", function(err, gb) {
+	ValidateObjectController.ValidateNumber(instanceID);
+	flatFile.loadJSONObject(absPath + "gameboard/" + instanceID + ".json", function(err, gb) {
 		if(err) {
 			callback(undefined);
 		} else {
@@ -48,11 +63,14 @@ exports.loadGameBoard = function(instanceID, callback) {
 };
 
 exports.storeToMatch = function(instanceID, userID, gameID, callback) {
+	ValidateObjectController.ValidateNumber(instanceID);
+	ValidateObjectController.ValidateNumber(userID);
+	ValidateObjectController.ValidateNumber(gameID);
 	if(exports.mock) {
 		var found = false;
 		for(var i=0; i<exports.mockMatches.length && !found; i++) {
 			if(exports.mockMatches[i].userID==userID
-					&& exports.mockMatches[i]==instanceID) {
+					&& exports.mockMatches[i].instanceID==instanceID) {
 				found = true;
 			}
 		}
@@ -63,16 +81,18 @@ exports.storeToMatch = function(instanceID, userID, gameID, callback) {
 				gameID:gameID
 			});
 		}
-		callback();
+		callback(!found);
 	} else {
-		//Call validate object on the relationalDB object
+		ValidateObjectController.ValidateObject(relationalDB);
 		relationalDB.addToMatch(instanceID, userID, gameID, callback);
 	}
 };
 
 exports.lookupMatch = function(instanceID, callback) {
+	ValidateObjectController.ValidateNumber(instanceID);
 	if(exports.mock) {
 		var matchEntries = [];
+		
 		for(var i=0; i<exports.mockMatches.length; i++) {
 			if(exports.mockMatches[i].instanceID == instanceID) {
 				matchEntries.push(exports.mockMatches[i]);
@@ -80,12 +100,14 @@ exports.lookupMatch = function(instanceID, callback) {
 		}
 		callback(matchEntries);
 	} else {
-		//Call validate object on the relationalDB object
+		ValidateObjectController.ValidateObject(relationalDB);
 		relationalDB.lookupMatch(instanceID, callback);
 	}
 };
 
 exports.removeFromMatch = function(instanceID, userID, callback) {
+	ValidateObjectController.ValidateNumber(instanceID);
+	ValidateObjectController.ValidateNumber(userID);
 	if(exports.mock) {
 		for(var i=0; i<exports.mockMatches.length; i++) {
 			if(exports.mockMatches[i].instanceID == instanceID
@@ -96,12 +118,13 @@ exports.removeFromMatch = function(instanceID, userID, callback) {
 		}
 		callback();
 	} else {
-		//Call validate object on the relationalDB object
+		ValidateObjectController.ValidateObject(relationalDB);
 		relationalDB.removeFromMatch(instanceID, userID, callback);
 	}
 };
 
 exports.endMatch = function(instanceID, callback) {
+	ValidateObjectController.ValidateNumber(instanceID);
 	if(exports.mock) {
 		for(var i=0; i<exports.mockMatches.length; i++) {
 			if(exports.mockMatches[i].instanceID == instanceID) {
@@ -109,13 +132,17 @@ exports.endMatch = function(instanceID, callback) {
 				i--;
 			}
 		}
-		callback();
+		flatFile.deleteFile(absPath + "gameboard/" + instanceID + ".json", function () {
+			callback();	
+		});
 	} else {
-		//Call validate object on the relationalDB object
+		ValidateObjectController.ValidateObject(relationalDB);
 		relationalDB.endMatch(instanceID, function(err) {
-			flatFile.isPathCreated("/gameboard/" + instanceID + ".json", function(exists) {
+			flatFile.isPathCreated(absPath + "gameboard/" + instanceID + ".json", function(exists) {
 				if(exists) {
-					flatFile.deleteFile("/gameboard/" + instanceID + ".json", callback);
+					flatFile.deleteFile(absPath + "gameboard/" + instanceID + ".json", function() {
+						callback();
+					});
 				} else {
 					callback();
 				}
@@ -125,6 +152,7 @@ exports.endMatch = function(instanceID, callback) {
 };
 
 exports.matchesByUser = function(userID, callback) {
+	ValidateObjectController.ValidateNumber(userID);
 	if(exports.mock) {
 		var matches = [];
 		for(var i=0; i<exports.mockMatches.length; i++) {
@@ -134,7 +162,7 @@ exports.matchesByUser = function(userID, callback) {
 		}
 		callback(matches);
 	} else {
-		//Call validate object on the relationalDB object
+		ValidateObjectController.ValidateObject(relationalDB);
 		relationalDB.matchesByUser(userID, callback);
 	}
 };

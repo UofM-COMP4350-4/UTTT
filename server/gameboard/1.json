@@ -1,0 +1,11 @@
+{
+	"instanceID": 1,
+	"gameID": 0,
+	"userToPlay": {
+		"id": 0,
+		"name": "Jason"
+	},
+	"players": "[{\"id\":0,\"name\":\"Jason\"}]",
+	"currentBoard": [],
+	"winner": null
+}

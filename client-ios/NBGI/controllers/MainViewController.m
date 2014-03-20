@@ -77,12 +77,13 @@ const int GAME_SOCKET_PORT = 10089;
                 NSLog(@"Error: User data was not returned in response.");
             }
             else {
+                NSLog(@"User id received from initialize is %@",[userDict objectForKey:@"userID"]);
                 [[MainViewController GameSocket] sendEvent:@"userSetup" withData:[userDict objectForKey:@"userID"]];
             }
         }
     };
     
-    [self sendHttpGetRequest: responseSuccess url: @"initialize"];
+    //[self sendHttpGetRequest: responseSuccess url: @"initialize"];
     [self setupGameSocketConnection];
 }
 
@@ -127,6 +128,7 @@ const int GAME_SOCKET_PORT = 10089;
 - (void)setupGameSocketConnection {
     gameSocket = [[SocketIO alloc] initWithDelegate:self];
     [gameSocket connectToHost:@"54.186.37.75" onPort:GAME_SOCKET_PORT];
+    [gameSocket setDelegate:self];
 }
 
 - (IBAction)PlayConnect4:(id)sender {
