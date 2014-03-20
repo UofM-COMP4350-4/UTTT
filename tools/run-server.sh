@@ -25,8 +25,8 @@ if [ "$2" != "" ] ; then
 	IP = $2
 fi
 
-if [ ! -e "$ROOT/server/gameboard" ] ; then
-	mkdir -p "$ROOT/server/gameboard"
+if [ ! -e "$ROOT/server/gamedata" ] ; then
+	mkdir -p "$ROOT/server/gamedata"
 fi 
 
 node "$ROOT/server/server.js"

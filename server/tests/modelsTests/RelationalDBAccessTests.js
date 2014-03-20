@@ -1,6 +1,6 @@
 var assert = require("assert");
 var RelationalDBAccess = require("../../models/RelationalDBAccess.js");
-var relationalDB = new RelationalDBAccess({username:'ubuntu', password:'', hostname:'54.186.20.243'});
+var relationalDB = new RelationalDBAccess({username:'ubuntu', password:'', hostname:'54.186.37.75'});
 
 describe("RelationalDBAccess", function() {
 	describe("#getListOfGames", function(){		

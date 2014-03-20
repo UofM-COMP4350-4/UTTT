@@ -126,13 +126,25 @@ server.get("/initialize", function(request, response, next) {
 			
 			console.log('Finished gettign game list ' + userInfo.userID);
 			//get a list of active games for the user
-			gameMGMT.findByUser(parseInt(userInfo.userID, 10), function(activeGames){
-				//for now, send back the user and game list
-				text = {'user': userInfo, 'availableGames': games, 'active': activeGames};		
-				response.writeHead( 200, {'content-type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
-				response.write(JSON.stringify(text));
-				response.end();
-				next();
+			gameMGMT.findByUser(parseInt(userInfo.userID, 10), function(activeEntries){
+				var activeGames = {};
+				var getActiveGameboards = function() {
+					if(activeEntries.length>0) {
+						var curr = activeEntries.pop();
+						gameMGMT.getGameboard(curr.instanceID, curr.gameID, function(gb) {
+							activeGames[curr.instanceID] = gb;
+							getActiveGameboards();
+						});
+					} else {
+						//for now, send back the user and game list
+						text = {'user': userInfo, 'availableGames': games, 'active': activeGames};		
+						response.writeHead( 200, {'content-type': 'application/json'});
+						response.write(JSON.stringify(text));
+						response.end();
+						next();
+					}
+				};
+				getActiveGameboards();
 			});
 		});
 	});
