@@ -11,17 +11,17 @@ exports.setup = function(database) {
 
 exports.getUserInformation = function(userID, callback) {
 	if(exports.mock) {
-		var userInfo = undefined;
+		var userInfo, i;
 		if ((typeof userID) === "undefined") {
 			var newUserID = 1;
-			for (var i=0; i < exports.mockUsers.length; i++) {
+			for(i=0; i < exports.mockUsers.length; i++) {
 				newUserID++;
 			}
 			userInfo = {userID:newUserID, userName:"", isOnline:true, avatarURL:"avatar.jpg"};
 			exports.mockUsers.push(userInfo);	
 		}
 		
-		for(var i=0; i<exports.mockUsers.length; i++) {
+		for(i=0; i<exports.mockUsers.length; i++) {
 			if(exports.mockUsers[i].userID == userID) {
 				userInfo = exports.mockUsers[i];
 			}

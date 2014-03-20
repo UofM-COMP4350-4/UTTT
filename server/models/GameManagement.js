@@ -115,7 +115,7 @@ module.exports = {
 					console.log('JoinMatch: UserName returned from userNameFromID is ' + userName);
 					matches[instanceID].gameBoard.AddPlayer(new Player(userID, userName));
 					console.log('JoinMatch: ' + JSON.stringify(matches[instanceID].gameBoard.players));
-					console.log('JoinMatch: ' + JSON.stringify(matches[instanceID]))
+					console.log('JoinMatch: ' + JSON.stringify(matches[instanceID]));
 					GameSocket.JoinRoom(userID, instanceID);
 					callback();
 				});
