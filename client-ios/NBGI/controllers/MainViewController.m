@@ -83,7 +83,7 @@ const int GAME_SOCKET_PORT = 10089;
         }
     };
     
-    //[self sendHttpGetRequest: responseSuccess url: @"initialize"];
+    [self sendHttpGetRequest: responseSuccess url: @"initialize"];
     [self setupGameSocketConnection];
 }
 
@@ -140,6 +140,29 @@ const int GAME_SOCKET_PORT = 10089;
     if (isGameCreatedSuccessfully) {
         [gameSocket sendEvent:@"gameCreated" withData:[NSNumber numberWithInt:gameInstanceID]];
     }
+}
+
+- (void) socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet
+{
+//    NSString *playerJSON = packet.data;
+//    NSData *playerJSONData = [playerJSON dataUsingEncoding:NSUTF8StringEncoding];
+//    NSError *error = NULL;
+//    
+//    NSDictionary *jsonNSDict = [NSJSONSerialization JSONObjectWithData:playerJSONData options:NSJSONReadingMutableContainers error:&error];
+//    
+//    if (error != NULL) {
+//        NSLog(@" error => %@ ", error);
+//    }
+//    else {
+//        NSLog(@"didReceiveEvent >>> data: %@", jsonNSDict);
+//        NSMutableArray *listOfMoves = [jsonNSDict objectForKey:@"currentBoard"];
+//        
+//        if (listOfMoves == nil) {
+//            NSLog(@"Error: Gameboard was not returned in response.");
+//        }
+//        else {
+//            [self drawGameBoard:listOfMoves];
+//        }
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
