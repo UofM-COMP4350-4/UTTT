@@ -17,7 +17,7 @@ if not "%2" == "" (
 	SET IP=%2
 )
 
-if not exist "%ROOT%\server\gameboard" mkdir "%ROOT%\server\gameboard"
+if not exist "%ROOT%\server\gamedata" mkdir "%ROOT%\server\gamedata"
 
 node "%ROOT%\server\server.js"
 
