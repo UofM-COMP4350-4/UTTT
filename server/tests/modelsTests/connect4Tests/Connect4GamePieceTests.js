@@ -7,7 +7,7 @@ var playerJS = require("../../../models/Player.js");
  */
 
 describe('Controller Test Suite', function(){
-	describe('GridValidationController Test Class', function() {
+	describe('Connect4GamePiece Test Class', function() {
 		it('Test: Inivialize Valid Data', function() {
 			var connect4GamePiece = new connect4GamePieceJS.Connect4GamePiece( {
 				player: new playerJS.Player(12,'Player 1'), pieceID: 1234

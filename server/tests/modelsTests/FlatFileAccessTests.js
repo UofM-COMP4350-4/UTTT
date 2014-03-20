@@ -10,7 +10,7 @@ var obj2 = {a: 2, b: 'test2', c: 4};
 var path = 'test.json';
 
 describe("FlatFileAccess", function() {
-	describe("#saveJSONObject()", function() {
+	describe("saveJSONObject()", function() {
 		it('should handle undefined/null input', function() {
 			assert.throws(function() { FlatFileAccess.saveJSONObject(path, null) }, Error);
 			assert.throws(function() { FlatFileAccess.saveJSONObject(null, obj1) }, Error);
@@ -71,7 +71,7 @@ describe("FlatFileAccess", function() {
 			});
 		});
 	});
-	describe("#loadJSONObject()", function() {
+	describe("loadJSONObject()", function() {
 		it('should handle undefined/null input', function() {
 			assert.throws(function() { FlatFileAccess.loadJSONObject(null) }, Error);
 			assert.throws(function() { FlatFileAccess.loadJSONObject(undefined) }, Error);
@@ -116,7 +116,7 @@ describe("FlatFileAccess", function() {
 			});
 		});
 	});
-	describe("#isPathCreated()", function() {
+	describe("isPathCreated()", function() {
 		var noop = function() {};
 		it('should handle undefined/null input', function() {
 			assert.throws(function() { FlatFileAccess.isPathCreated(null, noop) }, Error);
@@ -140,7 +140,7 @@ describe("FlatFileAccess", function() {
 			});
 		});
 	});
-	describe("#deleteFile()", function() {
+	describe("deleteFile()", function() {
 		it('should handle undefined/null input', function() {
 			assert.throws(function() { FlatFileAccess.deleteFile(null) }, Error);
 			assert.throws(function() { FlatFileAccess.deleteFile(undefined) }, Error);

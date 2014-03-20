@@ -111,11 +111,11 @@ describe('Connect4 Test Suite', function(){
 			iterator.StepColumnBackward();
 			assertGridInformation(iterator, 3, 0, 3);
 			
-			iterator.StepDiagonalForward();
+			iterator.StepNE();
 			assertGridInformation(iterator, 11, 1, 4);
 			
-			iterator.StepDiagonalBackward();
-			assertGridInformation(iterator, 3, 0, 3);
+			iterator.StepNW();
+			assertGridInformation(iterator, 17, 2, 3);
 			
 		});
 		
@@ -123,14 +123,16 @@ describe('Connect4 Test Suite', function(){
 			var grid = createGrid(42);
 			var iterator = new GridIteratorJS.GridIterator(grid, 0, 0, 6, 7);
 			
-			assert.equal(iterator.StepRowBackward(), null);
-			assert.equal(iterator.StepColumnBackward(), null);
-			assert.equal(iterator.StepDiagonalBackward(), null);
-			
+			assert.equal(iterator.StepRowBackward(), true);
+			assert.equal(iterator.StepColumnBackward(), true);
+			assert.equal(iterator.StepNE(), true);
+			assert.equal(iterator.StepNW(), true);
+						
 			iterator.StepToLocation(5,6);
-			assert.equal(iterator.StepRowForward(), null);
-			assert.equal(iterator.StepColumnForward(), null);
-			assert.equal(iterator.StepDiagonalForward(), null);
+			assert.equal(iterator.StepRowForward(), false);
+			assert.equal(iterator.StepColumnForward(), false);
+			assert.equal(iterator.StepNE(), false);
+			assert.equal(iterator.StepNW(), false);
 		});
 		
 		it('Test: Invalid/Bound data when Moving Around', function() {

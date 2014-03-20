@@ -1,5 +1,5 @@
 exports.ValidateObject = function(obj) {
-	if(obj == null || obj === undefined) {
+	if(obj == null || typeof obj === 'undefined') {
 		throw new Error('Argument cannot be null or undefined.');
 	} else if(typeof obj == 'object') {
 		return true;
