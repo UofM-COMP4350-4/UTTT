@@ -3,6 +3,11 @@ var RelationalDBAccess = require("../../models/RelationalDBAccess.js");
 var relationalDB = new RelationalDBAccess({username:'ubuntu', password:'', hostname:'54.186.20.243'});
 
 describe("RelationalDBAccess", function() {
+	describe('#initialize database with empty parameter', function(){
+		//TODO:
+	
+	});
+	
 	describe("#getListOfGames", function(){		
 		it('should get list of games from the database properly', function(){
 			//This assumes we have 2 games in the database

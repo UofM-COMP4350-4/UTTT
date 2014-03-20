@@ -65,11 +65,12 @@ describe('Server Test Suite', function(){
 		//Test invalid data sent to the Server's /initialize method
 		it('Test: Invalid Initialize Data', function() {
 			var path = "/initialize";
-			var text = "userID=bob";
+			var text = "userid=1";
 			var userData = "";
 						
 			var callback = function(response)
 			{
+				console.log('');
 				response.on('error', function(err){
 					console.log("Error received " + err);
 				});

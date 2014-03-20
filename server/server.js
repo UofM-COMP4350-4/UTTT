@@ -73,8 +73,6 @@ server.get("/queueForGame", function(request, response, next){
 					response.end({});
 				});
 			});
-			//call gameSocketController.sendMatchEvent to both users
-			//gameSocket.sendMatchEvent(params.clientID, gameInstanceID);
 		});
 	}
 
@@ -90,8 +88,6 @@ server.get("/queueForGame", function(request, response, next){
 		response.writeHead(500, {"content-type": "application/json"});
 		response.end(JSON.stringify("Game room Full. Please wait until Server restarts"));
 	}
-
-	//response.end(JSON.stringify({}));
 	next();
 });
 
