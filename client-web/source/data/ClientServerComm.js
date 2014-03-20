@@ -3,13 +3,28 @@ enyo.singleton({
 	kind: "Component",
 	components: [
 		{ kind:"Socket", name:"gameSocket", url:"http://localhost:10089", 
-			onmatchFound:"onMatchFound", onreceivePlayResult:"onReceivePlayResult" }
+			onmatchFound:"onMatchFound", onreceivePlayResult:"onReceivePlayResult", 
+			onclientConnectedToServer:"onClientConnected" }
 	],
 	
 	create: function() {
 		this.inherited(arguments);
-		this.$.gameSocket.connect();
 		//this.initialize( "1", enyo.bind(this, "initCallback"));
+	},
+	
+	createSocket: function() {		
+		this.$.gameSocket.connect();
+	},
+	
+	onClientConnected: function() {
+		if(window.userID)
+		{
+			this.$.gameSocket.emit('userSetup', window.userID);
+		}
+		else
+		{
+			this.log('Invalid userID found');
+		}
 	},
 	
 	onMatchFound: function(inSender, inEvent) {
@@ -61,7 +76,6 @@ enyo.singleton({
 			method: "GET", //You can also use POST
 			handleAs: "json" //options are "json", "text", or "xml"
 		});
-		this.view.$.createGameButton.setContent("Game Created 1");
 		request.response(enyo.bind(this, "queueResponse", callback)); //tells Ajax what the callback function is
 		request.go({userid: userID, gameid: gameID});		
 	},
@@ -100,6 +114,7 @@ enyo.singleton({
 			this.log(response);
 			this.log('Server responded with userID: ' + response.user.userID);
 			callback(response);
+			this.createSocket();
 		}		
 	},
 	

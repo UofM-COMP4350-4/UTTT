@@ -15,6 +15,10 @@ this.socketIO = io.listen(10089);
 this.socketIO.sockets.on('connection', function(socket) {
 	userSocket = socket;
 	userSocket.emit('clientConnectedToServer', "");
+	
+	socket.on('userSetup', function(){
+		console.log('I get a user setup event');
+	});
 });	
 	
 server.get("/queueForGame", function(request, response, next){
