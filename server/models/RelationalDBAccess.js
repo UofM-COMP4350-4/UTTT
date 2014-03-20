@@ -5,7 +5,10 @@ var dbConnection;
 function RelationalDBAccess(database) {
 	if (database === undefined)	{
 		new InitializeDB();
-	} else {
+	} else { 
+		Validator.ValidateString(database.username);
+		Validator.ValidateString(database.password);
+		Validator.ValidateString(database.hostname);
 		new InitializeOtherDB(database.username, database.password, database.hostname);
 	}
 }
