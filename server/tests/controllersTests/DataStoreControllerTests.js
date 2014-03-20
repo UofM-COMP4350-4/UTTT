@@ -35,5 +35,15 @@ describe('Controller Test Suite', function(){
 			});
 			
 		});
+		
+		it('Test: Request existing users information', function(done) {
+			DataStore.getUserInformation(1, function(user) {
+				assert.notEqual(user, null);
+				assert.notEqual(user, undefined);
+				assert.notEqual(user, NaN);
+				assert.equal(1,user.userID);
+				done();
+			});
+		});
 	});
 });
