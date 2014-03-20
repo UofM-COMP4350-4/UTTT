@@ -105,7 +105,6 @@ module.exports = {
 	joinMatch: function(userID, instanceID, callback) {
 		Validator.ValidateArgs(arguments, Number, Number, Function);
 		if(matches[instanceID]) {
-			console.log("DEBUG 1");
 			if(matches[instanceID].gameBoard.players.length < matches[instanceID].gameBoard.maxPlayers) {
 				module.exports.userNameFromID(userID, function(userName) {
 					matches[instanceID].gameBoard.AddPlayer(new Player(userID, userName));
@@ -116,7 +115,6 @@ module.exports = {
 				callback({errorCode:1, errorText:"Game full"});
 			}
 		} else {
-			console.log("DEBUG 2");
 			DataStore.lookupMatch(instanceID, function(entries) {
 				if(entries && entries.length>0) {
 					module.exports.setupMatch(entries[0].gameID, instanceID, function(id) {
@@ -162,6 +160,7 @@ module.exports = {
 	userConnected: function(userID, callback) {
 		Validator.ValidateArgs(arguments, Number, Function);
 		DataStore.getUserInformation(userID, function(userInfo) {
+			console.log('User Connected: UserInfo is ' + JSON.stringify(userInfo));
 			onlineUsers.push(userInfo);
 			module.exports.findByUser(userID, function(state) {
 				var instances = Object.keys(state);
@@ -192,6 +191,7 @@ module.exports = {
 			}
 		}
 		module.exports.findByUser(userID, function(state) {
+			console.log('UserDisconnected: State returned from findByUserID(' + userID + ') is ' + JSON.stringify(state));
 			var entries = Object.keys(state);
 			for(var i=0; i<entries.length; i++) {
 				var players = Object.keys(state[entries[i]].players);
@@ -231,9 +231,8 @@ module.exports = {
 			}
 		}
 		DataStore.getUserInformation(userID, function(userInfo) {
-			console.log('Username received is ' + JSON.stringify(userInfo));
-			console.log('Username received  ' + JSON.stringify(userInfo[0]));
-			callback(userInfo[0].userName);
+			console.log('UserNameFromID: User Information returned from db is ' + JSON.stringify(userInfo));
+			callback(userInfo.userName);
 		});
 	},
 	gameTypeFromID: function(gameID, callback) {
@@ -258,13 +257,15 @@ module.exports = {
 				}
 			}
 		}
+		console.log('FindByUser: UserState is ' + JSON.stringify(userState));
 		DataStore.matchesByUser(userID, function(entries) {
-			console.log('Matches returned from the database ' + entries);
+			console.log('FindByUser: Matches returned from the database are' + JSON.stringify(entries));
 			var loadItem = function() {
 				if(entries.length>0) {
 					var curr = entries.pop();
 					if(!userState[curr.instanceID]) {
 						DataStore.loadGameBoard(curr.instanceID, function(gb) {
+							console.log("FindByUser: LoadGameBoard from database is " + JSON.stringify(gb));
 							userState[curr.instanceID] = gb;
 							if(!userState[curr.instanceID]) {
 								// Special case where game match entry exists, but gameboard missing
@@ -272,12 +273,12 @@ module.exports = {
 									module.exports.gameTypeFromID(curr.gameID, function(type) {
 										GameDefinitions[curr.gameID] = require("../controllers/" + type + "GameController.js")[type + "GameController"];
 										var game = new GameDefinitions[curr.gameID]({instanceID:curr.instanceID, gameID:curr.gameID});
-										userState[curr.instanceID] = game.gameBoard.CreateBoardGameJSONObject();
+										userState[curr.instanceID] = game.gameBoard;
 										loadItem();
 									});
 								} else {
 									var game = new GameDefinitions[curr.gameID]({instanceID:curr.instanceID, gameID:curr.gameID});
-									userState[curr.instanceID] = game.gameBoard.CreateBoardGameJSONObject();
+									userState[curr.instanceID] = game.gameBoard;
 									loadItem();
 								}
 							} else {
