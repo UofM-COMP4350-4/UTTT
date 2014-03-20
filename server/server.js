@@ -3,7 +3,7 @@ var ecstatic = require('ecstatic');
 var dbController = require('./controllers/DataStoreController.js');
 dbController.setup({username:'ubuntu', password:'', hostname:'54.186.20.243'});
 var gameMGMT = require('./models/GameManagement.js');
-var gameSocketController = require('./controllers/GameSocketController.js').createGameSocket(10086);
+var gameSocketController = require('./controllers/GameSocketController.js').createGameSocket(10089);
 var queueForGameRequests = 0;
 var queueForGamesList = {};
 

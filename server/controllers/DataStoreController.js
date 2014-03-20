@@ -8,12 +8,20 @@ exports.setup = function(database) {
 
 exports.getUserInformation = function(userID, callback) {
 	if(exports.mock) {
+		if (!userID) {
+			var newUserID = 1;
+			for (var i=0; i < exports.mockUsers.length; i++) {
+				newUserID++;
+			}
+			mockUsers.push({userID:newUserID, userName:"", isOnline:true, avatarURL:"avatar.jpg"};	
+		}
 		for(var i=0; i<exports.mockUsers.length; i++) {
 			if(exports.mockUsers[i].userID == userID) {
 				callback(exports.mockUsers[i]);
 				break;
 			}
 		}
+		
 	} else {
 		relationalDB.getUserInfo(userID, callback);
 	}
