@@ -13,4 +13,6 @@
 @interface MainViewController : UIViewController <SocketIODelegate>
 + (SocketIO*) GameSocket;
 
+@property NSNumber *userID;
+
 @end

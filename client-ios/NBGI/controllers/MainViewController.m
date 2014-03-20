@@ -56,7 +56,6 @@ const int GAME_SOCKET_PORT = 10089;
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     success responseSuccess;
-    
     //callback method defined
     responseSuccess = ^(NSString *data){
         NSLog(@"I get here: Handle Server response called");
@@ -78,13 +77,14 @@ const int GAME_SOCKET_PORT = 10089;
             }
             else {
                 NSLog(@"User id received from initialize is %@",[userDict objectForKey:@"userID"]);
-                [[MainViewController GameSocket] sendEvent:@"userSetup" withData:[userDict objectForKey:@"userID"]];
+                _userID = [[NSNumber alloc] init];
+                _userID = [userDict objectForKey:@"userID"];
             }
         }
     };
-    
-    [self sendHttpGetRequest: responseSuccess url: @"initialize"];
+
     [self setupGameSocketConnection];
+    [self sendHttpGetRequest: responseSuccess url: @"initialize"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -144,25 +144,21 @@ const int GAME_SOCKET_PORT = 10089;
 
 - (void) socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet
 {
-//    NSString *playerJSON = packet.data;
-//    NSData *playerJSONData = [playerJSON dataUsingEncoding:NSUTF8StringEncoding];
-//    NSError *error = NULL;
-//    
-//    NSDictionary *jsonNSDict = [NSJSONSerialization JSONObjectWithData:playerJSONData options:NSJSONReadingMutableContainers error:&error];
-//    
-//    if (error != NULL) {
-//        NSLog(@" error => %@ ", error);
-//    }
-//    else {
-//        NSLog(@"didReceiveEvent >>> data: %@", jsonNSDict);
-//        NSMutableArray *listOfMoves = [jsonNSDict objectForKey:@"currentBoard"];
-//        
-//        if (listOfMoves == nil) {
-//            NSLog(@"Error: Gameboard was not returned in response.");
-//        }
-//        else {
-//            [self drawGameBoard:listOfMoves];
-//        }
+    NSString *responseJSON = packet.data;
+    NSData *responseJSONData = [responseJSON dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error = NULL;
+    NSDictionary *jsonNSDict = [NSJSONSerialization JSONObjectWithData:responseJSONData options:NSJSONReadingMutableContainers error:&error];
+
+    if (error != NULL) {
+        NSLog(@"Error: Socket event had an error.");
+    }
+    else {
+        NSString *eventName = [jsonNSDict objectForKeyedSubscript:@"name"];
+        
+        if ([eventName isEqualToString:@"clientConnectedToServer"]) {
+            [[MainViewController GameSocket] sendEvent:@"userSetup" withData: _userID];
+        }
+    }
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
