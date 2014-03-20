@@ -13,7 +13,8 @@ var userSocket;
 this.socketIO = io.listen(10089);
 	
 this.socketIO.sockets.on('connection', function(socket) {
-	userSocket = socket
+	userSocket = socket;
+	userSocket.emit('clientConnectedToServer', "");
 });	
 	
 server.get("/queueForGame", function(request, response, next){
