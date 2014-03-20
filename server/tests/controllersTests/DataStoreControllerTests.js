@@ -96,9 +96,9 @@ describe('Controller Test Suite', function(){
 					
 					DataStore.removeFromMatch(instanceID, userID, function() {
 						done();	
-					})
-				})
-			})
+					});
+				});
+			});
 		});		
 		
 		it('Test: Store an existing match', function(done) {
@@ -113,9 +113,9 @@ describe('Controller Test Suite', function(){
 					
 					DataStore.removeFromMatch(instanceID, userID, function() {
 						done();
-					})
-				})
-			})
+					});
+				});
+			});
 		});			
 		
 		it('Test: Look up a not existing match', function(done) {
@@ -125,7 +125,7 @@ describe('Controller Test Suite', function(){
 				assert.notEqual(playersInMatch, "undefined");
 				assert.notEqual(playersInMatch, null);
 				done();
-			})
+			});
 		});			
 		
 		it('Test: Remove a player from a match they are playing', function(done) {
@@ -173,10 +173,10 @@ describe('Controller Test Suite', function(){
 						DataStore.removeFromMatch(instanceID, userID, function() {
 							DataStore.removeFromMatch(instanceID + 1, userID, function() {
 								done();
-							})	
+							});
 						});
-					})
-				})
+					});
+				});
 			});			
 		});
 		
