@@ -21,7 +21,7 @@ exports.Connect4GameController.prototype.RequestMove = function(move) {
 		} else if (this.gameBoard.IsDraw()) {
 			this.emit('playResult',this.gameBoard.CreateBoardGameJSONObject('Draw'));
 		} else {
-			this.emit('boardChanged', this.gameBoard.CreateBoardGameJSONObject());
+			this.emit('boardChanged', this.gameBoard.CreateBoardGameJSONObject('Board Updated'));
 		}
 	} else {
 		this.emit('moveFailure', this.gameBoard.CreateBoardGameJSONObject(err));

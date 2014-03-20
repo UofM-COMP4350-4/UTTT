@@ -33,9 +33,9 @@ describe("FlatFileAccess", function() {
 						FlatFileAccess.loadJSONObject(path, function(err2, data) {
 							assert.ok(!err2);
 							assert.deepEqual(data, obj1);
-							FlatFileAccess.deleteFile(path, function(err3) {
-								done();
-							});
+							// FlatFileAccess.deleteFile(path, function(err3) {
+								// done();
+							// });
 						});
 					} else {
 						done();
