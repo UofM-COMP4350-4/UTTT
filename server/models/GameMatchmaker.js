@@ -2,20 +2,29 @@
 // Model that holds the matchmaking queues for each game
 /*globals GameMatchmaker */
 var validator = require('../controllers/ValidateObjectController');
-var _ = require('underscore');
 var gameQueue = [];
 exports.GameMatchmaker = function() {}; // constructor
 
+exports.GameMatchmaker.clearQueue = function() {
+	gameQueue = [];
+};
+
+//Player joins the queue
 exports.GameMatchmaker.joinQueue = function(player,game,callback){
-	validator.ValidateArgs(arguments, Object, Object, Function);
-	var newPlayer = {'player':player,'game':game};
-	gameQueue.push(newPlayer);
+	validator.ValidateObject(player);
+	validator.ValidateObject(game);
+	validator.ValidateFunction(callback);//(arguments, Object, Object, Function);
+	if ((typeof gameQueue[game.id]) === 'undefined' || !gameQueue[game.id])
+	{
+		gameQueue[game.id] = [];
+	}
+	gameQueue[game.id].push(player);
 	callback(gameQueue);
 };
 
 exports.GameMatchmaker.getGameQueue = function(game,callback){
 	validator.ValidateArgs(arguments, Object, Function);
-	var gameQ = _.groupBy(gameQueue,'game')[game];
+	var gameQ = gameQueue[game.id];
 	if(gameQ == null){
 		gameQ = [];
 	}
@@ -24,7 +33,14 @@ exports.GameMatchmaker.getGameQueue = function(game,callback){
 
 exports.GameMatchmaker.totalPlayers = function(callback){
 	validator.ValidateArgs(arguments,Function);
-	callback(gameQueue.length);
+	var count = 0;
+	for (var n in gameQueue) {
+		for (var u in gameQueue[n]) {
+			//console.log("bob " + gameQueue[0][u]);
+			count += 1;
+		}
+	}
+	callback(count);
 };
 
 exports.GameMatchmaker.queueTotal = function(game,callback){
@@ -37,11 +53,12 @@ exports.GameMatchmaker.queueTotal = function(game,callback){
 exports.GameMatchmaker.removeFromQueue = function(player,callback){
 	validator.ValidateArgs(arguments, Object, Function);
 	var newList = [];
-	for(var i = 0; i<gameQueue.length;i++){
-		if(gameQueue[i]['player']!=player){
-			newList.push(gameQueue[i]);
-		}	
+	for(var i in gameQueue){
+		for (var j in gameQueue[i]) {
+			if(gameQueue[i][j].id == player.id){
+				gameQueue[i].splice(gameQueue[i].indexOf(player), 1);
+			}
+		}
 	}
-	gameQueue = newList;
 	callback();
 };
