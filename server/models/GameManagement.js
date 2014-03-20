@@ -203,11 +203,10 @@ module.exports = {
 						}
 						if(!found) {
 							DataStore.storeToMatch(curr.instanceID, userID, curr.gameID, function() {
-								var data = matches[curr.instanceID].gameBoard.CreateBoardGameJSONObject()
+								var data = matches[curr.instanceID].gameBoard.CreateBoardGameJSONObject();
 								DataStore.saveGameData(curr.instanceID, data, function() {
 									delete matches[curr.instanceID];
 									saveMatches();
-
 								});
 							});
 						} else {

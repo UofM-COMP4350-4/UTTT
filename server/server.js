@@ -133,7 +133,8 @@ server.get("/initialize", function(request, response, next) {
 						var curr = activeEntries.pop();
 						gameMGMT.getGameboard(curr.instanceID, curr.gameID, function(gb) {
 							activeGames[curr.instanceID] = gb;
-						})
+							getActiveGameboards();
+						});
 					} else {
 						//for now, send back the user and game list
 						text = {'user': userInfo, 'availableGames': games, 'active': activeGames};		
@@ -142,7 +143,8 @@ server.get("/initialize", function(request, response, next) {
 						response.end();
 						next();
 					}
-				}
+				};
+				getActiveGameboards();
 			});
 		});
 	});

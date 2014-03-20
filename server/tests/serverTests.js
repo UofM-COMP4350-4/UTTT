@@ -45,6 +45,7 @@ function setup(path, text, callback){
 //setup function for calls that don't require data
 function setupNoData(path, callback){
 	var options = {
+		host: "localhost",
 		path: path
 	};
 	
@@ -73,7 +74,7 @@ describe('Server Test Suite', function(){
 				});
 				
 				response.on('end', function(){
-					console.log(userData)
+					console.log(userData);
 					userData = JSON.parse(userData);//parse out the JSON object
 					assert.notEqual(response.statusCode, 200);
 					
