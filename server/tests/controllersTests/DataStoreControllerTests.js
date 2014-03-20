@@ -26,15 +26,13 @@ DataStore.mockMatches = [
 
 describe('Controller Test Suite', function(){
 	describe('DataStoreController Test Class', function() {
-		it('Test: Valid Data', function() {
-			
-		});
-		
-		it('Test: Invalid Data', function() {
-			
-		});
-		
-		it('Test: Null/Undefined/NaN Data', function() {
+		it('Test: Request information for a new (undefined) user', function(done) {
+			DataStore.getUserInformation(undefined, function(user) {
+				assert.notEqual(user, null);
+				assert.notEqual(user, undefined);
+				assert.notEqual(user, NaN);
+				done();	
+			});
 			
 		});
 	});

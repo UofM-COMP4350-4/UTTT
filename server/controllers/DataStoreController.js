@@ -13,7 +13,8 @@ exports.getUserInformation = function(userID, callback) {
 			for (var i=0; i < exports.mockUsers.length; i++) {
 				newUserID++;
 			}
-			mockUsers.push({userID:newUserID, userName:"", isOnline:true, avatarURL:"avatar.jpg"};	
+			exports.mockUsers.push({userID:newUserID, userName:"", isOnline:true, avatarURL:"avatar.jpg"});
+			callback(exports.mockUsers[newUserID-1]);	
 		}
 		for(var i=0; i<exports.mockUsers.length; i++) {
 			if(exports.mockUsers[i].userID == userID) {
