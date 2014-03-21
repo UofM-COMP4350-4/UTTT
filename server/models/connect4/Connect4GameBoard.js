@@ -29,6 +29,7 @@ exports.Connect4GameBoard = function(gameInfo)
 		this.grid = new Array(this.ROW_SIZE * this.COL_SIZE);
 		this.moves = [];
 		this.isWinner = false;
+		this.isDraw = false;
 		this.winner = null;
 		this.maxPlayers = 2;
 		this.lastPieceID = 0;	
@@ -50,6 +51,7 @@ exports.Connect4GameBoard = function(gameInfo)
 		this.ROW_SIZE = gameInfo.ROW_SIZE;
 		this.COL_SIZE = gameInfo.COL_SIZE;
 		this.grid = gameInfo.grid;
+		this.isDraw = gameInfo.isDraw;
 		this.moves = gameInfo.moves;
 		this.isWinner = gameInfo.isWinner;
 		this.winner = gameInfo.winner;
@@ -60,7 +62,8 @@ exports.Connect4GameBoard = function(gameInfo)
 
 exports.Connect4GameBoard.prototype.IsDraw = function()
 {
-	return this.moves.length == this.grid.length;
+	this.isDraw = isDraw || (this.moves.length == this.grid.length && this.isWinner);
+	return this.isDraw;
 };
 
 exports.Connect4GameBoard.prototype.GetLocationIfDropGamePieceAtCol = function(col)
