@@ -37,9 +37,21 @@ const int gameInstanceID = 96;
 {
     [super viewDidLoad];
     
-    [self initializeGameBoard];
-    [self drawGameBoard:[[NSMutableArray alloc]init]];
+    //[self drawGameBoard:[[NSMutableArray alloc]init]];
     [self setupEvents];
+    [self setupNotifications];
+}
+
+- (void)setupNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                          selector:@selector(receiveNotification:)
+                                          name:@"MatchFoundNotification"
+                                          object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                          selector:@selector(receiveNotification:)
+                                          name:@"PlayResultNotification"
+                                          object:nil];
 }
 
 - (void)setupEvents {
@@ -64,31 +76,6 @@ const int gameInstanceID = 96;
      return UIInterfaceOrientationMaskAll;
      }*/
     return UIInterfaceOrientationMaskPortrait;
-}
-
-
-- (void) socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet
-{
-    NSString *playerJSON = packet.data;
-    NSData *playerJSONData = [playerJSON dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *error = NULL;
-    
-    NSDictionary *jsonNSDict = [NSJSONSerialization JSONObjectWithData:playerJSONData options:NSJSONReadingMutableContainers error:&error];
-    
-    if (error != NULL) {
-        NSLog(@" error => %@ ", error);
-    }
-    else {
-        NSLog(@"didReceiveEvent >>> data: %@", jsonNSDict);
-        NSMutableArray *listOfMoves = [jsonNSDict objectForKey:@"currentBoard"];
-        
-        if (listOfMoves == nil) {
-            NSLog(@"Error: Gameboard was not returned in response.");
-        }
-        else {
-            [self drawGameBoard:listOfMoves];
-        }
-    }
 }
 
 //The event handling method
@@ -116,15 +103,6 @@ const int gameInstanceID = 96;
     
     NSString *moveJSON = [NSString stringWithFormat:@"{ \"user:\", \"x\":%d,\"y\":5 }",col];
     NSLog(@"player made a move im col %d", col);
-    // send message to server with location of move
-    
-    //Remove me
-    Move *move = [[Move alloc]initWithPositionAndUserID:CGPointMake(col,0) userID:userID];
-    NSMutableArray *list = [[NSMutableArray alloc]init];
-    [list addObject:move];
-    [self drawGameBoard:list];
-    //end
-    
     [[MainViewController GameSocket] sendEvent:@"receiveMove" withData:moveJSON];
 }
 
@@ -164,6 +142,37 @@ const int gameInstanceID = 96;
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) receiveNotification:(NSNotification *) notification// : (NSDictionary *) jsonDict
+{
+    // [notification name] should always be @"TestNotification"
+    // unless you use this method for observation of other notifications
+    // as well.
+    
+    if ([[notification name] isEqualToString:@"MatchFoundNotification"]) {
+        [self initializeGameBoard];
+        NSDictionary *jsonNSDict = (NSDictionary *) [notification object];
+        NSError *error;
+        //NSData *args = [jsonNSDict objectForKeyedSubscript:@"args"];
+        NSArray *args = [jsonNSDict objectForKeyedSubscript:@"args"];
+        NSDictionary *argDict = args[0];
+        //NSDictionary *argDict = [NSJSONSerialization JSONObjectWithData:args options:NSJSONReadingMutableContainers error:&error];
+        
+        
+        if (error != NULL) {
+            NSLog(@"Error: Could not create dictionary from arguments returned from event.");
+        }
+        else {
+            NSMutableArray *listOfMoves = [argDict objectForKey:@"currentBoard"];
+            [self drawGameBoard:listOfMoves];
+        }
+        
+        NSLog (@"Connect4ViewController received a match found notification. %@", jsonNSDict);
+    }
+    else if ([[notification name] isEqualToString:@"PlayResultNotification"]) {
+        NSLog (@"Connect4ViewController received a play result notification.");
+    }
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {

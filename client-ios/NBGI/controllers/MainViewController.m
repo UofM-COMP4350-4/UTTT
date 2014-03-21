@@ -90,7 +90,6 @@ const int GAME_SOCKET_PORT = 10089;
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)sendHttpGetRequest: (void (^)(NSString *responseData))success url:(NSString *) url
@@ -131,15 +130,23 @@ const int GAME_SOCKET_PORT = 10089;
 }
 
 - (IBAction)PlayConnect4:(id)sender {
-    int gameInstanceID = 96;
+    NSMutableString *queueForGameUrl = [[NSMutableString alloc] initWithString:@"queueForGame?"];
+    success responseSuccess;
+    //callback method defined
+    responseSuccess = ^(NSString *data){
+        //Do nothing
+    };
+    
+    [queueForGameUrl appendString:@"userID="];
+    [queueForGameUrl appendString:[_userID stringValue]];
+    [queueForGameUrl appendString:@"&gameID="];
+    [queueForGameUrl appendString:@"1"];//Connect4 game id is 1
     
     // send http request to server to get an opponent to play against
     // set isGameCreatedSuccessfully to True if successful
-    isGameCreatedSuccessfully = true;
+    [self sendHttpGetRequest: responseSuccess url: queueForGameUrl];
+    //[gameSocket sendEvent:@"gameCreated" withData:[NSNumber numberWithInt:gameInstanceID]];
     
-    if (isGameCreatedSuccessfully) {
-        [gameSocket sendEvent:@"gameCreated" withData:[NSNumber numberWithInt:gameInstanceID]];
-    }
 }
 
 - (void) socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet
@@ -158,18 +165,20 @@ const int GAME_SOCKET_PORT = 10089;
         if ([eventName isEqualToString:@"clientConnectedToServer"]) {
             [[MainViewController GameSocket] sendEvent:@"userSetup" withData: _userID];
         }
+        else if ([eventName isEqualToString:@"matchFound"]) {
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:@"MatchFoundNotification"
+             object:jsonNSDict];
+        }
+        else if ([eventName isEqualToString:@"receivePlayResult"]) {
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:@"PlayResultNotification"
+             object:jsonNSDict];
+        }
     }
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
-    if ([identifier isEqualToString:@"PlayGameSegue"]) {
-        NSLog(@"Segue Blocked");
-        
-        if (!isGameCreatedSuccessfully) {
-            return NO;
-        }
-    }
-    
     return YES;
 }
 
