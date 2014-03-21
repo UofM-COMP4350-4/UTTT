@@ -34,12 +34,12 @@ function GameSocketController(port) {
 		});
 	});
 	
-	this.sendMatchEvent = function(userID, gameInstanceID) {
-		console.log("Sending match event to userID: " + userID + ", gameInstanceID: " + gameInstanceID);
+	this.sendMatchEvent = function(userID, gameboard) {
+		console.log("Sending match event to userID: " + userID);
 		ValidateObjectController.ValidateNumber(userID);
-		ValidateObjectController.ValidateNumber(gameInstanceID);
+		ValidateObjectController.ValidateObject(gameboard);
 		ValidateObjectController.ValidateObject(clientSocketIDHashTable[userID]);
-		clientSocketIDHashTable[userID].emit('matchFound', gameInstanceID);
+		clientSocketIDHashTable[userID].emit('matchFound', gameboard);
 	};
 
 	this.JoinRoom = function(userID, instanceID) {
