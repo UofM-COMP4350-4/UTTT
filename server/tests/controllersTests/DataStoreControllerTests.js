@@ -29,10 +29,10 @@ DataStore.mockMatches = [
 describe('Controller Test Suite', function(){
 	describe('DataStoreController Test Class', function() {
 		it('Test: Invalid Data', function(done) {
-			assert.throws(function() { DataStore.saveGameBoard([], true) }, Error);
-			assert.throws(function() { DataStore.saveGameBoard([], 0) }, Error);
-			assert.throws(function() { DataStore.loadGameBoard([]) }, Error);
-			assert.throws(function() { DataStore.loadGameBoard(true) }, Error);
+			assert.throws(function() { DataStore.saveGameData([], true) }, Error);
+			assert.throws(function() { DataStore.saveGameData([], 0) }, Error);
+			assert.throws(function() { DataStore.loadGameData([]) }, Error);
+			assert.throws(function() { DataStore.loadGameData(true) }, Error);
 			assert.throws(function() { DataStore.storeToMatch(true, 1, 1) }, Error);
 			assert.throws(function() { DataStore.storeToMatch(1, true, 1) }, Error);
 			assert.throws(function() { DataStore.storeToMatch(1, 1, true) }, Error);
@@ -202,7 +202,7 @@ describe('Controller Test Suite', function(){
 				player2:Player2
 			});
 						
-			DataStore.saveGameBoard(532744, gameboard, function() {
+			DataStore.saveGameData(532744, gameboard, function() {
 				DataStore.endMatch(532744, function() {
 					done();
 				});

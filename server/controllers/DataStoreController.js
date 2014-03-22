@@ -3,7 +3,7 @@ var flatFile = require('../models/FlatFileAccess.js');
 var ValidateObjectController = require("./ValidateObjectController.js");
 var connect4GameBoard = require("../models/connect4/Connect4GameBoard.js");
 var relationalDB;
-var absPath = "/Users/cam/NBGI/server/";
+var path = require("path");
 
 exports.setup = function(database) {
 	relationalDB = new RelationalDB(database);
@@ -11,17 +11,17 @@ exports.setup = function(database) {
 
 exports.getUserInformation = function(userID, callback) {
 	if(exports.mock) {
-		var userInfo = undefined;
+		var userInfo, i;
 		if ((typeof userID) === "undefined") {
 			var newUserID = 1;
-			for (var i=0; i < exports.mockUsers.length; i++) {
+			for(i=0; i < exports.mockUsers.length; i++) {
 				newUserID++;
 			}
 			userInfo = {userID:newUserID, userName:"", isOnline:true, avatarURL:"avatar.jpg"};
 			exports.mockUsers.push(userInfo);	
 		}
 		
-		for(var i=0; i<exports.mockUsers.length; i++) {
+		for(i=0; i<exports.mockUsers.length; i++) {
 			if(exports.mockUsers[i].userID == userID) {
 				userInfo = exports.mockUsers[i];
 			}
@@ -45,19 +45,18 @@ exports.getListOfGames = function(callback) {
 	}
 };
 
-exports.saveGameBoard = function(instanceID, gameboard, callback) {
-	ValidateObjectController.ValidateObject(gameboard);
+exports.saveGameData = function(instanceID, gamedata, callback) {
 	ValidateObjectController.ValidateNumber(instanceID);
-	flatFile.saveJSONObject(absPath + "gameboard/" + instanceID + ".json", gameboard, callback);
+	flatFile.saveJSONObject(path.join(__dirname, "gamedata/" + instanceID + ".json"), gamedata, callback);
 };
 
-exports.loadGameBoard = function(instanceID, callback) {
+exports.loadGameData = function(instanceID, callback) {
 	ValidateObjectController.ValidateNumber(instanceID);
-	flatFile.loadJSONObject(absPath + "gameboard/" + instanceID + ".json", function(err, gb) {
+	flatFile.loadJSONObject(path.join(__dirname, "gamedata/" + instanceID + ".json"), function(err, gd) {
 		if(err) {
 			callback(undefined);
 		} else {
-			callback(gb);
+			callback(gd);
 		}
 	});
 };
@@ -125,29 +124,22 @@ exports.removeFromMatch = function(instanceID, userID, callback) {
 
 exports.endMatch = function(instanceID, callback) {
 	ValidateObjectController.ValidateNumber(instanceID);
-	if(exports.mock) {
-		for(var i=0; i<exports.mockMatches.length; i++) {
-			if(exports.mockMatches[i].instanceID == instanceID) {
-				exports.mockMatches.splice(i, 1);
-				i--;
+	var deleteData = function() {
+		flatFile.isPathCreated(path.join(__dirname, "gamedata/" + instanceID + ".json"), function(exists) {
+			if(exists) {
+				flatFile.deleteFile(path.join(__dirname, "gamedata/" + instanceID + ".json"), function() {
+					callback();
+				});
+			} else {
+				callback();
 			}
-		}
-		flatFile.deleteFile(absPath + "gameboard/" + instanceID + ".json", function () {
-			callback();	
 		});
+	};
+	if(exports.mock) {
+		deleteData();
 	} else {
 		ValidateObjectController.ValidateObject(relationalDB);
-		relationalDB.endMatch(instanceID, function(err) {
-			flatFile.isPathCreated(absPath + "gameboard/" + instanceID + ".json", function(exists) {
-				if(exists) {
-					flatFile.deleteFile(absPath + "gameboard/" + instanceID + ".json", function() {
-						callback();
-					});
-				} else {
-					callback();
-				}
-			});
-		});
+		relationalDB.endMatch(instanceID, deleteData);
 	}
 };
 

@@ -263,10 +263,11 @@ describe("GameManagement", function(){
 			resetForTesting();
 			GameMgmt.userConnected(0, function() {
 				GameMgmt.findByUser(0, function(state) {
-					assert.ok(state[0]);
+					assert.ok(state);
+					assert.ok((state instanceof Array));
+					assert.equal(state.length, 2);
 					assert.equal((typeof state[0]), "object");
-					assert.ok(state[1]);
-					assert.equal((typeof state[0]), "object");
+					assert.equal((typeof state[1]), "object");
 					done();
 				});
 			});
@@ -279,19 +280,19 @@ describe("GameManagement", function(){
 	});
 	describe("#getGameboard()", function() {
 		it('should handle undefined/null input', function() {
-			assert.throws(function() { GameMgmt.getGameboard(undefined, null); }, Error);
-			assert.throws(function() { GameMgmt.getGameboard(null, undefined); }, Error);
+			assert.throws(function() { GameMgmt.getGameboard(undefined, undefined, null); }, Error);
+			assert.throws(function() { GameMgmt.getGameboard(null, null, undefined); }, Error);
 		});
 		it('should handle invalid input', function() {
-			assert.throws(function() { GameMgmt.getGameboard(false, 12); }, Error);
-			assert.throws(function() { GameMgmt.getGameboard("test", undefined); }, Error);
-			assert.throws(function() { GameMgmt.getGameboard(0, "blah"); }, Error);
-			assert.throws(function() { GameMgmt.getGameboard({a:1}, true); }, Error);
-			assert.throws(function() { GameMgmt.getGameboard(noop, noop); }, Error);
+			assert.throws(function() { GameMgmt.getGameboard(false, {}, 12); }, Error);
+			assert.throws(function() { GameMgmt.getGameboard("test", false, undefined); }, Error);
+			assert.throws(function() { GameMgmt.getGameboard(0, "blah", "blah"); }, Error);
+			assert.throws(function() { GameMgmt.getGameboard({a:1}, null, true); }, Error);
+			assert.throws(function() { GameMgmt.getGameboard(noop, noop, noop); }, Error);
 		});
 		it('should return match data for a given instanceID', function(done) {
 			GameMgmt.userConnected(0, function() {
-				GameMgmt.getGameboard(0, function(gb) {
+				GameMgmt.getGameboard(0, 0, function(gb) {
 					assert.equal((typeof gb), "object");
 					done();
 				});
