@@ -102,7 +102,7 @@ const int gameInstanceID = 96;
             currentQuadrantMax = quadrantSize * index;
         }
         
-        NSString *moveJSON = [NSString stringWithFormat:@"{ \"user:\", \"x\":%d,\"y\":5 }",col];
+        NSString *moveJSON = [NSString stringWithFormat:@"{ \"player\":{\"id\":%d, \"name\":\"player1\"}, \"x\":%d,\"y\":5 }",[_myUserID intValue], col];
         NSLog(@"player made a move im col %d", col);
         [[MainViewController GameSocket] sendEvent:@"receiveMove" withData:moveJSON];
     }
@@ -129,13 +129,13 @@ const int gameInstanceID = 96;
     Move* currentMove;
     
     for (int index = 0; index < [moveList count]; index++) {
-        currentMove = [moveList objectAtIndex:index];
+        currentMove = [[Move alloc] initWithJSONString:[moveList objectAtIndex:index]];
         col = currentMove.position.x;
         row = currentMove.position.y;
         gameBoardIndex = ROW_SIZE*COL_SIZE - ((row * COL_SIZE)+(COL_SIZE- col));
-        currUserID = [currentMove.userID intValue];
+        currUserID = [currentMove.user.userID intValue];
         
-        if (currUserID == userID) {
+        if (currUserID == [_myUserID intValue]) {
             [self.gameBoard replaceObjectAtIndex:gameBoardIndex withObject:blueChip];
         }
         else {
@@ -181,6 +181,12 @@ const int gameInstanceID = 96;
     }
     else if ([[notification name] isEqualToString:@"PlayResultNotification"]) {
         NSLog (@"Connect4ViewController received a play result notification.");
+        NSDictionary *jsonNSDict = (NSDictionary *) [notification object];
+        NSError *error;
+        NSArray *args = [jsonNSDict objectForKeyedSubscript:@"args"];
+        NSDictionary *argDict = args[0];
+        NSMutableArray *listOfMoves = [argDict objectForKey:@"currentBoard"];
+        [self drawGameBoard:listOfMoves];
     }
 }
 

@@ -34,7 +34,7 @@ this.socketIO.sockets.on('connection', function(socket) {
 		};
 		socket.emit("receivePlayResult", gameBoard);
 		setTimeout(function() {
-			gameBoard.currentBoard.push({x:2, y:2, player:{id:2, name:"Player2"}})
+			gameBoard.currentBoard.push(JSON.stringify({x:2, y:2, player:{id:2, name:"Player2"}}))
 			socket.emit("receivePlayResult", gameBoard);
 		}, 2000);
 	});
