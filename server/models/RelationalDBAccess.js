@@ -38,8 +38,8 @@ RelationalDBAccess.prototype.getListOfGames = function(callback) {
 		})
 		.error(function(error){
 			console.log('error is ' + error);
-			throw new Error('Relational Database Error is ' + error);
 			callback();
+			throw new Error('Relational Database Error is ' + error);
 		});
 };
 
@@ -64,8 +64,8 @@ RelationalDBAccess.prototype.getUserInfo = function(userID, callback) {
 			})
 			.error(function(error){
 				console.log('error is ' + error);
-				throw new Error('Relational Database Error is ' + error);
 				callback();
+				throw new Error('Relational Database Error is ' + error);
 			});
 	} else {
 		dbConnection
@@ -77,8 +77,8 @@ RelationalDBAccess.prototype.getUserInfo = function(userID, callback) {
 			})
 			.error(function(error){
 				console.log('error is ' + error);
-				throw new Error('Relational Database Error is ' + error);
 				callback();
+				throw new Error('Relational Database Error is ' + error);
 			});
 	}
 };
@@ -92,8 +92,8 @@ RelationalDBAccess.prototype.addToMatch = function(instanceID, userID, gameID, c
 			})
 			.error(function(error){
 				console.log('error is ' + error);
-				throw new Error('Relational Database Error is ' + error);
 				callback(error);
+				throw new Error('Relational Database Error is ' + error);
 			});
 	};
 	dbConnection
@@ -119,8 +119,8 @@ RelationalDBAccess.prototype.lookupMatch = function(instanceID,callback) {
 		})
 		.error(function(error){
 			console.log('error is ' + error);
-			throw new Error('Relational Database Error is ' + error);
 			callback();
+			throw new Error('Relational Database Error is ' + error);
 		});
 };
 
@@ -132,8 +132,8 @@ RelationalDBAccess.prototype.removeFromMatch = function(instanceID, userID, call
 		})
 		.error(function(error){
 			console.log('error is ' + error);
-			throw new Error('Relational Database Error is ' + error);
 			callback(error);
+			throw new Error('Relational Database Error is ' + error);
 		});
 };
 
@@ -145,8 +145,8 @@ RelationalDBAccess.prototype.endMatch = function(instanceID, callback) {
 		})
 		.error(function(error){
 			console.log('error is ' + error);
-			throw new Error('Relational Database Error is ' + error);
 			callback(error);
+			throw new Error('Relational Database Error is ' + error);
 		});
 };
 
@@ -158,13 +158,13 @@ RelationalDBAccess.prototype.matchesByUser = function(userID, callback) {
 		})
 		.error(function(error){
 			console.log('error is ' + error);
-			throw new Error('Relational Database Error is ' + error);
 			callback();
+			throw new Error('Relational Database Error is ' + error);
 		});
 };
 
 var validateObjectLength = function(obj, length) {
-	if(obj !== undefined && obj.length == 0 && obj.length > length) {
+	if(obj !== undefined && obj.length === 0 && obj.length > length) {
 		throw new Error('Invalid object length');
 	}
 };

@@ -49,7 +49,7 @@ describe("RelationalDBAccess", function() {
 			.error(function(err){
 				assert.fail('Insertion Failed', 'Insertion should not fail', 'Insertion of game into Games table failed.');
 			});
-		})
+		});
 	});
 // 	
 	// describe('#createNewUser', function() {
