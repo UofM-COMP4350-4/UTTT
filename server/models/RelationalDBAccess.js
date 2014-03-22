@@ -11,11 +11,12 @@ function RelationalDBAccess(database) {
 		Validator.ValidateString(database.hostname);
 		new InitializeOtherDB(database.username, database.password, database.hostname);
 	}
+	console.log('Relational db contains: ' + dbConnection);
 }
 
 //Connects to the default (main) database
 var InitializeDB = function() {
-	dbConnection = new Sequelize('test', 'ubuntu', '', {
+	dbConnection = new Sequelize('Games_Users', 'ubuntu', '', {
 		host: '54.186.20.243',
 		port: 3306
 	});	
@@ -23,7 +24,7 @@ var InitializeDB = function() {
 
 //Connects to a different database
 var InitializeOtherDB = function(username, password, hostname) {	
-	dbConnection = new Sequelize('test', username, password || '', {
+	dbConnection = new Sequelize('Games_Users', username, password || '', {
 		host: hostname,
 		port: 3306
 	});
@@ -37,6 +38,7 @@ RelationalDBAccess.prototype.getListOfGames = function(callback) {
 		})
 		.error(function(error){
 			console.log('error is ' + error);
+			throw new Error('Relational Database Error is ' + error);
 			callback();
 		});
 };
@@ -56,11 +58,13 @@ RelationalDBAccess.prototype.getUserInfo = function(userID, callback) {
 					})
 					.error(function(error){
 						console.log('error is ' + error);
+						throw new Error('Relational Database Error is ' + error);
 						callback();
 					});
 			})
 			.error(function(error){
 				console.log('error is ' + error);
+				throw new Error('Relational Database Error is ' + error);
 				callback();
 			});
 	} else {
@@ -73,6 +77,7 @@ RelationalDBAccess.prototype.getUserInfo = function(userID, callback) {
 			})
 			.error(function(error){
 				console.log('error is ' + error);
+				throw new Error('Relational Database Error is ' + error);
 				callback();
 			});
 	}
@@ -87,6 +92,7 @@ RelationalDBAccess.prototype.addToMatch = function(instanceID, userID, gameID, c
 			})
 			.error(function(error){
 				console.log('error is ' + error);
+				throw new Error('Relational Database Error is ' + error);
 				callback(error);
 			});
 	};
@@ -100,7 +106,7 @@ RelationalDBAccess.prototype.addToMatch = function(instanceID, userID, gameID, c
 			}
 		})
 		.error(function(error){
-			insertToDB();
+			throw new Error('Relational Database Error is ' + error);
 		});
 	
 };
@@ -113,6 +119,7 @@ RelationalDBAccess.prototype.lookupMatch = function(instanceID,callback) {
 		})
 		.error(function(error){
 			console.log('error is ' + error);
+			throw new Error('Relational Database Error is ' + error);
 			callback();
 		});
 };
@@ -125,6 +132,7 @@ RelationalDBAccess.prototype.removeFromMatch = function(instanceID, userID, call
 		})
 		.error(function(error){
 			console.log('error is ' + error);
+			throw new Error('Relational Database Error is ' + error);
 			callback(error);
 		});
 };
@@ -137,6 +145,7 @@ RelationalDBAccess.prototype.endMatch = function(instanceID, callback) {
 		})
 		.error(function(error){
 			console.log('error is ' + error);
+			throw new Error('Relational Database Error is ' + error);
 			callback(error);
 		});
 };
@@ -149,12 +158,13 @@ RelationalDBAccess.prototype.matchesByUser = function(userID, callback) {
 		})
 		.error(function(error){
 			console.log('error is ' + error);
+			throw new Error('Relational Database Error is ' + error);
 			callback();
 		});
 };
 
 var validateObjectLength = function(obj, length) {
-	if(obj !== undefined && obj.length > length) {
+	if(obj !== undefined && obj.length == 0 && obj.length > length) {
 		throw new Error('Invalid object length');
 	}
 };
