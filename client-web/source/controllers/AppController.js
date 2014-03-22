@@ -6,7 +6,7 @@ enyo.kind({
 		socialShowing: true
 	},
 	components: [
-		{kind:"Signals", onhashchange:"hashChange"}
+		{kind:"Signals", onhashchange:"hashChange", onMatchFound:"receivedGameboard", onPlayResult:"receivedGameboard"}
 	],
 	create:function() {
 		this.inherited(arguments);
@@ -27,12 +27,11 @@ enyo.kind({
 	    window.userID = window.ClientServerComm.initialize(window.userID, enyo.bind(this, function(baseState) {
 	    	window.userID = baseState.user.userID;
 	    	localStorage.setItem("clientID", window.userID);
-	    	window.ClientServerComm.sendUserSetupEvent(window.userID);
 	    	this.log(window.userID + " sent successfully.");
 	    	window.userName = baseState.user.userName;
 			window.availableGames = baseState.availableGames;
 			window.active = baseState.active;
-			//enyo.stage.menu.controller.loadActiveGames();
+			enyo.stage.menu.controller.loadBaseState();
 			if(!window.location.hash ||window.location.hash.length===0 || window.location.hash=="#") {
 				// set initial hash location in url
 				window.location.hash = "launcher";
@@ -116,6 +115,16 @@ enyo.kind({
 			}
 		} else {
 			window.location.hash = "launcher";
+		}
+	},
+	receivedGameboard: function(inSender, inEvent) {
+		if(inEvent && inEvent.gameboard) {
+			var gb = inEvent.gameboard;
+			if(!window.active[gb.instanceID]) {
+				window.active[gb.instanceID] = gb;
+				enyo.stage.menu.controller.addGame(gb);
+				window.location.hash = "game-" + gb.instanceID;
+			}
 		}
 	}
 });

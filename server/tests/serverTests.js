@@ -98,6 +98,7 @@ describe('Server Test Suite', function(){
 						
 			var callback = function(response)
 			{
+				console.log('');
 				response.on('error', function(err){
 					console.log("Error received " + err);
 				});
