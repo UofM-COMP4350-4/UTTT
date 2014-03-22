@@ -29,6 +29,7 @@ enyo.singleton({
 	
 	onMatchFound: function(inSender, inEvent) {
 		// initialize the game board
+		this.log('Received on match found event');
 	},
 	
 	onReceivePlayResult: function(inSender, inEvent) {
@@ -72,7 +73,7 @@ enyo.singleton({
 		// to the Server to create a new game (userID, gameID) and use the
 		// resulting object from the server to create a game view
 		var request = new enyo.Ajax({
-			url: "queueForGame", //URL goes here
+			url: "http://localhost/queueForGame", //URL goes here
 			method: "GET", //You can also use POST
 			handleAs: "json" //options are "json", "text", or "xml"
 		});

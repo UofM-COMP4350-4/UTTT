@@ -70,6 +70,7 @@ server.get("/queueForGame", function(request, response, next){
 					console.log('Event sent successfully');
 					gameSocketController.sendMatchEvent(parseInt(queueForGamesList.Player1.clientID, 10), parseInt(gameInstanceID, 10));
 					gameSocketController.sendMatchEvent(parseInt(queueForGamesList.Player1.clientID, 10), parseInt(gameInstanceID, 10));
+					response.writeHead(200, {'content-type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
 					response.end({});
 				});
 			});
@@ -80,12 +81,12 @@ server.get("/queueForGame", function(request, response, next){
 
 	if(queueForGameRequests < 2)
 	{
-		response.writeHead(200, {"content-type": "application/json"});
+		response.writeHead(200, {'content-type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
 		response.end(JSON.stringify("User queue request received. Please wait"));
 	}
 	else if (queueForGameRequests > 2)
 	{
-		response.writeHead(500, {"content-type": "application/json"});
+		response.writeHead(500, {'content-type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
 		response.end(JSON.stringify("Game room Full. Please wait until Server restarts"));
 	}
 	next();
@@ -128,10 +129,10 @@ server.get("/initialize", function(request, response, next) {
 				response.writeHead( 200, {'content-type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
 				response.write(JSON.stringify(text));
 				response.end();
-				next();
 			});
 		});
 	});
+	next();
 });
 
 server.get("/listOfGames", function(request, response, next)

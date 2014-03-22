@@ -32,7 +32,7 @@ server.get("/queueForGame", function(request, response, next){
 			"id": 1,
 			"name": "Player1"
 		},
-		"players": "[{\"id\":1,\"name\":\"Player1\"}]",
+		"players": [{\"id\":1,\"name\":\"Player1\"}],
 		"currentBoard": [],
 		"winner": null
 	};
@@ -40,9 +40,9 @@ server.get("/queueForGame", function(request, response, next){
 	if(userSocket)
 	{
 		userSocket.emit('matchFound', gameBoard);
+		response.writeHead( 200, {'content-type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
+		response.end("");
 	}
-	
-	response.end(JSON.stringify(gameBoard));
 });
 
 server.get("/listOfGames", function(request, response, next)
