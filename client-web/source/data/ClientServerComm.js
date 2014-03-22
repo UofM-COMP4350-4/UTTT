@@ -1,25 +1,23 @@
+window.WEB_SOCKET_SWF_LOCATION = "assets/WebSocketMain.swf";
+
 enyo.singleton({
 	name: "ClientServerComm",
-	kind: "Component",
-	components: [
-		{ kind:"Socket", name:"gameSocket", url:"http://localhost:10089", 
-			onmatchFound:"onMatchFound", onreceivePlayResult:"onReceivePlayResult", 
-			onclientConnectedToServer:"onClientConnected" }
-	],
-	
+	kind: "Object",
 	create: function() {
 		this.inherited(arguments);
-		//this.initialize( "1", enyo.bind(this, "initCallback"));
 	},
-	
 	createSocket: function() {		
-		this.$.gameSocket.connect();
+		this.socket = io.connect("http://localhost:10089", {});
+		this.socket.on("clientConnectedToServer", enyo.bind(this, "clientConnected"));
+		this.socket.on("matchFound", enyo.bind(this, "matchIsFound"));
+		this.socket.on("receivePlayResult", enyo.bind(this, "receivedPlayResult"));
 	},
 	
-	onClientConnected: function() {
+	clientConnected: function() {
 		if(window.userID)
 		{
-			this.$.gameSocket.emit('userSetup', window.userID);
+			this.log("Connected");
+			this.socket.emit('userSetup', window.userID);
 		}
 		else
 		{
@@ -27,21 +25,17 @@ enyo.singleton({
 		}
 	},
 	
-	onMatchFound: function(inSender, inEvent) {
-		// initialize the game board
+	matchIsFound: function(inEvent) {
+		this.log("MatchFound");
+		enyo.Signals.send("onMatchFound", {gameboard:inEvent});
 	},
 	
-	onReceivePlayResult: function(inSender, inEvent) {
-		enyo.Signals.send("playResult", {gameboard:inEvent});
+	receivedPlayResult: function(inEvent) {
+		this.log("PlayResult");
+		enyo.Signals.send("onPlayResult", {gameboard:inEvent});
 	},
-	
-	sendUserSetupEvent: function(userID) {
-		this.log("Sending " + userID + " to the server.");
-		this.$.gameSocket.emit('userSetup', userID);
-	},
-	
 	sendPlayMoveEvent: function(move) {
-		this.$.gameSocket.emit('receiveMove', move);
+		this.socket.emit('receiveMove', move);
 	},
 	
 	//request a list of games from the Server
@@ -52,7 +46,6 @@ enyo.singleton({
 			method: "GET",
 			handleAs: "json"
 		});
-		//this.log("list of games request sent");
 		request.response(enyo.bind(this, "listOfGamesResponse", callback));
 		request.go();
 	},
@@ -93,14 +86,13 @@ enyo.singleton({
 			method: "GET", //You can also use POST
 			handleAs: "json" //options are "json", "text", or "xml"
 		});
-		this.view.$.createGameButton.setContent("Game Created 1");
 		request.response(enyo.bind(this, "createGameResponse", callback)); //tells Ajax what the callback function is
 		request.go({userID: userid, gameid: gameID});		
 	},
 	
 	initialize: function(userID, callback) {
 		var request = new enyo.Ajax({
-			url: "http://localhost/initialize", //URL goes here
+			url: "initialize", //URL goes here
 			method: "GET", //You can also use POST
 			handleAs: "json" //options are "json", "text", or "xml"
 		});

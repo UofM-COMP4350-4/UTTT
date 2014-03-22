@@ -5,7 +5,7 @@ enyo.kind({
 		onLoadGame: "",
 		onShowLauncher: ""
 	},
-	loadBaseState: function(baseState) {
+	loadBaseState: function() {
 		this.state = [];
 		for(var x in window.active) {
 			this.state.push(window.active[x]);
@@ -32,19 +32,28 @@ enyo.kind({
 	setupActiveGames: function(inSender, inEvent) {
 		var index = inEvent.index;
 		var item = inEvent.item;
-		var gameName = window.availableGames[this.state[index].gameID];
+		var gameName = this.getGameName(this.state[index].gameID);
 		item.$.lbl1.setContent(gameName);
+		item.$.matchLink.setHref("#game-" + this.state[index].instanceID);
 		if(this.state[index].players.length>2) {
 			item.$.lbl2.setContent("vs " + (this.state[index].players.length-1)
 					+ " others");
 		} else if(this.state[index].players.length==2) {
 			var opponent = this.state[index].players[0];
-			if(opponent.userID==window.userID) {
+			if(opponent.id==window.userID) {
 				opponent = this.state[index].players[1];
 			}
-			item.$.lbl2.setContent("vs " + opponent.userName);
+			item.$.lbl2.setContent("vs " + opponent.name);
 		}
 		return true;
+	},
+	getGameName: function(gameID) {
+		for(var i=0; i<window.availableGames.length; i++) {
+			if(window.availableGames[i].gameID==gameID) {
+				return window.availableGames[i].gameName;
+			}
+		}
+		return "";
 	},
 	openMatch: function(inSender, inEvent) {
 		window.location.hash = "game-" + this.state[inEvent.index].instanceID;

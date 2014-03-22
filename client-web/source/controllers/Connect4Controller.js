@@ -9,7 +9,7 @@ enyo.kind({
 		"assets/connectfourred.png"
 	],
 	components:[
-		{kind:"Signals", onplayResult:"handleUpdateReceived"}
+		{kind:"Signals", onPlayResult:"handleUpdateReceived"}
 	],
 	create:function() {
 	    this.inherited(arguments);
@@ -64,13 +64,30 @@ enyo.kind({
 	},
 	columnSelected: function(inSender, inEvent) {
 		if(this.gameboard.userToPlay && this.gameboard.userToPlay.id==window.userID) {
+			//TODO: only pre-apply move if top row empty, as generic safecheck
+			this.gameboard.userToPlay = undefined;
 			this.moves.push({x:inSender.x, y:inSender.y, player:{id:window.userID, name:window.userName}});
 			this.update();
 			window.ClientServerComm.sendPlayMoveEvent({x:inSender.x, y:inSender.y, player:{id:window.userID, name:window.userName}});
 		}
 	},
 	handleUpdateReceived: function(inSender, inEvent) {
-		this.update(inEvent.gameboard);
-		//TODO
+		this.log("PlayResult");
+		if(this.moves.length<inEvent.gameboard.currentBoard.length) {
+			//new moves
+			//TODO: Status checks
+			this.log("Move Reveived");
+			this.update(inEvent.gameboard);
+		} else if(this.moves.length==inEvent.gameboard.currentBoard.length){
+			//move success
+			this.log("Move Success");
+			console.trace();
+			this.update(inEvent.gameboard);
+		} else {
+			//move failed
+			this.log("Move Failed");
+			this.update(inEvent.gameboard);
+		}
+		return true;
 	}
 });
