@@ -14,5 +14,7 @@
 @interface Connect4ViewController : UICollectionViewController <SocketIODelegate>
 
 @property NSMutableArray* gameBoard;
+@property Player* currentPlayersTurn;
+@property NSNumber* myUserID;
 
 @end

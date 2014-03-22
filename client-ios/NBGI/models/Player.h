@@ -11,7 +11,7 @@
 
 @interface Player : NSObject
 
-- (Player *) initWithUserIDAndNameAndisOnlineAndAvatarURL: (int) userID userName: (NSString *) userName : (bool) isOnline avatarURL : (NSString *) avatarURL;
+- (Player *) initWithUserIDAndNameAndisOnlineAndAvatarURL: (int) userID userName: (NSString *) userName isOnline: (bool) isOnline avatarURL : (NSString *) avatarURL;
 - (Player *) initWithJSONString:(NSString *) jsonString;
 - (NSString *) CreateJSONString;
 

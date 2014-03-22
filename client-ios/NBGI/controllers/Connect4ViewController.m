@@ -87,24 +87,31 @@ const int gameInstanceID = 96;
     int quadrantSize = screenWidth / COL_SIZE;
     int col = -1, index = 1, currentQuadrantMax = quadrantSize;
     
-    while (col == -1) {
-        if (touchX <= currentQuadrantMax) {
-            col = index - 1;
-        }
-        else {
-            if (index >= COL_SIZE) {
-                col = COL_SIZE - 1;
+    if ([_currentPlayersTurn.userID intValue] == [_myUserID intValue]) {
+        while (col == -1) {
+            if (touchX <= currentQuadrantMax) {
+                col = index - 1;
             }
+            else {
+                if (index >= COL_SIZE) {
+                    col = COL_SIZE - 1;
+                }
+            }
+            
+            index++;
+            currentQuadrantMax = quadrantSize * index;
         }
         
-        index++;
-        currentQuadrantMax = quadrantSize * index;
+        NSString *moveJSON = [NSString stringWithFormat:@"{ \"player\":{\"id\":%d, \"name\":\"player1\"}, \"x\":%d,\"y\":5 }",[_myUserID intValue], col];
+        NSLog(@"player made a move im col %d", col);
+        [[MainViewController GameSocket] sendEvent:@"receiveMove" withData:moveJSON];
     }
-    
-    NSString *moveJSON = [NSString stringWithFormat:@"{ \"user:\", \"x\":%d,\"y\":5 }",col];
-    NSLog(@"player made a move im col %d", col);
-    [[MainViewController GameSocket] sendEvent:@"receiveMove" withData:moveJSON];
+    else {
+        // display message saying its not your turn to play a move
+        NSLog(@"It's not your turn JERK!!!!");
+    }
 }
+    
 
 - (void)initializeGameBoard {
     self.gameBoard = [[NSMutableArray alloc]init];
@@ -122,13 +129,13 @@ const int gameInstanceID = 96;
     Move* currentMove;
     
     for (int index = 0; index < [moveList count]; index++) {
-        currentMove = [moveList objectAtIndex:index];
+        currentMove = [[Move alloc] initWithJSONString:[moveList objectAtIndex:index]];
         col = currentMove.position.x;
         row = currentMove.position.y;
         gameBoardIndex = ROW_SIZE*COL_SIZE - ((row * COL_SIZE)+(COL_SIZE- col));
-        currUserID = [currentMove.userID intValue];
+        currUserID = [currentMove.user.userID intValue];
         
-        if (currUserID == userID) {
+        if (currUserID == [_myUserID intValue]) {
             [self.gameBoard replaceObjectAtIndex:gameBoardIndex withObject:blueChip];
         }
         else {
@@ -154,11 +161,8 @@ const int gameInstanceID = 96;
         [self initializeGameBoard];
         NSDictionary *jsonNSDict = (NSDictionary *) [notification object];
         NSError *error;
-        //NSData *args = [jsonNSDict objectForKeyedSubscript:@"args"];
         NSArray *args = [jsonNSDict objectForKeyedSubscript:@"args"];
         NSDictionary *argDict = args[0];
-        //NSDictionary *argDict = [NSJSONSerialization JSONObjectWithData:args options:NSJSONReadingMutableContainers error:&error];
-        
         
         if (error != NULL) {
             NSLog(@"Error: Could not create dictionary from arguments returned from event.");
@@ -166,12 +170,23 @@ const int gameInstanceID = 96;
         else {
             NSMutableArray *listOfMoves = [argDict objectForKey:@"currentBoard"];
             [self drawGameBoard:listOfMoves];
+
+            NSDictionary *userToPlay = [argDict objectForKey:@"userToPlay"];
+            int userToPlayID = [[userToPlay objectForKey:@"id"] intValue];
+            NSString *userToPlayName = [userToPlay objectForKey:@"name"];
+            _currentPlayersTurn = [[Player alloc]initWithUserIDAndNameAndisOnlineAndAvatarURL:userToPlayID userName:userToPlayName isOnline:false avatarURL:@"avatar.jpg"];
         }
         
         NSLog (@"Connect4ViewController received a match found notification. %@", jsonNSDict);
     }
     else if ([[notification name] isEqualToString:@"PlayResultNotification"]) {
         NSLog (@"Connect4ViewController received a play result notification.");
+        NSDictionary *jsonNSDict = (NSDictionary *) [notification object];
+        NSError *error;
+        NSArray *args = [jsonNSDict objectForKeyedSubscript:@"args"];
+        NSDictionary *argDict = args[0];
+        NSMutableArray *listOfMoves = [argDict objectForKey:@"currentBoard"];
+        [self drawGameBoard:listOfMoves];
     }
 }
 

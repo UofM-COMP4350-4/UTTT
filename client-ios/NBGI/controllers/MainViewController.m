@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "SocketIOPacket.h"
+#import "Connect4ViewController.h"
 
 
 @interface MainViewController ()
@@ -146,15 +147,16 @@ const int GAME_SOCKET_PORT = 10089;
     // set isGameCreatedSuccessfully to True if successful
     [self sendHttpGetRequest: responseSuccess url: queueForGameUrl];
     //[gameSocket sendEvent:@"gameCreated" withData:[NSNumber numberWithInt:gameInstanceID]];
-    
 }
+
+
 
 - (void) socketIO:(SocketIO *)socket didReceiveEvent:(SocketIOPacket *)packet
 {
     NSString *responseJSON = packet.data;
     NSData *responseJSONData = [responseJSON dataUsingEncoding:NSUTF8StringEncoding];
     NSError *error = NULL;
-    NSDictionary *jsonNSDict = [NSJSONSerialization JSONObjectWithData:responseJSONData options:NSJSONReadingMutableContainers error:&error];
+    NSMutableDictionary *jsonNSDict = [NSJSONSerialization JSONObjectWithData:responseJSONData options:NSJSONReadingMutableContainers error:&error];
 
     if (error != NULL) {
         NSLog(@"Error: Socket event had an error.");
@@ -175,6 +177,13 @@ const int GAME_SOCKET_PORT = 10089;
              postNotificationName:@"PlayResultNotification"
              object:jsonNSDict];
         }
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"PlayGameSegue"]) {
+        Connect4ViewController *connect4ViewController = (Connect4ViewController *)segue.destinationViewController;
+        connect4ViewController.myUserID = _userID;
     }
 }
 

@@ -35,21 +35,23 @@ enyo.kind({
 	setupGameGrid: function(inSender, inEvent) {
 		var index = inEvent.index;
 		var item = inEvent.item;
-		item.$.image.setSrc("assets/" + window.availableGames[index].gameID + "-icon.png");
+		item.$.image.setSrc("assets/" + window.availableGames[index].gameType + "-icon.png");
 		item.$.title.setContent(window.availableGames[index].gameName);
 		return true;
 	},
 	gameLaunch: function(inSender, inEvent) {
 		var gameType = window.availableGames[inEvent.index].gameType;
-		var gameID = window.availableGames[inEvent.index];
-		this.createGame(gameType);
+		var gameID = window.availableGames[inEvent.index].gameID;
+		//this.createGame(gameType);
 		if(!this.inviteMode) {
 			window.ClientServerComm.queueForGame(window.userID, gameID, enyo.bind(this, function(response) {
-				// TODO
+				// TODO: Show waiting for opponent in place of launcher
+				console.log("Queued up");
 			}));
 		} else {
 			window.ClientServerComm.createNewGame(window.userID, gameID, enyo.bind(this, function(response) {
 				// TODO: popup dialog giving url to share
+				// TODO: Show waiting for opponent in place of launcher
 			}));
 		}
 	}

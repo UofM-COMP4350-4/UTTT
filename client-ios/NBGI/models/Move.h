@@ -8,14 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import "ValidationController.h"
+#import "Player.h"
 
 @interface Move : NSObject
 
-- (Move *) initWithPositionAndUserID: (CGPoint) position userID: (int) userID;
+- (Move *) initWithPositionAndUser: (CGPoint) position user: (Player *) user;
 - (NSString *) CreateJSONString;
 - (Move *) initWithJSONString:(NSString *) jsonString;
 
 @property CGPoint position;
-@property NSNumber *userID;
+@property Player *user;
 
 @end

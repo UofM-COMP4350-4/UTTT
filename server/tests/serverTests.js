@@ -1,7 +1,31 @@
 var assert = require("assert");
 var serverJS = require("../server.js");
 var http = require("http");
+var GameMgmt = require("../models/GameManagement.js");
+var DataStore = require("../controllers/DataStoreController.js");
 
+DataStore.mock = true;
+function resetForTesting() {
+	GameMgmt.reset();
+	DataStore.mockGames = [
+		{gameID:0, gameType:"Connect4", gameName:"Connect4", maxPlayers:2},
+		{gameID:1, gameType:"Scrabble", gameName:"Scrabble", maxPlayers:2},
+		{gameID:2, gameType:"BattleShip", gameName:"BattleShip", maxPlayers:2},
+		{gameID:3, gameType:"UltimateTicTacToe", gameName:" Ultimate TicTacToe", maxPlayers:2}
+	];
+	DataStore.mockUsers = [
+		{userID:0, userName:"Jason", isOnline:true, avatarURL:"avatar.jpg"},
+		{userID:1, userName:"Cam", isOnline:true, avatarURL:"avatar.jpg"},
+		{userID:2, userName:"Sam", isOnline:true, avatarURL:"avatar.jpg"},
+		{userID:3, userName:"Chris", isOnline:true, avatarURL:"avatar.jpg"}
+	];
+	DataStore.mockMatches = [
+		{instanceID:0, userID:0, gameID:0}, // Jason vs Cam Connect4
+		{instanceID:0, userID:1, gameID:0},
+		{instanceID:1, userID:0, gameID:0} // Jason waiting for opponent, Scrabble
+	];
+}
+resetForTesting();
 
 /*  Server Tests
  *  Use: Test class to be used with Mocha.  Tests the Server.js functions.
@@ -33,9 +57,10 @@ describe('Server Test Suite', function(){
 	describe('Server Test Class', function() {
 	
 		//Test valid data sent to the Server's /initialize method
-		it('Test: Valid Initialize Data', function() {
+		it('Test: Valid Initialize Data', function(done) {
+			resetForTesting();
 			var path = "/initialize";
-			var text = "userID=5";
+			var text = "userID=0";
 			var userData = "";
 						
 			var callback = function(response)
@@ -49,23 +74,26 @@ describe('Server Test Suite', function(){
 				});
 				
 				response.on('end', function(){
+					console.log(userData);
 					userData = JSON.parse(userData);//parse out the JSON object
-					console.log("Data received " + userData.userID);
-					
-					assert.equal(response.statusCode, 200);
+					assert.notEqual(response.statusCode, 200);
 					
 					assert.notEqual(userData, undefined);
-					assert.equal(userData.userID, 1);
+					assert.equal((typeof userData.user), "object");
+					assert.ok((userData.availableGames instanceof Array));
+					assert.equal((typeof userData.active), "object");
+					done();
 				});		
 			};
 			
 			setup(path, text, callback);
 		});
 		
-		//Test invalid data sent to the Server's /initialize method
-		it('Test: Invalid Initialize Data', function() {
+		//Test undefined user sent to the Server's /initialize method
+		it('Test: undefined user', function(done) {
+			resetForTesting();
 			var path = "/initialize";
-			var text = "userid=1";
+			var text = "userID=";
 			var userData = "";
 						
 			var callback = function(response)
@@ -86,8 +114,11 @@ describe('Server Test Suite', function(){
 					assert.notEqual(response.statusCode, 200);
 					
 					assert.notEqual(userData, undefined);
-					assert.equal(userData.userID, undefined);
-					//assert.equal(userData.userID, un);
+					assert.equal((typeof userData.user), "object");
+					assert.equal((typeof userData.user.userID), "number");
+					assert.ok((userData.availableGames instanceof Array));
+					assert.equal((typeof userData.active), "object");
+					done();
 				});		
 			};
 			
@@ -96,7 +127,8 @@ describe('Server Test Suite', function(){
 		
 		//All we have to do is make sure we have at least one game first
 		//after that, we can check to make sure the games match what we expect
-		it('Test: ListOfGames request test', function() {
+		it('Test: ListOfGames request test', function(done) {
+			resetForTesting();
 			var path = "/listOfGames";
 			var userData = "";
 			
@@ -112,25 +144,15 @@ describe('Server Test Suite', function(){
 				
 				response.on('end', function(){					
 					userData = JSON.parse(userData);//parse out the JSON object
-					console.log("Data received: gameID1= " + userData.gameID1);
-					
 					assert.equal(response.statusCode, 200);
 					assert.notEqual(userData, undefined);
-					
-					assert.notEqual(userData.gameID1, undefined);
-					assert.notEqual(userData.gameID2, undefined);
-					
-					assert.equal(userData.gameID1, "game name 1");
-					assert.equal(userData.gameID2, "game name 2");
+					assert.ok((userData instanceof Array));
+					assert.equal(userData.length, 4);
+					done();
 				});		
 			};
 			
 			setupNoData(path, callback);
-		});
-		
-		//Test the Server behaviour when a user tries to Create a New Game
-		it('Test: CreateNewGame Invalid Data', function() {
-			//console.log("I get here test 3");
 		});
 	});
 });
