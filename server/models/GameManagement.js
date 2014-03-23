@@ -16,16 +16,16 @@ var availGames;
 var GameDefinitions = {};
 var noop = function() {};
 
-GameSocket.on("userConnect", function(inEvent) {
-	module.exports.userConnected(inEvent.userID, noop);
+GameSocket.on("userConnect", function(inEvent, optCallback) {
+	module.exports.userConnected(inEvent.userID, (optCallback || noop));
 });
 GameSocket.on("moveReceived", function(inEvent) {
 	if(matches[inEvent.instanceID]) {
 		matches[inEvent.instanceID].RequestMove(inEvent);
 	}
 });
-GameSocket.on("userDisconnect", function(inEvent) {
-	module.exports.userDisconnected(inEvent.userID, noop);
+GameSocket.on("userDisconnect", function(inEvent, optCallback) {
+	module.exports.userDisconnected(inEvent.userID, (optCallback || noop));
 });
 
 var moveFailureHandler = function(inEvent) {
@@ -105,11 +105,20 @@ module.exports = {
 		Validator.ValidateArgs(arguments, Number, Number, Function);
 		if(matches[instanceID]) {
 			if(matches[instanceID].gameBoard.players.length < matches[instanceID].gameBoard.maxPlayers) {
-				module.exports.userNameFromID(userID, function(userName) {
-					matches[instanceID].gameBoard.AddPlayer(new Player(userID, userName));
+				var found = false;
+				for(var i=0; i<matches[instanceID].gameBoard.players.length && !found; i++) {
+					found = (matches[instanceID].gameBoard.players[i].id==userID);
+				}
+				if(!found) {
+					module.exports.userNameFromID(userID, function(userName) {
+						matches[instanceID].gameBoard.AddPlayer(new Player(userID, userName));
+						GameSocket.JoinRoom(userID, instanceID);
+						callback();
+					});
+				} else {
 					GameSocket.JoinRoom(userID, instanceID);
 					callback();
-				});
+				}
 			} else {
 				callback({errorCode:1, errorText:"Game full"});
 			}
@@ -158,26 +167,32 @@ module.exports = {
 	},
 	userConnected: function(userID, callback) {
 		Validator.ValidateArgs(arguments, Number, Function);
-		DataStore.getUserInformation(userID, function(userInfo) {
-			onlineUsers.push(userInfo);
-			module.exports.findByUser(userID, function(entries) {
-				var setupItem = function() {
-					if(entries.length>0) {
-						var curr = entries.pop();
-						if(matches[curr.instanceID]) {
-							setupItem();
-						} else {
-							module.exports.setupMatch(curr.gameID, curr.instanceID, function() {
+		var found = false;
+		for(var i=0; i<onlineUsers.length && !found; i++) {
+			found = (onlineUsers[i].userID==userID);
+		}
+		if(!found) {
+			DataStore.getUserInformation(userID, function(userInfo) {
+				onlineUsers.push(userInfo);
+				module.exports.findByUser(userID, function(entries) {
+					var setupItem = function() {
+						if(entries.length>0) {
+							var curr = entries.pop();
+							if(matches[curr.instanceID]) {
 								setupItem();
-							});
+							} else {
+								module.exports.setupMatch(curr.gameID, curr.instanceID, function() {
+									setupItem();
+								});
+							}
+						} else {
+							callback();
 						}
-					} else {
-						callback();
-					}
-				};
-				setupItem();
+					};
+					setupItem();
+				});
 			});
-		});
+		}
 	},
 	userDisconnected: function(userID, callback) {
 		Validator.ValidateArgs(arguments, Number, Function);
