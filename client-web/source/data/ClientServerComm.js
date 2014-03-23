@@ -7,7 +7,7 @@ enyo.singleton({
 		this.inherited(arguments);
 	},
 	createSocket: function() {		
-		this.socket = io.connect("http://localhost:10089", {});
+		this.socket = window.io.connect("http://localhost:10089", {});
 		this.socket.on("clientConnectedToServer", enyo.bind(this, "clientConnected"));
 		this.socket.on("matchFound", enyo.bind(this, "matchIsFound"));
 		this.socket.on("receivePlayResult", enyo.bind(this, "receivedPlayResult"));

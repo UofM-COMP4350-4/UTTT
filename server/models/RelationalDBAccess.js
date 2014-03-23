@@ -59,7 +59,6 @@ RelationalDBAccess.prototype.getUserInfo = function(userID, callback) {
 					.error(function(error){
 						console.log('error is ' + error);
 						throw new Error('Relational Database Error is ' + error);
-						callback();
 					});
 			})
 			.error(function(error){

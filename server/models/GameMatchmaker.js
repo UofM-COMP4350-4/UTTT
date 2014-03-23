@@ -1,64 +1,58 @@
 // GameMatchmaker.js
 // Model that holds the matchmaking queues for each game
 /*globals GameMatchmaker */
-var validator = require('../controllers/ValidateObjectController');
+var validator = require('../controllers/ValidateObjectController.js');
 var gameQueue = [];
 exports.GameMatchmaker = function() {}; // constructor
 
 exports.GameMatchmaker.clearQueue = function() {
-	gameQueue = [];
+	gameQueue = {};
 };
 
 //Player joins the queue
-exports.GameMatchmaker.joinQueue = function(player,game,callback){
-	validator.ValidateObject(player);
-	validator.ValidateObject(game);
-	validator.ValidateFunction(callback);//(arguments, Object, Object, Function);
-	if ((typeof gameQueue[game.id]) === 'undefined' || !gameQueue[game.id])
+exports.GameMatchmaker.joinQueue = function(userID,gameID){
+	validator.ValidateNumber(userID);
+	validator.ValidateNumber(gameID);
+	if ((typeof gameQueue[gameID]) === 'undefined' || !gameQueue[gameID])
 	{
-		gameQueue[game.id] = [];
+		gameQueue[gameID] = [];
 	}
-	gameQueue[game.id].push(player);
-	callback(gameQueue);
+	if(gameQueue[gameID].indexOf(userID)<0) {
+		gameQueue[gameID].push(userID);
+	}
 };
 
-exports.GameMatchmaker.getGameQueue = function(game,callback){
-	validator.ValidateArgs(arguments, Object, Function);
-	var gameQ = gameQueue[game.id];
-	if(gameQ == null){
-		gameQ = [];
+exports.GameMatchmaker.getGameQueue = function(gameID){
+	validator.ValidateArgs(arguments, Number);
+	if(!gameQueue[gameID]){
+		gameQueue[gameID] = [];
 	}
-	callback(gameQ);
+	return gameQueue[gameID];
 };
 
-exports.GameMatchmaker.totalPlayers = function(callback){
-	validator.ValidateArgs(arguments,Function);
+exports.GameMatchmaker.totalPlayers = function(){
 	var count = 0;
 	for (var n in gameQueue) {
-		for (var u in gameQueue[n]) {
-			//console.log("bob " + gameQueue[0][u]);
-			count += 1;
-		}
+		count += this.queueTotal(parseInt(n, 10));
 	}
-	callback(count);
+	return count;
 };
 
-exports.GameMatchmaker.queueTotal = function(game,callback){
-	validator.ValidateArgs(arguments, Object, Function);
-	this.getGameQueue(game, function(q){
-		callback(q.length);	
-	});
+exports.GameMatchmaker.queueTotal = function(gameID){
+	validator.ValidateArgs(arguments, Number);
+	var q = this.getGameQueue(gameID);
+	return q.length;
 };
 
-exports.GameMatchmaker.removeFromQueue = function(player,callback){
-	validator.ValidateArgs(arguments, Object, Function);
+exports.GameMatchmaker.removeFromQueue = function(userID){
+	validator.ValidateArgs(arguments, Number);
 	var newList = [];
 	for(var i in gameQueue){
-		for (var j in gameQueue[i]) {
-			if(gameQueue[i][j].id == player.id){
-				gameQueue[i].splice(gameQueue[i].indexOf(player), 1);
-			}
+		i = parseInt(i, 10);
+		var q = this.getGameQueue(i);
+		var index=q.indexOf(userID);
+		if(index>=0) {
+			q.splice(index, 1);
 		}
 	}
-	callback();
 };

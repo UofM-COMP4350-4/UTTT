@@ -92,18 +92,38 @@ server.get("/queueForGame", function(request, response, next){
 	next();
 });
 
-server.get("/createNewGame", function(request, response, next){
+server.get("/createNewGame", function(request, response, next) {
 	//We need to Setup a new game in the database between two players
 	//Create a flat file for the board data
 	//Then send back the board object
 	console.log("New game request received from Client");
-	gameMGMT.setupMatch(request.params.gameID, undefined, function(id) {
-		gameMGMT.joinMatch(request.params.userID, id, function() {
+	var gameID = parseInt(request.params.gameID, 10);
+	var userID = parseInt(request.params.userID, 10);
+	gameMGMT.setupMatch(gameID, undefined, function(instanceID) {
+		gameMGMT.joinMatch(userID, instanceID, function() {
 			response.writeHead(200, {"content-type": "application/json"});
-			response.end(JSON.stringify({gameID:request.params.gameID,
-					userID:request.params.userID, instanceID:id}));
+			response.end(JSON.stringify({instanceID:instanceID,
+					url:"http://" + request.header('Host') + "/#game-" + instanceID}));
 			next();
 		});
+	});
+});
+server.get("/joinGame", function(request, response, next) {
+	var userID = parseInt(request.params.userID, 10);
+	var instanceID = parseInt(request.params.instanceID, 10);
+	gameMGMT.joinMatch(userID, instanceID, function(err) {
+		response.writeHead(200, {"content-type": "application/json"});
+		if(err) {
+			response.end(JSON.stringify({err:err}));
+			next();
+		} else {
+			var gameID = gameMGMT.getMatches()[instanceID].gameBoard.gameID;
+			gameMGMT.getGameboard(instanceID, gameID, function(gb) {
+				response.end(JSON.stringify({gameID:gameID, instanceID:instanceID}));
+				gameSocketController.sendMatchEvent(userID, gb);
+				next();
+			});
+		}
 	});
 });
 
@@ -158,6 +178,7 @@ server.get("/listOfGames", function(request, response, next)
 	});
 	return next();
 });
-
+console.log("URL: " + server.url);
 server.listen(process.env.PORT || 80, process.env.IP);
+
 console.log("Server started & listening on port 80");

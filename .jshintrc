@@ -21,7 +21,8 @@
         "beforeEach": false,
         "afterEach": false,
         "spyOn": false,
-        "console": false
+        "console": false,
+        "ClientServerComm": false
     },
     "-W024": true,
     "-W099": true,
