@@ -36,6 +36,9 @@ var boardChangedHandler = function(inEvent) {
 };
 var playResultHandler = function(inEvent) {
 	GameSocket.SendDataToAllUsersInGame(inEvent.instanceID, inEvent);
+	delete matches[inEvent.instanceID];
+	GameSocket.CloseRoom(inEvent.instanceID);
+	DataStore.endMatch(inEvent.instanceID, noop);
 };
 
 module.exports = {
