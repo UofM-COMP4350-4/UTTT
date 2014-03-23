@@ -10,7 +10,7 @@
 
 @implementation Player
 
-- (Player *) initWithUserIDAndNameAndisOnlineAndAvatarURL: (int) userID userName: (NSString *) userName : (bool) isOnline avatarURL : (NSString *) avatarURL {
+- (Player *) initWithUserIDAndNameAndisOnlineAndAvatarURL: (int) userID userName: (NSString *) userName isOnline: (bool) isOnline avatarURL : (NSString *) avatarURL {
     [ValidationController ValidateObject:userName];
     [ValidationController ValidateObject:avatarURL];
     self = [super init];
@@ -63,7 +63,7 @@
             [ValidationController ValidateObject:avatarURL];
             [ValidationController ValidateObject:userName];
             
-            player = [self initWithUserIDAndNameAndisOnlineAndAvatarURL:userID userName:userName :isOnline avatarURL:avatarURL];
+            player = [self initWithUserIDAndNameAndisOnlineAndAvatarURL:userID userName:userName isOnline:isOnline avatarURL:avatarURL];
         }
         else {
             [NSException raise:@"Missing Data" format:@"JSON String is missing data for instantiating this object."];
