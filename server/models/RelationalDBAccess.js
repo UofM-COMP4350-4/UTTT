@@ -2,6 +2,8 @@ var Validator = require("../controllers/ValidateObjectController.js");
 var Sequelize = require('sequelize');
 var dbConnection;
 
+var my_host='54.186.85.227';
+
 function RelationalDBAccess(database) {
 	if (database === undefined)	{
 		new InitializeDB();
@@ -17,7 +19,7 @@ function RelationalDBAccess(database) {
 //Connects to the default (main) database
 var InitializeDB = function() {
 	dbConnection = new Sequelize('Games_Users', 'ubuntu', '', {
-		host: '54.186.20.243',
+		host: my_host,
 		port: 3306
 	});	
 };
