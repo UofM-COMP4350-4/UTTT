@@ -15,11 +15,11 @@ module.exports = {
 		Validator.ValidateArgs(arguments, Number, Number, Validator.OPTIONAL);
 		callback = callback || noop;
 		Matchmaker.joinQueue(userID, gameID);
-		module.exports.checkForMatch(gameID, function(response) {
+		module.exports.checkForMatchFound(gameID, function(response) {
 			callback(response);
 		});
 	},
-	checkForMatch: function(gameID, callback) {
+	checkForMatchFound: function(gameID, callback) {
 		Validator.ValidateArgs(arguments, Number, Validator.OPTIONAL);
 		callback = callback || noop;
 		GameMgmnt.availableGames(function(gameList){
@@ -47,8 +47,6 @@ module.exports = {
 						} else {
 							GameMgmnt.getGameboard(instanceID, gameID, function(gb) {
 								for(var i=0; i<players.length; i++) {
-									console.log(players[i]);
-									console.log(JSON.stringify(gb));
 									GameSocket.sendMatchEvent(players[i], gb);
 								}
 								callback(gb);

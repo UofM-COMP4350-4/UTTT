@@ -3,6 +3,7 @@ var matchmaker = require("../../controllers/MatchmakingController.js");
 var mmModel = require("../../models/GameMatchmaker.js").GameMatchmaker;
 var GameMgmt = require("../../models/GameManagement.js");
 var DataStore = require('../../controllers/DataStoreController.js');
+var GameSocket = require('../../controllers/GameSocketController.js').createGameSocket(10089);
 
 var players = [
 	0,
@@ -28,49 +29,80 @@ function resetForTesting() {
 		{userID:2, userName:"Sam", isOnline:true, avatarURL:"avatar.jpg"},
 		{userID:3, userName:"Chris", isOnline:true, avatarURL:"avatar.jpg"}
 	];
-	DataStore.mockMatches = [
-		{instanceID:0, userID:0, gameID:0}, // Jason vs Cam Connect4
-		{instanceID:0, userID:1, gameID:0},
-		{instanceID:1, userID:0, gameID:0} // Jason waiting for opponent, Scrabble
-	];
+	DataStore.mockMatches = [];
 }
 resetForTesting();
 
 
-describe('Matchmaking Controller Test Suite', function(){
-	describe('Testing MatchmakingController.js', function(){
+describe('MatchmakingController', function() {
+	describe('#joinMatchmaking()', function() {
+		it('should deal with invalid input accordingly', function(){
+			resetForTesting();
+			assert.throws(function() { matchmaker.joinMatchmaking(null,null) }, Error);
+			assert.throws(function() { matchmaker.joinMatchmaking({},{}) },Error);
+			assert.throws(function() { matchmaker.joinMatchmaking({hurr:'durr',invalid:'data'},{notA:'game'}) },Error);
+		});
 		it('should add a user to a game queue', function(){
 			resetForTesting();
 			matchmaker.joinMatchmaking(players[0], games[0]);
 			assert.equal(mmModel.queueTotal(games[0]), 1);
-		}); // end it
+		});
 		it('should create a game when a queue reaches a max # of users', function(done){
 			resetForTesting();
-			GameMgmt.userConnected(players[0], function() {
-				matchmaker.joinMatchmaking(players[0], games[0]);
-				GameMgmt.userConnected(players[1], function() {
-					matchmaker.joinMatchmaking(players[1], games[0], function(response) {
-						assert.ok(response);
-						assert.equal((typeof response), "object");
-						done();
+			// fake users connecting and joining the matchmaker
+			GameSocket.emit("userConnect", {userID: players[0]}, function() {
+				matchmaker.joinMatchmaking(players[0], games[0], function() {
+					GameSocket.emit("userConnect", {userID: players[1]}, function() {
+						matchmaker.joinMatchmaking(players[1], games[0], function(response) {
+							assert.ok(response);
+							assert.equal((typeof response), "object");
+							assert.equal((typeof response.instanceID), "number");
+							assert.equal(mmModel.queueTotal(games[0]), 0);
+							done();
+						});
 					});
 				});
 			});
-		}); // end it
+		});
+	});
+	describe('#checkForMatchFound()', function() {
 		it('should deal with invalid input accordingly', function(){
 			resetForTesting();
-			assert.throws(matchmaker.joinMatchmaking(null,null, function(){}), Error);
-			assert.throws(matchmaker.joinMatchmaking({},{}, function(){}),Error);
-			assert.throws(matchmaker.joinMatchmaking({hurr:'durr',invalid:'data'},{notA:'game'},function(){}),Error);
-		
-			//assert.throws(matchmaker.MatchmakingController.Match(null, null, function(){}),Error);
-			assert.throws(matchmaker.Match({},{}, function(){}),Error);
-			assert.throws(matchmaker.Match({fake:'name',no:'sense'},{non:'estistant game'},function(){}),Error);
-
-			assert.throws(matchmaker.gameValidate(null, null), Error);
-			assert.throws(matchmaker.gameValidate({},{}),Error);
-			assert.throws(matchmaker.gameValidate([],{}),Error);
-			assert.throws(matchmaker.gameValidate([{one:1},{two:2}],{fake:'game'}), Error);
+			assert.throws(function() { matchmaker.checkForMatchFound(null,null) }, Error);
+			assert.throws(function() { matchmaker.checkForMatchFound({},{}) },Error);
+			assert.throws(function() { matchmaker.checkForMatchFound("durr","game") },Error);
 		});
-	}); // end describe
+		it('should check to see if a match can be setup and setup one if needed', function(done){
+			resetForTesting();
+			mmModel.joinQueue(players[0], games[0]);
+			mmModel.joinQueue(players[1], games[0]);
+			assert.equal(mmModel.queueTotal(games[0]), DataStore.mockGames[games[0]].maxPlayers);
+			matchmaker.checkForMatchFound(games[0], function(response) {
+				assert.ok(response);
+				assert.equal((typeof response), "object");
+				assert.equal((typeof response.instanceID), "number");
+				assert.equal(mmModel.queueTotal(games[0]), 0);
+				assert.equal(response.players.length, DataStore.mockGames[games[0]].maxPlayers);
+				done();
+			});
+		});
+	});
+	describe('#leaveAllMatchmaking()', function() {
+		it('should deal with invalid input accordingly', function(){
+			resetForTesting();
+			assert.throws(function() { matchmaker.leaveAllMatchmaking(null) }, Error);
+			assert.throws(function() { matchmaker.leaveAllMatchmaking({}) },Error);
+			assert.throws(function() { matchmaker.leaveAllMatchmaking(false) },Error);
+		});
+		it('should remove a user from all game queues', function(){
+			resetForTesting();
+			mmModel.joinQueue(players[0], games[0]);
+			mmModel.joinQueue(players[0], games[1]);
+			assert.equal(mmModel.queueTotal(games[0]), 1);
+			assert.equal(mmModel.queueTotal(games[1]), 1);
+			matchmaker.leaveAllMatchmaking(players[0]);
+			assert.equal(mmModel.queueTotal(games[0]), 0);
+			assert.equal(mmModel.queueTotal(games[1]), 0);
+		});
+	});
 });
