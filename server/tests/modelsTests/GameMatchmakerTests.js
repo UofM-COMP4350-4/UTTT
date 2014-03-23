@@ -12,7 +12,7 @@ var games = [
 	2
 ];
 
-describe('Machmaker Model Test Suite', function(){
+describe('Matchmaker Model Test Suite', function(){
 	describe('Queue test suite',function(){
 		it('should have 1 players in the queue', function(){
 			matchmaker.GameMatchmaker.clearQueue();
