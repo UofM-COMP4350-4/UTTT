@@ -16,7 +16,8 @@
 		"mocha-phantomjs": "",
 		"mocha": "",
 		"expect.js": "",
-		"json2htmlcov": ""
+		"json2htmlcov": "",
+		"socket.io-client" : ""
 	}
 }
 
