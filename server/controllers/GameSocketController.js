@@ -11,6 +11,7 @@ function GameSocketController(port) {
 	var clientSocketIDHashTable = {};
 	var self = this;
 	this.socketIO.sockets.on('connection', function(socket) {
+		console.log("Socket client connected " + socket.id);
 		socket.on('userSetup', function(userID, callback) {
 			console.log('User Setup called for ' + userID);
 			ValidateObjectController.ValidateNumber(userID);
@@ -27,19 +28,24 @@ function GameSocketController(port) {
 			self.emit('moveReceived', move);
 		});
 		
-		socket.on('disconnect', function(userID) {
-			console.log('Disconnect called on socket for userID: ' + userID);
-			delete clientSocketIDHashTable[userID];
-			self.emit('userDisconnect', {userID: userID});
+		socket.on('disconnect', function() {
+			for(var x in clientSocketIDHashTable) {
+				if(clientSocketIDHashTable[x].id == socket.id) {
+					delete clientSocketIDHashTable[userID];
+					console.log('Disconnect called on socket for userID: ' + userID);
+					self.emit('userDisconnect', {userID: x});
+				}
+			}
 		});
 	});
 	
 	this.sendMatchEvent = function(userID, gameboard) {
-		console.log("Sending match event to userID: " + userID);
+		//console.log("Sending match event to userID: " + userID);
 		ValidateObjectController.ValidateNumber(userID);
 		ValidateObjectController.ValidateObject(gameboard);
-		ValidateObjectController.ValidateObject(clientSocketIDHashTable[userID]);
-		clientSocketIDHashTable[userID].emit('matchFound', gameboard);
+		if(clientSocketIDHashTable[userID]) {
+			clientSocketIDHashTable[userID].emit('matchFound', gameboard);
+		}
 	};
 
 	this.JoinRoom = function(userID, instanceID) {
@@ -61,7 +67,7 @@ function GameSocketController(port) {
 
 	this.CloseRoom = function(instanceID) {
 		ValidateObjectController.ValidateNumber(instanceID);
-		this.socketIO.sockets.clients('game/' + instanceID).forEach(function(s) {
+		self.socketIO.sockets.clients('game/' + instanceID).forEach(function(s) {
 			s.leave('game/' + instanceID);
 		});
 	};
@@ -69,14 +75,16 @@ function GameSocketController(port) {
 	this.SendDataToUser = function(userID, data) {
 		ValidateObjectController.ValidateNumber(userID);
 		ValidateObjectController.ValidateObject(data);
-		clientSocketIDHashTable[userID].emit('receivePlayResult', data);
+		if(clientSocketIDHashTable[userID]) {
+			clientSocketIDHashTable[userID].emit('receivePlayResult', data);
+		}
 	};
 	
 	this.SendDataToAllUsersInGame = function(gameInstanceID, data) {
 		ValidateObjectController.ValidateNumber(gameInstanceID);
 		ValidateObjectController.ValidateObject(data);
 		console.log('Sending Data to all users in gameInstanceID ' + gameInstanceID);
-		this.socketIO.sockets.in('game/' + gameInstanceID).emit('receivePlayResult', data);
+		self.socketIO.sockets.in('game/' + gameInstanceID).emit('receivePlayResult', data);
 	};
 	
 }
