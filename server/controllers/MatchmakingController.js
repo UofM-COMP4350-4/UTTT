@@ -37,10 +37,9 @@ module.exports = {
 					var addUsersToMatch = function() {
 						if(players.length<maxPlayers) {
 							var currUser = queue.shift();
-							players.push(currUser);
 							GameMgmnt.joinMatch(currUser, instanceID, function(err) {
-								if(err) {
-									count--;
+								if(!err) {
+									players.push(currUser);
 								}
 								addUsersToMatch();
 							});

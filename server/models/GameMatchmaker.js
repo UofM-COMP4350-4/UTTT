@@ -50,9 +50,9 @@ exports.GameMatchmaker.removeFromQueue = function(userID){
 	for(var i in gameQueue){
 		i = parseInt(i, 10);
 		var q = this.getGameQueue(i);
-		var i=q.indexOf(userID);
-		if(i>=0) {
-			q.splice(i, 1);
+		var index=q.indexOf(userID);
+		if(index>=0) {
+			q.splice(index, 1);
 		}
 	}
 };

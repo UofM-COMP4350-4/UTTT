@@ -31,8 +31,8 @@ function GameSocketController(port) {
 		socket.on('disconnect', function() {
 			for(var x in clientSocketIDHashTable) {
 				if(clientSocketIDHashTable[x].id == socket.id) {
-					delete clientSocketIDHashTable[userID];
-					console.log('Disconnect called on socket for userID: ' + userID);
+					delete clientSocketIDHashTable[x];
+					console.log('Disconnect called on socket for userID: ' + x);
 					self.emit('userDisconnect', {userID: x});
 				}
 			}
