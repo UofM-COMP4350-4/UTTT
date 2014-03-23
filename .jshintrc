@@ -22,8 +22,7 @@
         "afterEach": false,
         "spyOn": false,
         "console": false,
-        "ClientServerComm": false,
-        "io": false
+        "ClientServerComm": false
     },
     "-W024": true,
     "-W099": true,
