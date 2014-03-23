@@ -357,7 +357,7 @@ exports.Connect4GameBoard.prototype.CreateBoardGameJSONObject = function(status)
 	return {  instanceID: this.instanceID,
 			  gameID: this.gameID,
 			  userToPlay: this.userToPlay,
-			  players: JSON.stringify(this.players),
+			  players: this.players,
 			  currentBoard: this.moves,
 			  winner: this.winner,
 			  status: status
