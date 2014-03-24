@@ -7,9 +7,11 @@ var gameMGMT = require('./models/GameManagement.js');
 var gameSocketController = require('./controllers/GameSocketController.js').createGameSocket(10089);
 var queueForGameRequests = 0;
 var queueForGamesList = {};
+var path = require('path');
 
 var server = restify.createServer();
-server.pre(ecstatic({ root: __dirname + '/public'}));
+server.pre(ecstatic({ root: path.join(__dirname, '../../../client-web')}));
+//server.pre(ecstatic({ root: __dirname + '/public'}));
 
 server.use(restify.queryParser());
 
