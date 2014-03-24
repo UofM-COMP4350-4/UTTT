@@ -10,7 +10,7 @@ var queueForGamesList = {};
 var path = require('path');
 
 var server = restify.createServer();
-server.pre(ecstatic({ root: path.join(__dirname, '../../../client-web')}));
+server.pre(ecstatic({ root: path.join(__dirname, '../client-web')}));
 //server.pre(ecstatic({ root: __dirname + '/public'}));
 
 server.use(restify.queryParser());
