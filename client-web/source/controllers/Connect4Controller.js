@@ -47,17 +47,18 @@ enyo.kind({
 			this.moves = gameboard.currentBoard;
 			this.maxPlayers = this.getMaxPlayers();
 		}
+		var self = this;
+		var asyncStatusUpdate = function() {
+			self.view.$.status.setContent(self.getUserName(self.gameboard.userToPlay) + "'s turn");
+			self.timerID=undefined;
+		};
 		for(var i=0; i<this.moves.length; i++) {
 			var piece = this.view.$.c4Grid.$["piece-" + this.moves[i].x + "-" + this.moves[i].y];
 			if(i==this.moves.length-1 && animateLast) {
 				piece.setPiece();
 				piece.animateIn(this.moves[i].player.id);
-				var self = this;
 				// delay updating status to better align with animation
-				this.timerID = setTimeout(function() {
-					self.view.$.status.setContent(self.getUserName(self.gameboard.userToPlay) + "'s turn");
-					self.timerID=undefined;
-				}, 1100);
+				this.timerID = setTimeout(self, 1100);
 			} else {
 				piece.setPiece(this.moves[i].player.id);
 			}
@@ -69,7 +70,7 @@ enyo.kind({
 	getMaxPlayers:function() {
 		for(var i=0; i<window.availableGames.length; i++) {
 			if(window.availableGames[i].gameID==this.gameboard.gameID) {
-				return window.availableGames[i].maxPlayers
+				return window.availableGames[i].maxPlayers;
 			}
 		}
 		return 2;
