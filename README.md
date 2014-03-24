@@ -17,7 +17,7 @@ Run Tools:
 ###Database Access:
 
 ```sh
-mysql -u root -p #Enter pass as Group4
+mysql -h host -u root -p #you can append database name here, -p will make it so that mysql will prompt you for a password
 ```
 
 ###How to remotely connect to the database
@@ -31,12 +31,20 @@ GRANT ALL ON *.* TO 'ubuntu'@'localhost'; //local access
 GRANT ALL ON *.* TO 'ubuntu'@'%'; //remote access
 ``` 
 
+- you may have to set the password for ubuntu:
+
+```mysql
+SET PASSWORD FOR 'ubuntu'@'localhost' = PASSWORD("");
+```
+
 - Next to enable remote access, from your home directory (home/ubuntu/NBGI) run :
-	sudo vi ../../../etc/mysql/my.cnf
-	- change bind-address = 127.0.0.1 to 0.0.0.0
+	sudo vi /etc/mysql/my.cnf
+	- change bind-address to your aws instances public dns.
 	- Also, go to your AWS instance and add a new inbound rule for mysql (if you
 	dont have one)
 	- That's all you need
+
+- You mat have to change the hostname in server.js, relationDBTests, and relationDB
 
 ##Tools
 * `initialize.[bat|sh]` - Run after cloning repo. Will pull submodules and node libraries
