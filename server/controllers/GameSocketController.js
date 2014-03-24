@@ -12,6 +12,7 @@ function GameSocketController(port) {
 	var self = this;
 	this.socketIO.sockets.on('connection', function(socket) {
 		console.log("Socket client connected " + socket.id);
+		socket.emit("clientConnectedToServer", {});
 		socket.on('userSetup', function(userID, callback) {
 			console.log('User Setup called for ' + userID);
 			ValidateObjectController.ValidateNumber(userID);
