@@ -49,7 +49,9 @@ enyo.kind({
 		}
 		var self = this;
 		var asyncStatusUpdate = function() {
-			self.view.$.status.setContent(self.getUserName(self.gameboard.userToPlay) + "'s turn");
+			if(self.view.$.status) {
+				self.view.$.status.setContent(self.getUserName(self.gameboard.userToPlay) + "'s turn");
+			}
 			self.timerID=undefined;
 		};
 		for(var i=0; i<this.moves.length; i++) {
@@ -104,7 +106,8 @@ enyo.kind({
 				if(piece && !piece.isFilled()) {
 					this.moves.push({x:inSender.x, y:i, player:{id:window.userID, name:window.userName}});
 					this.update(undefined, true);
-					window.ClientServerComm.sendPlayMoveEvent({x:inSender.x, y:i, player:{id:window.userID, name:window.userName}});
+					window.ClientServerComm.sendPlayMoveEvent({x:inSender.x, y:i,
+							player:{id:window.userID, name:window.userName}, instanceID:this.gameboard.instanceID});
 					placable = true;
 				}
 			}
