@@ -20,6 +20,17 @@ this.socketIO.sockets.on('connection', function(socket) {
 		console.log('SETUP EVENT, USERID ' + param);
 		socket.emit("userSetupComplete", {});
 	});
+	socket.on('chat', function(param){
+		socket.emit("chat", param);
+		setTimeout(function() {
+			socket.emit("chat", {
+				instanceID: param.instanceID,
+				player: {"id":2,"name":"Player2"},
+				message: "This is a sample chat message",
+				timestamp: (new Date().getTime()*1)
+			});
+		})
+	});
 	var gameBoard = {
 		"instanceID": 1,
 		"gameID": 1,
