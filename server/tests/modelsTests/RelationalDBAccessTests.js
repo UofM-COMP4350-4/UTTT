@@ -1,7 +1,7 @@
 var assert = require("assert");
 var Sequelize = require('sequelize');
 var RelationalDBAccess = require("../../models/RelationalDBAccess.js");
-var relationalDB = new RelationalDBAccess({username:'ubuntu', password:'', hostname:'localhost'});
+var relationalDB = new RelationalDBAccess({username:'ubuntu', password:'', hostname:'ec2-54-186-85-227.us-west-2.compute.amazonaws.com'});
 
 describe("RelationalDBAccess", function() {
 	describe('#initialize database', function(){
@@ -12,7 +12,7 @@ describe("RelationalDBAccess", function() {
 	
 	describe("Testing queries (I don't know why. I thought we were going to abstract this?)", function(){		
 		var dbConnection = new Sequelize('Games_Users', 'ubuntu', '', {
-			host:'localhost',
+			host:'ec2-54-186-85-227.us-west-2.compute.amazonaws.com',
 			dialect: 'mysql',
 			port: 3306
 		});

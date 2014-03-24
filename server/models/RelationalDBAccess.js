@@ -2,16 +2,17 @@ var Validator = require("../controllers/ValidateObjectController.js");
 var Sequelize = require('sequelize');
 var dbConnection;
 
-var my_host='54.186.85.227';
+var my_host='ec2-54-186-85-227.us-west-2.compute.amazonaws.com';
 
 function RelationalDBAccess(database) {
+	console.log("connecting to db");
 	if (database === undefined)	{
-		new InitializeDB();
+		InitializeDB();
 	} else { 
 		Validator.ValidateString(database.username);
 		Validator.ValidateString(database.password);
 		Validator.ValidateString(database.hostname);
-		new InitializeOtherDB(database.username, database.password, database.hostname);
+		InitializeOtherDB(database.username, database.password, database.hostname);
 	}
 	console.log('Relational db contains: ' + dbConnection);
 }
@@ -20,6 +21,7 @@ function RelationalDBAccess(database) {
 var InitializeDB = function() {
 	dbConnection = new Sequelize('Games_Users', 'ubuntu', '', {
 		host: my_host,
+		dialect: 'mysql',
 		port: 3306
 	});
 	dbConnection
@@ -34,8 +36,9 @@ var InitializeDB = function() {
 };
 
 //Connects to a different database
-var InitializeOtherDB = function(username, password, hostname) {	
-	dbConnection = new Sequelize('Games_Users', username, password || '', {
+var InitializeOtherDB = function(username, password, hostname) {
+	console.log("initializing other");	
+	dbConnection = new Sequelize('Games_Users', 'ubuntu', '', {
 		host: hostname,
 		dialect: 'mysql',
 		port: 3306
@@ -49,6 +52,7 @@ var InitializeOtherDB = function(username, password, hostname) {
 				console.log("connection established");
 			}
 		});
+	console.log("finished initializing");
 };
 
 RelationalDBAccess.prototype.getListOfGames = function(callback) {
