@@ -78,8 +78,7 @@ const int GAME_SOCKET_PORT = 10089;
             }
             else {
                 NSLog(@"User id received from initialize is %@",[userDict objectForKey:@"userID"]);
-                _userID = [[NSNumber alloc] init];
-                _userID = [userDict objectForKey:@"userID"];
+                _player = [[Player alloc] initWithUserIDAndNameAndisOnlineAndAvatarURL:[[userDict objectForKey:@"userID"] intValue] userName:[userDict objectForKey:@"userName"] isOnline:[userDict objectForKey:@"isOnline"] avatarURL:[userDict objectForKey:@"avatarURL"]];
             }
         }
     };
@@ -139,7 +138,7 @@ const int GAME_SOCKET_PORT = 10089;
     };
     
     [queueForGameUrl appendString:@"userID="];
-    [queueForGameUrl appendString:[_userID stringValue]];
+    [queueForGameUrl appendString:[_player.userID stringValue]];
     [queueForGameUrl appendString:@"&gameID="];
     [queueForGameUrl appendString:@"1"];//Connect4 game id is 1
     
@@ -165,7 +164,7 @@ const int GAME_SOCKET_PORT = 10089;
         NSString *eventName = [jsonNSDict objectForKeyedSubscript:@"name"];
         
         if ([eventName isEqualToString:@"clientConnectedToServer"]) {
-            [[MainViewController GameSocket] sendEvent:@"userSetup" withData: _userID];
+            [[MainViewController GameSocket] sendEvent:@"userSetup" withData: _player.userID];
         }
         else if ([eventName isEqualToString:@"matchFound"]) {
             [[NSNotificationCenter defaultCenter]
@@ -183,7 +182,7 @@ const int GAME_SOCKET_PORT = 10089;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"PlayGameSegue"]) {
         Connect4ViewController *connect4ViewController = (Connect4ViewController *)segue.destinationViewController;
-        connect4ViewController.myUserID = _userID;
+        connect4ViewController.ownerPlayer = _player;
     }
 }
 

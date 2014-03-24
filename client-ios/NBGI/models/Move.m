@@ -54,8 +54,6 @@
             [jsonNSDict objectForKey:@"y"] != nil) {
             
             NSDictionary *user = [jsonNSDict objectForKey:@"player"];
-            int userID = [[user objectForKey:@"id"] intValue];
-            NSString * name = [user objectForKey:@"name"];
             Player *player = [[Player alloc] initWithUserIDAndNameAndisOnlineAndAvatarURL:[[user objectForKey:@"id"] intValue] userName:[user objectForKey:@"name"] isOnline:true avatarURL:@""];
             int x = [[jsonNSDict objectForKey:@"x"] intValue];
             int y = [[jsonNSDict objectForKey:@"y"] intValue];
