@@ -19,7 +19,7 @@ function GameSocketController(port) {
 			self.emit('userConnect', {userID: userID}, function() {
 				socket.emit("userSetupComplete", {});
 			});
-			if (typeof callback !== undefined) {
+			if (callback) {
 				callback(util.inspect(clientSocketIDHashTable));
 			}
 		});
