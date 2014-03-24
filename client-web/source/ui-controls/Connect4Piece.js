@@ -36,6 +36,9 @@ enyo.kind({
 		this.$.sliding.removeClass("connect4-sliding-trigger");
         this.$.sliding.applyStyle("top", (enyo.dom.getWindowHeight()*-1) + "px");
 	},
+	isFilled: function() {
+		return (this.userID!==undefined);
+	},
 	reflow: function() {
 		this.inherited(arguments);
 		if(this.userID===undefined) {
