@@ -6,12 +6,12 @@ var dbConnection;
 function RelationalDBAccess(database) {
 	console.log("connecting to db");
 	if (database === undefined)	{
-		InitializeDB();
+		new InitializeDB();
 	} else { 
 		Validator.ValidateString(database.username);
 		Validator.ValidateString(database.password);
 		Validator.ValidateString(database.hostname);
-		InitializeOtherDB(database.username, database.password, database.hostname);
+		new InitializeOtherDB(database.username, database.password, database.hostname);
 	}
 	console.log('Relational db contains: ' + dbConnection);
 }
