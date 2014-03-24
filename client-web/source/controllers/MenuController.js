@@ -21,9 +21,9 @@ enyo.kind({
 		this.loadGameList();
 	},
 	loadGameList: function() {
-		this.view.$.drawer.setOpen((this.state.length>0));
 		this.view.$.repeater.setCount(this.state.length);
 		this.view.$.repeater.render();
+		this.view.$.drawer.setOpen((this.state.length>0));
 	},
 	setupActiveGames: function(inSender, inEvent) {
 		var index = inEvent.index;
