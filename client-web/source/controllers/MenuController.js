@@ -1,10 +1,6 @@
 enyo.kind({
 	name: "MenuController",
 	kind: "Component",
-	events: {
-		onLoadGame: "",
-		onShowLauncher: ""
-	},
 	loadBaseState: function() {
 		this.state = [];
 		for(var x in window.active) {
@@ -55,9 +51,8 @@ enyo.kind({
 		}
 		return "";
 	},
-	openMatch: function(inSender, inEvent) {
-		window.location.hash = "game-" + this.state[inEvent.index].instanceID;
-		return true;
+	switchToGame: function(inSender, inEvent) {
+		enyo.stage.app.controller.showGameArea();
 	},
 	newMatch: function(inSender, inEvent) {
 		window.location.hash = "launcher";
