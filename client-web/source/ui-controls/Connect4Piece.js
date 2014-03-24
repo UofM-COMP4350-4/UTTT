@@ -35,5 +35,11 @@ enyo.kind({
 	resetAnimation: function() {
 		this.$.sliding.removeClass("connect4-sliding-trigger");
         this.$.sliding.applyStyle("top", (enyo.dom.getWindowHeight()*-1) + "px");
+	},
+	reflow: function() {
+		this.inherited(arguments);
+		if(this.userID===undefined) {
+			this.$.sliding.applyStyle("top", (enyo.dom.getWindowHeight()*-1) + "px");
+		}
 	}
 });
