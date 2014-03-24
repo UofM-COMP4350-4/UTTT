@@ -110,7 +110,5 @@ enyo.singleton({
 			}
 		}); //tells Ajax what the callback function is
 		request.go({userID: userid, instanceID: instanceID});		
-	},
-	
-	
+	}
 });

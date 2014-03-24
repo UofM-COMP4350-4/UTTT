@@ -16,6 +16,6 @@ enyo.kind({
 		{classes:"waiting-splash-spinner"}
 	]},
 	connectionFailure: {classes:"full", components:[
-		{classes:"connection-failure", content:"Connection Failed!"},
+		{classes:"connection-failure", content:"Connection Failed!"}
 	]}
 });
