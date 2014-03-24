@@ -6,7 +6,7 @@ enyo.kind({
 		socialShowing: true
 	},
 	components: [
-		{kind:"Signals", onhashchange:"hashChange", onMatchFound:"receivedGameboard", onPlayResult:"receivedGameboard"}
+		{kind:"Signals", onhashchange:"hashChange", onMatchFound:"receivedGameboard", onPlayResult:"updateActive"}
 	],
 	create:function() {
 		this.inherited(arguments);
@@ -33,8 +33,7 @@ enyo.kind({
 			window.active = baseState.active;
 			enyo.stage.menu.controller.loadBaseState();
 			if(!window.location.hash ||window.location.hash.length===0 || window.location.hash=="#") {
-				// set initial hash location in url
-				window.location.hash = "launcher";
+				enyo.stage.game.controller.showLauncher();
 			} else {
 				this.hashChange();
 			}
@@ -92,13 +91,16 @@ enyo.kind({
 		this.view.$.lowerPanels.draggable = (inEvent.clientX > (enyo.dom.getWindowWidth()/2));
 	},
 	hashChange: function(inSender, inEvent) {
-		this.showGameArea();
 		var hash = window.location.hash.slice(1);
 		if(hash=="launcher") {
 			document.title = "Let's Play - Game Launcher";
+			this.hideChat();
+			this.showGameArea();
 			enyo.stage.game.controller.showLauncher();
 		} else if(hash=="invite") {
 			document.title = "Let's Play- Invite to Play";
+			this.hideChat();
+			this.showGameArea();
 			enyo.stage.game.controller.showLauncher(true);
 		} else if(hash.indexOf("game-")===0) {
 			var instanceID = hash.replace("game-", "");
@@ -109,13 +111,26 @@ enyo.kind({
 						document.title = "Let's Play - " + window.availableGames[i].gameName;
 					}
 				}
+				this.showChat(instanceID);
+				this.showGameArea();
 				enyo.stage.game.controller.loadGame(gameboard);
 			} else { // attempt to join game
-				// TODO: attempt to join game and show if joined successfully
+				window.ClientServerComm.joinGame(window.userID, instanceID, enyo.bind(this, function(response) {
+					if(response.gameboard) {
+						enyo.Signals.send("onMatchFound", {gameboard:response.gameboard});
+						//since hash value is already set, hashChange won't tigger; explicitly load game
+						this.showChat(instanceID);
+						this.showGameArea();
+						enyo.stage.game.controller.loadGame(response.gameboard);
+					} else if(response.err) {
+						window.location.hash = "launcher";
+					}
+				}));
 			}
 		} else {
 			window.location.hash = "launcher";
 		}
+		return true;
 	},
 	receivedGameboard: function(inSender, inEvent) {
 		if(inEvent && inEvent.gameboard) {
@@ -124,7 +139,38 @@ enyo.kind({
 				window.active[gb.instanceID] = gb;
 				enyo.stage.menu.controller.addGame(gb);
 				window.location.hash = "game-" + gb.instanceID;
+			} else {
+				window.location.hash = "game-" + gb.instanceID;
 			}
+		}
+	},
+	updateActive: function(inSender, inEvent) {
+		window.active[inEvent.gameboard.instanceID] = inEvent.gameboard;
+	},
+	showChat: function(instanceID) {
+		this.view.$.chatInput.setValue("");
+		this.view.$.chatInputDecorator.show();
+		enyo.stage.chat.controller.loadChatroom(instanceID);
+		enyo.stage.chat.view.show();
+	},
+	hideChat: function() {
+		this.view.$.chatInputDecorator.hide();
+		enyo.stage.chat.view.hide();
+		enyo.stage.chat.controller.reset();
+	},
+	submitMessage: function() {
+		var msg = this.view.$.chatInput.getValue();
+		var instanceID = enyo.stage.chat.controller.instanceID;
+		if(msg && msg.length>0 && instanceID) {
+			this.view.$.chatInput.setValue("");
+			window.ClientServerComm.sendChatEvent({
+				message:msg,
+				instanceID:instanceID,
+				player: {
+					id: window.userID,
+					name: window.userName
+				}
+			});
 		}
 	}
 });

@@ -21,7 +21,7 @@ GameSocket.on("userConnect", function(inEvent, optCallback) {
 });
 GameSocket.on("moveReceived", function(inEvent) {
 	if(matches[inEvent.instanceID]) {
-		matches[inEvent.instanceID].RequestMove(inEvent);
+		matches[inEvent.instanceID].RequestMove({x:inEvent.x, y:inEvent.y, player:inEvent.player});
 	}
 });
 GameSocket.on("userDisconnect", function(inEvent, optCallback) {
@@ -126,15 +126,19 @@ module.exports = {
 				callback({errorCode:1, errorText:"Game full"});
 			}
 		} else {
-			DataStore.lookupMatch(instanceID, function(entries) {
-				if(entries && entries.length>0) {
-					module.exports.setupMatch(entries[0].gameID, instanceID, function(id) {
-						module.exports.joinMatch(userID, instanceID, callback);
-					});
-				} else {
-					throw new Error("Instance does not exist: " + instanceID);
-				}
-			});
+			try {
+				DataStore.lookupMatch(instanceID, function(entries) {
+					if(entries && entries.length>0) {
+						module.exports.setupMatch(entries[0].gameID, instanceID, function(id) {
+							module.exports.joinMatch(userID, instanceID, callback);
+						});
+					} else {
+						throw new Error("Instance does not exist: " + instanceID);
+					}
+				});
+			} catch(e) {
+				callback({errorCode:2, errorText:"Unable to join match"});
+			}
 		}
 	},
 	leaveMatch: function(userID, instanceID, callback) {

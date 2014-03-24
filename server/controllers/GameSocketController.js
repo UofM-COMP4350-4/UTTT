@@ -16,8 +16,9 @@ function GameSocketController(port) {
 			console.log('User Setup called for ' + userID);
 			ValidateObjectController.ValidateNumber(userID);
 			clientSocketIDHashTable[userID] = socket;
-			self.emit('userConnect', {userID: userID});
-		
+			self.emit('userConnect', {userID: userID}, function() {
+				socket.emit("userSetupComplete", {});
+			});
 			if (typeof callback !== undefined) {
 				callback(util.inspect(clientSocketIDHashTable));
 			}
@@ -26,6 +27,10 @@ function GameSocketController(port) {
 		socket.on('receiveMove', function(move) {
 			console.log('Received Move from Player.  X:' + move.x + ' Y:' + move.y);
 			self.emit('moveReceived', move);
+		});
+
+		socket.on('chat', function(param) {
+			self.socketIO.sockets.in('game/' + param.instanceID).emit('chat', param);
 		});
 		
 		socket.on('disconnect', function() {

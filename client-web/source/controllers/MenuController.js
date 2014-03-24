@@ -1,10 +1,6 @@
 enyo.kind({
 	name: "MenuController",
 	kind: "Component",
-	events: {
-		onLoadGame: "",
-		onShowLauncher: ""
-	},
 	loadBaseState: function() {
 		this.state = [];
 		for(var x in window.active) {
@@ -16,6 +12,14 @@ enyo.kind({
 		this.state.push(gameboard);
 		this.loadGameList();
 	},
+	updateGame: function(gameboard) {
+		for(var i=0; i<this.state.length; i++) {
+			if(gameboard.instanceID==this.state[i].instanceID) {
+				this.state[i] = gameboard;
+			}
+		}
+		this.loadGameList();
+	},
 	removeGame: function(instanceID) {
 		for(var i=0; i<this.state.length; i++) {
 			if(instanceID==this.state[i].instanceID) {
@@ -25,9 +29,9 @@ enyo.kind({
 		this.loadGameList();
 	},
 	loadGameList: function() {
-		this.view.$.drawer.setOpen((this.state.length>0));
 		this.view.$.repeater.setCount(this.state.length);
 		this.view.$.repeater.render();
+		this.view.$.drawer.setOpen((this.state.length>0));
 	},
 	setupActiveGames: function(inSender, inEvent) {
 		var index = inEvent.index;
@@ -55,9 +59,8 @@ enyo.kind({
 		}
 		return "";
 	},
-	openMatch: function(inSender, inEvent) {
-		window.location.hash = "game-" + this.state[inEvent.index].instanceID;
-		return true;
+	switchToGame: function(inSender, inEvent) {
+		enyo.stage.app.controller.showGameArea();
 	},
 	newMatch: function(inSender, inEvent) {
 		window.location.hash = "launcher";

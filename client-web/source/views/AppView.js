@@ -10,9 +10,15 @@ enyo.kind({
 				{layoutKind:"FittableRowsLayout", fit:true, ondragstart:"controller.draggingHandler", components:[
 					{name:"game", kind:"GameView", classes:"game-container", fit:true},
 					{name:"chat", kind:"ChatView", classes:"chat-container"},
-					{kind:"onyx.Toolbar", style:"padding-top:4px; padding-bottom:4px;", components:[
-						{kind:"onyx.IconButton", src:"assets/onyx-profile.png", ontap:"controller.toggleSocial", style:"float:right"},
-						{kind:"onyx.IconButton", src:"assets/onyx-menu.png", ontap:"controller.toggleMenu"}
+					{kind:"onyx.Toolbar", style:"padding-top:4px; padding-bottom:4px;", layoutKind:"FittableColumnsLayout", components:[
+						{kind:"onyx.IconButton", src:"assets/onyx-menu.png", style:"height:32px", ontap:"controller.toggleMenu"},
+						{style:"padding:1px 5px 2px 5px;text-align:center;", fit:true, components:[
+							{name:"chatInputDecorator", kind: "onyx.InputDecorator", alwaysLooksFocused:true, style:"max-width:1000px;width:90%;", layoutKind:"FittableColumnsLayout", components: [
+								{name:"chatInput", kind: "onyx.Input", fit:true},
+								{kind:"onyx.IconButton", style:"height:32px; width:32px; padding:0; margin-top:-6px !important; margin-bottom:-8px !important;", src:"assets/onyx-chat.png", ontap:"controller.submitMessage"}
+							]}
+						]},
+						{kind:"onyx.IconButton", src:"assets/onyx-profile.png", style:"height:32px", ontap:"controller.toggleSocial"}
 					]}
 				]},
 				{name:"social", kind:"SocialView", classes:"social-container social-shadow"}

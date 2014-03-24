@@ -1,10 +1,31 @@
-.app {
-	background-color: #333333 !important;
+@import url(http://fonts.googleapis.com/css?family=Oswald);
+
+/* Global CSS */
+
+.centre {
+	text-align: center;
 }
 
 .full {
 	width: 100%;
 	height: 100%;
+}
+
+.player {
+	color: blue;
+	font-weight: bold;
+}
+
+.opponent {
+	color: red;
+	font-weight: bold;
+}
+
+
+/* AppView CSS */
+
+.app {
+	background-color: #333333 !important;
 }
 
 .menu-container {
@@ -25,6 +46,10 @@
 
 .chat-container {
 	background-color: #EAEAEA;
+	height: 20%;
+	min-height: 5em;
+	background-color:gray;
+	border-top: 1px black inset;
 }
 
 .social-container {
@@ -32,8 +57,187 @@
 	background-color: #333333;
 }
 
+
+/* MenuView CSS */
+
+.app-title {
+	font-size: 2.8em;
+	color: rgb(150,150,150);
+	padding: 10px 10px 10px 30px;
+	text-shadow: 1px 1px 10px black, -1px -1px black;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-family: 'Oswald', sans-serif;
+}
+
+.menu-button {
+	width: 100%;
+	background-color: #4c4c4c;
+	color: lightgray;
+}
+
+.menubtn-title {
+	font-size: 1em;
+}
+
+.menubtn-subtitle {
+	font-size: 0.75em;
+	font-style: oblique;
+}
+
+.active-container {
+	background-color: transparent;
+	background-color: rgba(40,40,40, 0.4);
+	border-color: rgb(80,80,80);
+}
+
+
+/* GameView CSS */
+
+.launcher-wrapper {
+	padding:2em;
+}
+
+.launcher-item {
+	padding: 0.75em;
+	display: inline-block;
+	border: ridge 3px lightgray;
+	-webkit-border-radius: 0.75em;
+	-moz-border-radius: 0.75em;
+	border-radius: 0.75em;
+	background-color: white;
+	max-width: 80%;
+	opacity: 1;
+}
+
+.launcher-item:active:hover {
+	opacity: 0.5;
+}
+
+.launcher-item-icon {
+	max-width: 100%;
+	height:auto;
+}
+
+.launcher-item-title {
+	font-family: 'Oswald', sans-serif;
+	font-size: 1.2em;
+	line-height: 1.2em;
+}
+
+.splash-spacer {
+	height:25%;
+}
+
+.waiting-splash-title {
+	font-size:1.5em;
+	font-family: 'Oswald', sans-serif;
+}
+
+.waiting-splash-spinner {
+	margin:auto;
+	width: 52px;
+	height: 52px;
+	background: url('../assets/spinner.gif') no-repeat center center;
+}
+
+.connection-failure {
+	font-size:1.5em;
+	font-family: 'Oswald', sans-serif;
+}
+
+
+/* Connect4View CSS */
+
+.connect4-wrapper-outer {
+	position: relative;
+}
+
+.connect4-wrapper-inner {
+	display: block;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.connect4-row {
+	width: 100%;
+	height: 16.6666666667%;
+}
+
+.connect4-cell {
+	width: 14.2857142857%;
+	height: 100%;
+	display: inline-block;
+}
+
+.connect4-status-wrapper {
+	position: absolute;
+	bottom: -32px;
+	height: 32px;
+	width: 100%;
+	display: table;
+}
+
+.connect4-status {
+	display: table-cell;
+	vertical-align: top;
+	text-align: right;
+	font-size: 14px;
+	font-family: 'Oswald', sans-serif;
+}
+
+
+/* Connect4Piece CSS */
+
+.connect4-piece {
+	position:relative;
+}
+
+.connect4-static-piece {
+	position: absolute;
+	z-index: 200;
+}
+
+.connect4-sliding-piece {
+	position: relative;
+	z-index: 100;
+}
+
+.connect4-sliding-trigger {
+	transition: top 1s ease-in;
+	-webkit-transition: top 1s ease-in;
+	-moz-transition: top 1s ease-in;
+	-o-transition: top 1s ease-in;
+}
+
+
+/* ChatView CSS */
+
+.chat-scroller {
+	border:1px gray;
+	background-color:white;
+	color: black;
+}
+
+
+/* SocialView CSS */
+
 .social-shadow {
 	-moz-box-shadow: inset 4px 0 4px rgba(0,0,0,0.2) !important;
 	-webkit-box-shadow: inset 4px 0 4px rgba(0,0,0,0.2) !important;
 	box-shadow: inset 4px 0 4px rgba(0,0,0,0.2) !important;
 }
+
+
+/* Preload images via CSS */
+
+.connect4-icon { background: url('../assets/Connect4.gif') no-repeat center center; }
+.connect4-empty { background: url('../assets/connect4-empty.png') no-repeat center center; }
+.connect4-blue { background: url('../assets/connect4-blue.png') no-repeat center center; }
+.connect4-blue-filled { background: url('../assets/connect4-filledblue.png') no-repeat center center; }
+.connect4-red { background: url('../assets/connect4-red.png') no-repeat center center; }
+.connect4-red-filled { background: url('../assets/connect4-filledred.png') no-repeat center center; }
