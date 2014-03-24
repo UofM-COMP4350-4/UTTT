@@ -91,7 +91,44 @@ server.get("/initialize", function(request, response, next) {
 	return next();
 });
 
-server.get("/createNewGame", function(request, response, next){
+server.get("/createNewGame", function(request, response, next) {
+	var gb = {
+		"instanceID": 2,
+		"gameID": 1,
+		"userToPlay": {
+			"id": 1,
+			"name": "Player1"
+		},
+		"players": [{"id":1,"name":"Player1"}],
+		"currentBoard": [],
+		"winner": null
+	};
+	response.writeHead( 200, {'content-type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
+	response.write(JSON.stringify({gameboard:gb, url:"http://" + request.header('Host') + "/#game-2"}));
+	response.end();
+	return next();
+});
+server.get("/joinGame", function(request, response, next) {
+	var gb = {
+		"instanceID": 2,
+		"gameID": 1,
+		"userToPlay": {
+			"id": 1,
+			"name": "Player1"
+		},
+		"players": [{"id":1,"name":"Player1"}, {"id":2,"name":"Player2"}],
+		"currentBoard": [],
+		"winner": null
+	};
+	response.writeHead( 200, {'content-type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
+	if(request.params.instanceID==2) { // Success-reponse for joined game
+		console.log("joining " + request.params.instanceID);
+		response.write(JSON.stringify({gameboard:gb}));
+	} else { // Error-response for full game
+		response.write(JSON.stringify({err:{errorCode:0, errorText:""}}));
+	}
+	response.end();
+	return next();
 });
 
 server.listen(process.env.PORT || 80, process.env.IP);
