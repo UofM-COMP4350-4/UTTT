@@ -98,7 +98,8 @@ enyo.kind({
 	},
 	columnSelected: function(inSender, inEvent) {
 		if(this.gameboard.userToPlay && this.gameboard.userToPlay.id==window.userID && this.timerID===undefined
-					&& this.gameboard.players.length==this.maxPlayers) {
+					&& this.gameboard.players.length==this.maxPlayers
+					&& (this.moves.length==0 || this.moves[this.moves.length-1].player.id!=window.userID)) {
 			this.gameboard.userToPlay = undefined;
 			var placable = false;
 			for(var i=0; i<this.COL_SIZE && !placable; i++) {
