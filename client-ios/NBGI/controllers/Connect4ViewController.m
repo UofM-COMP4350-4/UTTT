@@ -171,7 +171,8 @@ const int COL_SIZE = 7;
         }
         else {
             NSMutableArray *listOfMoves = [argDict objectForKey:@"currentBoard"];
-            _gameInstanceID = [[NSNumber alloc] initWithInt:[[argDict objectForKey:@"instanceID"] intValue] ];
+            //NSLog(@"The game Instance ID is : %llu", [[argDict objectForKey:@"instanceID"] unsignedLongLongValue]);
+            _gameInstanceID = [[NSNumber alloc] initWithUnsignedLongLong:[[argDict objectForKey:@"instanceID"] unsignedLongLongValue]];
             [self drawGameBoard:listOfMoves];
 
             NSDictionary *userToPlay = [argDict objectForKey:@"userToPlay"];

@@ -12,15 +12,20 @@ function GameSocketController(port) {
 	var self = this;
 	this.socketIO.sockets.on('connection', function(socket) {
 		console.log("Socket client connected " + socket.id);
-		socket.on('userSetup', function(userID, callback) {
-			console.log('User Setup called for ' + userID);
-			ValidateObjectController.ValidateNumber(userID);
-			clientSocketIDHashTable[userID] = socket;
-			self.emit('userConnect', {userID: userID}, function() {
-				socket.emit("userSetupComplete", {});
-			});
-			if (typeof callback !== undefined) {
-				callback(util.inspect(clientSocketIDHashTable));
+		socket.emit("clientConnectedToServer", {});
+		socket.on('userSetup', function(user, callback) {
+			console.log('User Setup called for ' + user.userID);
+			if(user && user.userID!==undefined) {
+				ValidateObjectController.ValidateNumber(user.userID);
+				clientSocketIDHashTable[user.userID] = socket;
+				self.emit('userConnect', {userID: user.userID}, function() {
+					socket.emit("userSetupComplete", {});
+				});
+				if (callback) {
+					callback(util.inspect(clientSocketIDHashTable));
+				}
+			} else {
+				console.log("Unable to identify; socket id: " + socket.id);
 			}
 		});
 		
@@ -30,6 +35,7 @@ function GameSocketController(port) {
 		});
 
 		socket.on('chat', function(param) {
+			console.log("CHAT - " + param.player.name + ": " + param.message);
 			self.socketIO.sockets.in('game/' + param.instanceID).emit('chat', param);
 		});
 		
@@ -38,7 +44,7 @@ function GameSocketController(port) {
 				if(clientSocketIDHashTable[x].id == socket.id) {
 					delete clientSocketIDHashTable[x];
 					console.log('Disconnect called on socket for userID: ' + x);
-					self.emit('userDisconnect', {userID: x});
+					self.emit('userDisconnect', {userID: parseInt(x, 10)});
 				}
 			}
 		});

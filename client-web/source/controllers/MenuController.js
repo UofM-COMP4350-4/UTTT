@@ -47,9 +47,29 @@ enyo.kind({
 			if(opponent.id==window.userID) {
 				opponent = this.state[index].players[1];
 			}
-			item.$.lbl2.setContent("vs " + opponent.name);
+			item.$.lbl2.setContent("vs " + this.getUserName(opponent));
+			this.log("opponent's name is: " + this.getUserName(opponent));
 		}
 		return true;
+	},
+	getUserName: function(player) {
+		var name = "Player";
+		if(player && player.id) {
+			if(player.id==window.userID) {
+				if(player.name && player.name.length>0) {
+					name = player.name;
+					if(player.name!=window.userName) {
+						window.userName = player.name;
+					}
+				}
+			} else {
+				name = "Opponent";
+				if(player.name && player.name.length>0 && player.name!="Player") {
+					name = player.name;
+				}
+			}
+		}
+		return name;
 	},
 	getGameName: function(gameID) {
 		for(var i=0; i<window.availableGames.length; i++) {

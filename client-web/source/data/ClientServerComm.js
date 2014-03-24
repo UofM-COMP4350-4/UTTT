@@ -23,7 +23,7 @@ enyo.singleton({
 		var s = this.socket = window.io.connect(this.socketURL, {});
 		this.socket.on("connect", enyo.bind(this, function() {
 			if(userID) {
-				s.emit('userSetup', userID);
+				s.emit('userSetup', {userID:userID});
 			}
 		}));
 		this.socket.on("userSetupComplete", function() {

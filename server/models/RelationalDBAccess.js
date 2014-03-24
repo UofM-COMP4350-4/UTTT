@@ -69,7 +69,8 @@ RelationalDBAccess.prototype.getListOfGames = function(callback) {
 
 RelationalDBAccess.prototype.getUserInfo = function(userID, callback) {
 	var result = {};
-	if(!userID) {
+	if(userID===undefined) {
+		
 		dbConnection
 			.query("INSERT INTO Users (userName, isOnline, avatarURL) values ('', 1, '/assets/avatar_placeholder.jpg')")
 			.success(function(){
@@ -78,7 +79,7 @@ RelationalDBAccess.prototype.getUserInfo = function(userID, callback) {
 					.success(function(userInfo){
 						console.log(userInfo);
 						validateObjectLength(userInfo, 1);
-						callback(userInfo); //Only one entry should be returned so test for this
+						callback(userInfo[0]); //Only one entry should be returned so test for this
 					})
 					.error(function(error){
 						console.log('error is ' + error);
@@ -96,7 +97,7 @@ RelationalDBAccess.prototype.getUserInfo = function(userID, callback) {
 			.success(function(userInfo){
 				console.log('The data gotten back is: ' + userInfo);
 				validateObjectLength(userInfo, 1);
-				callback(userInfo); //Only one entry should be returned so test for this
+				callback(userInfo[0]); //Only one entry should be returned so test for this
 			})
 			.error(function(error){
 				console.log('error is ' + error);

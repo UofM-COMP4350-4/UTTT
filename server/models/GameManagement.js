@@ -20,6 +20,7 @@ GameSocket.on("userConnect", function(inEvent, optCallback) {
 	module.exports.userConnected(inEvent.userID, (optCallback || noop));
 });
 GameSocket.on("moveReceived", function(inEvent) {
+	console.log('Move Received: ' + JSON.stringify(inEvent));
 	if(matches[inEvent.instanceID]) {
 		matches[inEvent.instanceID].RequestMove({x:inEvent.x, y:inEvent.y, player:inEvent.player});
 	}
@@ -105,8 +106,10 @@ module.exports = {
 		});
 	},
 	joinMatch: function(userID, instanceID, callback) {
+		console.log("JOIN MATCH: " + userID +", " + instanceID);
 		Validator.ValidateArgs(arguments, Number, Number, Function);
 		if(matches[instanceID]) {
+			console.log("MATCH OBJECT EXISTS " + userID +", " + instanceID);
 			if(matches[instanceID].gameBoard.players.length < matches[instanceID].gameBoard.maxPlayers) {
 				var found = false;
 				for(var i=0; i<matches[instanceID].gameBoard.players.length && !found; i++) {

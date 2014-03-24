@@ -79,11 +79,11 @@ const int GAME_SOCKET_PORT = 10089;
             else {
                 NSLog(@"User id received from initialize is %@",[userDict objectForKey:@"userID"]);
                 _player = [[Player alloc] initWithUserIDAndNameAndisOnlineAndAvatarURL:[[userDict objectForKey:@"userID"] intValue] userName:[userDict objectForKey:@"userName"] isOnline:[userDict objectForKey:@"isOnline"] avatarURL:[userDict objectForKey:@"avatarURL"]];
+                [self setupGameSocketConnection];
             }
         }
     };
 
-    [self setupGameSocketConnection];
     [self sendHttpGetRequest: responseSuccess url: @"initialize"];
 }
 
@@ -163,10 +163,7 @@ const int GAME_SOCKET_PORT = 10089;
     else {
         NSString *eventName = [jsonNSDict objectForKeyedSubscript:@"name"];
         
-        if ([eventName isEqualToString:@"clientConnectedToServer"]) {
-            [[MainViewController GameSocket] sendEvent:@"userSetup" withData: _player.userID];
-        }
-        else if ([eventName isEqualToString:@"matchFound"]) {
+        if ([eventName isEqualToString:@"matchFound"]) {
             [[NSNotificationCenter defaultCenter]
              postNotificationName:@"MatchFoundNotification"
              object:jsonNSDict];
@@ -177,6 +174,16 @@ const int GAME_SOCKET_PORT = 10089;
              object:jsonNSDict];
         }
     }
+}
+
+- (void) socketIODidConnect:(SocketIO *)socket {
+    NSMutableDictionary *user = [NSMutableDictionary dictionary];
+    [user setObject:_player.userID forKey:@"userID"];
+    [[MainViewController GameSocket] sendEvent:@"userSetup" withData:user];
+}
+
+- (void) socketIODidDisconnect:(SocketIO *)socket disconnectedWithError:(NSError *)error {
+    [self setupGameSocketConnection];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
