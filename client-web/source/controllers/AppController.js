@@ -33,8 +33,7 @@ enyo.kind({
 			window.active = baseState.active;
 			enyo.stage.menu.controller.loadBaseState();
 			if(!window.location.hash ||window.location.hash.length===0 || window.location.hash=="#") {
-				// set initial hash location in url
-				window.location.hash = "launcher";
+				enyo.stage.game.controller.showLauncher();
 			} else {
 				this.hashChange();
 			}
@@ -92,13 +91,14 @@ enyo.kind({
 		this.view.$.lowerPanels.draggable = (inEvent.clientX > (enyo.dom.getWindowWidth()/2));
 	},
 	hashChange: function(inSender, inEvent) {
-		this.showGameArea();
 		var hash = window.location.hash.slice(1);
 		if(hash=="launcher") {
 			document.title = "Let's Play - Game Launcher";
+			this.showGameArea();
 			enyo.stage.game.controller.showLauncher();
 		} else if(hash=="invite") {
 			document.title = "Let's Play- Invite to Play";
+			this.showGameArea();
 			enyo.stage.game.controller.showLauncher(true);
 		} else if(hash.indexOf("game-")===0) {
 			var instanceID = hash.replace("game-", "");
@@ -109,12 +109,14 @@ enyo.kind({
 						document.title = "Let's Play - " + window.availableGames[i].gameName;
 					}
 				}
+				this.showGameArea();
 				enyo.stage.game.controller.loadGame(gameboard);
 			} else { // attempt to join game
 				window.ClientServerComm.joinGame(window.userID, instanceID, enyo.bind(this, function(response) {
 					if(response.gameboard) {
 						enyo.Signals.send("onMatchFound", {gameboard:response.gameboard});
 						//since hash value is already set, hashChange won't tigger; explicitly load game
+						this.showGameArea();
 						enyo.stage.game.controller.loadGame(response.gameboard);
 					} else if(response.err) {
 						window.location.hash = "launcher";
