@@ -164,7 +164,7 @@ server.get("/initialize", function(request, response, next) {
 					} else {
 						//for now, send back the user and game list
 						text = {'user': userInfo, 'availableGames': games, 'active': activeGames};		
-						response.writeHead( 200, {'content-type': 'application/json'});
+						response.writeHead( 200, {"content-type": "application/json", 'Access-Control-Allow-Origin' : '*'});
 						response.write(JSON.stringify(text));
 						response.end();
 						next();
