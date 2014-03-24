@@ -11,6 +11,7 @@ exports.GameMatchmaker.clearQueue = function() {
 
 //Player joins the queue
 exports.GameMatchmaker.joinQueue = function(userID,gameID){
+	console.log("JOINED QUEUE: " + userID);
 	validator.ValidateNumber(userID);
 	validator.ValidateNumber(gameID);
 	if ((typeof gameQueue[gameID]) === 'undefined' || !gameQueue[gameID])

@@ -30,6 +30,7 @@ function GameSocketController(port) {
 		});
 
 		socket.on('chat', function(param) {
+			console.log("CHAT - " + param.player.name + ": " + param.message);
 			self.socketIO.sockets.in('game/' + param.instanceID).emit('chat', param);
 		});
 		
@@ -38,7 +39,7 @@ function GameSocketController(port) {
 				if(clientSocketIDHashTable[x].id == socket.id) {
 					delete clientSocketIDHashTable[x];
 					console.log('Disconnect called on socket for userID: ' + x);
-					self.emit('userDisconnect', {userID: x});
+					self.emit('userDisconnect', {userID: parseInt(x, 10)});
 				}
 			}
 		});

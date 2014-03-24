@@ -2,6 +2,7 @@ var restify = require('restify');
 var ecstatic = require('ecstatic');
 var serverSettings = require('./server_settings.js');
 var dbController = require('./controllers/DataStoreController.js');
+var matchmaking = require('./controllers/MatchmakingController.js');
 dbController.setup({username:'ubuntu', password:'', hostname:serverSettings.hostname});
 var gameMGMT = require('./models/GameManagement.js');
 var gameSocketController = require('./controllers/GameSocketController.js').createGameSocket(10089);
@@ -22,8 +23,17 @@ server.get("/queueForGame", function(request, response, next){
 	
 	//Have to set up a mock queueForGame thing
 	//****MOCK MATCHMAKING CONTROLLER*******
-	var params = request.params;
-	
+	var userID = parseInt(request.params.userID, 10);
+	var gameID = parseInt(request.params.gameID, 10);
+	matchmaking.joinMatchmaking(userID, gameID, function(gb) {
+		if(gb) {
+			console.log(gb.instanceID +" MATCHMAKING SETUP");
+		}
+	});
+	response.writeHead(200, {'content-type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
+	response.end("{}");
+	return next();
+
 	//***CALL VALIDATE ON THE clientID && gameID*******
 	//matchMaking.joinMatchmaking(params.clientID, params.gameID);
 
@@ -33,7 +43,7 @@ server.get("/queueForGame", function(request, response, next){
 	{
 		queueForGamesList["Player1"] = 
 		{ 
-			"clientID": params.clientID,
+			"clientID": params.userID,
 			"gameID": params.gameID
 		};
 	}
@@ -42,7 +52,7 @@ server.get("/queueForGame", function(request, response, next){
 	{			
 		queueForGamesList["Player2"] =
 		{
-			"clientID": params.clientID,
+			"clientID": params.userID,
 			"gameID": params.gameID
 		};
 		
@@ -144,7 +154,7 @@ server.get("/initialize", function(request, response, next) {
 	var text = {};
 	//call DataStoreController and get a the user's information
 	dbController.getUserInformation(request.params.userID, function(newUserInfo){
-		var userInfo = newUserInfo[0];
+		var userInfo = newUserInfo;
 		
 		console.log('User info received is ' + userInfo);
 		//Get a list of games on the server
