@@ -1,5 +1,17 @@
+@import url(http://fonts.googleapis.com/css?family=Oswald);
+
 .app {
 	background-color: #333333 !important;
+}
+
+.app-title {
+	font-size: 2.8em;
+	color:rgb(150,150,150);
+	padding: 10px 10px 10px 30px;
+	text-shadow:1px 1px 10px black, -1px -1px black;
+	text-transform: uppercase;
+	letter-spacing:1px;
+	font-family: 'Oswald', sans-serif;
 }
 
 .full {
@@ -12,11 +24,49 @@
 	background-color: #333333;
 }
 
+.menu-button {
+	width:100%;
+	background-color:#4c4c4c;
+	color: lightgray;
+}
+
+.menubtn-title {
+	font-size: 1em;
+}
+
+.menubtn-subtitle {
+	font-size: 0.75em;
+	font-style: oblique;
+}
+
+.active-container {
+	background-color: transparent;
+	background-color: rgba(40,40,40, 0.4);
+	border-color: rgb(80,80,80);
+}
+
 .main-container {
 	background-color: white;
 	-moz-box-shadow: -4px 0 4px rgba(0,0,0,0.3);
 	-webkit-box-shadow: -4px 0 4px rgba(0,0,0,0.3);
 	box-shadow: -4px 0 4px rgba(0,0,0,0.3);
+}
+
+.waiting-splash {
+	text-align: center;
+}
+
+.waiting-splash-title {
+	padding-top:5em;
+	font-size:1.5em;
+	font-family: 'Oswald', sans-serif;
+}
+
+.waiting-splash-spinner {
+	margin:auto;
+	width: 52px;
+	height: 52px;
+	background: url('../assets/spinner.gif') no-repeat center center;
 }
 
 .game-container {
@@ -36,4 +86,24 @@
 	-moz-box-shadow: inset 4px 0 4px rgba(0,0,0,0.2) !important;
 	-webkit-box-shadow: inset 4px 0 4px rgba(0,0,0,0.2) !important;
 	box-shadow: inset 4px 0 4px rgba(0,0,0,0.2) !important;
+}
+
+/* Preload images via CSS */
+.connect4-icon {
+	background: url('../assets/Connect4.gif') no-repeat center center;
+}
+.connect4-empty {
+	background: url('../assets/connect4-empty.png') no-repeat center center;
+}
+.connect4-blue {
+	background: url('../assets/connect4-blue.png') no-repeat center center;
+}
+.connect4-blue-filled {
+	background: url('../assets/connect4-filledblue.png') no-repeat center center;
+}
+.connect4-red {
+	background: url('../assets/connect4-red.png') no-repeat center center;
+}
+.connect4-red-filled {
+	background: url('../assets/connect4-filledred.png') no-repeat center center;
 }
