@@ -13,15 +13,19 @@ function GameSocketController(port) {
 	this.socketIO.sockets.on('connection', function(socket) {
 		console.log("Socket client connected " + socket.id);
 		socket.emit("clientConnectedToServer", {});
-		socket.on('userSetup', function(userID, callback) {
-			console.log('User Setup called for ' + userID);
-			ValidateObjectController.ValidateNumber(userID);
-			clientSocketIDHashTable[userID] = socket;
-			self.emit('userConnect', {userID: userID}, function() {
-				socket.emit("userSetupComplete", {});
-			});
-			if (callback) {
-				callback(util.inspect(clientSocketIDHashTable));
+		socket.on('userSetup', function(user, callback) {
+			console.log('User Setup called for ' + user.userID);
+			if(user && user.userID!==undefined) {
+				ValidateObjectController.ValidateNumber(user.userID);
+				clientSocketIDHashTable[user.userID] = socket;
+				self.emit('userConnect', {userID: user.userID}, function() {
+					socket.emit("userSetupComplete", {});
+				});
+				if (callback) {
+					callback(util.inspect(clientSocketIDHashTable));
+				}
+			} else {
+				console.log("Unable to identify; socket id: " + socket.id);
 			}
 		});
 		
