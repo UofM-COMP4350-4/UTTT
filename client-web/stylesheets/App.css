@@ -166,6 +166,30 @@
 }
 
 
+/* Connect4Piece CSS */
+
+.connect4-piece {
+	position:relative;
+}
+
+.connect4-static-piece {
+	position:absolute;
+	z-index:200;
+}
+
+.connect4-sliding-piece {
+	position:relative;
+	z-index:100;
+}
+
+.connect4-sliding-trigger {
+	transition: top 1s ease-in;
+	-webkit-transition: top 1s ease-in;
+	-moz-transition: top 1s ease-in;
+	-o-transition: top 1s ease-in;
+}
+
+
 /* ChatView CSS */
 
 
