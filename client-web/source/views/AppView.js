@@ -16,10 +16,9 @@ enyo.kind({
 							{name:"chatInputDecorator", kind: "onyx.InputDecorator", alwaysLooksFocused:true, style:"max-width:1000px;width:90%;", layoutKind:"FittableColumnsLayout", components: [
 								{name:"chatInput", kind: "onyx.Input", fit:true},
 								{kind:"onyx.IconButton", style:"height:32px; width:32px; padding:0; margin-top:-6px !important; margin-bottom:-8px !important;", src:"assets/onyx-chat.png", ontap:"controller.submitMessage"}
-							]},
+							]}
 						]},
-						{kind:"onyx.IconButton", src:"assets/onyx-profile.png", style:"height:32px", ontap:"controller.toggleSocial"},
-						
+						{kind:"onyx.IconButton", src:"assets/onyx-profile.png", style:"height:32px", ontap:"controller.toggleSocial"}
 					]}
 				]},
 				{name:"social", kind:"SocialView", classes:"social-container social-shadow"}

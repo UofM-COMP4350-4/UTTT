@@ -2,7 +2,7 @@ enyo.kind({
 	name: "ChatController",
 	kind: "Component",
 	components:[
-		{kind:"Signals", onChat:"updateLog"},
+		{kind:"Signals", onChat:"updateLog"}
 	],
 	create: function() {
 		this.inherited(arguments);
