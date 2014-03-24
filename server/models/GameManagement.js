@@ -21,7 +21,7 @@ GameSocket.on("userConnect", function(inEvent, optCallback) {
 });
 GameSocket.on("moveReceived", function(inEvent) {
 	if(matches[inEvent.instanceID]) {
-		matches[inEvent.instanceID].RequestMove(inEvent);
+		matches[inEvent.instanceID].RequestMove({x:inEvent.x, y:inEvent.y, player:inEvent.player});
 	}
 });
 GameSocket.on("userDisconnect", function(inEvent, optCallback) {
