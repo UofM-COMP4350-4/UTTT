@@ -1,8 +1,50 @@
 @import url(http://fonts.googleapis.com/css?family=Oswald);
 
+/* Global CSS */
+
+.centre {
+	text-align: center;
+}
+
+.full {
+	width: 100%;
+	height: 100%;
+}
+
+
+/* AppView CSS */
+
 .app {
 	background-color: #333333 !important;
 }
+
+.menu-container {
+	width: 250px;
+	background-color: #333333;
+}
+
+.main-container {
+	background-color: white;
+	-moz-box-shadow: -4px 0 4px rgba(0,0,0,0.3);
+	-webkit-box-shadow: -4px 0 4px rgba(0,0,0,0.3);
+	box-shadow: -4px 0 4px rgba(0,0,0,0.3);
+}
+
+.game-container {
+	background-color: #EAEAEA;
+}
+
+.chat-container {
+	background-color: #EAEAEA;
+}
+
+.social-container {
+	width: 250px;
+	background-color: #333333;
+}
+
+
+/* MenuView CSS */
 
 .app-title {
 	font-size: 2.8em;
@@ -12,16 +54,6 @@
 	text-transform: uppercase;
 	letter-spacing:1px;
 	font-family: 'Oswald', sans-serif;
-}
-
-.full {
-	width: 100%;
-	height: 100%;
-}
-
-.menu-container {
-	width: 250px;
-	background-color: #333333;
 }
 
 .menu-button {
@@ -45,19 +77,45 @@
 	border-color: rgb(80,80,80);
 }
 
-.main-container {
-	background-color: white;
-	-moz-box-shadow: -4px 0 4px rgba(0,0,0,0.3);
-	-webkit-box-shadow: -4px 0 4px rgba(0,0,0,0.3);
-	box-shadow: -4px 0 4px rgba(0,0,0,0.3);
+
+/* GameView CSS */
+
+.launcher-wrapper {
+	padding:2em;
 }
 
-.waiting-splash {
-	text-align: center;
+.launcher-item {
+	padding: 0.75em;
+	display: inline-block;
+	border: ridge 3px lightgray;
+	-webkit-border-radius: 0.75em;
+	-moz-border-radius: 0.75em;
+	border-radius: 0.75em;
+	background-color: white;
+	max-width: 80%;
+	opacity: 1;
+}
+
+.launcher-item:active:hover {
+	opacity: 0.5;
+}
+
+.launcher-item-icon {
+	max-width: 100%;
+	height:auto;
+}
+
+.launcher-item-title {
+	font-family: 'Oswald', sans-serif;
+	font-size: 1.2em;
+	line-height: 1.2em;
+}
+
+.splash-spacer {
+	height:25%;
 }
 
 .waiting-splash-title {
-	padding-top:5em;
 	font-size:1.5em;
 	font-family: 'Oswald', sans-serif;
 }
@@ -69,18 +127,49 @@
 	background: url('../assets/spinner.gif') no-repeat center center;
 }
 
-.game-container {
-	background-color: #EAEAEA;
+.connection-failure {
+	font-size:1.5em;
+	font-family: 'Oswald', sans-serif;
 }
 
-.chat-container {
-	background-color: #EAEAEA;
+
+/* Connect4View CSS */
+
+.connect4-wrapper-outer {
+	position: relative;
 }
 
-.social-container {
-	width: 250px;
-	background-color: #333333;
+.connect4-wrapper-inner {
+	display:block;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
+
+.connect4-status-wrapper {
+	position:absolute;
+	bottom:-32px;
+	height:32px;
+	width:100%;
+	display:table;
+}
+
+.connect4-status {
+	display:table-cell;
+	vertical-align:top;
+	text-align:right;
+	font-size:14px;
+	font-family: 'Oswald', sans-serif;
+}
+
+
+/* ChatView CSS */
+
+
+/* SocialView CSS */
 
 .social-shadow {
 	-moz-box-shadow: inset 4px 0 4px rgba(0,0,0,0.2) !important;
@@ -88,22 +177,12 @@
 	box-shadow: inset 4px 0 4px rgba(0,0,0,0.2) !important;
 }
 
+
 /* Preload images via CSS */
-.connect4-icon {
-	background: url('../assets/Connect4.gif') no-repeat center center;
-}
-.connect4-empty {
-	background: url('../assets/connect4-empty.png') no-repeat center center;
-}
-.connect4-blue {
-	background: url('../assets/connect4-blue.png') no-repeat center center;
-}
-.connect4-blue-filled {
-	background: url('../assets/connect4-filledblue.png') no-repeat center center;
-}
-.connect4-red {
-	background: url('../assets/connect4-red.png') no-repeat center center;
-}
-.connect4-red-filled {
-	background: url('../assets/connect4-filledred.png') no-repeat center center;
-}
+
+.connect4-icon { background: url('../assets/Connect4.gif') no-repeat center center; }
+.connect4-empty { background: url('../assets/connect4-empty.png') no-repeat center center; }
+.connect4-blue { background: url('../assets/connect4-blue.png') no-repeat center center; }
+.connect4-blue-filled { background: url('../assets/connect4-filledblue.png') no-repeat center center; }
+.connect4-red { background: url('../assets/connect4-red.png') no-repeat center center; }
+.connect4-red-filled { background: url('../assets/connect4-filledred.png') no-repeat center center; }
