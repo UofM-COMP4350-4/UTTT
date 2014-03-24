@@ -21,8 +21,6 @@ const NSString* redChip = @"redChip.png";
 const NSString* whiteChip = @"whiteChip.png";
 const int ROW_SIZE = 6;
 const int COL_SIZE = 7;
-const int userID = 12;
-const int gameInstanceID = 96;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -87,7 +85,7 @@ const int gameInstanceID = 96;
     int quadrantSize = screenWidth / COL_SIZE;
     int col = -1, index = 1, currentQuadrantMax = quadrantSize;
     
-    if ([_currentPlayersTurn.userID intValue] == [_myUserID intValue]) {
+    if ([_currentPlayersTurn.userID intValue] == [_ownerPlayer.userID intValue]) {
         while (col == -1) {
             if (touchX <= currentQuadrantMax) {
                 col = index - 1;
@@ -101,8 +99,16 @@ const int gameInstanceID = 96;
             index++;
             currentQuadrantMax = quadrantSize * index;
         }
-        
-        NSString *moveJSON = [NSString stringWithFormat:@"{ \"player\":{\"id\":%d, \"name\":\"player1\"}, \"x\":%d,\"y\":5 }",[_myUserID intValue], col];
+        NSNumber* nsNumberCol = [[NSNumber alloc] initWithInt:col];
+        NSNumber* nsNumberRow = [[NSNumber alloc] initWithInt:5];
+        NSMutableDictionary* player = [NSMutableDictionary dictionary];
+        NSMutableDictionary* moveJSON = [NSMutableDictionary dictionary];
+        [player setObject:_ownerPlayer.userID forKey:@"id"];
+        [player setObject:_ownerPlayer.username forKey:@"name"];
+        [moveJSON setObject:player forKey:@"player"];
+        [moveJSON setObject:nsNumberCol forKey:@"x"];
+        [moveJSON setObject:nsNumberRow forKey:@"y"];
+        [moveJSON setObject:_gameInstanceID forKey:@"instanceID"];
         NSLog(@"player made a move im col %d", col);
         [[MainViewController GameSocket] sendEvent:@"receiveMove" withData:moveJSON];
     }
@@ -122,20 +128,16 @@ const int gameInstanceID = 96;
 }
 
 - (void)drawGameBoard:(NSMutableArray*) moveList {
-    int gameBoardIndex = 0;
-    int row = 0;
-    int col = 0;
-    int currUserID = 0;
-    Move* currentMove;
     
     for (int index = 0; index < [moveList count]; index++) {
-        currentMove = [[Move alloc] initWithJSONString:[moveList objectAtIndex:index]];
-        col = currentMove.position.x;
-        row = currentMove.position.y;
-        gameBoardIndex = ROW_SIZE*COL_SIZE - ((row * COL_SIZE)+(COL_SIZE- col));
-        currUserID = [currentMove.user.userID intValue];
+        NSDictionary* currentMove = [moveList objectAtIndex:index];
+        NSDictionary* player = [currentMove objectForKey:@"player"];
+        int col = [[currentMove objectForKey:@"x"] intValue];
+        int row = [[currentMove objectForKey:@"y"] intValue];
+        int gameBoardIndex = ROW_SIZE*COL_SIZE - ((row * COL_SIZE)+(COL_SIZE - col));
+        int currUserID = [[player objectForKey:@"id"] intValue];
         
-        if (currUserID == [_myUserID intValue]) {
+        if (currUserID == [_ownerPlayer.userID intValue]) {
             [self.gameBoard replaceObjectAtIndex:gameBoardIndex withObject:blueChip];
         }
         else {
@@ -169,6 +171,7 @@ const int gameInstanceID = 96;
         }
         else {
             NSMutableArray *listOfMoves = [argDict objectForKey:@"currentBoard"];
+            _gameInstanceID = [[NSNumber alloc] initWithInt:[[argDict objectForKey:@"instanceID"] intValue] ];
             [self drawGameBoard:listOfMoves];
 
             NSDictionary *userToPlay = [argDict objectForKey:@"userToPlay"];
@@ -182,7 +185,6 @@ const int gameInstanceID = 96;
     else if ([[notification name] isEqualToString:@"PlayResultNotification"]) {
         NSLog (@"Connect4ViewController received a play result notification.");
         NSDictionary *jsonNSDict = (NSDictionary *) [notification object];
-        NSError *error;
         NSArray *args = [jsonNSDict objectForKeyedSubscript:@"args"];
         NSDictionary *argDict = args[0];
         NSMutableArray *listOfMoves = [argDict objectForKey:@"currentBoard"];

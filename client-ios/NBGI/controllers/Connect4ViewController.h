@@ -15,6 +15,7 @@
 
 @property NSMutableArray* gameBoard;
 @property Player* currentPlayersTurn;
-@property NSNumber* myUserID;
+@property Player* ownerPlayer;
+@property NSNumber* gameInstanceID;
 
 @end
