@@ -29,7 +29,7 @@ this.socketIO.sockets.on('connection', function(socket) {
 				message: "This is a sample chat message",
 				timestamp: (new Date().getTime()*1)
 			});
-		})
+		}, 1000);
 	});
 	var gameBoard = {
 		"instanceID": 1,
