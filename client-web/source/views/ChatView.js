@@ -2,8 +2,10 @@ enyo.kind({
 	name: "ChatView",
 	kind: "View",
 	controllerKind: "ChatController",
-	layoutKind:"FittableRowsLayout",
+	style:"padding:4px;",
 	components:[
-		{fit:true}
+		{kind:"Scroller", classes:"full chat-scroller",  components:[
+			{name:"chatLog", content:"&nbsp;", allowHtml:true, style:"margin:4px;"}
+		]}
 	]
 });
