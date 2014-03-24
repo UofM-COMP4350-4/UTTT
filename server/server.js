@@ -122,6 +122,12 @@ server.get("/joinGame", function(request, response, next) {
 		} else {
 			var gameID = gameMGMT.getMatches()[instanceID].gameBoard.gameID;
 			gameMGMT.getGameboard(instanceID, gameID, function(gb) {
+				// Send gameboard updated with added player to other players in the match
+				for(var i=0; i<gb.players.length; i++) {
+					if(gb.players[i].id!=userID) {
+						gameSocketController.SendDataToUser(gb.players[i].id, gb);
+					}
+				}
 				response.end(JSON.stringify({gameboard:gb}));
 				next();
 			});
