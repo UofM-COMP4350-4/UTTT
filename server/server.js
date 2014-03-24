@@ -1,7 +1,8 @@
 var restify = require('restify');
 var ecstatic = require('ecstatic');
+var serverSettings = require('./server_settings.js');
 var dbController = require('./controllers/DataStoreController.js');
-dbController.setup({username:'ubuntu', password:'', hostname:'ec2-54-186-85-227.us-west-2.compute.amazonaws.com'});
+dbController.setup({username:'ubuntu', password:'', hostname:serverSettings.hostname});
 var gameMGMT = require('./models/GameManagement.js');
 var gameSocketController = require('./controllers/GameSocketController.js').createGameSocket(10089);
 var queueForGameRequests = 0;

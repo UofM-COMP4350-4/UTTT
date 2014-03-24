@@ -1,7 +1,8 @@
 var assert = require("assert");
+var serverSettings = require("../../server_settings");
 var Sequelize = require('sequelize');
 var RelationalDBAccess = require("../../models/RelationalDBAccess.js");
-var relationalDB = new RelationalDBAccess({username:'ubuntu', password:'', hostname:'ec2-54-186-85-227.us-west-2.compute.amazonaws.com'});
+var relationalDB = new RelationalDBAccess({username:'ubuntu', password:'', hostname:serverSettings.hostname});
 
 describe("RelationalDBAccess", function() {
 	describe('#initialize database', function(){
