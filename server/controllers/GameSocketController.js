@@ -28,6 +28,10 @@ function GameSocketController(port) {
 			console.log('Received Move from Player.  X:' + move.x + ' Y:' + move.y);
 			self.emit('moveReceived', move);
 		});
+
+		socket.on('chat', function(param) {
+			self.socketIO.sockets.in('game/' + param.instanceID).emit('chat', param);
+		});
 		
 		socket.on('disconnect', function() {
 			for(var x in clientSocketIDHashTable) {
