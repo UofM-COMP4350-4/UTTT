@@ -7,11 +7,13 @@ enyo.depends(
 	"$lib/ext",
 	// Stylesheets
 	"../stylesheets",
-	// Controller and data definitions
+	// Controller definitions
 	"controllers",
+	// UI control definitions
+	"ui-controls",
 	// View definitions
 	"views",
-	//data
+	// Data manipulation and access
 	"data",
 	// Default webapp entry point
 	"App.js"
