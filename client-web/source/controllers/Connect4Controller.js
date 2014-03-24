@@ -58,7 +58,7 @@ enyo.kind({
 				piece.setPiece();
 				piece.animateIn(this.moves[i].player.id);
 				// delay updating status to better align with animation
-				this.timerID = setTimeout(self, 1100);
+				this.timerID = setTimeout(asyncStatusUpdate, 1100);
 			} else {
 				piece.setPiece(this.moves[i].player.id);
 			}
@@ -116,7 +116,12 @@ enyo.kind({
 			//new user joined a non-full match
 			if(inEvent.gameboard.players.length==this.maxPlayers) {
 				this.update(inEvent.gameboard);
+			} else {
+				this.gameboard = gameboard;
+				this.moves = gameboard.currentBoard;
+				this.maxPlayers = this.getMaxPlayers();
 			}
+			enyo.stage.menu.controller.updateGame(inEvent.gameboard);
 		} else if(this.moves.length<inEvent.gameboard.currentBoard.length) {
 			//new moves
 			this.update(inEvent.gameboard, true);
