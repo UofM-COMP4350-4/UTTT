@@ -31,14 +31,21 @@ this.socketIO.sockets.on('connection', function(socket) {
 		"currentBoard": [],
 		"winner": null
 	};
+	var moves= {};
 	socket.on('receiveMove', function(param){
 		console.log('SETUP EVENT, RECEIVEMOVE ' + JSON.stringify(param));
-		gameBoard.currentBoard.push(param);
+		gameBoard.instanceID = param.instanceID;
+		if(!moves[gameBoard.instanceID]) {
+			moves[gameBoard.instanceID] = [];
+		}
+		moves[gameBoard.instanceID].push({x:param.x, y:param.y, player:param.player});
+		gameBoard.currentBoard = moves[gameBoard.instanceID];
 		gameBoard.userToPlay = {id:1, name:"Player2"};
 		socket.emit("receivePlayResult", gameBoard);
 		setTimeout(function() {
 			gameBoard.userToPlay = {id:1, name:"Player1"};
-			gameBoard.currentBoard.push({x:2, y:2, player:{id:2, name:"Player2"}});
+			moves[gameBoard.instanceID].push({x:2, y:2, player:{id:2, name:"Player2"}});
+			gameBoard.currentBoard = moves[gameBoard.instanceID];
 			socket.emit("receivePlayResult", gameBoard);
 
 		}, 2000);
