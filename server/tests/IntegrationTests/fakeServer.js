@@ -20,23 +20,24 @@ this.socketIO.sockets.on('connection', function(socket) {
 		console.log('SETUP EVENT, USERID ' + param);
 		socket.emit("userSetupComplete", {});
 	});
+	var gameBoard = {
+		"instanceID": 1,
+		"gameID": 1,
+		"userToPlay": {
+			"id": 2,
+			"name": "Player2"
+		},
+		"players": [{"id":1,"name":"Player1"}, {"id":2,"name":"Player2"}],
+		"currentBoard": [],
+		"winner": null
+	};
 	socket.on('receiveMove', function(param){
 		console.log('SETUP EVENT, RECEIVEMOVE ' + JSON.stringify(param));
-		var gameBoard = {
-			"instanceID": 1,
-			"gameID": 1,
-			"userToPlay": {
-				"id": 2,
-				"name": "Player2"
-			},
-			"players": [{"id":1,"name":"Player1"}, {"id":2,"name":"Player2"}],
-			"currentBoard": [param],
-			"winner": null
-		};
+		gameBoard.currentBoard.push(param);
 		socket.emit("receivePlayResult", gameBoard);
 		setTimeout(function() {
 			gameBoard.userToPlay = {id:1, name:"Player1"};
-			gameBoard.currentBoard.push(JSON.stringify({x:2, y:2, player:{id:2, name:"Player2"}}));
+			gameBoard.currentBoard.push({x:2, y:2, player:{id:2, name:"Player2"}});
 			socket.emit("receivePlayResult", gameBoard);
 		}, 2000);
 	});
