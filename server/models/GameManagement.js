@@ -126,15 +126,19 @@ module.exports = {
 				callback({errorCode:1, errorText:"Game full"});
 			}
 		} else {
-			DataStore.lookupMatch(instanceID, function(entries) {
-				if(entries && entries.length>0) {
-					module.exports.setupMatch(entries[0].gameID, instanceID, function(id) {
-						module.exports.joinMatch(userID, instanceID, callback);
-					});
-				} else {
-					throw new Error("Instance does not exist: " + instanceID);
-				}
-			});
+			try {
+				DataStore.lookupMatch(instanceID, function(entries) {
+					if(entries && entries.length>0) {
+						module.exports.setupMatch(entries[0].gameID, instanceID, function(id) {
+							module.exports.joinMatch(userID, instanceID, callback);
+						});
+					} else {
+						throw new Error("Instance does not exist: " + instanceID);
+					}
+				});
+			} catch(e) {
+				callback({errorCode:2, errorText:"Unable to join match"});
+			}
 		}
 	},
 	leaveMatch: function(userID, instanceID, callback) {
