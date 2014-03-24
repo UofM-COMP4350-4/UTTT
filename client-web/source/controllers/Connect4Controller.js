@@ -4,9 +4,9 @@ enyo.kind({
 	COL_SIZE: 7,
 	ROW_SIZE: 6,
 	PIECES: [
-		"assets/connectfourwhite.png",
-		"assets/connectfourblue.png",
-		"assets/connectfourred.png"
+		"assets/connect4-empty.png",
+		"assets/connect4-filledblue.png",
+		"assets/connect4-filledred.png"
 	],
 	components:[
 		{kind:"Signals", onPlayResult:"handleUpdateReceived"}
