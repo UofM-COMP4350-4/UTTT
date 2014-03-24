@@ -58,6 +58,14 @@ enyo.kind({
 		// rather than dispatching to the View, it'll attempt dispatching to the Controller first,
 		// afterwards carrying on to the view and upwards in the chain.
 		return this.controller.dispatchEvent.apply(this.controller, arguments) || this.inherited(arguments);
+	},
+	rendered: function() {
+		this.inherited(arguments);
+		this.controller && this.controller.rendered && this.controller.rendered();
+	},
+	reflow: function() {
+		this.inherited(arguments);
+		this.controller && this.controller.reflow && this.controller.reflow();
 	}
 });
 
