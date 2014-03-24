@@ -11,7 +11,7 @@ enyo.kind({
 			]}
 		]}
 	],
-	row: {style:"width:100%; height:16.6666666667%;"},
-	cell: {style:"width:14.2857142857%; height:100%;display:inline-block;"},
+	row: {classes:"connect4-row"},
+	cell: {classes:"connect4-cell"},
 	item: {kind:"Connect4Piece"}
 });
