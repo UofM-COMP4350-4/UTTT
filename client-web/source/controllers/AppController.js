@@ -6,7 +6,7 @@ enyo.kind({
 		socialShowing: true
 	},
 	components: [
-		{kind:"Signals", onhashchange:"hashChange", onMatchFound:"receivedGameboard", onPlayResult:"receivedGameboard"}
+		{kind:"Signals", onhashchange:"hashChange", onMatchFound:"receivedGameboard"}
 	],
 	create:function() {
 		this.inherited(arguments);
@@ -132,6 +132,8 @@ enyo.kind({
 			if(!window.active[gb.instanceID]) {
 				window.active[gb.instanceID] = gb;
 				enyo.stage.menu.controller.addGame(gb);
+				window.location.hash = "game-" + gb.instanceID;
+			} else {
 				window.location.hash = "game-" + gb.instanceID;
 			}
 		}
