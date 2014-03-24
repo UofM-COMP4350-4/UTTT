@@ -12,6 +12,14 @@ enyo.kind({
 		this.state.push(gameboard);
 		this.loadGameList();
 	},
+	updateGame: function(gameboard) {
+		for(var i=0; i<this.state.length; i++) {
+			if(gameboard.instanceID==this.state[i].instanceID) {
+				this.state[i] = gameboard;
+			}
+		}
+		this.loadGameList();
+	},
 	removeGame: function(instanceID) {
 		for(var i=0; i<this.state.length; i++) {
 			if(instanceID==this.state[i].instanceID) {
