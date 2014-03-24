@@ -18,6 +18,7 @@ this.socketIO.sockets.on('connection', function(socket) {
 	socket.emit("clientConnectedToServer", {});
 	socket.on('userSetup', function(param){
 		console.log('SETUP EVENT, USERID ' + param);
+		socket.emit("userSetupComplete", {});
 	});
 	socket.on('receiveMove', function(param){
 		console.log('SETUP EVENT, RECEIVEMOVE ' + JSON.stringify(param));

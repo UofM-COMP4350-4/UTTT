@@ -16,8 +16,9 @@ function GameSocketController(port) {
 			console.log('User Setup called for ' + userID);
 			ValidateObjectController.ValidateNumber(userID);
 			clientSocketIDHashTable[userID] = socket;
-			self.emit('userConnect', {userID: userID});
-		
+			self.emit('userConnect', {userID: userID}, function() {
+				socket.emit("userSetupComplete", {});
+			});
 			if (typeof callback !== undefined) {
 				callback(util.inspect(clientSocketIDHashTable));
 			}
