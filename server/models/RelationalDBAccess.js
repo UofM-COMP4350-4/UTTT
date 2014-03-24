@@ -6,12 +6,12 @@ var my_host='54.186.85.227';
 
 function RelationalDBAccess(database) {
 	if (database === undefined)	{
-		database = new InitializeDB();
+		new InitializeDB();
 	} else { 
 		Validator.ValidateString(database.username);
 		Validator.ValidateString(database.password);
 		Validator.ValidateString(database.hostname);
-		database = new InitializeOtherDB(database.username, database.password, database.hostname);
+		new InitializeOtherDB(database.username, database.password, database.hostname);
 	}
 	console.log('Relational db contains: ' + dbConnection);
 }
@@ -26,7 +26,7 @@ var InitializeDB = function() {
 		.authenticate()
 		.complete(function(err) {
 			if (!!err) {
-				console.log("unable to connect, error: " err);
+				console.log("unable to connect, error: " + err);
 			} else {
 				console.log("connection established");
 			}
@@ -37,6 +37,7 @@ var InitializeDB = function() {
 var InitializeOtherDB = function(username, password, hostname) {	
 	dbConnection = new Sequelize('Games_Users', username, password || '', {
 		host: hostname,
+		dialect: 'mysql',
 		port: 3306
 	});
 	dbConnection

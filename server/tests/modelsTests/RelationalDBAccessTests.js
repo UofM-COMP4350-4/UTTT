@@ -1,7 +1,7 @@
 var assert = require("assert");
 var Sequelize = require('sequelize');
 var RelationalDBAccess = require("../../models/RelationalDBAccess.js");
-var relationalDB = new RelationalDBAccess({username:'ubuntu', password:'', hostname:'54.186.85.227'});
+var relationalDB = new RelationalDBAccess({username:'ubuntu', password:'', hostname:'localhost'});
 
 describe("RelationalDBAccess", function() {
 	describe('#initialize database', function(){
@@ -10,7 +10,7 @@ describe("RelationalDBAccess", function() {
 		});
 	});
 	
-	describe("#getListOfGames", function(){		
+	describe("Testing queries (I don't know why. I thought we were going to abstract this?)", function(){		
 		var dbConnection = new Sequelize('Games_Users', 'ubuntu', '', {
 			host:'localhost',
 			dialect: 'mysql',
@@ -20,7 +20,7 @@ describe("RelationalDBAccess", function() {
 			.authenticate()
 			.complete(function(err) {
 				if (!!err) {
-					console.log("unable to connect to DB:", err);
+					console.log("unable to connect to DB:" +  err);
 				}
 				else {
 					console.log("connection has been established :)");
@@ -28,26 +28,32 @@ describe("RelationalDBAccess", function() {
 			});
 		
 		it('should get list of all games from the database properly', function(){
-		dbConnection
-			.query("SELECT * FROM Games;")
-			.complete(function(data) {
-				if (data)
-				{
-					console.log("data: ");
-				}
-				else {
-					console.log("No data was found: ");
-				}
-			})
-			.error(function(err){
-				assert.fail('Selection Failed', 'Selection should not fail', 'Selecting * in Games failed.');
-			});
+			dbConnection
+				.query("SELECT * FROM Games;")
+				.complete(function(data) {
+					if (data)
+					{
+						console.log("data: ");
+					}
+					else {
+						console.log("No data was found: ");
+					}
+				})
+				.error(function(err){
+					assert.fail('Selection Failed', 'Selection should not fail', 'Selecting * in Games failed.');
+				});
+		});
+		it('should get a list of all users from the database properly', function(){
+		});
+		it('should get a list of all friends from the database properly', function(){
+		});
+		it('should get a list of all matches from the database properly', function(){
 		});
 	});
 // 	
-	/* describe('#createNewUser', function() {
+	describe('#createNewUser', function() {
 		it('should create a new user properly', function(){
-			relationalDB.getUserInfo(function(newUser){
+			relationalDB.getUserInfo(0, function(newUser){
 				// assert.notEqual(newUser, undefined);
 // 				
 				// assert.equal(newUser.userName, '');
@@ -81,5 +87,5 @@ describe("RelationalDBAccess", function() {
 				// assert.equal(userInfo.avatarURL, '');
 			});
 		});
-	});*/
+	});
 });
