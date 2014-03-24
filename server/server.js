@@ -101,10 +101,12 @@ server.get("/createNewGame", function(request, response, next) {
 	var userID = parseInt(request.params.userID, 10);
 	gameMGMT.setupMatch(gameID, undefined, function(instanceID) {
 		gameMGMT.joinMatch(userID, instanceID, function() {
-			response.writeHead(200, {"content-type": "application/json"});
-			response.end(JSON.stringify({instanceID:instanceID,
-					url:"http://" + request.header('Host') + "/#game-" + instanceID}));
-			next();
+			gameMGMT.getGameboard(instanceID, gameID, function(gb) {
+				response.writeHead(200, {"content-type": "application/json"});
+				response.end(JSON.stringify({gameboard:gb,
+						url:"http://" + request.header('Host') + "/#game-" + instanceID}));
+				next();
+			});
 		});
 	});
 });
@@ -114,13 +116,13 @@ server.get("/joinGame", function(request, response, next) {
 	gameMGMT.joinMatch(userID, instanceID, function(err) {
 		response.writeHead(200, {"content-type": "application/json"});
 		if(err) {
+			// unable to join match; game full
 			response.end(JSON.stringify({err:err}));
 			next();
 		} else {
 			var gameID = gameMGMT.getMatches()[instanceID].gameBoard.gameID;
 			gameMGMT.getGameboard(instanceID, gameID, function(gb) {
-				response.end(JSON.stringify({gameID:gameID, instanceID:instanceID}));
-				gameSocketController.sendMatchEvent(userID, gb);
+				response.end(JSON.stringify({gameboard:gb}));
 				next();
 			});
 		}
@@ -132,7 +134,7 @@ server.get("/initialize", function(request, response, next) {
 	//Setup a Client Id if the id passed was not found in the database
 	var text = {};
 	//call DataStoreController and get a the user's information
-	dbController.getUserInformation(request.params.userid, function(newUserInfo){
+	dbController.getUserInformation(request.params.userID, function(newUserInfo){
 		var userInfo = newUserInfo[0];
 		
 		console.log('User info received is ' + userInfo);
