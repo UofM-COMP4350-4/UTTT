@@ -8,8 +8,9 @@ Website Access: http://ec2-54-213-160-158.us-west-2.compute.amazonaws.com
 ##Setup/Initialization
 ###Server
 install mysql for node
-	npm install mysql
-	
+```bash
+npm install mysql
+```
 Run Tools:
  1. update-repo   
  2. initialize   
