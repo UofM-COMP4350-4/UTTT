@@ -33,76 +33,6 @@ server.get("/queueForGame", function(request, response, next){
 	response.writeHead(200, {'content-type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
 	response.end("{}");
 	return next();
-
-	//***CALL VALIDATE ON THE clientID && gameID*******
-	//matchMaking.joinMatchmaking(params.clientID, params.gameID);
-
-	queueForGameRequests++;
-	//parameters gotten back are gameID & clientID
-	if(queueForGameRequests == 1)
-	{
-		queueForGamesList["Player1"] = 
-		{ 
-			"clientID": params.userID,
-			"gameID": params.gameID
-		};
-	}
-
-	if(queueForGameRequests == 2)//1 should be replaced with max_players for the game specified
-	{			
-		queueForGamesList["Player2"] =
-		{
-			"clientID": params.userID,
-			"gameID": params.gameID
-		};
-		
-		var queueInfo = JSON.stringify(queueForGamesList);
-		console.log("Two users gotten successfully " + queueInfo);
-
-		//we have enough players for a game SO 
-				
-		//send both players to the gameMGMT to start a new game
-		gameMGMT.setupMatch(parseInt(params.gameID, 10), undefined, function(gameInstanceID){
-			//use this to call joinMatch for both players
-			//works console.log("Users matched up successfully " + queueForGamesList["Player1"]);
-			//works console.log("Users matched up successfully " + queueForGamesList.Player2);
-			console.log("Game instance ID returned to Server is " + gameInstanceID);
-			
-			gameMGMT.joinMatch(parseInt(queueForGamesList.Player1.clientID, 10), parseInt(gameInstanceID, 10), function(error){
-				if(error)
-				{
-					throw new Error('Join match failed for player 1');
-				}
-				
-				gameMGMT.joinMatch(parseInt(queueForGamesList.Player2.clientID, 10), parseInt(gameInstanceID, 10), function(error){
-					if(error)
-					{
-						throw new Error('Join match failed for player 2');
-					}					
-					
-					console.log('Event sent successfully');
-					gameSocketController.sendMatchEvent(parseInt(queueForGamesList.Player1.clientID, 10), parseInt(gameInstanceID, 10));
-					gameSocketController.sendMatchEvent(parseInt(queueForGamesList.Player1.clientID, 10), parseInt(gameInstanceID, 10));
-					response.writeHead(200, {'content-type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
-					response.end({});
-				});
-			});
-		});
-	}
-
-	console.log("queueForGameRequests is: " + queueForGameRequests);
-
-	if(queueForGameRequests < 2)
-	{
-		response.writeHead(200, {'content-type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
-		response.end(JSON.stringify("User queue request received. Please wait"));
-	}
-	else if (queueForGameRequests > 2)
-	{
-		response.writeHead(500, {'content-type': 'application/json', 'Access-Control-Allow-Origin' : '*'});
-		response.end(JSON.stringify("Game room Full. Please wait until Server restarts"));
-	}
-	next();
 });
 
 server.get("/createNewGame", function(request, response, next) {
@@ -162,7 +92,7 @@ server.get("/initialize", function(request, response, next) {
 		gameMGMT.availableGames(function(gameList){
 			var games = gameList;
 			
-			console.log('Finished gettign game list ' + userInfo.userID);
+			console.log('Finished getting game list ' + userInfo.userID);
 			//get a list of active games for the user
 			gameMGMT.findByUser(parseInt(userInfo.userID, 10), function(activeEntries){
 				var activeGames = {};
