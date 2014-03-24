@@ -34,12 +34,16 @@ enyo.singleton({
 		});
 		this.socket.on("matchFound", enyo.bind(this, "matchIsFound"));
 		this.socket.on("receivePlayResult", enyo.bind(this, "receivedPlayResult"));
+		this.socket.on("chat", enyo.bind(this, "receivedChat"));
 	},
 	matchIsFound: function(inEvent) {
 		enyo.Signals.send("onMatchFound", {gameboard:inEvent});
 	},
 	receivedPlayResult: function(inEvent) {
 		enyo.Signals.send("onPlayResult", {gameboard:inEvent});
+	},
+	receivedChat: function(inEvent) {
+		enyo.Signals.send("onChat", inEvent);
 	},
 	sendPlayMoveEvent: function(move) {
 		if(this.socket) {
@@ -48,6 +52,7 @@ enyo.singleton({
 	},
 	sendChatEvent: function(message) {
 		if(this.socket) {
+			message.timestamp = (new Date().getTime()*1);
 			this.socket.emit('chat', message);
 		}
 	},
