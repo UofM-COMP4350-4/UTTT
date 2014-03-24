@@ -6,12 +6,12 @@ var my_host='54.186.85.227';
 
 function RelationalDBAccess(database) {
 	if (database === undefined)	{
-		new InitializeDB();
+		database = new InitializeDB();
 	} else { 
 		Validator.ValidateString(database.username);
 		Validator.ValidateString(database.password);
 		Validator.ValidateString(database.hostname);
-		new InitializeOtherDB(database.username, database.password, database.hostname);
+		database = new InitializeOtherDB(database.username, database.password, database.hostname);
 	}
 	console.log('Relational db contains: ' + dbConnection);
 }
@@ -21,7 +21,16 @@ var InitializeDB = function() {
 	dbConnection = new Sequelize('Games_Users', 'ubuntu', '', {
 		host: my_host,
 		port: 3306
-	});	
+	});
+	dbConnection
+		.authenticate()
+		.complete(function(err) {
+			if (!!err) {
+				console.log("unable to connect, error: " err);
+			} else {
+				console.log("connection established");
+			}
+		});	
 };
 
 //Connects to a different database
@@ -30,6 +39,15 @@ var InitializeOtherDB = function(username, password, hostname) {
 		host: hostname,
 		port: 3306
 	});
+	dbConnection
+		.authenticate()
+		.complete(function(err) {
+			if (!!err) {
+				console.log("error establishing connection to database, error: ", err);
+			} else {
+				console.log("connection established");
+			}
+		});
 };
 
 RelationalDBAccess.prototype.getListOfGames = function(callback) {
