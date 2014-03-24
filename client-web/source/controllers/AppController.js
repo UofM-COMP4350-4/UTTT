@@ -111,11 +111,20 @@ enyo.kind({
 				}
 				enyo.stage.game.controller.loadGame(gameboard);
 			} else { // attempt to join game
-				// TODO: attempt to join game and show if joined successfully
+				window.ClientServerComm.joinGame(window.userID, instanceID, enyo.bind(this, function(response) {
+					if(response.gameboard) {
+						enyo.Signals.send("onMatchFound", {gameboard:response.gameboard});
+						//since hash value is already set, hashChange won't tigger; explicitly load game
+						enyo.stage.game.controller.loadGame(response.gameboard);
+					} else if(response.err) {
+						window.location.hash = "launcher";
+					}
+				}));
 			}
 		} else {
 			window.location.hash = "launcher";
 		}
+		return true;
 	},
 	receivedGameboard: function(inSender, inEvent) {
 		if(inEvent && inEvent.gameboard) {
