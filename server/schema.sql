@@ -1,4 +1,5 @@
-CREATE DATABASE Games_Users;
+GRANT ALL ON *.* TO 'ubuntu'@'localhost'; /*local access*/
+GRANT ALL ON *.* TO 'ubuntu'@'%'; /*remote access*/
 
 CREATE TABLE Games (
 	gameID BIGINT NOT NULL AUTO_INCREMENT,
@@ -10,6 +11,7 @@ CREATE TABLE Games (
 
 CREATE TABLE Users (
 	userID BIGINT NOT NULL AUTO_INCREMENT,
+	isOnline BOOLEAN,
 	userName VARCHAR(100),
 	avatarURL VARCHAR(100),
 	PRIMARY KEY(userID)
