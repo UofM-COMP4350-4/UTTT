@@ -6,7 +6,7 @@ enyo.kind({
 		socialShowing: true
 	},
 	components: [
-		{kind:"Signals", onhashchange:"hashChange", onMatchFound:"receivedGameboard"}
+		{kind:"Signals", onhashchange:"hashChange", onMatchFound:"receivedGameboard", onPlayResult:"updateActive"}
 	],
 	create:function() {
 		this.inherited(arguments);
@@ -139,5 +139,8 @@ enyo.kind({
 				window.location.hash = "game-" + gb.instanceID;
 			}
 		}
+	},
+	updateActive: function(inSender, inEvent) {
+		window.active[inEvent.gameboard.instanceID] = inEvent.gameboard;
 	}
 });
