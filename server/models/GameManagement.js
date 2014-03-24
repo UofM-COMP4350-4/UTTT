@@ -20,6 +20,7 @@ GameSocket.on("userConnect", function(inEvent, optCallback) {
 	module.exports.userConnected(inEvent.userID, (optCallback || noop));
 });
 GameSocket.on("moveReceived", function(inEvent) {
+	console.log('Move Received: ' + JSON.stringify(inEvent));
 	if(matches[inEvent.instanceID]) {
 		matches[inEvent.instanceID].RequestMove({x:inEvent.x, y:inEvent.y, player:inEvent.player});
 	}

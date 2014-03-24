@@ -163,12 +163,7 @@ const int GAME_SOCKET_PORT = 10089;
     else {
         NSString *eventName = [jsonNSDict objectForKeyedSubscript:@"name"];
         
-        if ([eventName isEqualToString:@"clientConnectedToServer"]) {
-            NSMutableDictionary *user = [NSMutableDictionary dictionary];
-            [user setObject:_player.userID forKey:@"userID"];
-            [[MainViewController GameSocket] sendEvent:@"userSetup" withData:user];
-        }
-        else if ([eventName isEqualToString:@"matchFound"]) {
+        if ([eventName isEqualToString:@"matchFound"]) {
             [[NSNotificationCenter defaultCenter]
              postNotificationName:@"MatchFoundNotification"
              object:jsonNSDict];
@@ -179,6 +174,16 @@ const int GAME_SOCKET_PORT = 10089;
              object:jsonNSDict];
         }
     }
+}
+
+- (void) socketIODidConnect:(SocketIO *)socket {
+    NSMutableDictionary *user = [NSMutableDictionary dictionary];
+    [user setObject:_player.userID forKey:@"userID"];
+    [[MainViewController GameSocket] sendEvent:@"userSetup" withData:user];
+}
+
+- (void) socketIODidDisconnect:(SocketIO *)socket disconnectedWithError:(NSError *)error {
+    [self setupGameSocketConnection];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
