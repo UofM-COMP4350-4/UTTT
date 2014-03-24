@@ -111,39 +111,39 @@ enyo.kind({
 		}
 	},
 	handleUpdateReceived: function(inSender, inEvent) {
-		if(this.gameboard.players.length<this.maxPlayers
-				&& inEvent.gameboard.players.length>this.gameboard.players.length) {
-			//new user joined a non-full match
-			if(inEvent.gameboard.players.length==this.maxPlayers) {
+		if(this.gameboard.instanceID==inEvent.gameboard.instanceID) {
+			if(this.gameboard.players.length<this.maxPlayers
+					&& inEvent.gameboard.players.length>this.gameboard.players.length) {
+				//new user joined a non-full match
+				if(inEvent.gameboard.players.length==this.maxPlayers) {
+					this.update(inEvent.gameboard);
+				} else {
+					this.gameboard = inEvent.gameboard;
+					this.moves = inEvent.gameboard.currentBoard;
+					this.maxPlayers = this.getMaxPlayers();
+				}
+				enyo.stage.menu.controller.updateGame(inEvent.gameboard);
+			} else if(this.moves.length<inEvent.gameboard.currentBoard.length) {
+				//new moves
+				this.update(inEvent.gameboard, true);
+				if(inEvent.gameboard.status && (typeof inEvent.gameboard.status === "string")) {
+					var status = inEvent.gameboard.status.toLowerCase();
+					if(status=="winner") {
+						//TODO: Show winner popup
+						//afterwards, close this game
+					} else if(status=="draw") {
+						//TODO: Show winner popup
+						//afterwards, close this game
+					}
+				}
+			} else if(this.moves.length==inEvent.gameboard.currentBoard.length){
+				//move success
 				this.update(inEvent.gameboard);
 			} else {
-				this.gameboard = gameboard;
-				this.moves = gameboard.currentBoard;
-				this.maxPlayers = this.getMaxPlayers();
+				//move failed
+				this.update(inEvent.gameboard);
 			}
-			enyo.stage.menu.controller.updateGame(inEvent.gameboard);
-		} else if(this.moves.length<inEvent.gameboard.currentBoard.length) {
-			//new moves
-			this.update(inEvent.gameboard, true);
-			if(inEvent.gameboard.status && (typeof inEvent.gameboard.status === "string")) {
-				var status = inEvent.gameboard.status.toLowerCase();
-				if(status=="winner") {
-					//TODO: Show winner popup
-					//afterwards, close this game
-				} else if(status=="draw") {
-					//TODO: Show winner popup
-					//afterwards, close this game
-				}
-			}
-		} else if(this.moves.length==inEvent.gameboard.currentBoard.length){
-			//move success
-			this.update(inEvent.gameboard);
-		} else {
-			//move failed
-			this.update(inEvent.gameboard);
 		}
-		window.active[inEvent.gameboard.instanceID] = inEvent.gameboard;
-		return true;
 	},
 	rendered: function() {
 		this.updateRatio();
