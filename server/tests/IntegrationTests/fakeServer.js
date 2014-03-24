@@ -26,8 +26,8 @@ this.socketIO.sockets.on('connection', function(socket) {
 			"instanceID": 1,
 			"gameID": 1,
 			"userToPlay": {
-				"id": 1,
-				"name": "Player1"
+				"id": 2,
+				"name": "Player2"
 			},
 			"players": [{"id":1,"name":"Player1"}, {"id":2,"name":"Player2"}],
 			"currentBoard": [param],
@@ -35,6 +35,7 @@ this.socketIO.sockets.on('connection', function(socket) {
 		};
 		socket.emit("receivePlayResult", gameBoard);
 		setTimeout(function() {
+			gameBoard.userToPlay = {id:1, name:"Player1"};
 			gameBoard.currentBoard.push(JSON.stringify({x:2, y:2, player:{id:2, name:"Player2"}}));
 			socket.emit("receivePlayResult", gameBoard);
 		}, 2000);
