@@ -1,6 +1,9 @@
 enyo.kind({
 	name: "GameController",
 	kind: "Component",
+	components:[
+		{kind:"Signals", onSocketSetup:"socketIsSetup", onSocketFailed:"socketFailure"}
+	],
 	showLauncher: function(inviteMode) {
 		this.inviteMode = inviteMode;
 		if(this.active) {
@@ -35,24 +38,51 @@ enyo.kind({
 	setupGameGrid: function(inSender, inEvent) {
 		var index = inEvent.index;
 		var item = inEvent.item;
-		item.$.image.setSrc("assets/" + window.availableGames[index].gameType + "-icon.png");
+		item.$.image.setSrc("assets/" + window.availableGames[index].gameType + ".gif");
 		item.$.title.setContent(window.availableGames[index].gameName);
 		return true;
 	},
 	gameLaunch: function(inSender, inEvent) {
+		if(!this.socketSetup) {
+			return;
+		}
 		var gameType = window.availableGames[inEvent.index].gameType;
 		var gameID = window.availableGames[inEvent.index].gameID;
-		//this.createGame(gameType);
-		if(!this.inviteMode) {
-			window.ClientServerComm.queueForGame(window.userID, gameID, enyo.bind(this, function(response) {
-				// TODO: Show waiting for opponent in place of launcher
-				console.log("Queued up");
-			}));
-		} else {
-			window.ClientServerComm.createNewGame(window.userID, gameID, enyo.bind(this, function(response) {
-				// TODO: popup dialog giving url to share
-				// TODO: Show waiting for opponent in place of launcher
-			}));
+		if(this.active) {
+			this.active.destroy();
 		}
+		if(!this.inviteMode) {
+			this.view.waitingForOpponent.components[0].content="Searching for opponent...";
+			this.pendingCallback = function() {
+				window.ClientServerComm.queueForGame(window.userID, gameID, function() {});
+			};
+		} else {
+			this.view.waitingForOpponent.components[0].content="Setting up match...";
+			this.pendingCallback = function() {
+				window.ClientServerComm.createNewGame(window.userID, gameID, function(response) {
+					enyo.Signals.send("onMatchFound", {gameboard:response.gameboard, url:response.url});
+				});
+			};
+		}
+		this.active = this.view.createComponent(this.view.waitingForOpponent);
+		this.active.render();
+		if(this.socketSetup) {
+			this.pendingCallback();
+			this.pendingCallback = undefined;
+		}
+	},
+	socketIsSetup: function(inSender, inEvent) {
+		this.socketSetup = true;
+		if(this.pendingCallback) {
+			this.pendingCallback();
+			this.pendingCallback = undefined;
+		}
+	},
+	socketFailure: function(inSender, inEvent) {
+		this.socketSetup = true;
+		if(this.active) {
+			this.active.destroy();
+		}
+		this.active = this.view.createComponent(this.view.connectionFailure);
 	}
 });
