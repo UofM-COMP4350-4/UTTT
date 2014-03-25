@@ -25,17 +25,12 @@ const int COL_SIZE = 7;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
     return self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    //[self drawGameBoard:[[NSMutableArray alloc]init]];
     [self setupEvents];
     [self setupNotifications];
 }
@@ -68,15 +63,9 @@ const int COL_SIZE = 7;
 
 - (NSUInteger)supportedInterfaceOrientations
 {
-    /*if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-     return UIInterfaceOrientationMaskAllButUpsideDown;
-     } else {
-     return UIInterfaceOrientationMaskAll;
-     }*/
     return UIInterfaceOrientationMaskPortrait;
 }
 
-//The event handling method
 - (void)playerMadeMove:(UITapGestureRecognizer *)recognizer {
     CGPoint location = [recognizer locationInView:[recognizer.view superview]];
     CGFloat touchX = location.x;
@@ -113,7 +102,6 @@ const int COL_SIZE = 7;
         [[MainViewController GameSocket] sendEvent:@"receiveMove" withData:moveJSON];
     }
     else {
-        // display message saying its not your turn to play a move
         NSLog(@"It's not your turn JERK!!!!");
     }
 }
@@ -150,15 +138,10 @@ const int COL_SIZE = 7;
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-- (void) receiveNotification:(NSNotification *) notification// : (NSDictionary *) jsonDict
+- (void) receiveNotification:(NSNotification *) notification
 {
-    // [notification name] should always be @"TestNotification"
-    // unless you use this method for observation of other notifications
-    // as well.
-    
     if ([[notification name] isEqualToString:@"MatchFoundNotification"]) {
         [self initializeGameBoard];
         NSDictionary *jsonNSDict = (NSDictionary *) [notification object];
@@ -171,7 +154,6 @@ const int COL_SIZE = 7;
         }
         else {
             NSMutableArray *listOfMoves = [argDict objectForKey:@"currentBoard"];
-            //NSLog(@"The game Instance ID is : %llu", [[argDict objectForKey:@"instanceID"] unsignedLongLongValue]);
             _gameInstanceID = [[NSNumber alloc] initWithUnsignedLongLong:[[argDict objectForKey:@"instanceID"] unsignedLongLongValue]];
             [self drawGameBoard:listOfMoves];
 
