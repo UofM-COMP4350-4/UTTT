@@ -16,7 +16,7 @@ enyo.singleton({
 				self.setupSocket(response.user.userID);
 				callback(response);
 			}
-		}); //tells Ajax what the callback function is
+		});
 		request.go({userID: userID});
 	},
 	setupSocket: function(userID) {	
@@ -27,9 +27,11 @@ enyo.singleton({
 			}
 		}));
 		this.socket.on("userSetupComplete", function() {
+			// forward socket event up through top-level Enyo signal events
 			enyo.Signals.send("onSocketSetup", {});
 		});
 		this.socket.on("connect_failed", function() {
+			// forward socket event up through top-level Enyo signal events
 			enyo.Signals.send("onSocketFailed", {});
 		});
 		this.socket.on("matchFound", enyo.bind(this, "matchIsFound"));
@@ -37,12 +39,15 @@ enyo.singleton({
 		this.socket.on("chat", enyo.bind(this, "receivedChat"));
 	},
 	matchIsFound: function(inEvent) {
+		// forward socket event up through top-level Enyo signal events
 		enyo.Signals.send("onMatchFound", {gameboard:inEvent});
 	},
 	receivedPlayResult: function(inEvent) {
+		// forward socket event up through top-level Enyo signal events
 		enyo.Signals.send("onPlayResult", {gameboard:inEvent});
 	},
 	receivedChat: function(inEvent) {
+		// forward socket event up through top-level Enyo signal events
 		enyo.Signals.send("onChat", inEvent);
 	},
 	sendPlayMoveEvent: function(move) {
@@ -71,9 +76,6 @@ enyo.singleton({
 		request.go();
 	},
 	queueForGame: function(userID, gameID, callback) {
-		//This method is supposed to send an AJAX call
-		// to the Server to create a new game (userID, gameID) and use the
-		// resulting object from the server to create a game view
 		var request = new enyo.Ajax({
 			url: "queueForGame", //URL goes here
 			method: "GET", //You can also use POST
@@ -85,9 +87,6 @@ enyo.singleton({
 		request.go({userID: userID, gameID: gameID});		
 	},
 	createNewGame: function(userid, gameID, callback) {
-		//This method is supposed to send an AJAX call
-		// to the Server to create a new game (userID, gameID) and use the
-		// resulting object from the server to create a game view
 		var request = new enyo.Ajax({
 			url: "createNewGame", //URL goes here
 			method: "GET", //You can also use POST
@@ -97,13 +96,10 @@ enyo.singleton({
 			if(response) {
 				callback({gameboard:response.gameboard, url:response.url});
 			}
-		}); //tells Ajax what the callback function is
+		});
 		request.go({userID: userid, gameID: gameID});		
 	},
 	joinGame: function(userid, instanceID, callback) {
-		//This method is supposed to send an AJAX call
-		// to the Server to create a new game (userID, gameID) and use the
-		// resulting object from the server to create a game view
 		var request = new enyo.Ajax({
 			url: "joinGame", //URL goes here
 			method: "GET", //You can also use POST
@@ -113,7 +109,7 @@ enyo.singleton({
 			if(response) {
 				callback({gameboard:response.gameboard, err:response.err});
 			}
-		}); //tells Ajax what the callback function is
+		});
 		request.go({userID: userid, instanceID: instanceID});		
 	}
 });

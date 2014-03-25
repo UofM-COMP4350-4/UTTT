@@ -3,24 +3,29 @@ enyo.kind({
 	kind: "Component",
 	loadBaseState: function() {
 		this.state = [];
+		// convert into an array of gmeboards for indexed usage
 		for(var x in window.active) {
 			this.state.push(window.active[x]);
 		}
 		this.loadGameList();
 	},
+	// add a new active game to the list
 	addGame: function(gameboard) {
 		this.state.push(gameboard);
 		this.loadGameList();
 	},
+	// update an active game in the list
 	updateGame: function(gameboard) {
 		for(var i=0; i<this.state.length; i++) {
 			if(gameboard.instanceID==this.state[i].instanceID) {
 				this.state[i] = gameboard;
+				// re-render updated row
 				this.view.$.repeater.renderRow(i);
 			}
 		}
 		this.loadGameList();
 	},
+	// remove an active game from the list
 	removeGame: function(instanceID) {
 		for(var i=0; i<this.state.length; i++) {
 			if(instanceID==this.state[i].instanceID) {
@@ -32,6 +37,7 @@ enyo.kind({
 	loadGameList: function() {
 		this.view.$.repeater.setCount(this.state.length);
 		this.view.$.repeater.render();
+		//open the drawer after rendering for smoother animation
 		this.view.$.drawer.setOpen((this.state.length>0));
 	},
 	setupActiveGames: function(inSender, inEvent) {
@@ -41,9 +47,11 @@ enyo.kind({
 		item.$.lbl1.setContent(gameName);
 		item.$.matchLink.setHref("#game-" + this.state[index].instanceID);
 		if(this.state[index].players.length>2) {
+			// for games with more than 2 players, just label # of opponents
 			item.$.lbl2.setContent("vs " + (this.state[index].players.length-1)
 					+ " others");
 		} else if(this.state[index].players.length==2) {
+			// games with 2 players in it, label opponent's name
 			var opponent = this.state[index].players[0];
 			if(opponent.id==window.userID) {
 				opponent = this.state[index].players[1];
@@ -53,7 +61,7 @@ enyo.kind({
 		return true;
 	},
 	getUserName: function(player) {
-		var name = "Player";
+		var name = "Player"; //default name
 		if(player && player.id) {
 			if(player.id==window.userID) {
 				if(player.name && player.name.length>0) {
@@ -63,7 +71,7 @@ enyo.kind({
 					}
 				}
 			} else {
-				name = "Opponent";
+				name = "Opponent"; //default opponent name
 				if(player.name && player.name.length>0 && player.name!="Player") {
 					name = player.name;
 				}
@@ -80,6 +88,7 @@ enyo.kind({
 		return "";
 	},
 	switchToGame: function(inSender, inEvent) {
+		//switch to game panel on narrow screen devices
 		enyo.stage.app.controller.showGameArea();
 	},
 	newMatch: function(inSender, inEvent) {

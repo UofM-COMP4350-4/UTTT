@@ -6,8 +6,10 @@ enyo.kind({
 	],
 	create: function() {
 		this.inherited(arguments);
+		// log hash object to cache chat messages by instanceID
 		this.logs = {};
 	},
+	// load log cache for an instanceID
 	loadChatroom: function(instanceID) {
 		this.instanceID = instanceID;
 		if(!this.logs[this.instanceID]) {
@@ -24,10 +26,10 @@ enyo.kind({
 	},
 	addLog: function(chat) {
 		var name = this.getUserName(chat.player);
-		if(chat.player.id==window.userID) {
+		if(chat.player.id==window.userID) { //blue text for player
 			this.view.$.chatLog.addContent('<span class="player">'
 					+ name + ':&nbsp;</span>' + chat.message + '<br/>');
-		} else {
+		} else { //red text for opponent(s)
 			this.view.$.chatLog.addContent('<span class="opponent">'
 					+ name + ':&nbsp;</span>' + chat.message + '<br/>');
 		}
@@ -36,7 +38,7 @@ enyo.kind({
 		this.view.$.chatLog.setContent("");
 	},
 	getUserName: function(player) {
-		var name = "Player";
+		var name = "Player"; //default player name
 		if(player && player.id) {
 			if(player.id==window.userID) {
 				if(player.name && player.name.length>0) {
@@ -46,7 +48,7 @@ enyo.kind({
 					}
 				}
 			} else {
-				name = "Opponent";
+				name = "Opponent"; //default opponent name
 				if(player.name && player.name.length>0 && player.name!="Player") {
 					name = player.name;
 				}
@@ -55,6 +57,7 @@ enyo.kind({
 		return name;
 	},
 	updateLog: function(inSender, inEvent) {
+		// new chat message received
 		this.logs[inEvent.instanceID].push(inEvent);
 		if(this.instanceID==inEvent.instanceID) {
 			this.addLog(inEvent);

@@ -12,6 +12,7 @@ enyo.kind({
 		this.inherited(arguments);
 		this.narrowFit = enyo.Panels.isScreenNarrow();
 		if(this.narrowFit) {
+			// adjust default settings for narrow screens
 			this.socialShowing = false;
 			this.view.$.lowerPanels.setIndexDirect(0);
 			this.view.$.upperPanels.realtimeFit = false;
@@ -20,22 +21,25 @@ enyo.kind({
 		this.log("Client started");
 		//if the client has a userID, do nothing
 		//else send an initialize request to the database
-		//window.userID = localStorage.getItem("clientID");
-		window.userName = "Player";
+		//window.userID = localStorage.getItem("clientID"); //REMOVE COMMENT FOR PRODUCTION
+		window.userName = "Player"; 
 		window.availableGames = {};
 		window.active = {};
+		// retrieve base info from server, creating user if needed
 	    window.userID = window.ClientServerComm.initialize(window.userID, enyo.bind(this, function(baseState) {
 	    	window.userID = baseState.user.userID;
-	    	//localStorage.setItem("clientID", window.userID);
+	    	//localStorage.setItem("clientID", window.userID); //REMOVE COMMENT FOR PRODUCTION
 	    	this.log(window.userID + " sent successfully.");
 	    	window.userName = baseState.user.userName;
 			window.availableGames = baseState.availableGames;
 			window.active = baseState.active;
 			enyo.stage.menu.controller.loadBaseState();
 			if(!window.location.hash ||window.location.hash.length===0 || window.location.hash=="#") {
+				//default main view is game launcher for queued match
 				this.hideChat();
 				enyo.stage.game.controller.showLauncher();
 			} else {
+				// apply hash functionality
 				this.hashChange();
 			}
 	    }));
@@ -94,16 +98,19 @@ enyo.kind({
 	hashChange: function(inSender, inEvent) {
 		var hash = window.location.hash.slice(1);
 		if(hash=="launcher") {
+			// show game launcher
 			document.title = "Let's Play - Game Launcher";
 			this.hideChat();
 			this.showGameArea();
 			enyo.stage.game.controller.showLauncher();
 		} else if(hash=="invite") {
+			// show game launcher in invite-friends mode
 			document.title = "Let's Play- Invite to Play";
 			this.hideChat();
 			this.showGameArea();
 			enyo.stage.game.controller.showLauncher(true);
 		} else if(hash.indexOf("game-")===0) {
+			// load a game by instanceID
 			var instanceID = hash.replace("game-", "");
 			var gameboard = window.active[instanceID];
 			if(gameboard) { // switch to game
@@ -143,6 +150,7 @@ enyo.kind({
 		return true;
 	},
 	receivedGameboard: function(inSender, inEvent) {
+		// load up a new game; "matchFound" event from server
 		if(inEvent && inEvent.gameboard) {
 			var gb = inEvent.gameboard;
 			if(!window.active[gb.instanceID]) {
@@ -155,6 +163,7 @@ enyo.kind({
 		}
 	},
 	updateActive: function(inSender, inEvent) {
+		// cache gameboard in memory
 		window.active[inEvent.gameboard.instanceID] = inEvent.gameboard;
 	},
 	showChat: function(instanceID) {
@@ -196,10 +205,12 @@ enyo.kind({
 			});
 		}
 	},
+	// shows a centered popover that has the url to share
 	shareURL: function(url) {
 		this.view.$.shareInput.setValue(url);
 		this.view.$.shareURL.show();
 	},
+	// shows a modal centered popover with a specified message
 	showNotification: function(text, callback) {
 		this.notificationCallback = callback;
 		this.view.$.gameNotificationText.setContent(text);
@@ -211,6 +222,8 @@ enyo.kind({
 	socketIsSetup: function() {
 		this.connected = true;
 		if(this.joinDeferred) {
+			// executed any requests to join a game that have been deferred
+			// until after socket connection is fully setup
 			this.joinDeferred();
 			this.joinDeferred = undefined;
 		}
