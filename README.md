@@ -58,5 +58,4 @@ SET PASSWORD FOR 'ubuntu'@'localhost' = PASSWORD("");
 * Server: Use Mocha. `npm install -g mocha` will install it to your system's path. Test server files via commandline `mocha <filename>`.
 * iOS Client: Use Frank. In addition, there are objective-C unit tests within the NBGITests directory.
 * Web Client: Open spec-runner.html and Jasmine tests will be executed. In addition, there are Selenium tests included.
-* 
-NOTE: for the clients, there is a fake server with mock data available at /server/tests/IntegrationTests/fakeServer.js that can be run via NodeJS.
+* NOTE: for the clients, there is a fake server with mock data available at /server/tests/IntegrationTests/fakeServer.js that can be run via NodeJS.
