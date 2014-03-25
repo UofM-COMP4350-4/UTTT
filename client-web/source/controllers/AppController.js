@@ -150,13 +150,13 @@ enyo.kind({
 	},
 	showChat: function(instanceID) {
 		this.view.$.chatInput.setValue("");
-		//this.view.$.chatInputDecorator.show();
+		this.view.$.chatInputDecorator.show();
 		enyo.stage.chat.controller.loadChatroom(instanceID);
-		//enyo.stage.chat.view.show();
+		enyo.stage.chat.view.show();
 	},
 	hideChat: function() {
-		//this.view.$.chatInputDecorator.hide();
-		//this.view.$.chat.hide();
+		this.view.$.chatInputDecorator.hide();
+		this.view.$.chat.hide();
 		enyo.stage.chat.controller.reset();
 	},
 	submitMessage: function() {
