@@ -166,6 +166,24 @@ bool isOwnerWinner = false;
         NSString *userToPlayName = [userToPlay objectForKey:@"name"];
         _currentPlayersTurn = [[Player alloc]initWithUserIDAndNameAndisOnlineAndAvatarURL:userToPlayID userName:userToPlayName isOnline:false avatarURL:@"avatar.jpg"];
     }
+    else if ([[notification name] isEqualToString:@"ChatNotification"]) {
+        // Handle received chat messages here
+    }
+}
+
+- (void)sendChat:(NSString*) chatMsg {
+    NSDate *date = [NSDate date];
+    double time = floor([date timeIntervalSince1970] *1000);
+    NSNumber* nsNumberTime = [[NSNumber alloc] initWithDouble:time];
+    NSMutableDictionary* player = [NSMutableDictionary dictionary];
+    NSMutableDictionary* chatJSON = [NSMutableDictionary dictionary];
+    [player setObject:_ownerPlayer.userID forKey:@"id"];
+    [player setObject:_ownerPlayer.username forKey:@"name"];
+    [chatJSON setObject:player forKey:@"player"];
+    [chatJSON setObject:chatMsg forKey:@"message"];
+    [chatJSON setObject:nsNumberTime forKey:@"timestamp"];
+    [chatJSON setObject:_gameInstanceID forKey:@"instanceID"];
+    [[MainViewController GameSocket] sendEvent:@"chat" withData:chatJSON];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

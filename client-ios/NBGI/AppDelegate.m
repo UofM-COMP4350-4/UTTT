@@ -12,6 +12,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    if (![launchOptions objectForKey:UIApplicationLaunchOptionsURLKey]) {
+        // aap launched without URL scheme
+    }
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    NSString *urlReceived = [[url host] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    // can handle nbgi:// url here
+    NSLog(urlReceived, nil);
     return YES;
 }
 

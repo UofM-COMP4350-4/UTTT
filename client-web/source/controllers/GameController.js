@@ -45,28 +45,31 @@ enyo.kind({
 	gameLaunch: function(inSender, inEvent) {
 		var gameType = window.availableGames[inEvent.index].gameType;
 		var gameID = window.availableGames[inEvent.index].gameID;
-		if(this.active) {
-			this.active.destroy();
-		}
 		if(!this.inviteMode) {
-			this.view.waitingProcess.components[1].content="Searching for opponent...";
+			this.showWaiting("Searching for opponent...");
 			this.pendingCallback = function() {
 				window.ClientServerComm.queueForGame(window.userID, gameID, function() {});
 			};
 		} else {
-			this.view.waitingProcess.components[1].content="Setting up match...";
+			this.showWaiting("Setting up match...");
 			this.pendingCallback = function() {
 				window.ClientServerComm.createNewGame(window.userID, gameID, function(response) {
 					enyo.Signals.send("onMatchFound", {gameboard:response.gameboard, url:response.url});
 				});
 			};
 		}
-		this.active = this.view.createComponent(this.view.waitingProcess);
-		this.active.render();
 		if(this.socketSetup) {
 			this.pendingCallback();
 			this.pendingCallback = undefined;
 		}
+	},
+	showWaiting: function(message) {
+		if(this.active) {
+			this.active.destroy();
+		}
+		this.view.waitingProcess.components[1].content = message;
+		this.active = this.view.createComponent(this.view.waitingProcess);
+		this.active.render();
 	},
 	socketIsSetup: function(inSender, inEvent) {
 		this.socketSetup = true;

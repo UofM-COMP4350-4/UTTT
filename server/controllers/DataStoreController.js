@@ -142,7 +142,6 @@ exports.endMatch = function(instanceID, callback) {
 		relationalDB.endMatch(instanceID, deleteData);
 	}
 };
-
 exports.matchesByUser = function(userID, callback) {
 	ValidateObjectController.ValidateNumber(userID);
 	if(exports.mock) {
