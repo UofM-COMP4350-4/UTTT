@@ -20,7 +20,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="uUS-1m-WTC">
-                                <rect key="frame" x="0.0" y="64" width="100" height="100"/>
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
@@ -41,11 +41,76 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Connect4" id="hu9-X9-PEj"/>
-                    <value key="contentSizeForViewInPopover" type="size" width="500" height="500"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="300" height="300"/>
+                    <connections>
+                        <segue destination="c2c-Fy-YVI" kind="popover" identifier="GameCompleted" popoverAnchorView="U08-KD-Ym4" id="13K-qT-e66">
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                        </segue>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jQD-r4-a0b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4839" y="-3381"/>
+            <point key="canvasLocation" x="-3459" y="-3548"/>
+        </scene>
+        <!--Searching For Opponent - Waiting for Opponent-->
+        <scene sceneID="NMS-O7-qRm">
+            <objects>
+                <viewController title="Waiting for Opponent" id="21y-rx-U3m" customClass="SearchingForOpponent" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="OLW-0c-jo0"/>
+                        <viewControllerLayoutGuide type="bottom" id="dcX-jZ-eP1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ai5-Vz-as4">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Searching for Opponent" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o61-YG-BrQ">
+                                <rect key="frame" x="351" y="378" width="323" height="42"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Wmm-f7-ntQ">
+                                <rect key="frame" x="502" y="452" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="0GG-Td-Nb2"/>
+                    <connections>
+                        <outlet property="SearchForOppSpinner" destination="Wmm-f7-ntQ" id="9Yf-vN-PUQ"/>
+                        <segue destination="Kz0-ab-grV" kind="modal" id="VJp-cU-UEN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JdU-mY-Hd2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4747" y="-3392"/>
+        </scene>
+        <!--View Controller - Game Completed-->
+        <scene sceneID="Dwc-S5-MwB">
+            <objects>
+                <viewController title="Game Completed" id="c2c-Fy-YVI" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qRo-fp-In4"/>
+                        <viewControllerLayoutGuide type="bottom" id="fKc-7W-ppg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="d8a-Zd-tbz">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="250" height="300"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HJn-oV-i7i" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3535" y="-2488"/>
         </scene>
         <!--Main View Controller - Main View-->
         <scene sceneID="7vL-Xf-z2t">
@@ -65,7 +130,7 @@
                                 <state key="normal" title="Play Connect4"/>
                                 <connections>
                                     <action selector="PlayConnect4:" destination="CS8-Tz-Iq1" eventType="touchUpInside" id="oXW-Jd-VaL"/>
-                                    <segue destination="Kz0-ab-grV" kind="push" identifier="PlayGameSegue" id="ag1-xU-5pW"/>
+                                    <segue destination="21y-rx-U3m" kind="push" id="heb-5F-lnP"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LSu-Rd-UuJ">
@@ -195,7 +260,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7QO-YZ-Lre" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2918" y="-3543"/>
+            <point key="canvasLocation" x="-4990" y="-3907"/>
         </scene>
         <!--App Navi View Controller - Main Navigation-->
         <scene sceneID="Sj5-Nl-YEM">
@@ -291,7 +356,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7km-ko-9Sm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3308" y="-3963"/>
+            <point key="canvasLocation" x="-5720" y="-3899"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
