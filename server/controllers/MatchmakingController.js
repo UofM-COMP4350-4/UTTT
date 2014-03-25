@@ -12,11 +12,9 @@ GameSocket.on("userDisconnect", function(inEvent) {
 module.exports = {
 	// recieves inital queue request, validates it and passes it on to matchmaking
 	joinMatchmaking: function(userID, gameID, callback){
-		console.log("JOINED MATCHMAKING: " + userID);
 		Validator.ValidateArgs(arguments, Number, Number, Validator.OPTIONAL);
 		callback = callback || noop;
 		Matchmaker.joinQueue(userID, gameID);
-		console.log("CHECK FOR MATCH: " + userID);
 		module.exports.checkForMatchFound(gameID, function(response) {
 			callback(response);
 		});
@@ -34,19 +32,15 @@ module.exports = {
 				}
 			}
 			if(Matchmaker.queueTotal(gameID)>=maxPlayers) {
-				console.log("SETUP MATCH: " + maxPlayers);
 				GameMgmnt.setupMatch(gameID, undefined, function(instanceID) {
-					console.log("GAME SETUP: " + instanceID);
 					var players = [];
 					var addUsersToMatch = function() {
 						if(players.length<maxPlayers) {
 							var currUser = queue.shift();
-							console.log("ADDING: " + currUser);
 							GameMgmnt.joinMatch(currUser, instanceID, function(err) {
 								if(!err) {
 									players.push(currUser);
 								}
-								console.log("ADDED: " + currUser);
 								addUsersToMatch();
 							});
 						} else {
@@ -54,7 +48,6 @@ module.exports = {
 								for(var i=0; i<players.length; i++) {
 									GameSocket.sendMatchEvent(players[i], gb);
 								}
-								console.log("RETRIEVED: " + gb.instanceID);
 								callback(gb);
 							});
 						}

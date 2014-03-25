@@ -14,7 +14,6 @@ function GameSocketController(port) {
 		console.log("Socket client connected " + socket.id);
 		socket.emit("clientConnectedToServer", {});
 		socket.on('userSetup', function(user, callback) {
-			console.log('User Setup called for ' + user.userID);
 			if(user && user.userID!==undefined) {
 				ValidateObjectController.ValidateNumber(user.userID);
 				clientSocketIDHashTable[user.userID] = socket;
@@ -29,16 +28,17 @@ function GameSocketController(port) {
 			}
 		});
 		
+		//sending upwards on the server (Gameboard etc...)
 		socket.on('receiveMove', function(move) {
-			console.log('Received Move from Player.  X:' + move.x + ' Y:' + move.y);
 			self.emit('moveReceived', move);
 		});
-
+		
+		//send message to client(s)
 		socket.on('chat', function(param) {
-			console.log("CHAT - " + param.player.name + ": " + param.message);
 			self.socketIO.sockets.in('game/' + param.instanceID).emit('chat', param);
 		});
 		
+		//disconnects user
 		socket.on('disconnect', function() {
 			for(var x in clientSocketIDHashTable) {
 				if(clientSocketIDHashTable[x].id == socket.id) {
@@ -59,6 +59,9 @@ function GameSocketController(port) {
 		}
 	};
 
+	/****************************************************************************
+	 * Room = Chat/Game instance
+	 ****************************************************************************/
 	this.JoinRoom = function(userID, instanceID) {
 		ValidateObjectController.ValidateNumber(userID);
 		ValidateObjectController.ValidateNumber(instanceID);
@@ -94,7 +97,6 @@ function GameSocketController(port) {
 	this.SendDataToAllUsersInGame = function(gameInstanceID, data) {
 		ValidateObjectController.ValidateNumber(gameInstanceID);
 		ValidateObjectController.ValidateObject(data);
-		console.log('Sending Data to all users in gameInstanceID ' + gameInstanceID);
 		self.socketIO.sockets.in('game/' + gameInstanceID).emit('receivePlayResult', data);
 	};
 	
@@ -105,7 +107,6 @@ var gameSocket;
 exports.createGameSocket = function(port){
 	if(!gameSocket){
 		gameSocket = new GameSocketController(port);
-		console.log('Game Socket gets created properly');
 	}
 	
 	return gameSocket;

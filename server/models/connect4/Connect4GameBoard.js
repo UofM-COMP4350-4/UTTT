@@ -63,6 +63,12 @@ exports.Connect4GameBoard.prototype.IsDraw = function()
 	return this.moves.length == this.grid.length;
 };
 
+/**********************************************************************************
+ * GetLocationIfDropGamePieceAtCol
+ *
+ * gives us a y position for the column specified that is on top of all occupied cells
+ * column but not empty cells or off board.
+ **********************************************************************************/
 exports.Connect4GameBoard.prototype.GetLocationIfDropGamePieceAtCol = function(col)
 {
 	ValidateObjectController.ValidateNumber(col);
@@ -89,7 +95,11 @@ exports.Connect4GameBoard.prototype.GetLocationIfDropGamePieceAtCol = function(c
 	
 	return move;
 };
-
+/**************************************************************************************************************
+ * IsWinnerSouthEastToNorthWest
+ *
+ * Checks all of four in a row cases.
+ *************************************************************************************************************/
 exports.Connect4GameBoard.prototype.IsWinner = function(col, row)
 {
 	ValidateObjectController.ValidateNumber(row);
@@ -112,12 +122,18 @@ exports.Connect4GameBoard.prototype.IsWinner = function(col, row)
 	
 	return isWinner;
 };
-
+/**************************************************************************************************************
+ * IsWinnerSouthWestToNorthEast
+ *
+ * Checks to see if there is four in a row diagonally left to right. 
+ *************************************************************************************************************/
 exports.Connect4GameBoard.prototype.IsWinnerSouthWestToNorthEast = function(grid, col, row, ROW_SIZE, COL_SIZE)
 {
 	ValidateObjectController.ValidateObject(grid);
 	ValidateObjectController.ValidateNumber(row);
 	ValidateObjectController.ValidateNumber(col);
+	
+	//find a position to start at that is no more than 3 moves away from move(col, row) but still on grid
 	var iterator = new GridIteratorJS.GridIterator(grid, Math.max(col-(PIECES_TO_WIN-1),0), Math.max(row-(PIECES_TO_WIN-1),0), ROW_SIZE, COL_SIZE);
 	var currentGamePiece = grid[iterator.GetIndex()];	
 	var countSameOwner = 1;
@@ -128,11 +144,13 @@ exports.Connect4GameBoard.prototype.IsWinnerSouthWestToNorthEast = function(grid
 	while (!isWinner && moved) {
 		currentGamePiece = grid[iterator.GetIndex()];
 		
+		//our piece? increase count.
 		if (currentGamePiece && previousOwnerID == currentGamePiece.GetOwnerID()) {
 			countSameOwner = countSameOwner + 1;
 		}
+		//not our piece? is it valid?
 		else if (currentGamePiece) {
-			previousOwnerID = currentGamePiece.GetOwnerID();
+			previousOwnerID = currentGamePiece.GetOwnerID(); //we don't want to have to compare to a null object...
 			countSameOwner = 1;
 		}
 		else {
@@ -147,13 +165,18 @@ exports.Connect4GameBoard.prototype.IsWinnerSouthWestToNorthEast = function(grid
 	}
 	return isWinner;
 };
-
+/**************************************************************************************************************
+ * IsWinnerSouthEastToNorthWest
+ *
+ * Checks to see if there is four in a row diagonally right to left. 
+ *************************************************************************************************************/
 exports.Connect4GameBoard.prototype.IsWinnerSouthEastToNorthWest = function(grid, col, row, ROW_SIZE, COL_SIZE)
 {
 	ValidateObjectController.ValidateObject(grid);
 	ValidateObjectController.ValidateNumber(row);
 	ValidateObjectController.ValidateNumber(col);
 	
+	//find a position to start at that is no more than 3 moves away from move(col, row) but still on grid
 	var iterator = new GridIteratorJS.GridIterator(grid, Math.min(col+(((PIECES_TO_WIN-1) < row)? (PIECES_TO_WIN-1):row),COL_SIZE-1), Math.max(row-(PIECES_TO_WIN-1),0), ROW_SIZE, COL_SIZE);
 	var currentGamePiece = grid[iterator.GetIndex()];	
 	var countSameOwner = 1;
@@ -184,7 +207,11 @@ exports.Connect4GameBoard.prototype.IsWinnerSouthEastToNorthWest = function(grid
 	}
 	return isWinner;
 };
-
+/**************************************************************************************************************
+ * IsWinnerHorizontally
+ *
+ * Take a wild guess.
+ *************************************************************************************************************/
 exports.Connect4GameBoard.prototype.IsWinnerHorizontally = function(grid, col, row, ROW_SIZE, COL_SIZE) 
 {
 	ValidateObjectController.ValidateNumber(row);
@@ -193,7 +220,7 @@ exports.Connect4GameBoard.prototype.IsWinnerHorizontally = function(grid, col, r
 	
 	var countSameOwner = 1;
 	
-	var previousOwnerID = -1;//currentGamePiece.GetOwnerID();
+	var previousOwnerID = -1;
 	var isWinner = false;
 	var moved = true;
 	
@@ -312,7 +339,7 @@ exports.Connect4GameBoard.prototype.PlayMoveOnBoard = function(initmove)
 		return 'Invalid Move: It is not your turn.';
 	}
 
-	var lmove = this.GetLocationIfDropGamePieceAtCol(initmove.x);
+	var lmove = this.GetLocationIfDropGamePieceAtCol(initmove.x); //interpolates
 	var newy = 0;
 
 	if (lmove) {
