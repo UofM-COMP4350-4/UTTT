@@ -12,7 +12,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="oS4-1y-INd">
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="oS4-1y-INd">
                             <size key="itemSize" width="100" height="100"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -41,7 +41,6 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Connect4" id="hu9-X9-PEj"/>
-                    <value key="contentSizeForViewInPopover" type="size" width="300" height="300"/>
                     <connections>
                         <segue destination="c2c-Fy-YVI" kind="popover" identifier="GameCompleted" popoverAnchorView="U08-KD-Ym4" id="13K-qT-e66">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
@@ -81,7 +80,7 @@
                     <navigationItem key="navigationItem" id="0GG-Td-Nb2"/>
                     <connections>
                         <outlet property="SearchForOppSpinner" destination="Wmm-f7-ntQ" id="9Yf-vN-PUQ"/>
-                        <segue destination="Kz0-ab-grV" kind="modal" id="VJp-cU-UEN"/>
+                        <segue destination="Kz0-ab-grV" kind="modal" identifier="PlayGameSegue" id="VJp-cU-UEN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JdU-mY-Hd2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -130,7 +129,7 @@
                                 <state key="normal" title="Play Connect4"/>
                                 <connections>
                                     <action selector="PlayConnect4:" destination="CS8-Tz-Iq1" eventType="touchUpInside" id="oXW-Jd-VaL"/>
-                                    <segue destination="21y-rx-U3m" kind="push" id="heb-5F-lnP"/>
+                                    <segue destination="21y-rx-U3m" kind="modal" identifier="SearchForOpponent" id="heb-5F-lnP"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LSu-Rd-UuJ">

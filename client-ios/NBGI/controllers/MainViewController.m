@@ -8,8 +8,8 @@
 
 #import "MainViewController.h"
 #import "SocketIOPacket.h"
+#import "SearchingForOpponent.h"
 #import "Connect4ViewController.h"
-
 
 @interface MainViewController ()
 
@@ -176,9 +176,9 @@ const int GAME_SOCKET_PORT = 10089;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"PlayGameSegue"]) {
-        Connect4ViewController *connect4ViewController = (Connect4ViewController *)segue.destinationViewController;
-        connect4ViewController.ownerPlayer = _player;
+    if ([segue.identifier isEqualToString:@"SearchForOpponent"]) {
+        SearchingForOpponent *searchForOpponent = (SearchingForOpponent *)segue.destinationViewController;
+        searchForOpponent.ownerPlayer = _player;
     }
 }
 

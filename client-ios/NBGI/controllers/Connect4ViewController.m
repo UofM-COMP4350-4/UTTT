@@ -32,6 +32,7 @@ const int COL_SIZE = 7;
 {
     [super viewDidLoad];
     [self setupEvents];
+    [self initializeGameBoard];
     [self setupNotifications];
 }
 
@@ -62,7 +63,7 @@ const int COL_SIZE = 7;
 }
 
 - (void)playerMadeMove:(UITapGestureRecognizer *)recognizer {
-    CGPoint location = [recognizer locationInView:[recognizer.view superview]];
+    CGPoint location = [recognizer locationInView:self.view];
     CGFloat touchX = location.x;
     CGRect screenRect = [[self view] bounds];
     CGFloat screenWidth = screenRect.size.width;

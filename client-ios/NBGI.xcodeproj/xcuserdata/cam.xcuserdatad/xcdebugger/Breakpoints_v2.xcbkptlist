@@ -456,11 +456,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NBGI/controllers/Connect4ViewController.m"
-            timestampString = "417463681.342394"
+            timestampString = "417469671.096224"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
             landmarkName = "-playerMadeMove:"
             landmarkType = "5">
          </BreakpointContent>
@@ -472,11 +472,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NBGI/controllers/Connect4ViewController.m"
-            timestampString = "417463681.342394"
+            timestampString = "417469671.096224"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
             landmarkName = "-playerMadeMove:"
             landmarkType = "5">
          </BreakpointContent>
@@ -488,11 +488,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NBGI/controllers/Connect4ViewController.m"
-            timestampString = "417463681.342394"
+            timestampString = "417469671.096224"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "172"
-            endingLineNumber = "172"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
             landmarkName = "-receiveNotification:"
             landmarkType = "5">
          </BreakpointContent>
@@ -552,11 +552,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NBGI/controllers/Connect4ViewController.m"
-            timestampString = "417463681.342394"
+            timestampString = "417469671.096224"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "145"
-            endingLineNumber = "145"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
             landmarkName = "-receiveNotification:"
             landmarkType = "5">
          </BreakpointContent>
@@ -584,11 +584,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NBGI/controllers/Connect4ViewController.m"
-            timestampString = "417463681.342394"
+            timestampString = "417469671.096224"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "143"
-            endingLineNumber = "143"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
             landmarkName = "-receiveNotification:"
             landmarkType = "5">
          </BreakpointContent>
@@ -632,11 +632,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NBGI/controllers/Connect4ViewController.m"
-            timestampString = "417463681.342394"
+            timestampString = "417469671.096224"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
             landmarkName = "-setupNotifications"
             landmarkType = "5">
          </BreakpointContent>
@@ -680,11 +680,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NBGI/controllers/Connect4ViewController.m"
-            timestampString = "417463681.342394"
+            timestampString = "417469671.096224"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
             landmarkName = "-playerMadeMove:"
             landmarkType = "5">
          </BreakpointContent>
@@ -712,11 +712,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NBGI/controllers/Connect4ViewController.m"
-            timestampString = "417463681.342394"
+            timestampString = "417469671.096224"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "118"
-            endingLineNumber = "118"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
             landmarkName = "-drawGameBoard:"
             landmarkType = "5">
          </BreakpointContent>
@@ -776,11 +776,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NBGI/controllers/Connect4ViewController.m"
-            timestampString = "417463681.342394"
+            timestampString = "417469671.096224"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "95"
-            endingLineNumber = "95"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
             landmarkName = "-playerMadeMove:"
             landmarkType = "5">
          </BreakpointContent>
@@ -808,11 +808,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NBGI/controllers/Connect4ViewController.m"
-            timestampString = "417463681.342394"
+            timestampString = "417469671.096224"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "120"
-            endingLineNumber = "120"
+            startingLineNumber = "116"
+            endingLineNumber = "116"
             landmarkName = "-drawGameBoard:"
             landmarkType = "5">
          </BreakpointContent>
@@ -888,11 +888,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NBGI/controllers/Connect4ViewController.m"
-            timestampString = "417463681.342394"
+            timestampString = "417469671.096224"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "169"
-            endingLineNumber = "169"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
             landmarkName = "-receiveNotification:"
             landmarkType = "5">
          </BreakpointContent>
@@ -904,12 +904,124 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NBGI/controllers/Connect4ViewController.m"
-            timestampString = "417463681.342394"
+            timestampString = "417469671.096224"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
             landmarkName = "-receiveNotification:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NBGI/controllers/SearchingForOpponent.m"
+            timestampString = "417472006.480396"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
+            landmarkName = "-prepareForSegue:sender:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NBGI/controllers/SearchingForOpponent.m"
+            timestampString = "417472006.480396"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "-prepareForSegue:sender:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NBGI/controllers/SearchingForOpponent.m"
+            timestampString = "417471955.200191"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "-receiveNotification:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NBGI/controllers/SearchingForOpponent.m"
+            timestampString = "417471955.200191"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "-receiveNotification:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NBGI/controllers/SearchingForOpponent.m"
+            timestampString = "417471955.200191"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NBGI/controllers/SearchingForOpponent.m"
+            timestampString = "417472189.905441"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "-receiveNotification:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NBGI/controllers/SearchingForOpponent.m"
+            timestampString = "417472196.239035"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "-viewDidAppear:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

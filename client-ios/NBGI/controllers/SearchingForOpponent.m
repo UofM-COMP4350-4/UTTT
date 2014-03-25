@@ -7,6 +7,7 @@
 //
 
 #import "SearchingForOpponent.h"
+#import "Connect4ViewController.h"
 
 @interface SearchingForOpponent ()
 
@@ -15,6 +16,9 @@
 @end
 
 @implementation SearchingForOpponent
+
+bool isMatchFound = false;
+bool didViewAppear = false;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -27,7 +31,7 @@
 
 - (void) receiveNotification:(NSNotification *) notification
 {
-    if ([[notification name] isEqualToString:@"MatchFoundNotification"]) {
+    if ([[notification name] isEqualToString:@"MatchFoundNotification"] && !isMatchFound) {
         NSDictionary *jsonNSDict = (NSDictionary *) [notification object];
         NSError *error;
         NSArray *args = [jsonNSDict objectForKeyedSubscript:@"args"];
@@ -43,6 +47,12 @@
             int userToPlayID = [[userToPlay objectForKey:@"id"] intValue];
             NSString *userToPlayName = [userToPlay objectForKey:@"name"];
             _currentPlayersTurn = [[Player alloc]initWithUserIDAndNameAndisOnlineAndAvatarURL:userToPlayID userName:userToPlayName isOnline:false avatarURL:@"avatar.jpg"];
+            
+            if (didViewAppear) {
+                [self performSegueWithIdentifier: @"PlayGameSegue" sender: self];
+            }
+            
+            isMatchFound = true;
         }
         
         NSLog (@"Connect4ViewController received a match found notification. %@", jsonNSDict);
@@ -59,6 +69,27 @@
                                                object:nil];
     
     [_SearchForOppSpinner startAnimating];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    didViewAppear = true;
+    if (isMatchFound) {
+        [self performSegueWithIdentifier: @"PlayGameSegue" sender: self];
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"PlayGameSegue"]) {
+        Connect4ViewController *connect4Controller = (Connect4ViewController *)segue.destinationViewController;
+        connect4Controller.ownerPlayer = _ownerPlayer;
+        connect4Controller.currentPlayersTurn = _currentPlayersTurn;
+        connect4Controller.gameInstanceID = _gameInstanceID;
+    }
+}
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning
