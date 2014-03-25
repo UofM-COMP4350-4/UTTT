@@ -234,7 +234,6 @@
 /* ChatView CSS */
 
 .chat-scroller {
-	border:1px gray;
 	background-color:white;
 	color: black;
 	border-top: 1px black inset;

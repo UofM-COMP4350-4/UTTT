@@ -23,6 +23,7 @@ enyo.kind({
 		for(var i=0; i<history.length; i++) {
 			this.addLog(history[i]);
 		}
+		this.view.$.chatScroller.scrollToBottom();
 	},
 	addLog: function(chat) {
 		var name = this.getUserName(chat.player);
@@ -61,6 +62,7 @@ enyo.kind({
 		this.logs[inEvent.instanceID].push(inEvent);
 		if(this.instanceID==inEvent.instanceID) {
 			this.addLog(inEvent);
+			this.view.$.chatScroller.scrollToBottom();
 		}
 		return true;
 	}

@@ -3,8 +3,8 @@ enyo.kind({
 	kind: "View",
 	controllerKind: "ChatController",
 	components:[
-		{kind:"Scroller", classes:"full chat-scroller",  components:[
-			{name:"chatLog", content:"&nbsp;", allowHtml:true, style:"margin:4px;"}
+		{name:"chatScroller", kind:"Scroller", classes:"full chat-scroller",  components:[
+			{name:"chatLog", content:"&nbsp;", allowHtml:true, style:"padding:4px;"}
 		]}
 	]
 });
