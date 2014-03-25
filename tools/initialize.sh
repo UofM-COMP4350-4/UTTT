@@ -25,8 +25,6 @@ echo " "
 
 echo "Installing server node package dependencies..."
 npm install "$ROOT/server" --prefix "$ROOT/server/node_modules"
-npm install mysql
-npm install mocha
 
 echo " "
 echo "Complete!"

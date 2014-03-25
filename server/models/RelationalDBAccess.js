@@ -175,9 +175,11 @@ RelationalDBAccess.prototype.endMatch = function(instanceID, callback) {
 };
 
 RelationalDBAccess.prototype.matchesByUser = function(userID, callback) {
+	console.log("I get here matches for user call");
 	dbConnection
 		.query("SELECT * FROM Matches WHERE userID = " + userID, null, {raw: true})
 		.success(function(tableRows){
+			console.log("I finish finding matches for user call");
 			callback(tableRows);
 		})
 		.error(function(error){

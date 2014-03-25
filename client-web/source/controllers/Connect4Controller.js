@@ -136,7 +136,7 @@ enyo.kind({
 						//TODO: Show winner popup
 						//afterwards, close this game
 					} else if(status=="draw") {
-						//TODO: Show winner popup
+						//TODO: Show draw popup
 						//afterwards, close this game
 					}
 				}

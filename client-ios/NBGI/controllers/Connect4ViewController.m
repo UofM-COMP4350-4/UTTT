@@ -190,6 +190,11 @@ const int COL_SIZE = 7;
         NSDictionary *argDict = args[0];
         NSMutableArray *listOfMoves = [argDict objectForKey:@"currentBoard"];
         [self drawGameBoard:listOfMoves];
+        
+        NSDictionary *userToPlay = [argDict objectForKey:@"userToPlay"];
+        int userToPlayID = [[userToPlay objectForKey:@"id"] intValue];
+        NSString *userToPlayName = [userToPlay objectForKey:@"name"];
+        _currentPlayersTurn = [[Player alloc]initWithUserIDAndNameAndisOnlineAndAvatarURL:userToPlayID userName:userToPlayName isOnline:false avatarURL:@"avatar.jpg"];
     }
 }
 
