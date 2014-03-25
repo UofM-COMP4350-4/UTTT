@@ -7,15 +7,11 @@ Website Access: http://ec2-54-186-37-75.us-west-2.compute.amazonaws.com
 
 ##Setup/Initialization
 ###Server
-install mysql for node
-```bash
-npm install mysql
-```
 Run Tools:
- 1. update-repo
- 2. initialize
- 3. build-web-app
- 4. run-server
+ 1. initialize.sh
+    * In the event mysql node module doesn't automatically install, install it manually via `npm install mysql`
+ 2. build-webapp.sh
+ 3. run-server.sh
     * To run the server from a remote commandline out of the commandline, in a method that won't die on SSH disconnect, use "nohup" and "&". For example: `sudo nohup NBGI/tools/run-server.sh &`
 
 ##Database
