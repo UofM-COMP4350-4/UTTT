@@ -95,7 +95,7 @@ const int GAME_SOCKET_PORT = 10089;
 - (void)sendHttpGetRequest: (void (^)(NSString *responseData))success url:(NSString *) url
 {
     NSMutableString *s = [[NSMutableString alloc]init];
-    [s appendString:@"http://localhost/"];
+    [s appendString:@"http://54.186.37.75/"];
     [s appendString:url];
     NSString *urlPath = [NSString stringWithString:s];
     
@@ -126,7 +126,7 @@ const int GAME_SOCKET_PORT = 10089;
 
 - (void)setupGameSocketConnection {
     gameSocket = [[SocketIO alloc] initWithDelegate:self];
-    [gameSocket connectToHost:@"localhost" onPort:GAME_SOCKET_PORT];
+    [gameSocket connectToHost:@"54.186.37.75" onPort:GAME_SOCKET_PORT];
 }
 
 - (IBAction)PlayConnect4:(id)sender {
