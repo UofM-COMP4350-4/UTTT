@@ -16,6 +16,7 @@ enyo.kind({
 		for(var i=0; i<this.state.length; i++) {
 			if(gameboard.instanceID==this.state[i].instanceID) {
 				this.state[i] = gameboard;
+				this.view.$.repeater.renderRow(i);
 			}
 		}
 		this.loadGameList();
@@ -48,7 +49,6 @@ enyo.kind({
 				opponent = this.state[index].players[1];
 			}
 			item.$.lbl2.setContent("vs " + this.getUserName(opponent));
-			this.log("opponent's name is: " + this.getUserName(opponent));
 		}
 		return true;
 	},
@@ -84,7 +84,6 @@ enyo.kind({
 	},
 	newMatch: function(inSender, inEvent) {
 		window.location.hash = "launcher";
-		//this.waterfall("onNewMatch");
 		return true;
 	},
 	invite: function(inSender, inEvent) {
