@@ -7,12 +7,12 @@ Website Access: http://ec2-54-186-37-75.us-west-2.compute.amazonaws.com
 
 ##Setup/Initialization
 ###Server
-Run Tools:
+Run Tools (don't forget `sudo` over SSH):
  1. initialize.sh
     * In the event mysql node module doesn't automatically install, install it manually via `npm install mysql`
  2. build-webapp.sh
  3. run-server.sh
-    * To run the server from a remote commandline out of the commandline, in a method that won't die on SSH disconnect, use "nohup" and "&". For example: `sudo nohup NBGI/tools/run-server.sh &`
+    * To run the server from a remote commandline out of the commandline, in a method that won't die on SSH disconnect, use "nohup" and "&". For example: `nohup NBGI/tools/run-server.sh &` To kill this kind of server, use `killall node`
 
 ##Database
 ###Database Access:
@@ -52,3 +52,10 @@ SET PASSWORD FOR 'ubuntu'@'localhost' = PASSWORD("");
 * `update-repo.[bat|sh]` - Updates the repo and submodules to current state
 * `build-webapp.[bat|sh]` - Builds the Enyo web client and copies it to the server/public directory
 * `run-server.[bat|sh]` - Run the node server, with optional argument port and ip as passed arguments.
+
+
+##Testing
+* Server: Use Mocha. `npm install -g mocha` will install it to your system's path. Test server files via commandline `mocha <filename>`.
+* iOS Client: Use Frank. In addition, there are objective-C unit tests within the NBGITests directory.
+* Web Client: Open spec-runner.html and Jasmine tests will be executed. In addition, there are Selenium tests included.
+* NOTE: for the clients, there is a fake server with mock data available at /server/tests/IntegrationTests/fakeServer.js that can be run via NodeJS.
