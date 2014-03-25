@@ -13,8 +13,6 @@
 @interface Move : NSObject
 
 - (Move *) initWithPositionAndUser: (CGPoint) position user: (Player *) user;
-- (NSString *) CreateJSONString;
-- (Move *) initWithJSONString:(NSString *) jsonString;
 
 @property CGPoint position;
 @property Player *user;
