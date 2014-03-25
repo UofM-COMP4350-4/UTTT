@@ -6,7 +6,7 @@ enyo.kind({
 		socialShowing: true
 	},
 	components: [
-		{kind:"Signals", onhashchange:"hashChange", onMatchFound:"receivedGameboard", onPlayResult:"updateActive"}
+		{kind:"Signals", onhashchange:"hashChange", onMatchFound:"receivedGameboard", onPlayResult:"updateActive", onkeypress:"checkForChatSubmit", onSocketSetup:"socketIsSetup"}
 	],
 	create:function() {
 		this.inherited(arguments);
@@ -116,17 +116,26 @@ enyo.kind({
 				this.showGameArea();
 				enyo.stage.game.controller.loadGame(gameboard);
 			} else { // attempt to join game
-				window.ClientServerComm.joinGame(window.userID, instanceID, enyo.bind(this, function(response) {
-					if(response.gameboard) {
-						enyo.Signals.send("onMatchFound", {gameboard:response.gameboard});
-						//since hash value is already set, hashChange won't tigger; explicitly load game
-						this.showChat(instanceID);
-						this.showGameArea();
-						enyo.stage.game.controller.loadGame(response.gameboard);
-					} else if(response.err) {
-						window.location.hash = "launcher";
-					}
-				}));
+				enyo.stage.game.controller.showWaiting("Joining match...");
+				var self = this;
+				this.joinDeferred = function() {
+					window.ClientServerComm.joinGame(window.userID, instanceID, function(response) {
+						if(response.gameboard) {
+							enyo.Signals.send("onMatchFound", {gameboard:response.gameboard});
+							//since hash value is already set, hashChange won't tigger; explicitly load game
+							self.showChat(instanceID);
+							self.showGameArea();
+							enyo.stage.game.controller.loadGame(response.gameboard);
+						} else if(response.err) {
+							window.location.hash = "launcher";
+						}
+					});
+				};
+				if(this.connected) {
+					this.joinDeferred();
+					this.joinDeferred = undefined;
+				}
+				
 			}
 		} else {
 			window.location.hash = "launcher";
@@ -150,14 +159,25 @@ enyo.kind({
 	},
 	showChat: function(instanceID) {
 		this.view.$.chatInput.setValue("");
-		//this.view.$.chatInputDecorator.show();
+		this.view.$.chatInputDecorator.show();
 		enyo.stage.chat.controller.loadChatroom(instanceID);
-		//enyo.stage.chat.view.show();
+		enyo.stage.chat.view.show();
 	},
 	hideChat: function() {
-		//this.view.$.chatInputDecorator.hide();
-		//this.view.$.chat.hide();
+		this.view.$.chatInputDecorator.hide();
+		this.view.$.chat.hide();
 		enyo.stage.chat.controller.reset();
+	},
+	chatFocus: function(inSender, inEvent) {
+		this.chatFocused = true;
+	},
+	chatBlur: function(inSender, inEvent) {
+		this.chatFocused = false;
+	},
+	checkForChatSubmit: function(inSender, inEvent) {
+		if(inEvent && inEvent.keyCode==13 && this.chatFocused) {
+			this.submitMessage();
+		}
 	},
 	submitMessage: function() {
 		var msg = this.view.$.chatInput.getValue();
@@ -172,6 +192,25 @@ enyo.kind({
 					name: window.userName
 				}
 			});
+		}
+	},
+	shareURL: function(url) {
+		this.view.$.shareInput.setValue(url);
+		this.view.$.shareURL.show();
+	},
+	showNotification: function(text, callback) {
+		this.notificationCallback = callback;
+		this.view.$.gameNotificationText.setContent(text);
+		this.view.$.gameNotification.show();
+	},
+	closeNotification: function() {
+		this.notificationCallback && this.notificationCallback();
+	},
+	socketIsSetup: function() {
+		this.connected = true;
+		if(this.joinDeferred) {
+			this.joinDeferred();
+			this.joinDeferred = undefined;
 		}
 	}
 });

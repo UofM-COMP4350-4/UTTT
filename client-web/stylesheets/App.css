@@ -38,8 +38,13 @@
 	box-shadow: -4px 0 4px rgba(0,0,0,0.3);
 }
 
+.mainLayout {
+    display:table;
+}
+
 .game-container {
 	background-color: #EAEAEA;
+	display:table-row;
 }
 
 .chat-container {
@@ -47,12 +52,26 @@
 	height: 20%;
 	min-height: 5em;
 	background-color:gray;
-	border-top: 1px black inset;
+	display:table-row;
 }
 
 .social-container {
 	width: 250px;
 	background-color: #333333;
+}
+
+.share-title {
+	font-family: 'Oswald', sans-serif;
+	font-size: 1.2em;
+	line-height: 1.2em;
+	padding-bottom: 10px;
+}
+
+.game-notification-title {
+	font-family: 'Oswald', sans-serif;
+	font-size: 1.5em;
+	line-height: 1.5em;
+	padding-bottom: 10px;
 }
 
 
@@ -219,6 +238,7 @@
 	border:1px gray;
 	background-color:white;
 	color: black;
+	border-top: 1px black inset;
 }
 
 
