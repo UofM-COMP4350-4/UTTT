@@ -162,10 +162,12 @@ enyo.kind({
 		this.view.$.chatInputDecorator.show();
 		enyo.stage.chat.controller.loadChatroom(instanceID);
 		enyo.stage.chat.view.show();
+		this.view.$.game.removeClass("full-override");
 	},
 	hideChat: function() {
 		this.view.$.chatInputDecorator.hide();
 		this.view.$.chat.hide();
+		this.view.$.game.addClass("full-override");
 		enyo.stage.chat.controller.reset();
 	},
 	chatFocus: function(inSender, inEvent) {
