@@ -9,6 +9,7 @@
 #import "Connect4ViewController.h"
 #import "SocketIOPacket.h"
 #import "Move.h"
+#import "GameCompletedController.h"
 
 @interface Connect4ViewController ()
 
@@ -21,31 +22,23 @@ const NSString* redChip = @"redChip.png";
 const NSString* whiteChip = @"whiteChip.png";
 const int ROW_SIZE = 6;
 const int COL_SIZE = 7;
+bool isOwnerWinner = false;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
     return self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    //[self drawGameBoard:[[NSMutableArray alloc]init]];
     [self setupEvents];
+    [self initializeGameBoard];
     [self setupNotifications];
 }
 
 - (void)setupNotifications {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                          selector:@selector(receiveNotification:)
-                                          name:@"MatchFoundNotification"
-                                          object:nil];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                           selector:@selector(receiveNotification:)
                                           name:@"PlayResultNotification"
@@ -68,17 +61,11 @@ const int COL_SIZE = 7;
 
 - (NSUInteger)supportedInterfaceOrientations
 {
-    /*if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-     return UIInterfaceOrientationMaskAllButUpsideDown;
-     } else {
-     return UIInterfaceOrientationMaskAll;
-     }*/
     return UIInterfaceOrientationMaskPortrait;
 }
 
-//The event handling method
 - (void)playerMadeMove:(UITapGestureRecognizer *)recognizer {
-    CGPoint location = [recognizer locationInView:[recognizer.view superview]];
+    CGPoint location = [recognizer locationInView:self.view];
     CGFloat touchX = location.x;
     CGRect screenRect = [[self view] bounds];
     CGFloat screenWidth = screenRect.size.width;
@@ -113,7 +100,6 @@ const int COL_SIZE = 7;
         [[MainViewController GameSocket] sendEvent:@"receiveMove" withData:moveJSON];
     }
     else {
-        // display message saying its not your turn to play a move
         NSLog(@"It's not your turn JERK!!!!");
     }
 }
@@ -150,40 +136,11 @@ const int COL_SIZE = 7;
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-- (void) receiveNotification:(NSNotification *) notification// : (NSDictionary *) jsonDict
+- (void) receiveNotification:(NSNotification *) notification
 {
-    // [notification name] should always be @"TestNotification"
-    // unless you use this method for observation of other notifications
-    // as well.
-    
-    if ([[notification name] isEqualToString:@"MatchFoundNotification"]) {
-        [self initializeGameBoard];
-        NSDictionary *jsonNSDict = (NSDictionary *) [notification object];
-        NSError *error;
-        NSArray *args = [jsonNSDict objectForKeyedSubscript:@"args"];
-        NSDictionary *argDict = args[0];
-        
-        if (error != NULL) {
-            NSLog(@"Error: Could not create dictionary from arguments returned from event.");
-        }
-        else {
-            NSMutableArray *listOfMoves = [argDict objectForKey:@"currentBoard"];
-            //NSLog(@"The game Instance ID is : %llu", [[argDict objectForKey:@"instanceID"] unsignedLongLongValue]);
-            _gameInstanceID = [[NSNumber alloc] initWithUnsignedLongLong:[[argDict objectForKey:@"instanceID"] unsignedLongLongValue]];
-            [self drawGameBoard:listOfMoves];
-
-            NSDictionary *userToPlay = [argDict objectForKey:@"userToPlay"];
-            int userToPlayID = [[userToPlay objectForKey:@"id"] intValue];
-            NSString *userToPlayName = [userToPlay objectForKey:@"name"];
-            _currentPlayersTurn = [[Player alloc]initWithUserIDAndNameAndisOnlineAndAvatarURL:userToPlayID userName:userToPlayName isOnline:false avatarURL:@"avatar.jpg"];
-        }
-        
-        NSLog (@"Connect4ViewController received a match found notification. %@", jsonNSDict);
-    }
-    else if ([[notification name] isEqualToString:@"PlayResultNotification"]) {
+    if ([[notification name] isEqualToString:@"PlayResultNotification"]) {
         NSLog (@"Connect4ViewController received a play result notification.");
         NSDictionary *jsonNSDict = (NSDictionary *) [notification object];
         NSArray *args = [jsonNSDict objectForKeyedSubscript:@"args"];
@@ -192,6 +149,19 @@ const int COL_SIZE = 7;
         [self drawGameBoard:listOfMoves];
         
         NSDictionary *userToPlay = [argDict objectForKey:@"userToPlay"];
+        NSDictionary *winner = [argDict objectForKey:@"winner"];
+        
+        if (![winner isKindOfClass:[NSNull class]]) {
+            NSNumber *userID = [winner objectForKey:@"id"];
+            if ([userID compare:_ownerPlayer.userID] == 0) {
+                isOwnerWinner = true;
+            }
+            else {
+                isOwnerWinner = false;
+            }
+            [self performSegueWithIdentifier: @"GameCompletedSegue" sender: self];
+        }
+        
         int userToPlayID = [[userToPlay objectForKey:@"id"] intValue];
         NSString *userToPlayName = [userToPlay objectForKey:@"name"];
         _currentPlayersTurn = [[Player alloc]initWithUserIDAndNameAndisOnlineAndAvatarURL:userToPlayID userName:userToPlayName isOnline:false avatarURL:@"avatar.jpg"];
@@ -214,6 +184,13 @@ const int COL_SIZE = 7;
     [chatJSON setObject:nsNumberTime forKey:@"timestamp"];
     [chatJSON setObject:_gameInstanceID forKey:@"instanceID"];
     [[MainViewController GameSocket] sendEvent:@"chat" withData:chatJSON];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"GameCompletedSegue"]) {
+        GameCompletedController *gameCompletedController = (GameCompletedController *)segue.destinationViewController;
+        gameCompletedController.isWinner = isOwnerWinner;
+    }
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {

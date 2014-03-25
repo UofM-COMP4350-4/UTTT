@@ -8,8 +8,8 @@
 
 #import "MainViewController.h"
 #import "SocketIOPacket.h"
+#import "SearchingForOpponent.h"
 #import "Connect4ViewController.h"
-
 
 @interface MainViewController ()
 
@@ -17,11 +17,8 @@
 
 @end
 
-//typedef void (^success)(NSURLRequest *request, NSHTTPURLResponse *response, id JSON);
-//defining a type of success we can reuse
 typedef void (^success)(NSString *responseData);
 SocketIO* gameSocket = NULL;
-bool isGameCreatedSuccessfully = false;
 const int GAME_SOCKET_PORT = 10089;
 
 @implementation MainViewController
@@ -41,10 +38,6 @@ const int GAME_SOCKET_PORT = 10089;
 
 
 - (BOOL)shouldAutorotate {
-    /*if (self.interfaceOrientation == self.supportedInterfaceOrientations)
-    {
-        return NO;
-    }*/
     return YES;
 }
 
@@ -55,7 +48,7 @@ const int GAME_SOCKET_PORT = 10089;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    
     success responseSuccess;
     //callback method defined
     responseSuccess = ^(NSString *data){
@@ -111,7 +104,6 @@ const int GAME_SOCKET_PORT = 10089;
          }
          else
          {
-             //handle response from Server
              NSString *response = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
              success(response);
              NSLog(@"Finished calling callback method");
@@ -132,7 +124,7 @@ const int GAME_SOCKET_PORT = 10089;
 - (IBAction)PlayConnect4:(id)sender {
     NSMutableString *queueForGameUrl = [[NSMutableString alloc] initWithString:@"queueForGame?"];
     success responseSuccess;
-    //callback method defined
+
     responseSuccess = ^(NSString *data){
         //Do nothing
     };
@@ -142,10 +134,7 @@ const int GAME_SOCKET_PORT = 10089;
     [queueForGameUrl appendString:@"&gameID="];
     [queueForGameUrl appendString:@"1"];//Connect4 game id is 1
     
-    // send http request to server to get an opponent to play against
-    // set isGameCreatedSuccessfully to True if successful
     [self sendHttpGetRequest: responseSuccess url: queueForGameUrl];
-    //[gameSocket sendEvent:@"gameCreated" withData:[NSNumber numberWithInt:gameInstanceID]];
 }
 
 
@@ -192,9 +181,9 @@ const int GAME_SOCKET_PORT = 10089;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"PlayGameSegue"]) {
-        Connect4ViewController *connect4ViewController = (Connect4ViewController *)segue.destinationViewController;
-        connect4ViewController.ownerPlayer = _player;
+    if ([segue.identifier isEqualToString:@"SearchForOpponent"]) {
+        SearchingForOpponent *searchForOpponent = (SearchingForOpponent *)segue.destinationViewController;
+        searchForOpponent.ownerPlayer = _player;
     }
 }
 
