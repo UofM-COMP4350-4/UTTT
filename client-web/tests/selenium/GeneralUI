@@ -9,7 +9,6 @@
 <table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
 <tr><td><b>Test Suite</b></td></tr>
 <tr><td><a href="Test Sliders">Test Sliders</a></td></tr>
-<tr><td><a href="GeneralUI">Create New Game</a></td></tr>
 <tr><td><a href="Invite to Play">Invite to Play</a></td></tr>
 </tbody></table>
 </body>

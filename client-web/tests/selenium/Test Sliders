@@ -4,24 +4,38 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://ec2-54-186-117-250.us-west-2.compute.amazonaws.com/" />
-<title>Invite to Play</title>
+<title>Test Sliders</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Invite to Play</td></tr>
+<tr><td rowspan="1" colspan="3">Test Sliders</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/#launcher</td>
+	<td></td>
+	<td>http://ec2-54-186-37-75.us-west-2.compute.amazonaws.com/</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=app_iconButton</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=app_menu_button</td>
+	<td>id=app_iconButton</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>click</td>
+	<td>id=app_iconButton2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=app_iconButton2</td>
+	<td></td>
+</tr>
 </tbody></table>
 </body>
 </html>

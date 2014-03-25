@@ -14,14 +14,13 @@
 <tr>
 	<td>open</td>
 	<td></td>
-	<td>http://ec2-54-186-117-250.us-west-2.compute.amazonaws.com/</td>
+	<td>http://ec2-54-186-37-75.us-west-2.compute.amazonaws.com/</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=app_menu_button2</td>
+	<td>id=app_menu_button</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>
