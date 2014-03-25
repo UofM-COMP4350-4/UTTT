@@ -6,7 +6,7 @@ enyo.kind({
 		socialShowing: true
 	},
 	components: [
-		{kind:"Signals", onhashchange:"hashChange", onMatchFound:"receivedGameboard", onPlayResult:"updateActive"}
+		{kind:"Signals", onhashchange:"hashChange", onMatchFound:"receivedGameboard", onPlayResult:"updateActive", onkeypress:"checkForChatSubmit"}
 	],
 	create:function() {
 		this.inherited(arguments);
@@ -158,6 +158,17 @@ enyo.kind({
 		this.view.$.chatInputDecorator.hide();
 		this.view.$.chat.hide();
 		enyo.stage.chat.controller.reset();
+	},
+	chatFocus: function(inSender, inEvent) {
+		this.chatFocused = true;
+	},
+	chatBlur: function(inSender, inEvent) {
+		this.chatFocused = false;
+	},
+	checkForChatSubmit: function(inSender, inEvent) {
+		if(inEvent && inEvent.keyCode==13 && this.chatFocused) {
+			this.submitMessage();
+		}
 	},
 	submitMessage: function() {
 		var msg = this.view.$.chatInput.getValue();
