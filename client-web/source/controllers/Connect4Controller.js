@@ -49,7 +49,7 @@ enyo.kind({
 		}
 		var self = this;
 		var asyncStatusUpdate = function() {
-			if(self.view.$.status) {
+			if(self.view.$.status && !self.gameover) {
 				self.view.$.status.setContent(self.getUserName(self.gameboard.userToPlay) + "'s turn");
 			}
 			self.timerID=undefined;
@@ -65,7 +65,7 @@ enyo.kind({
 				piece.setPiece(this.moves[i].player.id);
 			}
 		}
-		if(this.gameboard.userToPlay && !animateLast && !this.timerID) {
+		if(this.gameboard.userToPlay && !animateLast && !this.timerID && !this.gameover) {
 			this.view.$.status.setContent(this.getUserName(this.gameboard.userToPlay) + "'s turn");
 		}
 	},
@@ -135,29 +135,27 @@ enyo.kind({
 					if(status=="winner") {
 						if(inEvent.gameboard.winner && inEvent.gameboard.winner.id
 								&& inEvent.gameboard.winner.id!=window.userID) {
-							enyo.stage.app.controller.showNotification("You Lost!", function() {
-								enyo.stage.menu.removeGame(inEvent.gameboard.instanceID);
-								delete window.active[inEvent.gameboard.instanceID];
-								enyo.stage.game.controller.showLauncher();
-							});
+							this.handleGameOver("You Lost!", inEvent.gameboard.instanceID);
 						} else {
-							enyo.stage.app.controller.showNotification("You Won!", function() {
-								enyo.stage.menu.removeGame(inEvent.gameboard.instanceID);
-								delete window.active[inEvent.gameboard.instanceID];
-								enyo.stage.game.controller.showLauncher();
-							});
+							this.handleGameOver("You Won!", inEvent.gameboard.instanceID);
 						}
 					} else if(status=="draw") {
-						enyo.stage.app.controller.showNotification("It's A Draw!", function() {
-							enyo.stage.menu.removeGame(inEvent.gameboard.instanceID);
-							delete window.active[inEvent.gameboard.instanceID];
-							enyo.stage.game.controller.showLauncher();
-						});
+						this.handleGameOver("It's A Draw!", inEvent.gameboard.instanceID);
 					}
 				}
 			} else if(this.moves.length==inEvent.gameboard.currentBoard.length){
 				//move success
 				this.update(inEvent.gameboard);
+				// check to see if that move resulted in a win
+				if(inEvent.gameboard.status && (typeof inEvent.gameboard.status === "string")) {
+					var status = inEvent.gameboard.status.toLowerCase();
+					if(status=="winner") {
+						if(inEvent.gameboard.winner && inEvent.gameboard.winner.id
+								&& inEvent.gameboard.winner.id==window.userID) {
+							this.handleGameOver("You Won!", inEvent.gameboard.instanceID);
+						}
+					}
+				}
 			} else {
 				//move failed
 				this.update(inEvent.gameboard);
@@ -186,5 +184,16 @@ enyo.kind({
 				});
 			}
 		}
+	},
+	handleGameOver: function(message, instanceID) {
+		this.gameover = true;
+		this.view.$.status.setContent("Game Over");
+		setTimeout(function() {
+			enyo.stage.app.controller.showNotification(message, function() {
+				enyo.stage.menu.controller.removeGame(instanceID);
+				delete window.active[instanceID];
+				enyo.stage.game.controller.showLauncher();
+			});
+		}, 800);
 	}
 });
