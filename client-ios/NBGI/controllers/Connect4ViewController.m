@@ -9,6 +9,7 @@
 #import "Connect4ViewController.h"
 #import "SocketIOPacket.h"
 #import "Move.h"
+#import "GameCompletedController.h"
 
 @interface Connect4ViewController ()
 
@@ -21,6 +22,7 @@ const NSString* redChip = @"redChip.png";
 const NSString* whiteChip = @"whiteChip.png";
 const int ROW_SIZE = 6;
 const int COL_SIZE = 7;
+bool isOwnerWinner = false;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -147,9 +149,29 @@ const int COL_SIZE = 7;
         [self drawGameBoard:listOfMoves];
         
         NSDictionary *userToPlay = [argDict objectForKey:@"userToPlay"];
+        NSDictionary *winner = [argDict objectForKey:@"winner"];
+        
+        if (![winner isKindOfClass:[NSNull class]]) {
+            NSNumber *userID = [winner objectForKey:@"id"];
+            if ([userID compare:_ownerPlayer.userID] == 0) {
+                isOwnerWinner = true;
+            }
+            else {
+                isOwnerWinner = false;
+            }
+            [self performSegueWithIdentifier: @"GameCompletedSegue" sender: self];
+        }
+        
         int userToPlayID = [[userToPlay objectForKey:@"id"] intValue];
         NSString *userToPlayName = [userToPlay objectForKey:@"name"];
         _currentPlayersTurn = [[Player alloc]initWithUserIDAndNameAndisOnlineAndAvatarURL:userToPlayID userName:userToPlayName isOnline:false avatarURL:@"avatar.jpg"];
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"GameCompletedSegue"]) {
+        GameCompletedController *gameCompletedController = (GameCompletedController *)segue.destinationViewController;
+        gameCompletedController.isWinner = isOwnerWinner;
     }
 }
 
