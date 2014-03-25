@@ -35,7 +35,7 @@ enyo.kind({
 		this.view.$.c4Grid.render();
 		if(gameboard.players.length==1) {
 			// user just created a new game
-			//TODO: show popup with copyable URL in it
+			enyo.stage.app.controller.shareURL("http://" + window.location.host + "/#game-" + gameboard.instanceID);
 			this.view.$.status.setContent("Waiting for opponent...");
 		} else if(gameboard.players.length<this.maxPlayers) {
 			
@@ -133,11 +133,26 @@ enyo.kind({
 				if(inEvent.gameboard.status && (typeof inEvent.gameboard.status === "string")) {
 					var status = inEvent.gameboard.status.toLowerCase();
 					if(status=="winner") {
-						//TODO: Show winner popup
-						//afterwards, close this game
+						if(inEvent.gameboard.winner && inEvent.gameboard.winner.id
+								&& inEvent.gameboard.winner.id!=window.userID) {
+							enyo.stage.app.controller.showNotification("You Lost!", function() {
+								enyo.stage.menu.removeGame(inEvent.gameboard.instanceID);
+								delete window.active[inEvent.gameboard.instanceID];
+								enyo.stage.game.controller.showLauncher();
+							});
+						} else {
+							enyo.stage.app.controller.showNotification("You Won!", function() {
+								enyo.stage.menu.removeGame(inEvent.gameboard.instanceID);
+								delete window.active[inEvent.gameboard.instanceID];
+								enyo.stage.game.controller.showLauncher();
+							});
+						}
 					} else if(status=="draw") {
-						//TODO: Show draw popup
-						//afterwards, close this game
+						enyo.stage.app.controller.showNotification("It's A Draw!", function() {
+							enyo.stage.menu.removeGame(inEvent.gameboard.instanceID);
+							delete window.active[inEvent.gameboard.instanceID];
+							enyo.stage.game.controller.showLauncher();
+						});
 					}
 				}
 			} else if(this.moves.length==inEvent.gameboard.currentBoard.length){

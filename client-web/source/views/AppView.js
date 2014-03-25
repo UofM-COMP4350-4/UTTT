@@ -23,7 +23,19 @@ enyo.kind({
 				]},
 				{name:"social", kind:"SocialView", classes:"social-container social-shadow"}
 			]}
-			
+		]},
+		{name:"shareURL", kind:"onyx.Popup", centered:true, floating: true, components:[
+			{style:"margin:2em;", components:[
+				{classes:"share-title", content:"Share this URL so friends can join your game:"},
+				{kind: "onyx.InputDecorator", alwaysLooksFocused:true, style:"width:90%;", components: [
+					{name:"shareInput", kind: "onyx.Input", style:"color:black !important;width:100%;"},
+				]}
+			]}
+		]},
+		{name:"gameNotification", kind:"onyx.Popup", centered:true, floating: true, onHide:"controller.closeNotification", components:[
+			{style:"margin:2em;", components:[
+				{name:"gameNotificationText", classes:"game-notification-title", content:"&nbsp;", allowHtml:true}
+			]}
 		]}
 	]
 });

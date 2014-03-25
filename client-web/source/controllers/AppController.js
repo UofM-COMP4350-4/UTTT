@@ -184,5 +184,17 @@ enyo.kind({
 				}
 			});
 		}
+	},
+	shareURL: function(url) {
+		this.view.$.shareInput.setValue(url);
+		this.view.$.shareURL.show();
+	},
+	showNotification: function(text, callback) {
+		this.notificationCallback = callback;
+		this.view.$.gameNotificationText.setContent(text);
+		this.view.$.gameNotification.show();
+	},
+	closeNotification: function() {
+		this.notificationCallback && this.notificationCallback();
 	}
 });
