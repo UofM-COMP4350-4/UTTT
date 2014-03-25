@@ -19,7 +19,6 @@
 
 typedef void (^success)(NSString *responseData);
 SocketIO* gameSocket = NULL;
-bool isGameCreatedSuccessfully = false;
 const int GAME_SOCKET_PORT = 10089;
 
 @implementation MainViewController
