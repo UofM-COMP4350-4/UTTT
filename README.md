@@ -12,10 +12,11 @@ install mysql for node
 npm install mysql
 ```
 Run Tools:
- 1. update-repo   
- 2. initialize   
- 3. build-web-app   
- 4. run-server (in sudo and with & to run it in the background)   
+ 1. update-repo
+ 2. initialize
+ 3. build-web-app
+ 4. run-server
+    * To run the server from a remote commandline out of the commandline, in a method that won't die on SSH disconnect, use "nohup" and "&". For example: `sudo nohup NBGI/tools/run-server.sh &`
 
 ##Database
 ###Database Access:
