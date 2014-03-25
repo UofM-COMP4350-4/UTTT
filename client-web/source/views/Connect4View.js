@@ -9,7 +9,7 @@ enyo.kind({
 			{classes:"connect4-status-wrapper", components:[
 				{name:"status", classes:"connect4-status", content:"&nbsp;", allowHtml:true}
 			]}
-		]},
+		]}
 	],
 	row: {classes:"connect4-row"},
 	cell: {classes:"connect4-cell"},

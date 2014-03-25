@@ -148,8 +148,7 @@ enyo.kind({
 				this.update(inEvent.gameboard);
 				// check to see if that move resulted in a win
 				if(inEvent.gameboard.status && (typeof inEvent.gameboard.status === "string")) {
-					var status = inEvent.gameboard.status.toLowerCase();
-					if(status=="winner") {
+					if(inEvent.gameboard.status.toLowerCase()=="winner") {
 						if(inEvent.gameboard.winner && inEvent.gameboard.winner.id
 								&& inEvent.gameboard.winner.id==window.userID) {
 							this.handleGameOver("You Won!", inEvent.gameboard.instanceID);

@@ -28,7 +28,7 @@ enyo.kind({
 			{style:"margin:2em;", components:[
 				{classes:"share-title", content:"Share this URL so friends can join your game:"},
 				{kind: "onyx.InputDecorator", alwaysLooksFocused:true, style:"width:90%;", components: [
-					{name:"shareInput", kind: "onyx.Input", style:"color:black !important;width:100%;"},
+					{name:"shareInput", kind: "onyx.Input", style:"color:black !important;width:100%;"}
 				]}
 			]}
 		]},

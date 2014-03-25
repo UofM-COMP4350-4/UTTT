@@ -130,7 +130,7 @@ enyo.kind({
 							window.location.hash = "launcher";
 						}
 					});
-				}
+				};
 				if(this.connected) {
 					this.joinDeferred();
 					this.joinDeferred = undefined;
