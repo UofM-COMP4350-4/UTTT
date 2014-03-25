@@ -38,11 +38,6 @@ const int COL_SIZE = 7;
 - (void)setupNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                           selector:@selector(receiveNotification:)
-                                          name:@"MatchFoundNotification"
-                                          object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                          selector:@selector(receiveNotification:)
                                           name:@"PlayResultNotification"
                                           object:nil];
 }
@@ -142,30 +137,7 @@ const int COL_SIZE = 7;
 
 - (void) receiveNotification:(NSNotification *) notification
 {
-    if ([[notification name] isEqualToString:@"MatchFoundNotification"]) {
-        [self initializeGameBoard];
-        NSDictionary *jsonNSDict = (NSDictionary *) [notification object];
-        NSError *error;
-        NSArray *args = [jsonNSDict objectForKeyedSubscript:@"args"];
-        NSDictionary *argDict = args[0];
-        
-        if (error != NULL) {
-            NSLog(@"Error: Could not create dictionary from arguments returned from event.");
-        }
-        else {
-            NSMutableArray *listOfMoves = [argDict objectForKey:@"currentBoard"];
-            _gameInstanceID = [[NSNumber alloc] initWithUnsignedLongLong:[[argDict objectForKey:@"instanceID"] unsignedLongLongValue]];
-            [self drawGameBoard:listOfMoves];
-
-            NSDictionary *userToPlay = [argDict objectForKey:@"userToPlay"];
-            int userToPlayID = [[userToPlay objectForKey:@"id"] intValue];
-            NSString *userToPlayName = [userToPlay objectForKey:@"name"];
-            _currentPlayersTurn = [[Player alloc]initWithUserIDAndNameAndisOnlineAndAvatarURL:userToPlayID userName:userToPlayName isOnline:false avatarURL:@"avatar.jpg"];
-        }
-        
-        NSLog (@"Connect4ViewController received a match found notification. %@", jsonNSDict);
-    }
-    else if ([[notification name] isEqualToString:@"PlayResultNotification"]) {
+    if ([[notification name] isEqualToString:@"PlayResultNotification"]) {
         NSLog (@"Connect4ViewController received a play result notification.");
         NSDictionary *jsonNSDict = (NSDictionary *) [notification object];
         NSArray *args = [jsonNSDict objectForKeyedSubscript:@"args"];

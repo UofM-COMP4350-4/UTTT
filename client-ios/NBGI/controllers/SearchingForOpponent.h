@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Player.h"
 
 @interface SearchingForOpponent : UIViewController
+
+@property Player* currentPlayersTurn;
+@property Player* ownerPlayer;
+@property NSNumber* gameInstanceID;
 
 @end

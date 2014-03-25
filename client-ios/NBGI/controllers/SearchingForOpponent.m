@@ -16,8 +16,6 @@
 
 @implementation SearchingForOpponent
 
-
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -27,12 +25,39 @@
     return self;
 }
 
+- (void) receiveNotification:(NSNotification *) notification
+{
+    if ([[notification name] isEqualToString:@"MatchFoundNotification"]) {
+        NSDictionary *jsonNSDict = (NSDictionary *) [notification object];
+        NSError *error;
+        NSArray *args = [jsonNSDict objectForKeyedSubscript:@"args"];
+        NSDictionary *argDict = args[0];
+        
+        if (error != NULL) {
+            NSLog(@"Error: Could not create dictionary from arguments returned from event.");
+        }
+        else {
+            _gameInstanceID = [[NSNumber alloc] initWithUnsignedLongLong:[[argDict objectForKey:@"instanceID"] unsignedLongLongValue]];
+            
+            NSDictionary *userToPlay = [argDict objectForKey:@"userToPlay"];
+            int userToPlayID = [[userToPlay objectForKey:@"id"] intValue];
+            NSString *userToPlayName = [userToPlay objectForKey:@"name"];
+            _currentPlayersTurn = [[Player alloc]initWithUserIDAndNameAndisOnlineAndAvatarURL:userToPlayID userName:userToPlayName isOnline:false avatarURL:@"avatar.jpg"];
+        }
+        
+        NSLog (@"Connect4ViewController received a match found notification. %@", jsonNSDict);
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-//    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-//    [spinner setCenter:CGPointMake(100, 100)]; // I do this because I'm in landscape mode
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveNotification:)
+                                                 name:@"MatchFoundNotification"
+                                               object:nil];
+    
     [_SearchForOppSpinner startAnimating];
 }
 
