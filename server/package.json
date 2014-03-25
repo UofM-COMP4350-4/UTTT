@@ -9,6 +9,7 @@
 		"passport-twitter": "",
 		"passport-google": "",
 		"socket.io": "",
+		"mysql": "",
 		"sequelize" : ""
 	},
 	"devDependencies": {
