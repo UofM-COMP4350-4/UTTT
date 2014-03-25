@@ -185,6 +185,7 @@ module.exports = {
 			DataStore.getUserInformation(userID, function(userInfo) {
 				onlineUsers.push(userInfo);
 				module.exports.findByUser(userID, function(entries) {
+					console.log("I finish find matches call");
 					var setupItem = function() {
 						if(entries.length>0) {
 							var curr = entries.pop();

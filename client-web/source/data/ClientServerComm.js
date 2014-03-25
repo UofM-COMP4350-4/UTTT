@@ -3,7 +3,7 @@ window.WEB_SOCKET_SWF_LOCATION = "assets/WebSocketMain.swf";
 enyo.singleton({
 	name: "ClientServerComm",
 	kind: "Object",
-	socketURL: "http://localhost:10089",
+	socketURL: "http://" + window.location.hostname + ":10089",
 	initialize: function(userID, callback) {
 		var request = new enyo.Ajax({
 			url: "initialize", //URL goes here
