@@ -3,7 +3,7 @@ Networked BoardGame Infrastructure
 
 Winter 2014 Project for Software Engineering 2 Group 4
 
-Website Access: http://ec2-54-213-160-158.us-west-2.compute.amazonaws.com
+Website Access: http://ec2-54-186-37-75.us-west-2.compute.amazonaws.com
 
 ##Setup/Initialization
 ###Server
