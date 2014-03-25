@@ -11,7 +11,7 @@ enyo.kind({
 					{name:"game", kind:"GameView", classes:"game-container"},
 					{name:"chat", kind:"ChatView", classes:"chat-container"},
 					{kind:"onyx.Toolbar", style:"padding-top:4px; padding-bottom:4px; height:46px;display:table-row;", layoutKind:"FittableColumnsLayout", components:[
-						{kind:"onyx.IconButton", src:"assets/onyx-menu.png", style:"height:32px", ontap:"controller.toggleMenu"},
+						{kind:"onyx.IconButton", src:"assets/onyx-menu.png", style:"height:32px; margin-left:5px;", ontap:"controller.toggleMenu"},
 						{style:"padding:5px 5px 2px 5px;text-align:center;", fit:true, components:[
 							{name:"chatInputDecorator", kind: "onyx.InputDecorator", alwaysLooksFocused:true, style:"max-width:1000px;width:90%;", layoutKind:"FittableColumnsLayout", components: [
 								{name:"chatInput", kind: "onyx.Input", style:"color:black !important;", onfocus:"controller.chatFocus", onblur:"controller.chatBlur", fit:true},
