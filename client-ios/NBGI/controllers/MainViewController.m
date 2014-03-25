@@ -173,6 +173,11 @@ const int GAME_SOCKET_PORT = 10089;
              postNotificationName:@"PlayResultNotification"
              object:jsonNSDict];
         }
+        else if ([eventName isEqualToString:@"chat"]) {
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:@"ChatNotification"
+             object:jsonNSDict];
+        }
     }
 }
 
