@@ -214,7 +214,7 @@ enyo.kind({
 				// close/cleanup game
 				enyo.stage.menu.controller.removeGame(instanceID);
 				delete window.active[instanceID];
-				window.location.hash = "launcher";
+				window.location.hash = "menu";
 			});
 		}, 800);
 	}

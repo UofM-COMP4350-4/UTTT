@@ -88,20 +88,18 @@ enyo.kind({
 	},
 	switchToGame: function(inSender, inEvent) {
 		//switch to game panel on narrow screen devices
-		var newHash = "game-" + this.state[inEvent.index].instanceID;
 		var hash = window.location.hash;
-		if(window.location.hash && window.location.hash.length>1 && hash.slice(1)==newHash) {
-			enyo.stage.app.controller.showGameArea();
-		} else {
-			window.location.hash = newHash;
-		}
+		enyo.stage.app.controller.showGameArea();
+		window.location.hash = "game-" + this.state[inEvent.index].instanceID;
 		return true;
 	},
 	newMatch: function(inSender, inEvent) {
+		enyo.stage.app.controller.showGameArea();
 		window.location.hash = "launcher";
 		return true;
 	},
 	invite: function(inSender, inEvent) {
+		enyo.stage.app.controller.showGameArea();
 		window.location.hash = "invite";
 		return true;
 	}

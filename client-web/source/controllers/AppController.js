@@ -140,6 +140,13 @@ enyo.kind({
 				}
 				
 			}
+		} else if(hash=="menu") {
+			document.title = "Let's Play";
+			if(this.narrowFit) {
+				this.setMenuShowing(true);
+			}
+			this.hideChat();
+			enyo.stage.game.controller.showLauncher();
 		} else {
 			window.location.hash = "launcher";
 		}
