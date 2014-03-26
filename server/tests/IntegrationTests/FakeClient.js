@@ -6,7 +6,7 @@ var rest_port = 80;
 var port = 10089;
 var socket_url = 'http://0.0.0.0:' + port;
 
-var web_url = 'http://'
+var web_url = 'http://';
 
 var options = {
   transports: ['websocket'],
@@ -42,6 +42,7 @@ describe("Integration Tests -- [Fake] Client Socket(s) communicating with Server
 		
 		var callback = function(response)
 		{
+			var userData="";
 			response.on('error', function(err){
 				console.log("Error received " + err);
 			
@@ -63,7 +64,7 @@ describe("Integration Tests -- [Fake] Client Socket(s) communicating with Server
 			});		
 		};
 		
-		zapp_client.post("/initialize?userid="+zapp_data.userid}, callback);
+		zapp_client.post("/initialize?userid="+zapp_data.userid, callback);
 		braico_client.post("/initialize?userid="+braico_data.userid, callback);
 	});
 	//second step
