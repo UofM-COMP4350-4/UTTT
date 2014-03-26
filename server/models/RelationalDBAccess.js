@@ -13,7 +13,6 @@ function RelationalDBAccess(database) {
 		Validator.ValidateString(database.hostname);
 		new InitializeOtherDB(database.username, database.password, database.hostname);
 	}
-	console.log('Relational db contains: ' + dbConnection);
 }
 
 //Connects to the default (main) database
@@ -28,6 +27,7 @@ var InitializeDB = function() {
 		.complete(function(err) {
 			if (!!err) {
 				console.log("unable to connect, error: " + err);
+				throw new Error('Error establishing connection to database');
 			} else {
 				console.log("connection established");
 			}
@@ -47,11 +47,11 @@ var InitializeOtherDB = function(username, password, hostname) {
 		.complete(function(err) {
 			if (!!err) {
 				console.log("error establishing connection to database, error: ", err);
+				throw new Error("Error establishing connection to database");
 			} else {
 				console.log("connection established");
 			}
 		});
-	console.log("finished initializing");
 };
 
 RelationalDBAccess.prototype.getListOfGames = function(callback) {
@@ -69,15 +69,13 @@ RelationalDBAccess.prototype.getListOfGames = function(callback) {
 
 RelationalDBAccess.prototype.getUserInfo = function(userID, callback) {
 	var result = {};
-	if(userID===undefined) {
-		
+	if(userID===undefined) {		
 		dbConnection
 			.query("INSERT INTO Users (userName, isOnline, avatarURL) values ('', 1, '/assets/avatar_placeholder.jpg')")
 			.success(function(){
 				dbConnection
 					.query("SELECT * FROM Users ORDER BY userID DESC LIMIT 1")
 					.success(function(userInfo){
-						console.log(userInfo);
 						validateObjectLength(userInfo, 1);
 						callback(userInfo[0]); //Only one entry should be returned so test for this
 					})
@@ -95,7 +93,6 @@ RelationalDBAccess.prototype.getUserInfo = function(userID, callback) {
 		dbConnection
 			.query("SELECT userID, userName, isOnline, avatarURL FROM Users WHERE userID = " + userID)
 			.success(function(userInfo){
-				console.log('The data gotten back is: ' + userInfo);
 				validateObjectLength(userInfo, 1);
 				callback(userInfo[0]); //Only one entry should be returned so test for this
 			})
@@ -175,11 +172,9 @@ RelationalDBAccess.prototype.endMatch = function(instanceID, callback) {
 };
 
 RelationalDBAccess.prototype.matchesByUser = function(userID, callback) {
-	console.log("I get here matches for user call");
 	dbConnection
 		.query("SELECT * FROM Matches WHERE userID = " + userID, null, {raw: true})
 		.success(function(tableRows){
-			console.log("I finish finding matches for user call");
 			callback(tableRows);
 		})
 		.error(function(error){
