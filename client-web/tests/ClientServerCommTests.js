@@ -68,7 +68,7 @@ describe("ClientServerComm", function() {
 				window.ClientServerComm.socket.on("userSetupComplete", function() {
 					done();
 				});
-			})
+			});
 		});
 	});
 	describe("[SocketEvent]#matchFound", function() {
@@ -81,7 +81,7 @@ describe("ClientServerComm", function() {
 					expect(typeof response).toBe("object");
 					done();
 				});
-			})
+			});
 		});
 	});
 	describe("[SocketEvent]#receivePlayResult", function() {
@@ -97,7 +97,7 @@ describe("ClientServerComm", function() {
 					expect(typeof response).toBe("object");
 					done();
 				});
-			})
+			});
 		});
 	});
 	describe("[SocketEvent]#chat", function() {
@@ -113,7 +113,7 @@ describe("ClientServerComm", function() {
 					expect(typeof response).toBe("object");
 					done();
 				});
-			})
+			});
 		});
 	});
 });

@@ -51,7 +51,7 @@ describe("MenuController", function() {
 		it("should remove an entry from the active state array", function() {
 			window.active = {0:{gameID:0, instanceID:0, players:[{id:0,name:""},{id:1,name:""}]}};
 			menuC.loadBaseState();
-			menuC.removeGame(0)
+			menuC.removeGame(0);
 			expect(menuC.state.length).toBe(0);
 		});
 	});

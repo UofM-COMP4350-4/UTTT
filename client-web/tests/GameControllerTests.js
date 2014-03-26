@@ -9,7 +9,7 @@ describe("GameController", function() {
 	});
 	describe("#createGame()", function() {
 		it("should show the game's view based on gameType", function() {
-			gameC.createGame("Connect4")
+			gameC.createGame("Connect4");
 			expect(!!gameC.active).toBe(true);
 			expect(gameC.active.kind).toBe("Connect4View");
 		});
