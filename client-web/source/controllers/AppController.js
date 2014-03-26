@@ -18,18 +18,14 @@ enyo.kind({
 			this.view.$.upperPanels.realtimeFit = false;
 			this.view.$.lowerPanels.realtimeFit = false;
 		}
-		this.log("Client started");
-		//if the client has a userID, do nothing
-		//else send an initialize request to the database
-		//window.userID = localStorage.getItem("clientID"); //REMOVE COMMENT FOR PRODUCTION
+		window.userID = localStorage.getItem("clientID");
 		window.userName = "Player"; 
 		window.availableGames = {};
 		window.active = {};
 		// retrieve base info from server, creating user if needed
 	    window.userID = window.ClientServerComm.initialize(window.userID, enyo.bind(this, function(baseState) {
 	    	window.userID = baseState.user.userID;
-	    	//localStorage.setItem("clientID", window.userID); //REMOVE COMMENT FOR PRODUCTION
-	    	this.log(window.userID + " sent successfully.");
+	    	localStorage.setItem("clientID", window.userID);
 	    	window.userName = baseState.user.userName;
 			window.availableGames = baseState.availableGames;
 			window.active = baseState.active;
