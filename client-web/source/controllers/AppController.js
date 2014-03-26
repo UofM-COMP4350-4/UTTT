@@ -168,6 +168,9 @@ enyo.kind({
 		enyo.stage.chat.controller.loadChatroom(instanceID);
 		enyo.stage.chat.view.show();
 		this.view.$.game.removeClass("full-override");
+		setTimeout(function() {
+			enyo.stage.app.view.$.mainToolbar.reflow();
+		}, 500);
 	},
 	hideChat: function() {
 		this.view.$.chatInputDecorator.hide();

@@ -45,7 +45,6 @@ enyo.kind({
 		var item = inEvent.item;
 		var gameName = this.getGameName(this.state[index].gameID);
 		item.$.lbl1.setContent(gameName);
-		item.$.matchLink.setHref("#game-" + this.state[index].instanceID);
 		if(this.state[index].players.length>2) {
 			// for games with more than 2 players, just label # of opponents
 			item.$.lbl2.setContent("vs " + (this.state[index].players.length-1)
@@ -89,7 +88,14 @@ enyo.kind({
 	},
 	switchToGame: function(inSender, inEvent) {
 		//switch to game panel on narrow screen devices
-		enyo.stage.app.controller.showGameArea();
+		var newHash = "game-" + this.state[inEvent.index].instanceID;
+		var hash = window.location.hash;
+		if(window.location.hash && window.location.hash.length>1 && hash.slice(1)==newHash) {
+			enyo.stage.app.controller.showGameArea();
+		} else {
+			window.location.hash = newHash;
+		}
+		return true;
 	},
 	newMatch: function(inSender, inEvent) {
 		window.location.hash = "launcher";

@@ -11,12 +11,10 @@ enyo.kind({
 				{kind: "onyx.Groupbox", style:"padding:5%;", components: [
 					{kind: "onyx.GroupboxHeader", content: "Active Matches"},
 					{kind: "Repeater", count: 0, classes:"active-container", onSetupItem:"controller.setupActiveGames", components: [
-						{name:"matchLink", kind:"Link", style:"width:90%; margin:5%;", components:[
-							{kind:"onyx.Button", ontap:"controller.switchToGame", classes:"menu-button", components:[
-								{name:"lbl1", content:"Game", classes:"menubtn-title"},
-								{tag:"br"},
-								{name:"lbl2", content:"vs ????", classes:"menubtn-subtitle"}
-							]}
+						{kind:"onyx.Button", ontap:"controller.switchToGame", style:"width:90%; margin:5%;", classes:"menu-button", components:[
+							{name:"lbl1", content:"Game", classes:"menubtn-title"},
+							{tag:"br"},
+							{name:"lbl2", content:"vs ????", classes:"menubtn-subtitle"}
 						]}
 					]}   
 				]}
