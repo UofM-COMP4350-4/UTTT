@@ -45,7 +45,8 @@ server.get("/createNewGame", function(request, response, next) {
 	gameMGMT.setupMatch(gameID, undefined, function(instanceID) {
 		gameMGMT.joinMatch(userID, instanceID, function() {
 			gameMGMT.getGameboard(instanceID, gameID, function(gb) {
-				response.writeHead(200, {"content-type": "application/json"});
+				response.writeHead(200, {'content-type': 'application/json',
+						'Access-Control-Allow-Origin' : '*'});
 				response.end(JSON.stringify({gameboard:gb,
 						url:"http://" + request.header('Host') + "/#game-" + instanceID}));
 				next();
@@ -57,7 +58,8 @@ server.get("/joinGame", function(request, response, next) {
 	var userID = parseInt(request.params.userID, 10);
 	var instanceID = parseInt(request.params.instanceID, 10);
 	gameMGMT.joinMatch(userID, instanceID, function(err) {
-		response.writeHead(200, {"content-type": "application/json"});
+		response.writeHead(200, {'content-type': 'application/json',
+				'Access-Control-Allow-Origin' : '*'});
 		if(err) {
 			// unable to join match; game full
 			response.end(JSON.stringify({err:err}));
