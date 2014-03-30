@@ -1,0 +1,19 @@
+{
+	"name": "Let's Play",
+	"description": "Networked BoardGame Infrastructure (NBGI) demonstration using Connect4",
+	"version": "0.0.1",
+	"manifest_version": 2,
+	"offline_enabled": true,
+	"app": {
+		"urls": [
+			"*://ec2-54-186-37-75.us-west-2.compute.amazonaws.com"
+		],
+		"launch": {
+			"web_url": "http://ec2-54-186-37-75.us-west-2.compute.amazonaws.com/"
+		}
+	},
+	"icons": {
+		"64": "assets/icons/icon-64.png",
+		"128": "assets/icons/icon-128.png"
+	}
+}

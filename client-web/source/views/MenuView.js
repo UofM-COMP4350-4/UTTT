@@ -22,7 +22,9 @@ enyo.kind({
 			{style:"padding:30px;", components:[
 				{kind:"onyx.Button", content:"New Match", ontap:"controller.newMatch", classes:"menu-button"},
 				{style:"height:15px;"},
-				{kind:"onyx.Button", content:"Invite to Play", ontap:"controller.invite", classes:"menu-button"}
+				{kind:"onyx.Button", content:"Invite to Play", ontap:"controller.invite", classes:"menu-button"},
+				{style:"height:15px;"},
+				{kind:"onyx.WebAppButton", classes:"menu-button", installLabel:"Install WebApp", updateLabel:"Update WebApp"}
 			]}
 		]},
 		{kind:"onyx.Toolbar", style:"padding-top:4px; padding-bottom:4px; height:46px;", allowHtml:true, content:"&nbsp;"}

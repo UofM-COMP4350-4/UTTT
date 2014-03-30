@@ -1,0 +1,16 @@
+{
+	"name": "Let's Play",
+	"description": "Networked BoardGame Infrastructure (NBGI) demonstration using Connect4",
+	"launch_path": "/",
+	"icons": {
+		"30": "/assets/icons/mozilla-icon-30.png",
+		"60": "/assets/icons/mozilla-icon-60.png",
+		"64": "/assets/icons/icon-64.png",
+		"128": "/assets/icons/icon-128.png"
+	},
+	"developer": {
+		"name": "UofM COMP 4350 Group 4",
+		"url": "http://ec2-54-186-37-75.us-west-2.compute.amazonaws.com"
+	},
+	"default_locale": "en"
+}
