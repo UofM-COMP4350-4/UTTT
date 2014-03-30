@@ -10,14 +10,7 @@ enyo.kind({
 	],
 	create:function() {
 		this.inherited(arguments);
-		this.narrowFit = enyo.Panels.isScreenNarrow();
-		if(this.narrowFit) {
-			// adjust default settings for narrow screens
-			this.socialShowing = false;
-			this.view.$.lowerPanels.setIndexDirect(0);
-			this.view.$.upperPanels.realtimeFit = false;
-			this.view.$.lowerPanels.realtimeFit = false;
-		}
+		this.setupLayout();
 		window.userID = localStorage.getItem("clientID");
 		window.userName = "Player"; 
 		window.availableGames = {};
@@ -39,7 +32,28 @@ enyo.kind({
 				this.hashChange();
 			}
 	    }));
-	},		
+	},
+	setupLayout: function() {
+		var was = this.narrowFit;
+		this.narrowFit = enyo.Panels.isScreenNarrow();
+		this.view.$.upperPanels.realtimeFit = !this.narrowFit;
+		this.view.$.lowerPanels.realtimeFit = !this.narrowFit;
+		if(this.narrowFit) {
+			// adjust default settings for narrow screens
+			this.socialShowing = false;
+			this.view.$.lowerPanels.setIndexDirect(0);
+		} else {
+			if(was===true) {
+				this.menuShowing = true;
+				this.socialShowing = true;
+				this.view.$.upperPanels.setIndexDirect(0);
+				this.view.$.lowerPanels.setIndexDirect(1);
+			}
+		}
+	},
+	reflow: function() {
+		this.setupLayout();
+	},
 	toggleMenu: function() {
 		this.setMenuShowing(!this.menuShowing);
 		return true;
