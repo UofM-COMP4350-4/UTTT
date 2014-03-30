@@ -3,10 +3,11 @@ window.WEB_SOCKET_SWF_LOCATION = "assets/WebSocketMain.swf";
 enyo.singleton({
 	name: "ClientServerComm",
 	kind: "Object",
+	host: "http://" + window.location.hostname,
 	socketURL: "http://" + window.location.hostname + ":10089",
 	initialize: function(userID, callback) {
 		var request = new enyo.Ajax({
-			url: "initialize", //URL goes here
+			url: this.host + "/initialize", //URL goes here
 			method: "GET", //You can also use POST
 			handleAs: "json" //options are "json", "text", or "xml"
 		});
@@ -64,7 +65,7 @@ enyo.singleton({
 	//request a list of games from the Server
 	listGames: function(callback) {
 		var request = new enyo.Ajax({
-			url: "listOfGames",
+			url: this.host + "/listOfGames",
 			method: "GET",
 			handleAs: "json"
 		});
@@ -77,7 +78,7 @@ enyo.singleton({
 	},
 	queueForGame: function(userID, gameID, callback) {
 		var request = new enyo.Ajax({
-			url: "queueForGame", //URL goes here
+			url: this.host + "/queueForGame", //URL goes here
 			method: "GET", //You can also use POST
 			handleAs: "json" //options are "json", "text", or "xml"
 		});
@@ -88,7 +89,7 @@ enyo.singleton({
 	},
 	createNewGame: function(userid, gameID, callback) {
 		var request = new enyo.Ajax({
-			url: "createNewGame", //URL goes here
+			url: this.host + "/createNewGame", //URL goes here
 			method: "GET", //You can also use POST
 			handleAs: "json" //options are "json", "text", or "xml"
 		});
@@ -101,7 +102,7 @@ enyo.singleton({
 	},
 	joinGame: function(userid, instanceID, callback) {
 		var request = new enyo.Ajax({
-			url: "joinGame", //URL goes here
+			url: this.host + "/joinGame", //URL goes here
 			method: "GET", //You can also use POST
 			handleAs: "json" //options are "json", "text", or "xml"
 		});
@@ -113,3 +114,5 @@ enyo.singleton({
 		request.go({userID: userid, instanceID: instanceID});		
 	}
 });
+window.ClientServerComm.host = "http://ec2-54-186-37-75.us-west-2.compute.amazonaws.com";
+window.ClientServerComm.socketURL = "http://ec2-54-186-37-75.us-west-2.compute.amazonaws.com:10089";
