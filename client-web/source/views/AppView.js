@@ -6,7 +6,7 @@ enyo.kind({
 	components:[
 		{name:"upperPanels", kind: "Panels", index:0, arrangerKind: "CollapsingArranger", realtimeFit: true, wrap: false, classes:"panels enyo-fit app", draggable:true, onTransitionFinish:"controller.upperTransition", components:[
 			{name:"menu", kind:"MenuView", classes:"menu-container"},
-			{name:"lowerPanels", kind:"Panels", index:1, arrangerKind: "CollapsingRightArranger", wrap: false, realtimeFit: true, classes:"main-container enyo-border-box app", draggable:true, onTransitionFinish:"controller.lowerTransition", components:[
+			{name:"lowerPanels", kind:"Panels", index:0, arrangerKind: "CollapsingRightArranger", wrap: false, realtimeFit: true, classes:"main-container enyo-border-box app", draggable:true, onTransitionFinish:"controller.lowerTransition", components:[
 				{kind:"FittableRows", classes:"full", ondragstart:"controller.draggingHandler", components:[
 					{fit:true, components:[
 						{name:"game", kind:"GameView", classes:"game-container full-override"},

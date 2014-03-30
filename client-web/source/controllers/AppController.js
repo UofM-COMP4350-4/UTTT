@@ -3,7 +3,7 @@ enyo.kind({
 	kind: "Component",
 	published: {
 		menuShowing: true,
-		socialShowing: true
+		socialShowing: false
 	},
 	components: [
 		{kind:"Signals", onhashchange:"hashChange", onMatchFound:"receivedGameboard", onPlayResult:"updateActive", onkeypress:"checkForChatSubmit", onSocketSetup:"socketIsSetup"}
@@ -45,9 +45,7 @@ enyo.kind({
 		} else {
 			if(was===true) {
 				this.menuShowing = true;
-				this.socialShowing = true;
 				this.view.$.upperPanels.setIndexDirect(0);
-				this.view.$.lowerPanels.setIndexDirect(1);
 			}
 		}
 	},
